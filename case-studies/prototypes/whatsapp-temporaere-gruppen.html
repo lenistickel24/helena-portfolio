@@ -1,0 +1,1765 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Temporäre Gruppen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;450;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  /* ---------- page chrome tokens (theme-aware) ---------- */
+  :root{
+    --bg:#EDEDED;
+    --text:#1F1F1F;
+    --text-soft:#6B6B6B;
+    --hairline:#D6D6D6;
+    --card:#F4F4F4;
+    --chrome-accent:#1F1F1F;
+    --focus:#1F1F1F;
+    --font-display:"Fraunces",Georgia,"Times New Roman",serif;
+    --font-ui:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    --font-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#1A1A1A;
+      --text:#ECECEC;
+      --text-soft:#9A9A9A;
+      --hairline:#333333;
+      --card:#202020;
+      --chrome-accent:#ECECEC;
+      --focus:#ECECEC;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#1A1A1A;
+    --text:#ECECEC;
+    --text-soft:#9A9A9A;
+    --hairline:#333333;
+    --card:#202020;
+    --chrome-accent:#ECECEC;
+    --focus:#ECECEC;
+  }
+
+  /* ---------- device tokens (fixed single-world light "app", pure greyscale) ---------- */
+  :root{
+    --d-screen:#FFFFFF;
+    --d-grey:#EFEFEF;
+    --d-ink:#1A1A1A;
+    --d-soft:#8A8A8A;
+    --d-faint:#B3B3B3;
+    --d-line:#E6E6E6;
+    --d-field:#F0F0F0;
+    /* "feature-touch" emphasis — carried by fill / border / icon, never hue */
+    --d-accent:#1A1A1A;
+    --d-accent-ink:#1A1A1A;
+    --d-accent-wash:#EAEAEA;
+    --d-accent-line:#CBCBCB;
+  }
+
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font-ui);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .wrap{
+    max-width:940px;
+    margin:0 auto;
+    padding:44px 24px 72px;
+  }
+
+  /* ---------- intro ---------- */
+  .intro{max-width:600px;margin:0 auto 30px;text-align:center}
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:11px;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--chrome-accent);
+    margin:0 0 14px;
+  }
+  .intro h1{
+    font-family:var(--font-display);
+    font-optical-sizing:auto;
+    font-weight:600;
+    font-size:clamp(30px,5vw,44px);
+    line-height:1.08;
+    letter-spacing:-.01em;
+    text-wrap:balance;
+    margin:0 0 12px;
+  }
+  .intro p{
+    font-size:15px;
+    color:var(--text-soft);
+    margin:0;
+    text-wrap:pretty;
+  }
+
+  /* ---------- stage layout ---------- */
+  .stage{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 356px minmax(0,1fr);
+    gap:24px;
+    align-items:start;
+    justify-content:center;
+  }
+  @media (max-width:900px){
+    .stage{grid-template-columns:1fr;max-width:356px;margin:0 auto}
+    .rail{order:3}
+    .sidenote{order:2}
+  }
+
+  /* ---------- ?test — clean app, nothing that gives the design away ---------- */
+  body.testmode .intro,
+  body.testmode .rail,
+  body.testmode .sidenote,
+  body.testmode .colophon{display:none}
+  body.testmode .wrap{padding:0;max-width:none}
+  body.testmode .stage{grid-template-columns:1fr;max-width:none;gap:0}
+  body.testmode .device-col{gap:0}
+  body.testmode .device{
+    width:min(100vw,420px);height:100vh;height:100dvh;
+    border-radius:0;padding:0;background:transparent;box-shadow:none;
+    margin:0 auto;
+  }
+  body.testmode .screen{border-radius:0}
+  /* keine Tap-Hinweise im Test — sonst misst man nicht, ob Leute den Weg finden,
+     sondern nur, ob sie einem blinkenden Ring folgen können */
+  body.testmode .hint::after{display:none!important}
+  body.testmode .mrow.is-hot.blink{animation:none;font-weight:500;color:var(--d-ink)}
+  body.testmode .mrow.is-hot svg{color:var(--d-soft)}
+  body.testmode .toolbar{
+    position:fixed;right:12px;bottom:12px;z-index:20;gap:8px;
+  }
+  body.testmode .tb{
+    background:var(--bg);opacity:.5;
+    padding:7px 11px;font-size:12px;border-radius:20px;
+  }
+  body.testmode .tb:hover{opacity:1}
+  @media (min-width:641px){
+    body.testmode{display:flex;align-items:center;justify-content:center;min-height:100vh}
+    body.testmode .device{height:min(96vh,860px);border-radius:14px;overflow:hidden}
+    body.testmode .screen{border-radius:14px}
+  }
+
+  /* ---------- step rail ---------- */
+  .rail{
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+    padding-top:8px;
+  }
+  .rail-title{
+    font-family:var(--font-mono);
+    font-size:10px;
+    letter-spacing:.13em;
+    text-transform:uppercase;
+    color:var(--text-soft);
+    margin:0 0 9px 12px;
+  }
+  .rail-title + .rail-title,
+  .step + .rail-title{margin-top:22px}
+  .step{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    width:100%;
+    border:0;
+    background:transparent;
+    color:var(--text-soft);
+    font-family:var(--font-ui);
+    font-size:13.5px;
+    font-weight:500;
+    text-align:left;
+    padding:9px 12px;
+    border-radius:9px;
+    cursor:pointer;
+  }
+  .step:hover{background:color-mix(in srgb,var(--text) 6%,transparent)}
+  .step .dot{
+    width:9px;height:9px;border-radius:50%;
+    border:1.5px solid var(--hairline);
+    flex-shrink:0;
+    transition:background .2s,border-color .2s;
+  }
+  .step[aria-current="true"]{color:var(--text);font-weight:600}
+  .step[aria-current="true"] .dot{background:var(--chrome-accent);border-color:var(--chrome-accent)}
+  .step.done .dot{background:var(--text-soft);border-color:var(--text-soft)}
+  .step .idx{
+    font-family:var(--font-mono);
+    font-size:10.5px;
+    color:var(--d-faint);
+    margin-left:auto;
+  }
+  .step:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+
+  /* ---------- device ---------- */
+  .device-col{display:flex;flex-direction:column;align-items:center;gap:18px}
+  .device{
+    width:356px;
+    height:722px;
+    border-radius:52px;
+    background:#0C0C0D;
+    padding:11px;
+    box-shadow:0 34px 60px -26px rgba(28,24,20,.42),0 4px 12px rgba(28,24,20,.12);
+    flex-shrink:0;
+  }
+  .screen{
+    position:relative;
+    width:100%;height:100%;
+    background:var(--d-screen);
+    border-radius:42px;
+    overflow:hidden;
+    font-family:var(--font-ui);
+    color:var(--d-ink);
+    display:flex;
+    flex-direction:column;
+  }
+  .screen-inner{display:flex;flex-direction:column;height:100%;animation:fade .16s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+  /* status bar */
+  .statusbar{
+    flex-shrink:0;
+    height:38px;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:0 26px 0 30px;
+    font-size:13px;font-weight:600;letter-spacing:.01em;
+  }
+  .statusbar .sig{display:flex;gap:5px;align-items:center}
+  .statusbar .bars{display:flex;gap:2px;align-items:flex-end;height:10px}
+  .statusbar .bars i{width:3px;background:var(--d-ink);border-radius:1px}
+  .statusbar .bars i:nth-child(1){height:4px}
+  .statusbar .bars i:nth-child(2){height:6px}
+  .statusbar .bars i:nth-child(3){height:8px}
+  .statusbar .bars i:nth-child(4){height:10px}
+  .statusbar .batt{width:22px;height:11px;border:1.3px solid var(--d-ink);border-radius:3px;position:relative}
+  .statusbar .batt::after{content:"";position:absolute;right:-3.4px;top:3px;width:2px;height:5px;background:var(--d-ink);border-radius:0 1px 1px 0}
+  .statusbar .batt i{position:absolute;inset:1.6px;width:70%;background:var(--d-ink);border-radius:1px}
+
+  /* nav bar */
+  .nav{
+    flex-shrink:0;
+    display:flex;align-items:center;gap:10px;
+    padding:6px 16px 12px;
+    min-height:46px;
+  }
+  .nav .circ{
+    width:34px;height:34px;border-radius:50%;
+    background:var(--d-grey);
+    display:flex;align-items:center;justify-content:center;
+    border:0;cursor:pointer;flex-shrink:0;
+    color:var(--d-ink);
+  }
+  .nav .circ svg{width:16px;height:16px}
+  .nav .title{
+    font-size:15px;font-weight:600;line-height:1.15;white-space:nowrap;
+  }
+  .nav .title small{display:block;font-size:10.5px;font-weight:450;color:var(--d-soft);margin-top:1px}
+  .nav .grow{flex:1}
+  .nav .pill{
+    border:0;cursor:pointer;flex-shrink:0;
+    background:var(--d-ink);color:#fff;
+    font-family:var(--font-ui);font-size:13.5px;font-weight:600;
+    padding:7px 15px;border-radius:20px;
+  }
+  .nav .pill[disabled]{background:var(--d-field);color:var(--d-faint);cursor:default}
+  .nav .link{
+    border:0;background:transparent;cursor:pointer;
+    color:var(--d-accent);font-family:var(--font-ui);font-size:15px;font-weight:600;
+    padding:6px 4px;
+  }
+  .nav-lg{font-size:26px;font-weight:700;letter-spacing:-.02em;padding:2px 20px 8px}
+
+  /* scroll body */
+  .body{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
+  .body::-webkit-scrollbar{width:0}
+  .pad{padding:0 18px}
+
+  .search{
+    margin:2px 16px 8px;
+    background:var(--d-field);
+    border-radius:11px;
+    padding:9px 13px;
+    display:flex;align-items:center;gap:9px;
+    color:var(--d-soft);font-size:14px;
+  }
+  .search svg{width:15px;height:15px;flex-shrink:0}
+
+  .home{
+    flex-shrink:0;
+    display:flex;justify-content:center;
+    padding:8px 0 10px;
+  }
+  .home i{width:120px;height:4px;border-radius:2px;background:#D9D9D9}
+
+  /* chat list rows */
+  .clist{padding:2px 0 6px}
+  .crow{
+    display:flex;align-items:center;gap:12px;
+    padding:11px 18px;
+    width:100%;border:0;background:transparent;cursor:pointer;text-align:left;
+    font-family:var(--font-ui);
+    position:relative;
+  }
+  .crow + .crow::before{content:"";position:absolute;left:72px;right:0;top:0;height:1px;background:var(--d-line)}
+  .av{
+    width:46px;height:46px;border-radius:50%;flex-shrink:0;
+    background:var(--d-grey);
+    display:flex;align-items:center;justify-content:center;
+    font-size:16px;font-weight:600;color:var(--d-soft);
+  }
+  .av.grp{background:var(--d-grey)}
+  .av.grp svg{width:22px;height:22px;color:var(--d-faint)}
+  .cmain{flex:1;min-width:0}
+  .cline1{display:flex;align-items:baseline;gap:8px}
+  .cname{font-size:15.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .ctime{margin-left:auto;font-size:11.5px;color:var(--d-soft);flex-shrink:0}
+  .cline2{display:flex;align-items:center;gap:8px;margin-top:2px}
+  .cmsg{flex:1;min-width:0;font-size:13.5px;color:var(--d-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .unread{
+    flex-shrink:0;
+    min-width:19px;height:19px;padding:0 5px;border-radius:10px;
+    background:var(--d-ink);color:#fff;font-size:11px;font-weight:600;
+    display:flex;align-items:center;justify-content:center;
+  }
+
+  /* expiry badge — the one spot of colour */
+  .exp{
+    display:inline-flex;align-items:center;gap:4px;flex-shrink:0;
+    background:var(--d-accent-wash);
+    color:var(--d-accent-ink);
+    border:1px solid var(--d-accent-line);
+    font-size:11px;font-weight:600;
+    padding:2px 7px 2px 6px;border-radius:9px;
+    white-space:nowrap;
+  }
+  .exp svg{width:11px;height:11px}
+
+  /* new-chat sheet */
+  .sheet-grab{display:flex;justify-content:center;padding:9px 0 4px}
+  .sheet-grab i{width:38px;height:4px;border-radius:2px;background:#DADADA}
+  .menu{
+    margin:6px 16px 4px;
+    background:var(--d-field);
+    border-radius:14px;
+    overflow:hidden;
+  }
+  .mrow{
+    display:flex;align-items:center;gap:15px;
+    padding:14px 16px;
+    width:100%;border:0;background:transparent;cursor:pointer;text-align:left;
+    font-family:var(--font-ui);font-size:15.5px;font-weight:500;color:var(--d-ink);
+    position:relative;
+  }
+  .mrow + .mrow::before{content:"";position:absolute;left:52px;right:0;top:0;height:1px;background:var(--d-line)}
+  .mrow svg{width:21px;height:21px;color:var(--d-soft);flex-shrink:0}
+  .mrow.is-hot{color:var(--d-accent-ink);font-weight:650}
+  .mrow.is-hot svg{color:var(--d-accent)}
+  /* the whole "Neue Gruppe" row blinks so it reads as the thing to tap — background only, no outline */
+  .mrow.is-hot.blink{animation:rowBlink 1.35s ease-in-out infinite}
+  .mrow.is-hot.blink::after{display:none}
+  @keyframes rowBlink{
+    0%,100%{background-color:transparent}
+    50%{background-color:rgba(26,26,26,.13)}
+  }
+
+  .sect{
+    font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--d-faint);
+    padding:14px 18px 6px;
+  }
+
+  /* contact rows */
+  .ctc{
+    display:flex;align-items:center;gap:13px;
+    padding:10px 18px;
+    width:100%;border:0;background:transparent;cursor:pointer;text-align:left;
+    font-family:var(--font-ui);
+    position:relative;
+  }
+  .ctc + .ctc::before{content:"";position:absolute;left:63px;right:18px;top:0;height:1px;background:var(--d-line)}
+  .ctc > span:not(.tick){display:flex;flex-direction:column;min-width:0}
+  .ctc .cn{display:block;font-size:15px;font-weight:550}
+  .ctc .ce{display:block;font-size:12.5px;color:var(--d-soft);margin-top:1px}
+  .tick{
+    margin-left:auto;flex-shrink:0;
+    width:22px;height:22px;border-radius:50%;
+    border:1.6px solid var(--d-line);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .ctc{transition:background .14s}
+  .ctc:active{background:var(--d-field)}
+  .ctc .tick{transition:background .16s,border-color .16s,transform .16s}
+  .ctc[aria-pressed="true"] .tick{background:var(--d-ink);border-color:var(--d-ink)}
+  .ctc[aria-pressed="true"]:active .tick{transform:scale(.86)}
+  .tick svg{width:12px;height:12px;color:#fff;opacity:0;transition:opacity .14s}
+  .ctc[aria-pressed="true"] .tick svg{opacity:1}
+
+  .chips{
+    display:flex;gap:8px;flex-wrap:wrap;
+    padding:4px 18px 10px;
+  }
+  .chip{
+    display:flex;flex-direction:column;align-items:center;gap:4px;
+    font-size:11px;color:var(--d-soft);width:52px;
+  }
+  .chip .av{width:44px;height:44px;font-size:15px}
+
+  /* selection bar on "Mitglieder hinzufügen" — grows/shrinks smoothly, no reload */
+  .chips.selbar{
+    max-height:0;padding-top:0;padding-bottom:0;overflow:hidden;
+    transition:max-height .3s ease,padding .3s ease;
+  }
+  .chips.selbar.has{max-height:150px;padding-top:6px;padding-bottom:12px}
+  .chips.selbar .chip{animation:chipIn .22s ease}
+  .chips.selbar .chip.out{animation:chipOut .18s ease forwards}
+  @keyframes chipIn{from{opacity:0;transform:translateY(7px) scale(.82)}to{opacity:1;transform:none}}
+  @keyframes chipOut{to{opacity:0;transform:scale(.82)}}
+
+  /* group-info screen */
+  .gi-name{
+    display:flex;align-items:center;gap:14px;
+    margin:6px 16px 16px;
+    background:var(--d-field);
+    border-radius:14px;
+    padding:14px 16px;
+  }
+  .gi-cam{
+    width:52px;height:52px;border-radius:50%;flex-shrink:0;
+    border:1.6px solid var(--d-accent-line);
+    display:flex;align-items:center;justify-content:center;
+    color:var(--d-accent);
+  }
+  .gi-cam svg{width:22px;height:22px}
+  .gi-name input{
+    flex:1;min-width:0;border:0;background:transparent;
+    font-family:var(--font-ui);font-size:16px;color:var(--d-ink);
+    padding:4px 0;
+  }
+  .gi-name input:focus{outline:none}
+  .gi-name input::placeholder{color:var(--d-faint)}
+  .opt{
+    margin:0 16px 16px;
+    background:var(--d-field);
+    border-radius:14px;overflow:hidden;
+  }
+  .optrow{
+    display:flex;align-items:center;gap:10px;
+    padding:14px 16px;font-size:13.7px;font-weight:500;
+    position:relative;white-space:nowrap;
+  }
+  .optrow + .optrow::before{content:"";position:absolute;left:16px;right:0;top:0;height:1px;background:var(--d-line)}
+  /* settings row that is actually tappable (group info) */
+  .orow{
+    width:100%;border:0;background:transparent;cursor:pointer;text-align:left;
+    font-family:var(--font-ui);color:var(--d-ink);
+  }
+  .optrow .oi{color:var(--d-soft);display:flex;flex-shrink:0}
+  .optrow .oi svg{width:16px;height:16px;display:block}
+  .orow.hint .oi{color:var(--d-accent)}
+
+  /* group info header */
+  .gi-head{
+    display:flex;flex-direction:column;align-items:center;gap:4px;
+    padding:18px 16px 20px;
+  }
+  .gi-head .gi-av{width:64px;height:64px}
+  .gi-head .gi-av svg{width:30px;height:30px}
+  .gi-head b{font-size:18px;font-weight:650;margin-top:6px}
+  .gi-head span:last-child{font-size:12.5px;color:var(--d-soft)}
+  .gi-note{margin:-6px 16px 0;font-size:11.5px;line-height:1.5;color:var(--d-soft)}
+  .optrow .val{margin-left:auto;color:var(--d-soft);font-weight:450;font-size:14px}
+  .optrow .chev{color:var(--d-faint)}
+  .optrow .chev svg{width:14px;height:14px;display:block}
+
+  /* group-type screen */
+  .gt-body{padding:4px 18px 0}
+  .onboard{
+    display:flex;gap:10px;
+    background:var(--d-accent-wash);
+    border:1px solid var(--d-accent-line);
+    border-radius:12px;
+    padding:11px 12px;
+    margin-bottom:14px;
+  }
+  .onboard .ob-clock{color:var(--d-accent);flex-shrink:0;margin-top:1px}
+  .onboard .ob-clock svg{width:17px;height:17px;display:block}
+  .onboard b{font-size:13px;display:block;margin-bottom:2px;color:var(--d-accent-ink)}
+  .onboard p{margin:0;font-size:12.3px;line-height:1.45;color:#5C5C5C}
+  .onboard .x{
+    border:0;background:transparent;cursor:pointer;color:var(--d-accent);
+    flex-shrink:0;align-self:flex-start;padding:2px;margin:-2px -2px 0 0;
+  }
+  .onboard .x svg{width:14px;height:14px;display:block}
+
+  .gt-q{
+    font-size:17.5px;font-weight:650;letter-spacing:-.01em;
+    text-wrap:balance;margin:0 0 5px;
+  }
+  .gt-lead{font-size:12px;color:var(--d-soft);margin:0 0 13px;line-height:1.4}
+  .perm-hint{
+    max-height:0;overflow:hidden;opacity:0;
+    transition:max-height .3s ease,opacity .22s ease,margin .3s ease;
+    border:1px dashed transparent;border-radius:13px;
+    font-size:12px;line-height:1.5;color:var(--d-soft);
+  }
+  .perm-hint.show{max-height:180px;opacity:1;margin-top:11px;padding:12px 14px;border-color:var(--d-accent-line)}
+  .perm-hint b{color:var(--d-ink);font-weight:650}
+
+  /* two equal option cards — no default, a genuine either/or choice */
+  .opts{display:flex;flex-direction:column;gap:11px}
+  .optcard{
+    display:grid;grid-template-columns:24px 1fr 22px;column-gap:12px;row-gap:0;
+    align-items:center;
+    width:100%;text-align:left;cursor:pointer;
+    font-family:var(--font-ui);
+    background:var(--d-screen);
+    border:1.5px solid var(--d-line);
+    border-radius:15px;
+    padding:15px 15px;
+    transition:border-color .18s ease,background .18s ease;
+  }
+  .optcard:hover{border-color:var(--d-faint)}
+  .optcard[aria-checked="true"]{border-color:var(--d-ink);background:#FAFAFA}
+  .optcard.info{
+    grid-template-columns:24px 1fr;
+    cursor:default;background:#FAFAFA;border-color:var(--d-line);
+  }
+  .optcard.info:hover{border-color:var(--d-line)}
+  .optcard.info .oc-d{grid-column:2 / 3}
+  .optcard .oc-ic{grid-column:1;grid-row:1;color:var(--d-ink);width:24px;height:24px;display:flex;align-items:center;justify-content:center}
+  .optcard .oc-ic svg{width:22px;height:22px;display:block}
+  .optcard .oc-t{grid-column:2;grid-row:1;font-size:15.5px;font-weight:650;color:var(--d-ink)}
+  .optcard .oc-t .neu{
+    display:inline-block;margin-left:7px;vertical-align:middle;
+    font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+    background:var(--d-ink);color:#fff;
+    padding:2px 5px;border-radius:5px;
+  }
+  .optcard .oc-r{
+    grid-column:3;grid-row:1;
+    width:22px;height:22px;border-radius:50%;
+    border:1.7px solid var(--d-line);
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
+    transition:border-color .18s ease;
+  }
+  .optcard[aria-checked="true"] .oc-r{border-color:var(--d-ink)}
+  .optcard .oc-r::after{content:"";width:11px;height:11px;border-radius:50%;background:var(--d-ink);transform:scale(0);transition:transform .18s cubic-bezier(.2,.9,.3,1.4)}
+  .optcard[aria-checked="true"] .oc-r::after{transform:scale(1)}
+  .optcard .oc-d{grid-column:2 / 4;grid-row:2;font-size:12.6px;line-height:1.5;color:var(--d-soft);margin-top:5px}
+
+  /* Laufzeit sub-panel — appears only when "Temporär" is chosen */
+  .lzwrap{max-height:0;overflow:hidden;opacity:0;transition:max-height .3s ease,opacity .22s ease,margin .3s ease}
+  .lzwrap.show{max-height:280px;opacity:1;margin-top:11px}
+  .lzcard{
+    border:1.5px solid var(--d-line);
+    border-radius:15px;
+    padding:6px 4px;
+    background:var(--d-screen);
+  }
+  .lz-label{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--d-faint);padding:9px 12px 5px}
+  .lz-row{
+    display:flex;align-items:center;gap:11px;
+    width:100%;border:0;background:transparent;cursor:pointer;text-align:left;
+    font-family:var(--font-ui);
+    padding:11px 12px;position:relative;
+  }
+  .lz-row + .lz-row::before{content:"";position:absolute;left:44px;right:12px;top:0;height:1px;background:var(--d-line)}
+  .lz-row .lz-ic{width:20px;height:20px;color:var(--d-ink);flex-shrink:0}
+  .lz-row .lz-ic svg{width:19px;height:19px;display:block}
+  .lz-row .lz-k{font-size:14px;color:var(--d-ink)}
+  .lz-row .lz-v{margin-left:auto;font-size:14px;font-weight:600;color:var(--d-ink)}
+  .lz-row .lz-cv{color:var(--d-faint);display:flex;flex-shrink:0}
+  .lz-row .lz-cv svg{width:14px;height:14px;display:block}
+  .lz-hint{font-size:11.7px;line-height:1.45;color:var(--d-soft);padding:8px 12px 10px;margin:0}
+
+  /* calendar (date sheet) */
+  .cal-head{display:flex;align-items:center;justify-content:space-between;padding:2px 2px 12px}
+  .cal-head b{font-size:14.5px;font-weight:650}
+  .cal-nav{
+    width:32px;height:32px;border-radius:50%;border:0;cursor:pointer;
+    background:var(--d-field);color:var(--d-ink);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .cal-nav[disabled]{opacity:.3;cursor:default}
+  .cal-nav svg{width:15px;height:15px}
+  .cal-dow{display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:4px}
+  .cal-dow span{text-align:center;font-size:10px;font-weight:700;color:var(--d-faint);text-transform:uppercase;letter-spacing:.03em}
+  .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+  .cal-cell{
+    min-height:36px;border:0;background:transparent;cursor:pointer;
+    border-radius:50%;font-family:var(--font-ui);font-size:13px;color:var(--d-ink);
+    display:flex;align-items:center;justify-content:center;
+    transition:background .12s;
+  }
+  .cal-cell.empty{visibility:hidden;cursor:default}
+  .cal-cell.past{color:var(--d-faint);cursor:default}
+  .cal-cell:not(.past):not(.sel):hover{background:var(--d-field)}
+  .cal-cell.sel{background:var(--d-ink);color:#fff;font-weight:650}
+
+  /* time list (uhrzeit sheet) */
+  .time-list{max-height:264px;overflow-y:auto;margin:0 -4px;-webkit-overflow-scrolling:touch}
+  .time-list::-webkit-scrollbar{width:0}
+  .time-opt{
+    width:100%;border:0;background:transparent;cursor:pointer;text-align:left;
+    font-family:var(--font-ui);font-size:14.5px;color:var(--d-ink);
+    padding:12px 8px;display:flex;align-items:center;position:relative;
+  }
+  .time-opt + .time-opt::before{content:"";position:absolute;left:8px;right:8px;top:0;height:1px;background:var(--d-line)}
+  .time-opt.sel{font-weight:650}
+  .time-opt svg{width:15px;height:15px;margin-left:auto;color:var(--d-ink)}
+
+  /* group chat screen */
+  .chat-head{
+    display:flex;align-items:center;gap:11px;
+    padding:6px 16px 11px;
+  }
+  /* tapping the name in the chat header opens the group info */
+  .chat-id{
+    flex:1;display:flex;align-items:center;gap:11px;min-width:0;
+    border:0;background:transparent;cursor:pointer;text-align:left;
+    font-family:var(--font-ui);padding:2px 0;
+  }
+  .chat-head .av{width:36px;height:36px;font-size:14px}
+  .chat-head .ch-t{font-size:16px;font-weight:600;line-height:1.15}
+  .chat-head .ch-s{font-size:11.5px;color:var(--d-soft);display:flex;align-items:center;gap:4px;margin-top:1px}
+  .chat-head .ch-s.temp{color:var(--d-accent-ink)}
+  .chat-head .ch-s svg{width:11px;height:11px}
+  .thread{
+    flex:1;overflow-y:auto;
+    background:var(--d-grey);
+    padding:16px 16px 8px;
+    display:flex;flex-direction:column;gap:10px;
+  }
+  .sys{
+    align-self:center;
+    background:#EBEBEB;
+    color:#666666;
+    font-size:11.5px;line-height:1.4;
+    padding:6px 12px;border-radius:9px;
+    max-width:86%;text-align:center;
+  }
+  .sys.temp{background:var(--d-accent-wash);color:var(--d-accent-ink);border:1px solid var(--d-accent-line)}
+  .bub{
+    max-width:74%;
+    font-size:13.5px;line-height:1.4;
+    padding:8px 12px;border-radius:13px;
+  }
+  .bub.them{align-self:flex-start;background:var(--d-screen);border-bottom-left-radius:4px}
+  .bub.me{align-self:flex-end;background:#ECECEC;border-bottom-right-radius:4px}
+  .bub .bn{display:block;font-size:11.5px;font-weight:650;color:#8A8A8A;margin-bottom:1px}
+  .composer{
+    flex-shrink:0;
+    display:flex;align-items:center;gap:9px;
+    padding:9px 14px;
+    background:var(--d-screen);
+    border-top:1px solid var(--d-line);
+  }
+  .composer .cbox{
+    flex:1;background:var(--d-field);border-radius:18px;
+    padding:8px 14px;font-size:13.5px;color:var(--d-faint);
+  }
+  .composer .csend{
+    width:32px;height:32px;border-radius:50%;background:var(--d-ink);
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  .composer .csend svg{width:15px;height:15px;color:#fff}
+
+  .preview-link{
+    align-self:center;
+    display:inline-flex;align-items:center;gap:5px;
+    border:1px dashed var(--d-accent-line);
+    background:color-mix(in srgb,var(--d-accent-wash) 60%,transparent);
+    color:var(--d-accent-ink);
+    font-family:var(--font-ui);font-size:11.5px;font-weight:600;
+    padding:6px 11px;border-radius:20px;cursor:pointer;
+    margin:4px 0 2px;
+  }
+  .preview-link svg{width:12px;height:12px;flex-shrink:0}
+  .preview-link svg:last-child{width:11px;height:11px;opacity:.6}
+
+  /* reminder banner */
+  .banner{
+    flex-shrink:0;
+    display:flex;align-items:center;gap:10px;
+    background:var(--d-accent-wash);
+    border-bottom:1px solid var(--d-accent-line);
+    padding:11px 16px;
+  }
+  .banner .bi{color:var(--d-accent);flex-shrink:0}
+  .banner .bi svg{width:16px;height:16px;display:block}
+  .banner .bt{flex:1;font-size:12.5px;line-height:1.35;color:var(--d-accent-ink)}
+  .banner .bt small{display:block;color:#707070;font-size:10.5px;margin-top:1px}
+  .banner .bb{
+    border:0;cursor:pointer;flex-shrink:0;
+    background:var(--d-accent);color:#fff;
+    font-family:var(--font-ui);font-size:12.5px;font-weight:650;
+    padding:7px 13px;border-radius:9px;
+  }
+
+  .opt .lz-row + .lz-row::before{left:12px}
+  .opt .lz-row{padding:13px 14px}
+
+  /* reminder banner in the chat list */
+  .rbanner{
+    flex-shrink:0;
+    display:flex;align-items:center;gap:8px;
+    padding:8px 12px 9px 14px;
+    background:var(--d-accent-wash);
+    border-bottom:1px solid var(--d-accent-line);
+  }
+  .rbanner .rb-main{
+    flex:1;display:flex;align-items:center;gap:9px;
+    border:0;background:transparent;cursor:pointer;text-align:left;
+    font-family:var(--font-ui);padding:4px 0;
+  }
+  .rbanner .rb-ic{color:var(--d-ink);flex-shrink:0}
+  .rbanner .rb-ic svg{width:15px;height:15px;display:block}
+  .rbanner .rb-t{font-size:12.5px;font-weight:500;color:var(--d-ink)}
+  .rbanner .rb-b{
+    border:0;cursor:pointer;flex-shrink:0;
+    background:var(--d-ink);color:#fff;
+    font-family:var(--font-ui);font-size:11.5px;font-weight:650;
+    padding:6px 12px;border-radius:8px;
+  }
+  .rbanner .rb-cv{color:var(--d-soft);flex-shrink:0;display:flex}
+  .rbanner .rb-cv svg{width:14px;height:14px;display:block}
+
+  /* dismiss "x" on the list banners */
+  .bn-x{
+    border:0;background:transparent;cursor:pointer;color:var(--d-soft);
+    flex-shrink:0;display:flex;
+    padding:3px;margin:1px -4px 0 2px;
+  }
+  .bn-x svg{width:13px;height:13px;display:block}
+  .banner .bn-x{align-self:flex-start}
+  .rbanner .bn-x{align-self:center;margin-top:0}
+
+  /* group rows inside the "mehrere Gruppen" sheet */
+  .mg-row{
+    display:flex;align-items:center;gap:11px;
+    width:100%;padding:12px 4px;position:relative;
+    font-family:var(--font-ui);text-align:left;
+  }
+  .mg-row + .mg-row::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:var(--d-line)}
+  .mg-row .mg-ic{color:var(--d-accent);flex-shrink:0;display:flex}
+  .mg-row .mg-ic svg{width:16px;height:16px;display:block}
+  .mg-row .mg-t{flex:1;min-width:0}
+  .mg-row .mg-n{display:block;font-size:14px;font-weight:600;color:var(--d-ink)}
+  .mg-row .mg-s{display:block;font-size:11.5px;color:var(--d-soft);margin-top:1px}
+  .mg-row .mg-b{
+    border:0;cursor:pointer;flex-shrink:0;
+    background:var(--d-ink);color:#fff;
+    font-family:var(--font-ui);font-size:11.5px;font-weight:650;
+    padding:7px 12px;border-radius:8px;
+  }
+  .mg-row .mg-b.ghost{
+    background:transparent;color:var(--d-soft);
+    border:1px solid var(--d-line);font-weight:550;
+  }
+
+  /* bottom sheet overlay (inside device) */
+  .ov{
+    position:absolute;inset:0;
+    background:rgba(24,20,16,.34);
+    display:flex;flex-direction:column;justify-content:flex-end;
+    animation:fade .16s ease;
+    z-index:5;
+  }
+  .ov-card{
+    background:var(--d-screen);
+    border-radius:24px 24px 0 0;
+    padding:8px 18px 22px;
+    animation:rise .22s cubic-bezier(.2,.7,.3,1);
+  }
+  @keyframes rise{from{transform:translateY(100%)}to{transform:none}}
+  .ov-card .grab{display:flex;justify-content:center;padding:4px 0 10px}
+  .ov-card .grab i{width:38px;height:4px;border-radius:2px;background:#DADADA}
+  .ov-card h3{font-size:16px;font-weight:650;margin:0 0 4px}
+  .ov-card .sub{font-size:12.5px;color:var(--d-soft);margin:0 0 12px}
+  .ov-opt{
+    display:flex;align-items:center;gap:10px;
+    width:100%;border:0;background:transparent;cursor:pointer;text-align:left;
+    font-family:var(--font-ui);font-size:14.5px;font-weight:500;color:var(--d-ink);
+    padding:13px 4px;
+    position:relative;
+  }
+  .ov-opt + .ov-opt::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:var(--d-line)}
+  .ov-opt .rec{
+    font-family:var(--font-mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--d-accent);border:1px solid var(--d-accent-line);border-radius:5px;padding:1px 5px;
+  }
+  .ov-opt .od{margin-left:auto;font-size:13px;color:var(--d-soft);font-weight:450}
+  .sheet-cta{
+    width:100%;border:0;cursor:pointer;
+    background:var(--d-ink);color:#fff;
+    font-family:var(--font-ui);font-size:15px;font-weight:650;
+    padding:13px;border-radius:13px;
+  }
+  .ov-opt svg{width:16px;height:16px;color:var(--d-accent);flex-shrink:0}
+
+  /* toast */
+  .toast{
+    position:absolute;left:50%;bottom:34px;transform:translateX(-50%);
+    background:var(--d-ink);color:#fff;
+    font-size:12.5px;font-weight:500;
+    padding:9px 16px;border-radius:11px;
+    white-space:nowrap;
+    animation:fade .18s ease;
+    z-index:8;
+  }
+
+  /* tap hint */
+  .hint{position:relative}
+  .hint::after{
+    content:"";position:absolute;inset:-4px;border-radius:inherit;
+    box-shadow:0 0 0 2px var(--d-accent);
+    opacity:0;
+    animation:pulse 2s ease-in-out infinite;
+    pointer-events:none;
+  }
+  .crow.hint::after{inset:2px 6px;border-radius:12px}
+  .mrow.is-hot.hint::after{inset:0;border-radius:0}
+  .nav .pill.hint::after,.nav .circ.hint::after{inset:-2px}
+  @keyframes pulse{0%,100%{opacity:0}50%{opacity:.7}}
+
+  .tap-target:focus-visible{outline:2px solid var(--d-accent);outline-offset:-2px;border-radius:8px}
+
+  /* sidenote under device */
+  .sidenote{max-width:340px;padding-top:8px}
+  .sn-k{
+    font-family:var(--font-mono);
+    font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;
+    color:var(--text-soft);margin:0 0 7px;
+  }
+  .sn-h{
+    font-family:var(--font-display);
+    font-weight:600;font-size:19px;line-height:1.2;
+    margin:0 0 8px;text-wrap:balance;
+  }
+  .sn-p{font-size:13.5px;line-height:1.55;color:var(--text-soft);margin:0}
+  .sn-p b{color:var(--text);font-weight:600}
+
+  .toolbar{
+    display:flex;gap:10px;justify-content:center;
+  }
+  .tb{
+    border:1px solid var(--hairline);
+    background:transparent;
+    color:var(--text);
+    font-family:var(--font-ui);font-size:13px;font-weight:500;
+    padding:8px 15px;border-radius:9px;cursor:pointer;
+    display:flex;align-items:center;gap:6px;
+  }
+  .tb:hover{background:color-mix(in srgb,var(--text) 6%,transparent)}
+  .tb[disabled]{opacity:.4;cursor:default}
+  .tb:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+  .tb svg{width:13px;height:13px}
+
+  .colophon{
+    max-width:600px;margin:52px auto 0;
+    padding-top:20px;border-top:1px solid var(--hairline);
+    font-size:12px;color:var(--text-soft);text-align:center;line-height:1.6;
+  }
+
+  button{font:inherit}
+
+  /* ---------- phone: the device frame gets out of the way ----------
+     Steht bewusst am Ende der Datei: die Basis-Regel .device{width:356px}
+     kommt weiter oben und würde sonst gewinnen (gleiche Spezifität, späteres Wins). */
+  @media (max-width:640px){
+    .wrap{padding:0}
+    .intro{padding:26px 20px 18px;margin-bottom:0}
+    .intro h1{font-size:27px}
+    .intro p{font-size:14px}
+    .stage{max-width:none;gap:0}
+    .device-col{gap:14px}
+    .device{
+      width:100%;height:86vh;height:86dvh;
+      border-radius:0;padding:0;background:transparent;box-shadow:none;
+    }
+    .screen{border-radius:0}
+    .toolbar{padding:12px 0}
+    .sidenote{max-width:none;padding:4px 20px 0}
+    .rail{padding:8px 12px 0}
+    .colophon{margin:34px 20px 0;max-width:none;padding-bottom:28px}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    *,*::after{animation:none!important;transition:none!important}
+    .hint::after{opacity:.55}
+    .screen-inner{opacity:1;transform:none}
+    .mrow.is-hot.blink{background:rgba(26,26,26,.1)}
+    .chips.selbar{max-height:none}
+    .chips.selbar:not(.has){display:none}
+    .lzwrap,.perm-hint{opacity:1}
+    .lzwrap:not(.show),.perm-hint:not(.show){max-height:0}
+    .optcard .oc-r::after{transition:none}
+  }
+</style>
+
+<div class="wrap">
+  <div class="intro">
+    <p class="eyebrow">Feature-Konzept · Klick-Prototyp</p>
+    <h1>Temporäre Gruppen</h1>
+    <p>Jede neue Gruppe trifft eine bewusste Wahl: dauerhaft oder auf Zeit. Der Flow von der Erstellung über die Kennzeichnung und die Erinnerung bis zur Löschung am Stichtag — Schritt für Schritt durchklickbar.</p>
+  </div>
+
+  <div class="stage">
+    <nav class="rail" id="rail" aria-label="Schritte">
+      <p class="rail-title">Flow</p>
+    </nav>
+
+    <div class="device-col">
+      <div class="device">
+        <div class="screen" id="screen"></div>
+      </div>
+      <div class="toolbar">
+        <button class="tb" id="btn-back">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+          Zurück
+        </button>
+        <button class="tb" id="btn-reset">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
+          Neu starten
+        </button>
+      </div>
+    </div>
+
+    <aside class="sidenote" id="sidenote"></aside>
+  </div>
+
+  <p class="colophon">
+    Reiner Graustufen-Prototyp — es geht ausschließlich um Interaktionslogik und Konzept,
+    nicht um visuelles Design. Bewusst keine 1:1-Nachbildung der WhatsApp-Marke.
+    Konzept: <code>03_Konzept.md</code>.
+  </p>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ?test — strip the intro, the flow rail and the design notes.
+     Wichtig fürs User-Testing: die Notizen erklären jede Design-Entscheidung.
+     Wer sie vorher liest, kann den Prototyp nicht mehr unvoreingenommen benutzen. */
+  var TESTMODE = /[?&]test\b/.test(location.search) || /(^|[#&])test\b/.test(location.hash);
+  if(TESTMODE) document.body.classList.add("testmode");
+
+  /* ---------- icons ---------- */
+  var I = {
+    back:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>',
+    close:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>',
+    search:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>',
+    plus:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>',
+    check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>',
+    chev:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>',
+    clock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+    infinity:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 8a4 4 0 1 0 0 8c2.5 0 3.5-2 5-4s2.5-4 5-4a4 4 0 1 1 0 8c-2.5 0-3.5-2-5-4S9.5 8 7 8Z"/></svg>',
+    grp:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/><path d="M16 6.2A3 3 0 0 1 16 12M20.5 19c0-2.4-1.4-4.2-3.5-4.8"/></svg>',
+    person:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c0-3.4 3.1-6 7-6s7 2.6 7 6"/></svg>',
+    broadcast:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10v4l10 5V5L4 10Z"/><path d="M18 8a6 6 0 0 1 0 8"/></svg>',
+    cam:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l1.6-2h6.8L20 8h0a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1Z"/><circle cx="12" cy="13" r="3.4"/></svg>',
+    send:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l16-8-6 16-3-6-7-2Z"/></svg>',
+    cal:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="16" rx="2.5"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>',
+    archive:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="4" rx="1"/><path d="M5 8v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8"/><path d="M9.5 12h5"/></svg>',
+    trash:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M6 7l1 13a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1l1-13"/></svg>'
+  };
+
+  var MON = ["Jan","Feb","März","Apr","Mai","Juni","Juli","Aug","Sept","Okt","Nov","Dez"];
+  var TODAY = new Date("2026-08-30T00:00:00");
+  function fmt(iso){ var d=new Date(iso+"T00:00:00"); return d.getDate()+". "+MON[d.getMonth()]+" "+d.getFullYear(); }
+  function fmtShort(iso){ var d=new Date(iso+"T00:00:00"); return d.getDate()+". "+MON[d.getMonth()]; }
+  function daysLeft(iso){ var d=new Date(iso+"T00:00:00"); return Math.round((d-TODAY)/864e5); }
+  /* adaptive: the date normally, relative wording only when the end is near (<= 7 days) */
+  function expLabel(iso){ var n=daysLeft(iso); if(n<=0) return "Endet heute"; if(n===1) return "Endet morgen"; if(n<=7) return "Endet in "+n+" Tagen"; return "Endet "+fmtShort(iso); }
+
+  /* ---------- state ---------- */
+  var state = {
+    screen:"chats",
+    selected:{},          // id -> true
+    groupName:"",
+    groupType:null,       // "perm" | "temp" — no default (concept: conscious choice)
+    endDate:"2026-10-14",
+    endTime:"18:00",
+    calMonth:"2026-10",   // month shown in the date picker
+    onboard:true,          // one-time feature onboarding (grouptype step)
+    deleted:false,         // temp group has reached its end date and been deleted for everyone
+    multi:false,           // variant: several temp groups end on the same day
+    remDismissed:false,    // reminder line in the chat overview dismissed
+    delDismissed:false,    // "group was deleted" line in the chat overview dismissed
+    sheet:null,            // "date" | "time" | "extend" | "multi"
+    sheetBack:null,        // sheet to return to after picking a date/time
+    preExtend:null,        // snapshot of date+time so "verlängern" can be cancelled
+    toast:null
+  };
+
+  /* second temporary group, only used in the "several groups on the same day" variant */
+  var MG2 = {name:"Sommerfest Orga", grp:true, time:"Gestern", msg:"Lisa: Danke euch allen!", expiry:"Endet morgen"};
+  var toastTimer = null;
+
+  var CONTACTS = [
+    {id:"sara", n:"Sara", e:"sara@example.com", grp:"Häufig kontaktiert"},
+    {id:"mama", n:"Mama", e:"mama@family.com", grp:"Häufig kontaktiert"},
+    {id:"alex", n:"Alex", e:"alex@example.com", grp:"Häufig kontaktiert"},
+    {id:"tom",  n:"Tom",  e:"tom@example.com",  grp:"Weitere Kontakte"},
+    {id:"lisa", n:"Lisa", e:"lisa@example.com", grp:"Weitere Kontakte"},
+    {id:"amira",n:"Amira",e:"amira@example.com",grp:"Weitere Kontakte"},
+    {id:"amal", n:"Amal", e:"amal@family.com",  grp:"Weitere Kontakte"}
+  ];
+
+  function selCount(){ return Object.keys(state.selected).length; }
+  function memberLabel(){ var n = selCount()+1; return n===1 ? "1 Mitglied" : n+" Mitglieder"; }
+  function hasName(){ return !!(state.groupName||"").trim(); }
+  function gname(){ return (state.groupName||"").trim() || "Neue Gruppe"; }
+  function shiftMonth(ym, delta){
+    var y=+ym.slice(0,4), m=+ym.slice(5,7)-1+delta;
+    y += Math.floor(m/12); m = ((m%12)+12)%12;
+    return y+"-"+String(m+1).padStart(2,"0");
+  }
+
+  /* ---------- flow definition — two sections ---------- */
+  var STEPS = [
+    {label:"Start",       screen:"chats"},
+    {label:"Neuer Chat",  screen:"newchat"},
+    {label:"Kontakte",    screen:"members"},
+    {label:"Name & Foto", screen:"groupinfo"},
+    {label:"Gruppentyp",  screen:"grouptype"},
+    {label:"Erstellt",    screen:"chatsAfter"},
+    {label:"Erinnerung",  screen:"chatsReminder"},
+    {label:"Gelöscht",    screen:"deleted"}
+  ];
+  var STEP_MAP = {
+    chats:0, newchat:1, members:2, groupinfo:3, grouptype:4,
+    chatsAfter:5, group:5, ginfo:5, chatsReminder:6, reminder:6, deleted:7
+  };
+  function stepOf(screen){ return (screen in STEP_MAP) ? STEP_MAP[screen] : -1; }
+  var BACK = {chats:null,newchat:"chats",members:"newchat",groupinfo:"members",grouptype:"groupinfo",chatsAfter:"grouptype",group:"chatsAfter"};
+  function backTarget(){
+    switch(state.screen){
+      case "ginfo":         return "group";
+      case "chatsReminder": return "group";
+      case "reminder":      return "chatsReminder";
+      case "deleted":       return "reminder";
+    }
+    return BACK[state.screen];
+  }
+
+  /* ---------- side notes ---------- */
+  function note(){
+    switch(state.screen){
+      case "chats": return ["Ausgangspunkt","Die vertraute Übersicht","Gruppenerstellung startet wie immer über das Plus. Der neue Schritt kommt später im Flow, nicht hier."];
+      case "newchat": return ["Einstieg","Unverändertes Menü","Der neue Schritt drängt sich nicht vor — er kommt an der Stelle, wo er hingehört."];
+      case "members": return ["Kontakte","Mitglieder auswählen","Bekannter Ablauf, damit die eine echte Änderung im Flow nicht in Neuerungen untergeht. Die Auswahl aktualisiert die Seite in-place, kein Neuladen."];
+      case "groupinfo": return ["Identität zuerst","Erst der Name, dann die Zeit","Der Name ist optional. Vergibt man einen, wird die Frage nach der Laufzeit im nächsten Schritt konkret statt abstrakt."];
+      case "grouptype": return ["Der neue Pflichtschritt","Eine bewusste Wahl","Zwei gleichwertige Karten, <b>keine vorausgewählt</b>. „Temporär“ klappt das Enddatum auf und aktiviert „Erstellen“ oben rechts. (Der Prototyp zeigt nur den temporären Pfad — „Dauerhaft“ ist hier eine Sackgasse.)"];
+      case "chatsAfter": return ["Sichtbare Kennzeichnung","Die Gruppe trägt ihr Enddatum","Der Badge zeigt das Datum („"+expLabel(state.endDate)+"“), erst ab 7 Tagen vorher wird er relativ. Die Gruppe muss nie wieder aktiv im Kopf behalten werden."];
+      case "group": return ["Im Chat","Enddatum immer im Blick","Auch im Header steht das Datum. Eine Systemnachricht erklärt einmalig, was am Stichtag passiert. <b>Auf den Gruppennamen tippen</b> führt in die Gruppeninfo — dort lässt sich jederzeit verlängern."];
+      case "ginfo": return ["Gruppeneinstellungen","Verlängern geht jederzeit","Das Enddatum ist eine normale Einstellungs-Zeile — direkt neben „Selbstlöschende Nachrichten“, wo WhatsApp so etwas heute schon führt. Man muss nicht bis zur Erinnerung warten: Anlässe verschieben sich, also muss das Datum jederzeit korrigierbar sein. Sichtbar für alle, änderbar nur von Admins."];
+      case "chatsReminder": return state.multi
+        ? ["Mehrere am selben Tag","Eine Zeile statt einem Stapel","Enden mehrere Gruppen am selben Tag, werden Push und Übersichts-Zeile zu <b>einem</b> Hinweis gebündelt — sonst stapeln sich nach einem Festival-Wochenende drei Banner übereinander. Antippen öffnet die Liste mit „Verlängern“ je Gruppe."]
+        : ["Ein Tag vorher — in der Liste","Dort, wo man hinschaut","Die Erinnerung kommt als Push (ignoriert die Stummschaltung) und als Zeile in der Chatübersicht — nicht nur im Chat, den man ja genau deshalb nicht öffnet. Die Gruppe rückt nach oben. Das <b>X</b> blendet nur die Zeile aus, nicht das Enddatum."];
+      case "reminder": return ["Ein Tag vorher — im Chat","Gemeinsame Erinnerung","Alle sehen den Hinweis <b>und die Aufforderung, jetzt zu sichern, was man behalten will</b>. Nur Admins sehen „Verlängern“. Reagiert niemand, wird die Gruppe am Stichtag gelöscht (unten verlinkt)."];
+      case "deleted": return ["Der Stichtag","Weg heißt weg","Kein Archiv, keine Nachfrist, keine Reaktivierung. Die Gruppe ist für alle Mitglieder gelöscht — Verlauf und Medien. Wer etwas behalten wollte, hat es nach der Erinnerung gesichert. Der Hinweis ist eine Quittung, kein Zustand: <b>X</b> schließt ihn."];
+    }
+    return ["","",""];
+  }
+
+  /* ---------- shared partials ---------- */
+  function statusbar(time){
+    return '<div class="statusbar"><span>'+(time||"9:41")+'</span>'+
+      '<span class="sig"><span class="bars"><i></i><i></i><i></i><i></i></span>'+
+      '<svg viewBox="0 0 24 18" width="17" height="13" fill="currentColor"><path d="M12 3c3.5 0 6.7 1.3 9 3.4l-2 2C17.3 6.7 14.8 5.7 12 5.7S6.7 6.7 5 8.4l-2-2C5.3 4.3 8.5 3 12 3Zm0 5c2 0 3.8.8 5.2 2l-2 2c-.9-.8-2-1.3-3.2-1.3s-2.3.5-3.2 1.3l-2-2C8.2 8.8 10 8 12 8Zm0 5c.9 0 1.7.4 2.3 1L12 17l-2.3-3c.6-.6 1.4-1 2.3-1Z"/></svg>'+
+      '<span class="batt"><i></i></span></span></div>';
+  }
+  function home(){ return '<div class="home"><i></i></div>'; }
+  function av(letter,isGrp){
+    if(isGrp) return '<span class="av grp">'+I.grp+'</span>';
+    return '<span class="av">'+letter+'</span>';
+  }
+
+  /* base chat rows (shared by all chat-list screens) */
+  function baseChats(){
+    return [
+      {name:"Kochclub", msg:"Tom: bringe den Nachtisch mit", time:"08:12", grp:true, unread:3},
+      {name:"Papa", msg:"Foto", time:"07:40"},
+      {name:"Team Projekt", msg:"Alex: klingt gut", time:"Gestern", grp:true},
+      {name:"Grillfest 2025", msg:"Sara: war ein schöner Abend!", time:"12. Mai", grp:true},
+      {name:"Sara", msg:"Wir sehen uns Samstag!", time:"Gestern"}
+    ];
+  }
+  function visibleChats(){ return baseChats(); }
+  function navChats(noHint){
+    return '<div class="nav" style="padding-bottom:2px"><div class="nav-lg" style="flex:1">Chats</div>'+
+      '<button class="circ '+(noHint?'':'hint ')+'tap-target" data-act="fab" aria-label="Neuer Chat"'+(noHint?' style="cursor:default"':'')+'>'+I.plus+'</button></div>';
+  }
+  function chatRow(c, opts){
+    opts = opts || {};
+    var trail = c.expiry
+      ? '<span class="exp">'+I.clock+' '+c.expiry+'</span>'
+      : (c.unread ? '<span class="unread">'+c.unread+'</span>' : '');
+    return '<button class="crow tap-target'+(opts.hint?' hint':'')+'"'+(opts.act?' data-act="'+opts.act+'"':'')+'>'+
+      av(c.letter||c.name.charAt(0), c.grp)+
+      '<span class="cmain">'+
+        '<span class="cline1"><span class="cname">'+c.name+'</span><span class="ctime">'+c.time+'</span></span>'+
+        '<span class="cline2"><span class="cmsg">'+c.msg+'</span>'+trail+'</span>'+
+      '</span>'+
+    '</button>';
+  }
+
+  /* ---------- screen renderers ---------- */
+  var R = {};
+
+  R.chats = function(){
+    var rows = visibleChats().map(function(c){ return chatRow(c); }).join("");
+    return statusbar("9:41")+
+      navChats()+
+      '<div class="search">'+I.search+' Suchen</div>'+
+      '<div class="body"><div class="clist">'+rows+'</div></div>'+
+      home();
+  };
+
+  R.newchat = function(){
+    var freq = CONTACTS.filter(function(c){return c.grp==="Häufig kontaktiert";}).map(function(c){
+      return '<button class="ctc tap-target" style="cursor:default"><span class="av">'+c.n.charAt(0)+'</span>'+
+        '<span><span class="cn">'+c.n+'</span></span></button>';
+    }).join("");
+    return statusbar("9:41")+
+      '<div class="sheet-grab"><i></i></div>'+
+      '<div class="nav"><div class="grow"></div><div class="title" style="text-align:center">Neuer Chat</div><div class="grow" style="display:flex;justify-content:flex-end">'+
+        '<button class="circ tap-target" data-act="to-chats" aria-label="Schließen">'+I.close+'</button></div></div>'+
+      '<div class="search">'+I.search+' Name oder Nummer</div>'+
+      '<div class="body">'+
+        '<div class="menu">'+
+          '<button class="mrow is-hot blink tap-target" data-act="to-members">'+I.grp+' Neue Gruppe</button>'+
+          '<button class="mrow tap-target" style="cursor:default">'+I.person+' Neuer Kontakt</button>'+
+          '<button class="mrow tap-target" style="cursor:default">'+I.grp+' Neue Community</button>'+
+          '<button class="mrow tap-target" style="cursor:default">'+I.broadcast+' Neuer Broadcast</button>'+
+        '</div>'+
+        '<div class="sect">Häufig kontaktiert</div>'+
+        freq+
+      '</div>'+
+      home();
+  };
+
+  function chipHtml(c){
+    return '<span class="chip" data-id="'+c.id+'"><span class="av">'+c.n.charAt(0)+'</span>'+c.n+'</span>';
+  }
+  R.members = function(){
+    var n = selCount();
+    var groups = ["Häufig kontaktiert","Weitere Kontakte"];
+    var list = groups.map(function(g){
+      var rows = CONTACTS.filter(function(c){return c.grp===g;}).map(function(c){
+        var on = !!state.selected[c.id];
+        return '<button class="ctc tap-target" data-act="toggle" data-id="'+c.id+'" aria-pressed="'+on+'">'+
+          '<span class="av">'+c.n.charAt(0)+'</span>'+
+          '<span><span class="cn">'+c.n+'</span><span class="ce">'+c.e+'</span></span>'+
+          '<span class="tick">'+I.check+'</span>'+
+        '</button>';
+      }).join("");
+      return '<div class="sect">'+g+'</div>'+rows;
+    }).join("");
+
+    var chips = '<div class="chips selbar'+(n?' has':'')+'">'+
+      CONTACTS.filter(function(c){return state.selected[c.id];}).map(chipHtml).join("")+
+    '</div>';
+
+    return statusbar("9:41")+
+      '<div class="nav">'+
+        '<button class="circ tap-target" data-act="back" aria-label="Zurück">'+I.close+'</button>'+
+        '<div class="title">Mitglieder hinzufügen<small>'+n+' / 1023</small></div>'+
+        '<div class="grow"></div>'+
+        '<button class="pill tap-target'+(n?' hint':'')+'" data-act="to-groupinfo"'+(n?'':' disabled')+'>Weiter</button>'+
+      '</div>'+
+      '<div class="search">'+I.search+' Kontakte suchen …</div>'+
+      '<div class="body">'+chips+list+'</div>'+
+      home();
+  };
+
+  /* update the "Mitglieder hinzufügen" screen in place — no full re-render */
+  function syncMembers(changedId, nowOn){
+    var n = selCount();
+    var small = screenEl.querySelector('.nav .title small');
+    if(small) small.textContent = n + ' / 1023';
+    var pill = screenEl.querySelector('[data-act="to-groupinfo"]');
+    if(pill){ pill.disabled = (n===0); pill.classList.toggle('hint', n>0); }
+    var bar = screenEl.querySelector('.chips.selbar');
+    if(!bar) return;
+    bar.classList.toggle('has', n>0);
+    var existing = bar.querySelector('.chip[data-id="'+changedId+'"]');
+    if(nowOn){
+      if(existing) existing.classList.remove('out');
+      else {
+        var c = null;
+        for(var i=0;i<CONTACTS.length;i++){ if(CONTACTS[i].id===changedId){ c=CONTACTS[i]; break; } }
+        if(c){
+          var s = document.createElement('span');
+          s.className = 'chip'; s.setAttribute('data-id', c.id);
+          s.innerHTML = '<span class="av">'+c.n.charAt(0)+'</span>'+c.n;
+          bar.appendChild(s);
+        }
+      }
+    } else if(existing){
+      existing.classList.add('out');
+      setTimeout(function(){
+        if(existing.parentNode && !state.selected[changedId]) existing.parentNode.removeChild(existing);
+      }, 180);
+    }
+  }
+
+  R.groupinfo = function(){
+    var n = selCount()+1;
+    var avatars = CONTACTS.filter(function(c){return state.selected[c.id];}).slice(0,6).map(function(c){
+      return '<span class="chip"><span class="av">'+c.n.charAt(0)+'</span>'+c.n+'</span>';
+    }).join("");
+    return statusbar("9:41")+
+      '<div class="nav">'+
+        '<button class="circ tap-target" data-act="back" aria-label="Zurück">'+I.back+'</button>'+
+        '<div class="title" style="flex:1;text-align:center">Neue Gruppe</div>'+
+        '<button class="pill hint tap-target" data-act="to-grouptype">Weiter</button>'+
+      '</div>'+
+      '<div class="body">'+
+        '<div class="gi-name">'+
+          '<span class="gi-cam">'+I.cam+'</span>'+
+          '<input id="gname" type="text" value="'+ (state.groupName||"").replace(/"/g,"&quot;") +'" placeholder="Gruppenname" aria-label="Gruppenname">'+
+        '</div>'+
+        '<div class="opt">'+
+          '<div class="optrow">Selbstlöschende Nachrichten <span class="val">Aus</span><span class="chev">'+I.chev+'</span></div>'+
+          '<div class="optrow">Gruppenberechtigungen <span class="chev" style="margin-left:auto">'+I.chev+'</span></div>'+
+        '</div>'+
+        '<div class="sect">Mitglieder: '+n+' von 1023</div>'+
+        '<div class="chips">'+
+          '<span class="chip"><span class="av">Du</span>Du</span>'+ avatars +
+        '</div>'+
+      '</div>'+
+      home();
+  };
+
+  R.grouptype = function(){
+    var gt = state.groupType;
+    var canCreate = gt==="temp";
+    var gq = hasName()
+      ? 'Wie lange soll die Gruppe „'+state.groupName.trim()+'“ bestehen bleiben?'
+      : 'Wie lange soll die Gruppe bestehen bleiben?';
+
+    var onboard = state.onboard ? '<div class="onboard">'+
+      '<span class="ob-clock">'+I.clock+'</span>'+
+      '<div><b>Neu: Temporäre Gruppen</b><p>Eine temporäre Gruppe endet an einem festgelegten Datum und wird dann automatisch gelöscht. Ihr werdet einen Tag vorher erinnert, damit ihr sichern könnt, was ihr behalten wollt.</p></div>'+
+      '<button class="x tap-target" data-act="dismiss-onboard" aria-label="Hinweis schließen">'+I.close+'</button>'+
+    '</div>' : '';
+
+    function card(type, icon, title, desc, neu){
+      return '<button class="optcard tap-target" role="radio" aria-checked="'+(gt===type)+'" data-act="set-type" data-type="'+type+'">'+
+        '<span class="oc-ic">'+icon+'</span>'+
+        '<span class="oc-t">'+title+(neu?' <span class="neu">Neu</span>':'')+'</span>'+
+        '<span class="oc-r"></span>'+
+        '<span class="oc-d">'+desc+'</span>'+
+      '</button>';
+    }
+
+    var lz = '<div class="lzwrap'+(gt==="temp"?' show':'')+'">'+
+      '<div class="lzcard">'+
+        '<div class="lz-label">Laufzeit</div>'+
+        '<button class="lz-row tap-target" data-act="open-date">'+
+          '<span class="lz-ic">'+I.cal+'</span><span class="lz-k">Datum</span>'+
+          '<span class="lz-v">'+fmt(state.endDate)+'</span><span class="lz-cv">'+I.chev+'</span>'+
+        '</button>'+
+        '<button class="lz-row tap-target" data-act="open-time">'+
+          '<span class="lz-ic">'+I.clock+'</span><span class="lz-k">Uhrzeit <span style="opacity:.6">(optional)</span></span>'+
+          '<span class="lz-v">'+state.endTime+' Uhr</span><span class="lz-cv">'+I.chev+'</span>'+
+        '</button>'+
+        '<p class="lz-hint">Die Gruppe endet an diesem Tag und wird dann automatisch gelöscht, falls niemand verlängert. Ein Tag nach dem eigentlichen Anlass ist meist eine gute Wahl.</p>'+
+      '</div>'+
+    '</div>';
+
+    var permHint = '<div class="perm-hint'+(gt==="perm"?' show':'')+'">'+
+      'In diesem Prototyp geht es nur um <b>temporäre</b> Gruppen. Für eine dauerhafte Gruppe gäbe es hier nichts weiter einzustellen — wähle „Temporär“, um fortzufahren.'+
+    '</div>';
+
+    return statusbar("9:41")+
+      '<div class="nav">'+
+        '<button class="circ tap-target" data-act="back" aria-label="Zurück">'+I.back+'</button>'+
+        '<div class="title" style="flex:1;text-align:center">Gruppentyp</div>'+
+        '<button class="pill tap-target'+(canCreate?' hint':'')+'" data-act="create"'+(canCreate?'':' disabled')+'>Erstellen</button>'+
+      '</div>'+
+      '<div class="body"><div class="gt-body">'+
+        onboard+
+        '<p class="gt-q">'+gq+'</p>'+
+        '<p class="gt-lead">Keine Option ist vorausgewählt.</p>'+
+        '<div class="opts" role="radiogroup" aria-label="Gruppentyp">'+
+          card("perm", I.infinity, "Dauerhaft", "Bleibt bestehen, bis ihr sie selbst löscht. Kein Enddatum.")+
+          card("temp", I.clock, "Temporär", "Endet an einem festgelegten Datum — danach wird die Gruppe für alle gelöscht. Vorher werden alle erinnert.", true)+
+        '</div>'+
+        lz+
+        permHint+
+      '</div></div>'+
+      home();
+  };
+
+  function scrollBodyToEnd(){
+    var b = screenEl.querySelector('.body');
+    if(b) b.scrollTo({ top:b.scrollHeight, behavior:'smooth' });
+  }
+
+  /* update grouptype selection in place — Laufzeit / Hinweis slide, "Erstellen" enables only for Temporär */
+  function syncGroupType(){
+    var gt = state.groupType;
+    var cards = screenEl.querySelectorAll('.optcard');
+    for(var i=0;i<cards.length;i++){
+      cards[i].setAttribute('aria-checked', String(cards[i].getAttribute('data-type')===gt));
+    }
+    var lzw = screenEl.querySelector('.lzwrap');
+    if(lzw) lzw.classList.toggle('show', gt==="temp");
+    var ph = screenEl.querySelector('.perm-hint');
+    if(ph) ph.classList.toggle('show', gt==="perm");
+    var pill = screenEl.querySelector('[data-act="create"]');
+    if(pill){ pill.disabled = (gt!=="temp"); pill.classList.toggle('hint', gt==="temp"); }
+    if(gt==="temp") setTimeout(scrollBodyToEnd, 330);
+  }
+
+  R.chatsAfter = function(){
+    var temp = state.groupType==="temp";
+    var newRow = {
+      name: gname(), grp:true, time:"jetzt",
+      msg: temp ? "Gruppe erstellt" : "Du hast die Gruppe erstellt",
+      expiry: temp ? expLabel(state.endDate) : null
+    };
+    var rows = chatRow(newRow, {act:"open-group", hint:true}) +
+      visibleChats().map(function(c){ return chatRow(c); }).join("");
+    return statusbar("9:41")+
+      navChats(true)+
+      '<div class="search">'+I.search+' Suchen</div>'+
+      '<div class="body"><div class="clist">'+rows+'</div></div>'+
+      home();
+  };
+
+  R.chatsReminder = function(){
+    /* one day before: the group is pinned to the top and carries a "near end" badge */
+    var head = {name:gname(), grp:true, time:"10:32", msg:"Sara: Ich hab die Flüge gebucht!", expiry:"Endet morgen"};
+    var rows = chatRow(head, {act:"open-reminder-chat", hint:!state.multi}) +
+      (state.multi ? chatRow(MG2, {act:"open-multi"}) : "") +
+      visibleChats().map(function(c){ return chatRow(c); }).join("");
+
+    /* one group -> named line with an inline "Verlängern".
+       several groups on the same day -> one bundled line that opens a list. */
+    var banner = "";
+    if(!state.remDismissed){
+      banner = state.multi
+        ? '<div class="rbanner">'+
+            '<button class="rb-main tap-target hint" data-act="open-multi">'+
+              '<span class="rb-ic">'+I.clock+'</span><span class="rb-t">2 Gruppen enden morgen.</span>'+
+            '</button>'+
+            '<span class="rb-cv">'+I.chev+'</span>'+
+            '<button class="bn-x tap-target" data-act="dismiss-reminder" aria-label="Hinweis schließen">'+I.close+'</button>'+
+          '</div>'
+        : '<div class="rbanner">'+
+            '<button class="rb-main tap-target" data-act="open-reminder-chat">'+
+              '<span class="rb-ic">'+I.clock+'</span><span class="rb-t">„'+gname()+'“ endet morgen.</span>'+
+            '</button>'+
+            '<button class="rb-b tap-target" data-act="open-extend">Verlängern</button>'+
+            '<button class="bn-x tap-target" data-act="dismiss-reminder" aria-label="Hinweis schließen">'+I.close+'</button>'+
+          '</div>';
+    }
+
+    var toggle = '<button class="preview-link tap-target" data-act="toggle-multi" style="margin:14px 16px 4px">'+
+      I.grp+' '+(state.multi
+        ? 'Zurück zur Ansicht mit einer Gruppe'
+        : 'Vorschau: mehrere Gruppen am selben Tag')+' '+I.chev+'</button>';
+
+    return statusbar("9:41")+
+      navChats(true)+
+      '<div class="search">'+I.search+' Suchen</div>'+
+      banner+
+      '<div class="body"><div class="clist">'+rows+'</div>'+toggle+'</div>'+
+      home();
+  };
+
+  R.deleted = function(){
+    var rows = visibleChats().map(function(c){ return chatRow(c); }).join("");
+    var txt = state.multi
+      ? '2 Gruppen wurden an ihrem Stichtag gelöscht.'
+      : '„'+gname()+'“ wurde am Stichtag gelöscht.';
+    var notice = state.delDismissed ? "" :
+      '<div class="banner">'+
+        '<span class="bi">'+I.trash+'</span>'+
+        '<span class="bt">'+txt+'<small>Für alle Mitglieder entfernt — Verlauf und Medien. Kein Archiv, keine Wiederherstellung.</small></span>'+
+        '<button class="bn-x tap-target" data-act="dismiss-deleted" aria-label="Hinweis schließen">'+I.close+'</button>'+
+      '</div>';
+    return statusbar("9:41")+
+      navChats(true)+
+      '<div class="search">'+I.search+' Suchen</div>'+
+      notice+
+      '<div class="body"><div class="clist">'+rows+'</div></div>'+
+      home();
+  };
+
+  R.group = function(){
+    var temp = state.groupType==="temp";
+    var members = memberLabel();
+    var sub = temp
+      ? '<span class="ch-s temp">'+I.clock+' Endet '+fmtShort(state.endDate)+' · '+members+'</span>'
+      : '<span class="ch-s">'+members+'</span>';
+    var sysTemp = temp
+      ? '<div class="sys temp">Diese Gruppe endet am '+fmt(state.endDate)+', '+state.endTime+' Uhr. Alle Mitglieder werden am Tag davor erinnert. Verlängert kein Admin, wird die Gruppe an diesem Tag für alle gelöscht.</div>'
+      : '';
+    var preview = temp
+      ? '<button class="preview-link tap-target" data-act="to-reminder">'+I.clock+' Vorschau: 1 Tag vor dem Stichtag '+I.chev+'</button>'
+      : '';
+    return statusbar("9:41")+
+      '<div class="nav chat-head">'+
+        '<button class="circ tap-target" data-act="back" aria-label="Zurück">'+I.back+'</button>'+
+        '<button class="chat-id tap-target'+(temp?' hint':'')+'" data-act="open-ginfo">'+
+          '<span class="av grp">'+I.grp+'</span>'+
+          '<span><span class="ch-t">'+gname()+'</span>'+sub+'</span>'+
+        '</button>'+
+      '</div>'+
+      '<div class="thread">'+
+        '<div class="sys">Du hast die Gruppe „'+gname()+'“ erstellt</div>'+
+        sysTemp+
+        '<div class="bub them"><span class="bn">Sara</span>Ich hab die Flüge gebucht!</div>'+
+        '<div class="bub me">Perfekt, danke dir</div>'+
+        '<div class="bub them"><span class="bn">Alex</span>Packliste kommt heute Abend</div>'+
+        '<div style="flex:1"></div>'+
+        preview+
+      '</div>'+
+      '<div class="composer"><span class="cbox">Nachricht</span><span class="csend">'+I.send+'</span></div>'+
+      home();
+  };
+
+  /* Gruppe → Name antippen → Gruppeninfo/Einstellungen.
+     Hier steht das Enddatum als ganz normale Einstellungs-Zeile — jederzeit, nicht nur am Stichtag. */
+  R.ginfo = function(){
+    var temp = state.groupType!=="perm";
+    return statusbar("9:41")+
+      '<div class="nav">'+
+        '<button class="circ tap-target" data-act="back" aria-label="Zurück">'+I.back+'</button>'+
+        '<div class="title" style="flex:1;text-align:center">Gruppeninfo</div>'+
+        '<div style="width:34px"></div>'+
+      '</div>'+
+      '<div class="body">'+
+        '<div class="gi-head">'+
+          '<span class="av grp gi-av">'+I.grp+'</span>'+
+          '<b>'+gname()+'</b>'+
+          '<span>Gruppe · '+memberLabel()+'</span>'+
+        '</div>'+
+        '<div class="sect">Einstellungen</div>'+
+        '<div class="opt">'+
+          (temp
+            ? '<button class="optrow orow tap-target hint" data-act="open-extend">'+
+                '<span class="oi">'+I.clock+'</span>Endet am'+
+                '<span class="val">'+fmtShort(state.endDate)+'</span><span class="chev">'+I.chev+'</span>'+
+              '</button>'
+            : '<div class="optrow"><span class="oi">'+I.infinity+'</span>Dauerhaft<span class="val">kein Enddatum</span></div>')+
+          '<div class="optrow"><span class="oi">'+I.clock+'</span>Selbstlöschende Nachrichten <span class="val">Aus</span><span class="chev">'+I.chev+'</span></div>'+
+          '<div class="optrow"><span class="oi">'+I.grp+'</span>Gruppenberechtigungen <span class="chev" style="margin-left:auto">'+I.chev+'</span></div>'+
+        '</div>'+
+        (temp ? '<p class="gi-note">Nur Admins können das Enddatum ändern. Verlängern geht jederzeit — nicht erst am Stichtag.</p>' : '')+
+      '</div>'+
+      home();
+  };
+
+  R.reminder = function(){
+    return statusbar("9:41")+
+      '<div class="nav chat-head">'+
+        '<button class="circ tap-target" data-act="back" aria-label="Zurück">'+I.back+'</button>'+
+        '<span class="av grp">'+I.grp+'</span>'+
+        '<span><span class="ch-t">'+gname()+'</span>'+
+        '<span class="ch-s temp">'+I.clock+' Endet morgen · '+memberLabel()+'</span></span>'+
+      '</div>'+
+      '<div class="banner">'+
+        '<span class="bi">'+I.clock+'</span>'+
+        '<span class="bt">„'+gname()+'“ endet morgen um '+state.endTime+' Uhr. Danach wird die Gruppe gelöscht — sichert bis dahin Fotos und alles, was ihr behalten wollt.<small>Nur Admins können verlängern — alle anderen sehen nur den Hinweis.</small></span>'+
+        '<button class="bb tap-target hint" data-act="open-extend">Verlängern</button>'+
+      '</div>'+
+      '<div class="thread">'+
+        '<div class="sys temp">Erinnerung an alle: Diese Gruppe endet morgen und wird dann gelöscht, falls kein Admin verlängert. Sichert bis dahin Fotos, Sprachnachrichten und Infos, die ihr behalten wollt.</div>'+
+        '<div class="bub them"><span class="bn">Mama</span>Schade! War schön mit euch</div>'+
+        '<div class="bub them"><span class="bn">Tom</span>Ich hab die Fotos gerade in meine Galerie gespeichert</div>'+
+        '<div class="bub me">Gute Idee, mach ich auch</div>'+
+        '<div style="flex:1"></div>'+
+        '<button class="preview-link tap-target" data-act="simulate-delete">'+I.trash+' Vorschau: Niemand verlängert — Stichtag erreicht '+I.chev+'</button>'+
+      '</div>'+
+      '<div class="composer"><span class="cbox">Nachricht</span><span class="csend">'+I.send+'</span></div>'+
+      home();
+  };
+
+  /* ---------- sheets ---------- */
+  function sheetDate(){
+    var ym = state.calMonth;
+    var y = +ym.slice(0,4), m = +ym.slice(5,7)-1;
+    var startDow = (new Date(y,m,1).getDay()+6)%7;   // Monday-first
+    var dim = new Date(y,m+1,0).getDate();
+    var todayIso = "2026-08-30";
+    var cells = "";
+    for(var i=0;i<startDow;i++) cells += '<span class="cal-cell empty"></span>';
+    for(var d=1;d<=dim;d++){
+      var iso = ym+"-"+String(d).padStart(2,"0");
+      if(iso < todayIso){ cells += '<span class="cal-cell past">'+d+'</span>'; continue; }
+      var sel = iso === state.endDate;
+      cells += '<button class="cal-cell'+(sel?' sel':'')+' tap-target" data-act="pick-date" data-date="'+iso+'">'+d+'</button>';
+    }
+    var canPrev = ym > "2026-08";
+    var dows = ["Mo","Di","Mi","Do","Fr","Sa","So"].map(function(x){return '<span>'+x+'</span>';}).join("");
+    return '<div class="ov" data-act="close-sheet"><div class="ov-card" data-stop>'+
+      '<div class="grab"><i></i></div>'+
+      '<h3>Enddatum wählen</h3>'+
+      '<div class="cal-head">'+
+        '<button class="cal-nav tap-target" data-act="cal-prev"'+(canPrev?'':' disabled')+' aria-label="Vorheriger Monat">'+I.back+'</button>'+
+        '<b>'+MON[m]+' '+y+'</b>'+
+        '<button class="cal-nav tap-target" data-act="cal-next" aria-label="Nächster Monat">'+I.chev+'</button>'+
+      '</div>'+
+      '<div class="cal-dow">'+dows+'</div>'+
+      '<div class="cal-grid">'+cells+'</div>'+
+    '</div></div>';
+  }
+  function sheetTime(){
+    var rows = "";
+    for(var h=0;h<24;h++){
+      var t = String(h).padStart(2,"0")+":00";
+      var sel = t===state.endTime;
+      rows += '<button class="time-opt'+(sel?' sel':'')+' tap-target" data-act="pick-time" data-time="'+t+'">'+t+' Uhr'+(sel?I.check:'')+'</button>';
+    }
+    return '<div class="ov" data-act="close-sheet"><div class="ov-card" data-stop>'+
+      '<div class="grab"><i></i></div>'+
+      '<h3>Uhrzeit wählen</h3>'+
+      '<div class="time-list">'+rows+'</div>'+
+    '</div></div>';
+  }
+  /* same date + time step as when the group was created — no shortcut presets,
+     so „verlängern" feels like the decision it is */
+  function sheetExtend(){
+    return '<div class="ov" data-act="close-sheet"><div class="ov-card" data-stop>'+
+      '<div class="grab"><i></i></div>'+
+      '<h3>„'+gname()+'“ verlängern</h3>'+
+      '<p class="sub">Das neue Enddatum gilt für die ganze Gruppe. Vor dem neuen Termin wird erneut erinnert.</p>'+
+      '<div class="lzcard" style="margin-bottom:13px">'+
+        '<button class="lz-row tap-target" data-act="open-date">'+
+          '<span class="lz-ic">'+I.cal+'</span><span class="lz-k">Datum</span>'+
+          '<span class="lz-v">'+fmt(state.endDate)+'</span><span class="lz-cv">'+I.chev+'</span>'+
+        '</button>'+
+        '<button class="lz-row tap-target" data-act="open-time">'+
+          '<span class="lz-ic">'+I.clock+'</span><span class="lz-k">Uhrzeit <span style="opacity:.6">(optional)</span></span>'+
+          '<span class="lz-v">'+state.endTime+' Uhr</span><span class="lz-cv">'+I.chev+'</span>'+
+        '</button>'+
+      '</div>'+
+      '<button class="sheet-cta tap-target hint" data-act="confirm-extend">Verlängern</button>'+
+      '<button class="ov-opt tap-target" data-act="pick-extend" data-perm="1">'+I.infinity+' Stattdessen dauerhaft behalten<span class="od">kein Enddatum</span></button>'+
+    '</div></div>';
+  }
+  /* several groups ending on the same day: one bundled list instead of one line per group */
+  function sheetMulti(){
+    return '<div class="ov" data-act="close-sheet"><div class="ov-card" data-stop>'+
+      '<div class="grab"><i></i></div>'+
+      '<h3>2 Gruppen enden morgen</h3>'+
+      '<p class="sub">Danach werden sie gelöscht. Sichert bis dahin, was ihr behalten wollt — Verlängern kann nur, wer Admin der jeweiligen Gruppe ist.</p>'+
+      '<div class="mg-row">'+
+        '<span class="mg-ic">'+I.clock+'</span>'+
+        '<span class="mg-t"><span class="mg-n">'+gname()+'</span><span class="mg-s">morgen, '+state.endTime+' Uhr · du bist Admin</span></span>'+
+        '<button class="mg-b tap-target" data-act="open-extend">Verlängern</button>'+
+      '</div>'+
+      '<div class="mg-row">'+
+        '<span class="mg-ic">'+I.clock+'</span>'+
+        '<span class="mg-t"><span class="mg-n">'+MG2.name+'</span><span class="mg-s">morgen, 20:00 Uhr · du bist kein Admin</span></span>'+
+        '<button class="mg-b ghost tap-target" data-act="request-extend">Anfragen</button>'+
+      '</div>'+
+    '</div></div>';
+  }
+
+  /* ---------- render ---------- */
+  var screenEl = document.getElementById("screen");
+  var railEl = document.getElementById("rail");
+  var noteEl = document.getElementById("sidenote");
+
+  function render(){
+    var html = '<div class="screen-inner">'+ R[state.screen]() +'</div>';
+    if(state.sheet==="date") html += sheetDate();
+    if(state.sheet==="time") html += sheetTime();
+    if(state.sheet==="extend") html += sheetExtend();
+    if(state.sheet==="multi") html += sheetMulti();
+    if(state.toast) html += '<div class="toast">'+state.toast+'</div>';
+    screenEl.innerHTML = html;
+
+    var g = document.getElementById("gname");
+    if(g){
+      g.addEventListener("input", function(){ state.groupName = g.value; });
+    }
+
+    if(state.sheet==="time"){
+      var tl = screenEl.querySelector(".time-list");
+      var sel = tl && tl.querySelector(".time-opt.sel");
+      if(tl && sel) tl.scrollTop = sel.offsetTop - tl.clientHeight/2 + sel.offsetHeight/2;
+    }
+
+    renderRail();
+    renderNote();
+    document.getElementById("btn-back").disabled = !backTarget();
+  }
+
+  function renderRail(){
+    var cur = stepOf(state.screen);
+    var h = '<p class="rail-title">Flow</p>';
+    STEPS.forEach(function(st, i){
+      var cls = "step" + (cur>=0 && i<cur ? " done" : "");
+      h += '<button class="'+cls+'" data-step="'+st.screen+'" '+(i===cur?'aria-current="true"':'')+'>'+
+        '<span class="dot"></span>'+st.label+'<span class="idx">'+(i+1)+'</span></button>';
+    });
+    railEl.innerHTML = h;
+  }
+
+  function renderNote(){
+    var nx = note();
+    noteEl.innerHTML = '<p class="sn-k">'+nx[0]+'</p><p class="sn-h">'+nx[1]+'</p><p class="sn-p">'+nx[2]+'</p>';
+  }
+
+  function go(s){ state.screen = s; state.sheet = null; render(); }
+  function flash(msg){
+    state.toast = msg;
+    render();
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ state.toast = null; render(); }, 1700);
+  }
+
+  /* ---------- events ---------- */
+  screenEl.addEventListener("click", function(e){
+    var stop = e.target.closest("[data-stop]");
+    var el = e.target.closest("[data-act]");
+    if(!el){ return; }
+    var a = el.getAttribute("data-act");
+    if(a==="close-sheet" && stop){ return; } // tap inside the sheet card: ignore
+
+    switch(a){
+      case "fab": go("newchat"); break;
+      case "to-chats": go("chats"); break;
+      case "to-members": go("members"); break;
+      case "toggle":
+        var id = el.getAttribute("data-id");
+        var nowOn = !state.selected[id];
+        if(nowOn) state.selected[id] = true; else delete state.selected[id];
+        el.setAttribute("aria-pressed", String(nowOn));
+        syncMembers(id, nowOn);
+        break;
+      case "to-groupinfo": if(selCount()>0) go("groupinfo"); break;
+      case "to-grouptype": go("grouptype"); break;
+      case "set-type":
+        state.groupType = el.getAttribute("data-type");
+        syncGroupType();
+        break;
+      case "dismiss-onboard": state.onboard = false; render(); break;
+      case "open-date":
+        state.sheetBack = (state.sheet === "extend") ? "extend" : null;
+        state.sheet = "date";
+        state.calMonth = state.endDate.slice(0,7);
+        if(state.calMonth < "2026-08") state.calMonth = "2026-08";
+        render();
+        break;
+      case "open-time":
+        state.sheetBack = (state.sheet === "extend") ? "extend" : null;
+        state.sheet = "time"; render();
+        break;
+      case "cal-prev":
+        if(state.calMonth > "2026-08"){ state.calMonth = shiftMonth(state.calMonth,-1); render(); }
+        break;
+      case "cal-next": state.calMonth = shiftMonth(state.calMonth,1); render(); break;
+      case "close-sheet":
+        if(state.sheetBack){                        // date/time opened from the extend sheet
+          state.sheet = state.sheetBack; state.sheetBack = null; render(); break;
+        }
+        if(state.sheet === "extend" && state.preExtend){   // cancelled: undo the picked date
+          state.endDate = state.preExtend.d; state.endTime = state.preExtend.t;
+        }
+        state.preExtend = null;
+        state.sheet = null; render();
+        break;
+      case "pick-date":
+        state.endDate = el.getAttribute("data-date");
+        state.sheet = state.sheetBack || null; state.sheetBack = null;
+        render();
+        if(!state.sheet) setTimeout(scrollBodyToEnd, 30);
+        break;
+      case "pick-time":
+        state.endTime = el.getAttribute("data-time");
+        state.sheet = state.sheetBack || null; state.sheetBack = null;
+        render();
+        if(!state.sheet) setTimeout(scrollBodyToEnd, 30);
+        break;
+      case "create": if(state.groupType==="temp"){ go("chatsAfter"); } break;
+      case "open-group": go("group"); break;
+      case "open-ginfo": go("ginfo"); break;
+      case "to-reminder": go("chatsReminder"); break;
+      case "open-reminder-chat": go("reminder"); break;
+      case "open-extend":
+        state.preExtend = {d:state.endDate, t:state.endTime};
+        state.sheet = "extend"; render();
+        break;
+      case "confirm-extend":
+        state.preExtend = null;
+        state.sheet = null; go("group");
+        flash("Endet jetzt am "+fmtShort(state.endDate)+", "+state.endTime+" Uhr");
+        break;
+      case "pick-extend":
+        if(el.getAttribute("data-perm")){
+          if(state.preExtend){ state.endDate = state.preExtend.d; state.endTime = state.preExtend.t; }
+          state.preExtend = null;
+          state.groupType = "perm";
+          state.sheet = null; go("group");
+          flash("„"+gname()+"“ ist jetzt dauerhaft");
+        }
+        break;
+      case "simulate-delete":
+        state.deleted = true;
+        state.delDismissed = false;
+        go("deleted");
+        flash(state.multi ? "2 Gruppen wurden gelöscht" : "„"+gname()+"“ wurde gelöscht");
+        break;
+      case "open-multi": state.sheet = "multi"; render(); break;
+      case "request-extend":
+        state.sheet = null; render();
+        flash("Anfrage an die Admins gesendet");
+        break;
+      case "toggle-multi":
+        state.multi = !state.multi;
+        state.remDismissed = false;
+        render();
+        break;
+      case "dismiss-reminder":
+        state.remDismissed = true;
+        render();
+        flash("Hinweis ausgeblendet — das Enddatum steht weiter in der Gruppe");
+        break;
+      case "dismiss-deleted":
+        state.delDismissed = true;
+        render();
+        break;
+      case "back":
+        if(backTarget()) go(backTarget());
+        break;
+    }
+  });
+
+  railEl.addEventListener("click", function(e){
+    var b = e.target.closest("[data-step]");
+    if(!b) return;
+    go(b.getAttribute("data-step"));
+  });
+
+  document.getElementById("btn-back").addEventListener("click", function(){
+    if(backTarget()) go(backTarget());
+  });
+  document.getElementById("btn-reset").addEventListener("click", function(){
+    state.selected = {}; state.groupName = ""; state.groupType = null;
+    state.endDate = "2026-10-14"; state.endTime = "18:00"; state.calMonth = "2026-10";
+    state.onboard = true; state.deleted = false; state.multi = false;
+    state.remDismissed = false; state.delDismissed = false;
+    state.sheet = null; state.sheetBack = null; state.preExtend = null; state.toast = null;
+    go("chats");
+  });
+
+  render();
+})();
+</script>
