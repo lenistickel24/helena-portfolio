@@ -19,8 +19,11 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
+          # FTPS statt FTP — sonst gehen Zugangsdaten unverschlüsselt über die Leitung
+          protocol: ftps
           local-dir: ./
-          server-dir: ./
+          # Plesk: das Web-Root ist httpdocs, nicht das FTP-Wurzelverzeichnis
+          server-dir: ./httpdocs/
           exclude: |
             **/.git*
             **/.git*/**
