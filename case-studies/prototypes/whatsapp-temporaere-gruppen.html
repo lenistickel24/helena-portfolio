@@ -779,6 +779,8 @@
     animation:rise .22s cubic-bezier(.2,.7,.3,1);
   }
   @keyframes rise{from{transform:translateY(100%)}to{transform:none}}
+  /* Folge-Schritte im selben Sheet: nicht erneut aufklappen, nur Inhalt tauschen */
+  .ov.instant,.ov-card.instant,.screen-inner.no-fade{animation:none}
   .ov-card .grab{display:flex;justify-content:center;padding:4px 0 10px}
   .ov-card .grab i{width:38px;height:4px;border-radius:2px;background:#DADADA}
   .ov-card h3{font-size:16px;font-weight:650;margin:0 0 4px}
@@ -1322,9 +1324,12 @@
       '</div></div>';
   };
 
-  /* Rahmen um jeden Schritt des Erstellungs-Flows */
-  function sheetWrap(inner){
-    return '<div class="ov" data-act="cancel-create"><div class="ov-card tall" data-stop>'+
+  /* Rahmen um jeden Schritt des Erstellungs-Flows.
+     instant=true, wenn das Sheet schon offen war: dann nur der Inhalt wechseln,
+     nicht erneut aufklappen. Sonst wirkt jedes "Weiter" wie ein neues Sheet. */
+  function sheetWrap(inner, instant){
+    var c = instant ? " instant" : "";
+    return '<div class="ov'+c+'" data-act="cancel-create"><div class="ov-card tall'+c+'" data-stop>'+
       '<div class="grab"><i></i></div>'+ inner +
     '</div></div>';
   }
@@ -1603,11 +1608,15 @@
   var railEl = document.getElementById("rail");
   var noteEl = document.getElementById("sidenote");
 
+  var sheetWasOpen = false;   // stand im letzten Durchlauf ein Erstellungs-Sheet offen?
+
   function render(){
     var inSheet = !!SC[state.screen];
+    var stay = inSheet && sheetWasOpen;      // Sheet bleibt offen, nur der Inhalt wechselt
     var base = inSheet ? R.chats(true) : R[state.screen]();
-    var html = '<div class="screen-inner">'+ base +'</div>';
-    if(inSheet) html += sheetWrap(SC[state.screen]());
+    var html = '<div class="screen-inner'+(stay?' no-fade':'')+'">'+ base +'</div>';
+    if(inSheet) html += sheetWrap(SC[state.screen](), stay);
+    sheetWasOpen = inSheet;
     if(state.sheet==="date") html += sheetDate();
     if(state.sheet==="time") html += sheetTime();
     if(state.sheet==="extend") html += sheetExtend();
