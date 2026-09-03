@@ -611,9 +611,11 @@
   }
   .chat-head .av{width:36px;height:36px;font-size:14px}
   .chat-head .ch-t{font-size:16px;font-weight:600;line-height:1.15}
-  .chat-head .ch-s{font-size:11.5px;color:var(--d-soft);display:flex;align-items:center;gap:4px;margin-top:1px}
-  .chat-head .ch-s.temp{color:var(--d-accent-ink)}
+  .chat-head .ch-s{font-size:11.5px;color:var(--d-soft);display:flex;align-items:center;gap:5px;margin-top:2px}
   .chat-head .ch-s svg{width:11px;height:11px}
+  /* derselbe Badge wie in der Chatliste — eine Kennzeichnung, ueberall gleich */
+  .chat-head .ch-s .exp{font-size:10.5px;padding:1px 6px 1px 5px;border-radius:8px}
+  .chat-head .ch-s .exp svg{width:10px;height:10px}
   .thread{
     flex:1;overflow-y:auto;
     background:var(--d-grey);
@@ -998,6 +1000,7 @@
     calMonth:"2026-10",   // month shown in the date picker
     deleted:false,         // temp group has reached its end date and been deleted for everyone
     multi:false,           // variant: several temp groups end on the same day
+    ginfoFrom:"group",     // woher die Gruppeninfo geoeffnet wurde (Chat oder Erinnerung)
     remDismissed:false,    // reminder line in the chat overview dismissed
     delDismissed:false,    // "group was deleted" line in the chat overview dismissed
     sheet:null,            // "date" | "time" | "extend" | "multi"
@@ -1050,7 +1053,7 @@
   var BACK = {chats:null,newchat:"chats",members:"newchat",groupinfo:"members",grouptype:"groupinfo",chatsAfter:null,group:"chatsAfter"};
   function backTarget(){
     switch(state.screen){
-      case "ginfo":         return "group";
+      case "ginfo":         return state.ginfoFrom || "group";
       case "chatsReminder": return "group";
       case "reminder":      return "chatsReminder";
       case "deleted":       return "reminder";
@@ -1414,7 +1417,7 @@
     var temp = state.groupType==="temp";
     var members = memberLabel();
     var sub = temp
-      ? '<span class="ch-s temp">'+I.clock+' Endet '+fmtShort(state.endDate)+' · '+members+'</span>'
+      ? '<span class="ch-s"><span class="exp">'+I.clock+' Endet '+fmtShort(state.endDate)+'</span> · '+members+'</span>'
       : '<span class="ch-s">'+members+'</span>';
     var sysTemp = temp
       ? '<div class="sys temp">Diese Gruppe endet am '+fmt(state.endDate)+', '+state.endTime+' Uhr. Alle Mitglieder werden am Tag davor erinnert. Verlängert kein Admin, wird die Gruppe an diesem Tag für alle gelöscht.</div>'
@@ -1479,9 +1482,11 @@
     return statusbar("9:41")+
       '<div class="nav chat-head">'+
         '<button class="circ tap-target" data-act="back" aria-label="Zurück">'+I.back+'</button>'+
-        '<span class="av grp">'+I.grp+'</span>'+
-        '<span><span class="ch-t">'+gname()+'</span>'+
-        '<span class="ch-s temp">'+I.clock+' Endet morgen · '+memberLabel()+'</span></span>'+
+        '<button class="chat-id tap-target" data-act="open-ginfo">'+
+          '<span class="av grp">'+I.grp+'</span>'+
+          '<span><span class="ch-t">'+gname()+'</span>'+
+          '<span class="ch-s"><span class="exp">'+I.clock+' Endet morgen</span> · '+memberLabel()+'</span></span>'+
+        '</button>'+
       '</div>'+
       '<div class="banner">'+
         '<span class="bi">'+I.clock+'</span>'+
@@ -1713,7 +1718,10 @@
         }
         break;
       case "open-group": go("group"); break;
-      case "open-ginfo": go("ginfo"); break;
+      case "open-ginfo":
+        state.ginfoFrom = state.screen;      // zurueck dorthin, wo man herkam
+        go("ginfo");
+        break;
       case "to-reminder": go("chatsReminder"); break;
       case "open-reminder-chat": go("reminder"); break;
       case "open-extend":
@@ -1777,7 +1785,7 @@
   document.getElementById("btn-reset").addEventListener("click", function(){
     state.selected = {}; state.groupName = ""; state.groupType = null;
     state.endDate = "2026-10-14"; state.endTime = "18:00"; state.calMonth = "2026-10";
-    state.deleted = false; state.multi = false;
+    state.deleted = false; state.multi = false; state.ginfoFrom = "group";
     state.remDismissed = false; state.delDismissed = false;
     state.sheet = null; state.sheetBack = null; state.preExtend = null; state.toast = null;
     go("chats");
