@@ -870,6 +870,28 @@
 
   button{font:inherit}
 
+  /* ---------- kein doppeltes Chrome ----------
+     Wo kein Geraeterahmen gezeichnet wird (Test-Modus, echtes Handy), liefern
+     Browser und Betriebssystem Statusleiste und Home-Indikator schon selbst.
+     Unsere waeren ein sichtbares Duplikat -> ausblenden und den Abstand,
+     den die Statusleiste vorher erzeugt hat, oben wieder aufschlagen. */
+  body.testmode .statusbar, body.testmode .home{display:none}
+  body.testmode .screen{padding-top:18px}
+  @media (max-width:640px){
+    .statusbar,.home{display:none}
+    .screen{padding-top:18px}
+  }
+
+  /* "Neuer Chat" als Bottom-Sheet ueber der Chatliste */
+  .ov-card.tall{
+    display:flex;flex-direction:column;
+    height:84%;
+    padding:8px 0 0;
+  }
+  .ov-card.tall .nav{padding-left:16px;padding-right:16px}
+  .ov-card.tall .search{margin-left:16px;margin-right:16px}
+  .ov-card.tall .sheet-body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:16px}
+
   /* ---------- phone: the device frame gets out of the way ----------
      Steht bewusst am Ende der Datei: die Basis-Regel .device{width:356px}
      kommt weiter oben und würde sonst gewinnen (gleiche Spezifität, späteres Wins). */
@@ -1116,26 +1138,29 @@
   /* ---------- screen renderers ---------- */
   var R = {};
 
-  R.chats = function(){
+  R.chats = function(noHint){
     var rows = visibleChats().map(function(c){ return chatRow(c); }).join("");
     return statusbar("9:41")+
-      navChats()+
+      navChats(noHint)+
       '<div class="search">'+I.search+' Suchen</div>'+
       '<div class="body"><div class="clist">'+rows+'</div></div>'+
       home();
   };
 
-  R.newchat = function(){
+  /* Basis bleibt die Chatliste — das Menue faehrt als Sheet darueber auf (siehe sheetNewchat) */
+  R.newchat = function(){ return R.chats(true); };
+
+  function sheetNewchat(){
     var freq = CONTACTS.filter(function(c){return c.grp==="Häufig kontaktiert";}).map(function(c){
       return '<button class="ctc tap-target" style="cursor:default"><span class="av">'+c.n.charAt(0)+'</span>'+
         '<span><span class="cn">'+c.n+'</span></span></button>';
     }).join("");
-    return statusbar("9:41")+
-      '<div class="sheet-grab"><i></i></div>'+
+    return '<div class="ov" data-act="dismiss-newchat"><div class="ov-card tall" data-stop>'+
+      '<div class="grab"><i></i></div>'+
       '<div class="nav"><div class="grow"></div><div class="title" style="text-align:center">Neuer Chat</div><div class="grow" style="display:flex;justify-content:flex-end">'+
         '<button class="circ tap-target" data-act="to-chats" aria-label="Schließen">'+I.close+'</button></div></div>'+
       '<div class="search">'+I.search+' Name oder Nummer</div>'+
-      '<div class="body">'+
+      '<div class="sheet-body">'+
         '<div class="menu">'+
           '<button class="mrow is-hot blink tap-target" data-act="to-members">'+I.grp+' Neue Gruppe</button>'+
           '<button class="mrow tap-target" style="cursor:default">'+I.person+' Neuer Kontakt</button>'+
@@ -1145,8 +1170,8 @@
         '<div class="sect">Häufig kontaktiert</div>'+
         freq+
       '</div>'+
-      home();
-  };
+    '</div></div>';
+  }
 
   function chipHtml(c){
     return '<span class="chip" data-id="'+c.id+'"><span class="av">'+c.n.charAt(0)+'</span>'+c.n+'</span>';
@@ -1578,6 +1603,7 @@
 
   function render(){
     var html = '<div class="screen-inner">'+ R[state.screen]() +'</div>';
+    if(state.screen==="newchat") html += sheetNewchat();
     if(state.sheet==="date") html += sheetDate();
     if(state.sheet==="time") html += sheetTime();
     if(state.sheet==="extend") html += sheetExtend();
@@ -1631,11 +1657,12 @@
     var el = e.target.closest("[data-act]");
     if(!el){ return; }
     var a = el.getAttribute("data-act");
-    if(a==="close-sheet" && stop){ return; } // tap inside the sheet card: ignore
+    if((a==="close-sheet" || a==="dismiss-newchat") && stop){ return; } // tap inside the sheet card: ignore
 
     switch(a){
       case "fab": go("newchat"); break;
       case "to-chats": go("chats"); break;
+      case "dismiss-newchat": go("chats"); break;
       case "to-members": go("members"); break;
       case "toggle":
         var id = el.getAttribute("data-id");
