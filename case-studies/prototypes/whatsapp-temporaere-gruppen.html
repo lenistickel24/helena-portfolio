@@ -480,23 +480,6 @@
 
   /* group-type screen */
   .gt-body{padding:4px 18px 0}
-  .onboard{
-    display:flex;gap:10px;
-    background:var(--d-accent-wash);
-    border:1px solid var(--d-accent-line);
-    border-radius:12px;
-    padding:11px 12px;
-    margin-bottom:14px;
-  }
-  .onboard .ob-clock{color:var(--d-accent);flex-shrink:0;margin-top:1px}
-  .onboard .ob-clock svg{width:17px;height:17px;display:block}
-  .onboard b{font-size:13px;display:block;margin-bottom:2px;color:var(--d-accent-ink)}
-  .onboard p{margin:0;font-size:12.3px;line-height:1.45;color:#5C5C5C}
-  .onboard .x{
-    border:0;background:transparent;cursor:pointer;color:var(--d-accent);
-    flex-shrink:0;align-self:flex-start;padding:2px;margin:-2px -2px 0 0;
-  }
-  .onboard .x svg{width:14px;height:14px;display:block}
 
   .gt-q{
     font-size:17.5px;font-weight:650;letter-spacing:-.01em;
@@ -1013,7 +996,6 @@
     endDate:"2026-10-14",
     endTime:"18:00",
     calMonth:"2026-10",   // month shown in the date picker
-    onboard:true,          // one-time feature onboarding (grouptype step)
     deleted:false,         // temp group has reached its end date and been deleted for everyone
     multi:false,           // variant: several temp groups end on the same day
     remDismissed:false,    // reminder line in the chat overview dismissed
@@ -1272,12 +1254,9 @@
       ? 'Wie lange soll die Gruppe „'+state.groupName.trim()+'“ bestehen bleiben?'
       : 'Wie lange soll die Gruppe bestehen bleiben?';
 
-    var onboard = state.onboard ? '<div class="onboard">'+
-      '<span class="ob-clock">'+I.clock+'</span>'+
-      '<div><b>Neu: Temporäre Gruppen</b><p>Eine temporäre Gruppe endet an einem festgelegten Datum und wird dann automatisch gelöscht. Ihr werdet einen Tag vorher erinnert, damit ihr sichern könnt, was ihr behalten wollt.</p></div>'+
-      '<button class="x tap-target" data-act="dismiss-onboard" aria-label="Hinweis schließen">'+I.close+'</button>'+
-    '</div>' : '';
-
+    /* Kein separater Onboarding-Hinweis: die Beschreibung IN der Karte erklaert
+       das Feature schon vollstaendig, und zwar im Moment der Entscheidung.
+       Ein Tooltip daneben waere dieselbe Information ein zweites Mal. */
     function card(type, icon, title, desc, neu){
       return '<button class="optcard tap-target" role="radio" aria-checked="'+(gt===type)+'" data-act="set-type" data-type="'+type+'">'+
         '<span class="oc-ic">'+icon+'</span>'+
@@ -1312,7 +1291,6 @@
         '<button class="pill tap-target'+(canCreate?' hint':'')+'" data-act="create"'+(canCreate?'':' disabled')+'>Erstellen</button>'+
       '</div>'+
       '<div class="sheet-body"><div class="gt-body">'+
-        onboard+
         '<p class="gt-q">'+gq+'</p>'+
         '<p class="gt-lead">Keine Option ist vorausgewählt.</p>'+
         '<div class="opts" role="radiogroup" aria-label="Gruppentyp">'+
@@ -1690,7 +1668,6 @@
         state.groupType = el.getAttribute("data-type");
         syncGroupType();
         break;
-      case "dismiss-onboard": state.onboard = false; render(); break;
       case "open-date":
         state.sheetBack = (state.sheet === "extend") ? "extend" : null;
         state.sheet = "date";
@@ -1794,7 +1771,7 @@
   document.getElementById("btn-reset").addEventListener("click", function(){
     state.selected = {}; state.groupName = ""; state.groupType = null;
     state.endDate = "2026-10-14"; state.endTime = "18:00"; state.calMonth = "2026-10";
-    state.onboard = true; state.deleted = false; state.multi = false;
+    state.deleted = false; state.multi = false;
     state.remDismissed = false; state.delDismissed = false;
     state.sheet = null; state.sheetBack = null; state.preExtend = null; state.toast = null;
     go("chats");
