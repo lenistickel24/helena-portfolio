@@ -1147,17 +1147,19 @@
       home();
   };
 
-  /* Basis bleibt die Chatliste — das Menue faehrt als Sheet darueber auf (siehe sheetNewchat) */
-  R.newchat = function(){ return R.chats(true); };
+  /* ---------- Inhalte des Erstellungs-Sheets ----------
+     Der komplette Flow (Neuer Chat -> Kontakte -> Name -> Gruppentyp) laeuft in
+     EINEM Bottom-Sheet ueber der Chatliste. Diese Funktionen liefern deshalb nur
+     den Inhalt: keine Statusleiste, kein Home-Indikator, Scrollbereich .sheet-body.
+     Zusammengesetzt wird in render() ueber sheetWrap(). */
+  var SC = {};
 
-  function sheetNewchat(){
+  SC.newchat = function(){
     var freq = CONTACTS.filter(function(c){return c.grp==="Häufig kontaktiert";}).map(function(c){
       return '<button class="ctc tap-target" style="cursor:default"><span class="av">'+c.n.charAt(0)+'</span>'+
         '<span><span class="cn">'+c.n+'</span></span></button>';
     }).join("");
-    return '<div class="ov" data-act="dismiss-newchat"><div class="ov-card tall" data-stop>'+
-      '<div class="grab"><i></i></div>'+
-      '<div class="nav"><div class="grow"></div><div class="title" style="text-align:center">Neuer Chat</div><div class="grow" style="display:flex;justify-content:flex-end">'+
+    return '<div class="nav"><div class="grow"></div><div class="title" style="text-align:center">Neuer Chat</div><div class="grow" style="display:flex;justify-content:flex-end">'+
         '<button class="circ tap-target" data-act="to-chats" aria-label="Schließen">'+I.close+'</button></div></div>'+
       '<div class="search">'+I.search+' Name oder Nummer</div>'+
       '<div class="sheet-body">'+
@@ -1169,14 +1171,13 @@
         '</div>'+
         '<div class="sect">Häufig kontaktiert</div>'+
         freq+
-      '</div>'+
-    '</div></div>';
-  }
+      '</div>';
+  };
 
   function chipHtml(c){
     return '<span class="chip" data-id="'+c.id+'"><span class="av">'+c.n.charAt(0)+'</span>'+c.n+'</span>';
   }
-  R.members = function(){
+  SC.members = function(){
     var n = selCount();
     var groups = ["Häufig kontaktiert","Weitere Kontakte"];
     var list = groups.map(function(g){
@@ -1195,16 +1196,14 @@
       CONTACTS.filter(function(c){return state.selected[c.id];}).map(chipHtml).join("")+
     '</div>';
 
-    return statusbar("9:41")+
-      '<div class="nav">'+
-        '<button class="circ tap-target" data-act="back" aria-label="Zurück">'+I.close+'</button>'+
+    return '<div class="nav">'+
+        '<button class="circ tap-target" data-act="back" aria-label="Zurück">'+I.back+'</button>'+
         '<div class="title">Mitglieder hinzufügen<small>'+n+' / 1023</small></div>'+
         '<div class="grow"></div>'+
         '<button class="pill tap-target'+(n?' hint':'')+'" data-act="to-groupinfo"'+(n?'':' disabled')+'>Weiter</button>'+
       '</div>'+
       '<div class="search">'+I.search+' Kontakte suchen …</div>'+
-      '<div class="body">'+chips+list+'</div>'+
-      home();
+      '<div class="sheet-body">'+chips+list+'</div>';
   };
 
   /* update the "Mitglieder hinzufügen" screen in place — no full re-render */
@@ -1238,18 +1237,17 @@
     }
   }
 
-  R.groupinfo = function(){
+  SC.groupinfo = function(){
     var n = selCount()+1;
     var avatars = CONTACTS.filter(function(c){return state.selected[c.id];}).slice(0,6).map(function(c){
       return '<span class="chip"><span class="av">'+c.n.charAt(0)+'</span>'+c.n+'</span>';
     }).join("");
-    return statusbar("9:41")+
-      '<div class="nav">'+
+    return '<div class="nav">'+
         '<button class="circ tap-target" data-act="back" aria-label="Zurück">'+I.back+'</button>'+
         '<div class="title" style="flex:1;text-align:center">Neue Gruppe</div>'+
         '<button class="pill hint tap-target" data-act="to-grouptype">Weiter</button>'+
       '</div>'+
-      '<div class="body">'+
+      '<div class="sheet-body">'+
         '<div class="gi-name">'+
           '<span class="gi-cam">'+I.cam+'</span>'+
           '<input id="gname" type="text" value="'+ (state.groupName||"").replace(/"/g,"&quot;") +'" placeholder="Gruppenname" aria-label="Gruppenname">'+
@@ -1262,11 +1260,10 @@
         '<div class="chips">'+
           '<span class="chip"><span class="av">Du</span>Du</span>'+ avatars +
         '</div>'+
-      '</div>'+
-      home();
+      '</div>';
   };
 
-  R.grouptype = function(){
+  SC.grouptype = function(){
     var gt = state.groupType;
     var canCreate = gt==="temp";
     var gq = hasName()
@@ -1307,13 +1304,12 @@
       'In diesem Prototyp geht es nur um <b>temporäre</b> Gruppen. Für eine dauerhafte Gruppe gäbe es hier nichts weiter einzustellen — wähle „Temporär“, um fortzufahren.'+
     '</div>';
 
-    return statusbar("9:41")+
-      '<div class="nav">'+
+    return '<div class="nav">'+
         '<button class="circ tap-target" data-act="back" aria-label="Zurück">'+I.back+'</button>'+
         '<div class="title" style="flex:1;text-align:center">Gruppentyp</div>'+
         '<button class="pill tap-target'+(canCreate?' hint':'')+'" data-act="create"'+(canCreate?'':' disabled')+'>Erstellen</button>'+
       '</div>'+
-      '<div class="body"><div class="gt-body">'+
+      '<div class="sheet-body"><div class="gt-body">'+
         onboard+
         '<p class="gt-q">'+gq+'</p>'+
         '<p class="gt-lead">Keine Option ist vorausgewählt.</p>'+
@@ -1323,12 +1319,18 @@
         '</div>'+
         lz+
         permHint+
-      '</div></div>'+
-      home();
+      '</div></div>';
   };
 
+  /* Rahmen um jeden Schritt des Erstellungs-Flows */
+  function sheetWrap(inner){
+    return '<div class="ov" data-act="cancel-create"><div class="ov-card tall" data-stop>'+
+      '<div class="grab"><i></i></div>'+ inner +
+    '</div></div>';
+  }
+
   function scrollBodyToEnd(){
-    var b = screenEl.querySelector('.body');
+    var b = screenEl.querySelector('.ov-card .sheet-body') || screenEl.querySelector('.body');
     if(b) b.scrollTo({ top:b.scrollHeight, behavior:'smooth' });
   }
 
@@ -1602,8 +1604,10 @@
   var noteEl = document.getElementById("sidenote");
 
   function render(){
-    var html = '<div class="screen-inner">'+ R[state.screen]() +'</div>';
-    if(state.screen==="newchat") html += sheetNewchat();
+    var inSheet = !!SC[state.screen];
+    var base = inSheet ? R.chats(true) : R[state.screen]();
+    var html = '<div class="screen-inner">'+ base +'</div>';
+    if(inSheet) html += sheetWrap(SC[state.screen]());
     if(state.sheet==="date") html += sheetDate();
     if(state.sheet==="time") html += sheetTime();
     if(state.sheet==="extend") html += sheetExtend();
@@ -1657,12 +1661,12 @@
     var el = e.target.closest("[data-act]");
     if(!el){ return; }
     var a = el.getAttribute("data-act");
-    if((a==="close-sheet" || a==="dismiss-newchat") && stop){ return; } // tap inside the sheet card: ignore
+    if((a==="close-sheet" || a==="cancel-create") && stop){ return; } // tap inside the sheet card: ignore
 
     switch(a){
       case "fab": go("newchat"); break;
       case "to-chats": go("chats"); break;
-      case "dismiss-newchat": go("chats"); break;
+      case "cancel-create": go("chats"); break;
       case "to-members": go("members"); break;
       case "toggle":
         var id = el.getAttribute("data-id");
