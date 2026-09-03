@@ -1037,16 +1037,17 @@
     {label:"Kontakte",    screen:"members"},
     {label:"Name & Foto", screen:"groupinfo"},
     {label:"Gruppentyp",  screen:"grouptype"},
-    {label:"Erstellt",    screen:"chatsAfter"},
+    {label:"Gruppe",      screen:"group"},
+    {label:"In der Liste", screen:"chatsAfter"},
     {label:"Erinnerung",  screen:"chatsReminder"},
     {label:"Gelöscht",    screen:"deleted"}
   ];
   var STEP_MAP = {
     chats:0, newchat:1, members:2, groupinfo:3, grouptype:4,
-    chatsAfter:5, group:5, ginfo:5, chatsReminder:6, reminder:6, deleted:7
+    group:5, ginfo:5, chatsAfter:6, chatsReminder:7, reminder:7, deleted:8
   };
   function stepOf(screen){ return (screen in STEP_MAP) ? STEP_MAP[screen] : -1; }
-  var BACK = {chats:null,newchat:"chats",members:"newchat",groupinfo:"members",grouptype:"groupinfo",chatsAfter:"grouptype",group:"chatsAfter"};
+  var BACK = {chats:null,newchat:"chats",members:"newchat",groupinfo:"members",grouptype:"groupinfo",chatsAfter:null,group:"chatsAfter"};
   function backTarget(){
     switch(state.screen){
       case "ginfo":         return "group";
@@ -1065,8 +1066,8 @@
       case "members": return ["Kontakte","Mitglieder auswählen","Bekannter Ablauf, damit die eine echte Änderung im Flow nicht in Neuerungen untergeht. Die Auswahl aktualisiert die Seite in-place, kein Neuladen."];
       case "groupinfo": return ["Identität zuerst","Erst der Name, dann die Zeit","Der Name ist optional. Vergibt man einen, wird die Frage nach der Laufzeit im nächsten Schritt konkret statt abstrakt."];
       case "grouptype": return ["Der neue Pflichtschritt","Eine bewusste Wahl","Zwei gleichwertige Karten, <b>keine vorausgewählt</b>. „Temporär“ klappt das Enddatum auf und aktiviert „Erstellen“ oben rechts. (Der Prototyp zeigt nur den temporären Pfad — „Dauerhaft“ ist hier eine Sackgasse.)"];
-      case "chatsAfter": return ["Sichtbare Kennzeichnung","Die Gruppe trägt ihr Enddatum","Der Badge zeigt das Datum („"+expLabel(state.endDate)+"“), erst ab 7 Tagen vorher wird er relativ. Die Gruppe muss nie wieder aktiv im Kopf behalten werden."];
-      case "group": return ["Im Chat","Enddatum immer im Blick","Auch im Header steht das Datum. Eine Systemnachricht erklärt einmalig, was am Stichtag passiert. <b>Auf den Gruppennamen tippen</b> führt in die Gruppeninfo — dort lässt sich jederzeit verlängern."];
+      case "chatsAfter": return ["Sichtbare Kennzeichnung","Die Gruppe trägt ihr Enddatum","Ein Schritt zurück aus der Gruppe: In der Liste steht der Badge mit dem Datum („"+expLabel(state.endDate)+"“), erst ab 7 Tagen vorher wird er relativ. Die Gruppe muss nie wieder aktiv im Kopf behalten werden."];
+      case "group": return ["Direkt nach dem Erstellen","Enddatum immer im Blick","Man landet in der neuen Gruppe, nicht in der Liste — so wie in WhatsApp. Im Header steht das Datum. Eine Systemnachricht erklärt einmalig, was am Stichtag passiert. <b>Auf den Gruppennamen tippen</b> führt in die Gruppeninfo — dort lässt sich jederzeit verlängern."];
       case "ginfo": return ["Gruppeneinstellungen","Verlängern geht jederzeit","Das Enddatum ist eine normale Einstellungs-Zeile — direkt neben „Selbstlöschende Nachrichten“, wo WhatsApp so etwas heute schon führt. Man muss nicht bis zur Erinnerung warten: Anlässe verschieben sich, also muss das Datum jederzeit korrigierbar sein. Sichtbar für alle, änderbar nur von Admins."];
       case "chatsReminder": return state.multi
         ? ["Mehrere am selben Tag","Eine Zeile statt einem Stapel","Enden mehrere Gruppen am selben Tag, werden Push und Übersichts-Zeile zu <b>einem</b> Hinweis gebündelt — sonst stapeln sich nach einem Festival-Wochenende drei Banner übereinander. Antippen öffnet die Liste mit „Verlängern“ je Gruppe."]
@@ -1705,7 +1706,12 @@
         render();
         if(!state.sheet) setTimeout(scrollBodyToEnd, 30);
         break;
-      case "create": if(state.groupType==="temp"){ go("chatsAfter"); } break;
+      case "create":
+        if(state.groupType==="temp"){
+          go("group");                       // wie in WhatsApp: man landet in der neuen Gruppe
+          flash("Gruppe erstellt — endet am "+fmtShort(state.endDate));
+        }
+        break;
       case "open-group": go("group"); break;
       case "open-ginfo": go("ginfo"); break;
       case "to-reminder": go("chatsReminder"); break;
