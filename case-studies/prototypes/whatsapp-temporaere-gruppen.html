@@ -628,16 +628,32 @@
   .cal-cell:not(.past):not(.sel):hover{background:var(--d-field)}
   .cal-cell.sel{background:var(--d-ink);color:#fff;font-weight:650}
 
-  /* Uhrzeit inline: 24 Stunden als Raster — alles sichtbar, kein Scrollen */
-  .time-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
-  .time-opt{
-    border:1px solid var(--d-line);background:var(--d-screen);cursor:pointer;
-    font-family:var(--font-ui);font-size:13px;color:var(--d-ink);
-    padding:9px 0;border-radius:var(--r-control);text-align:center;
-    transition:background .12s ease,border-color .12s ease;
+  /* Uhrzeit als Rad — zwei Spalten, Auswahl liegt mittig unter einem Balken.
+     Werte darueber/darunter blenden aus, wie bei iOS/WhatsApp. */
+  .wheel{position:relative;height:200px;display:flex;justify-content:center;gap:10px}
+  .wheel-sel{
+    position:absolute;left:0;right:0;top:80px;height:40px;
+    background:var(--d-field);border-radius:var(--r-control);pointer-events:none;
   }
-  .time-opt:hover{background:var(--d-field)}
-  .time-opt.sel{background:var(--d-ink);border-color:var(--d-ink);color:#fff;font-weight:650}
+  .wheel-col{
+    position:relative;z-index:1;
+    width:74px;height:100%;overflow-y:auto;
+    scroll-snap-type:y mandatory;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+    -webkit-mask-image:linear-gradient(to bottom,transparent,#000 24%,#000 76%,transparent);
+    mask-image:linear-gradient(to bottom,transparent,#000 24%,#000 76%,transparent);
+  }
+  .wheel-col::-webkit-scrollbar{width:0}
+  .wheel-pad{height:80px;flex-shrink:0}
+  .wheel-item{
+    display:flex;align-items:center;justify-content:center;
+    height:40px;scroll-snap-align:center;
+    width:100%;border:0;background:transparent;cursor:pointer;
+    font-family:var(--font-ui);font-size:22px;font-weight:400;color:var(--d-ink);
+    transition:font-weight .1s ease;
+  }
+  .wheel-item.sel{font-weight:600}
 
   /* group chat screen */
   .chat-head{
@@ -1372,7 +1388,10 @@
     }
     var pill = screenEl.querySelector('[data-act="'+actionSel+'"]');
     if(pill){ pill.disabled = !enableOn; pill.classList.toggle('hint', !!enableOn); }
-    if(mode==="temp") setTimeout(scrollBodyToEnd, 330);
+    if(mode==="temp") setTimeout(function(){
+      var ex = screenEl.querySelector('.oc-extra.show');
+      if(ex && ex.scrollIntoView) ex.scrollIntoView({block:"nearest", behavior:"smooth"});
+    }, 330);
   }
   function syncGroupType(){
     var gt = state.groupType;
@@ -1594,14 +1613,22 @@
     '</div>';
   }
   function timePanel(){
-    var rows = "";
-    for(var h=0;h<24;h++){
-      var t = String(h).padStart(2,"0")+":00";
-      rows += '<button class="time-opt'+(t===state.endTime?' sel':'')+' tap-target" data-act="pick-time" data-time="'+t+'">'+t+'</button>';
+    var cur = state.endTime.split(":");
+    function col(unit, count, sel){
+      var items = '<div class="wheel-pad"></div>';
+      for(var i=0;i<count;i++){
+        var v = String(i).padStart(2,"0");
+        items += '<button class="wheel-item'+(v===sel?' sel':'')+'" data-act="pick-unit" data-unit="'+unit+'" data-v="'+v+'">'+v+'</button>';
+      }
+      return '<div class="wheel-col" data-unit="'+unit+'">'+items+'<div class="wheel-pad"></div></div>';
     }
-    /* Standard: Tagesende — passt zu "die Gruppe endet an diesem Tag" */
-    rows += '<button class="time-opt'+("23:59"===state.endTime?' sel':'')+' tap-target" data-act="pick-time" data-time="23:59">23:59</button>';
-    return '<div class="dtf-panel"><div class="time-grid">'+rows+'</div></div>';
+    return '<div class="dtf-panel">'+
+      '<div class="wheel">'+
+        '<div class="wheel-sel"></div>'+
+        col("h",24,cur[0])+
+        col("m",60,cur[1])+
+      '</div>'+
+    '</div>';
   }
   /* label: "Endet:" im Erstellungsflow, "Neues Ende:" beim Verlaengern */
   function dateTimeField(label, hint, bare){
@@ -1617,7 +1644,8 @@
   }
 
   /* ---------- sheets ---------- */
-  function sheetExtend(){
+  function sheetExtend(instant){
+    var c = instant ? " instant" : "";
     var m = state.extendMode;                     // "temp" | "perm"
     function card(type, icon, title, desc, extra){
       return '<div class="optcard" role="radio" aria-checked="'+(m===type)+'">'+
@@ -1630,7 +1658,7 @@
         (extra ? '<div class="oc-extra'+(m===type?' show':'')+'">'+extra+'</div>' : '')+
       '</div>';
     }
-    return '<div class="ov" data-act="close-sheet"><div class="ov-card tall" data-stop>'+
+    return '<div class="ov'+c+'" data-act="close-sheet"><div class="ov-card tall'+c+'" data-stop>'+
       '<div class="grab"><i></i></div>'+
       '<div class="nav">'+
         '<button class="circ tap-target" data-act="close-sheet" aria-label="Schließen">'+I.close+'</button>'+
@@ -1649,8 +1677,9 @@
     '</div></div>';
   }
   /* several groups ending on the same day: one bundled list instead of one line per group */
-  function sheetMulti(){
-    return '<div class="ov" data-act="close-sheet"><div class="ov-card" data-stop>'+
+  function sheetMulti(instant){
+    var c = instant ? " instant" : "";
+    return '<div class="ov'+c+'" data-act="close-sheet"><div class="ov-card'+c+'" data-stop>'+
       '<div class="grab"><i></i></div>'+
       '<h3>2 Gruppen enden morgen</h3>'+
       '<p class="sub">Danach werden sie gelöscht. Sichert bis dahin, was ihr behalten wollt — Verlängern kann nur, wer Admin der jeweiligen Gruppe ist.</p>'+
@@ -1667,12 +1696,55 @@
     '</div></div>';
   }
 
+  /* ---------- Uhrzeit-Rad ----------
+     Der Wert aendert sich beim Scrollen, ohne neu zu rendern — sonst wuerde
+     die Spalte bei jeder Bewegung an den Anfang zurueckspringen. */
+  var WHEEL_ITEM = 40;
+  function setUnit(unit, v){
+    var t = state.endTime.split(":");
+    if(unit === "h") t[0] = v; else t[1] = v;
+    state.endTime = t[0]+":"+t[1];
+    var col = screenEl.querySelector('.wheel-col[data-unit="'+unit+'"]');
+    if(col){
+      /* direkt setzen statt scrollTo({behavior:"smooth"}) — im Snap-Container
+         wird das smooth-Scrollen sonst verschluckt und das Rad bleibt stehen,
+         waehrend sich der Wert oben schon geaendert hat. */
+      var target = parseInt(v,10) * WHEEL_ITEM;
+      if(Math.abs(col.scrollTop - target) > 1) col.scrollTop = target;
+      var items = col.querySelectorAll(".wheel-item");
+      for(var i=0;i<items.length;i++) items[i].classList.toggle("sel", items[i].getAttribute("data-v")===v);
+    }
+    var chip = screenEl.querySelector('.dtf-chip[data-mode="time"]');
+    if(chip) chip.textContent = state.endTime;
+  }
+  function initWheels(){
+    var cols = screenEl.querySelectorAll(".wheel-col");
+    for(var i=0;i<cols.length;i++){
+      (function(col){
+        var unit = col.getAttribute("data-unit");
+        var cur = state.endTime.split(":")[unit==="h"?0:1];
+        col.scrollTop = parseInt(cur,10) * WHEEL_ITEM;      // ohne Animation auf den Startwert
+        var timer = null;
+        col.addEventListener("scroll", function(){
+          clearTimeout(timer);
+          timer = setTimeout(function(){                     // erst wenn das Scrollen steht
+            var idx = Math.round(col.scrollTop / WHEEL_ITEM);
+            var max = col.querySelectorAll(".wheel-item").length - 1;
+            idx = Math.max(0, Math.min(max, idx));
+            setUnit(unit, String(idx).padStart(2,"0"));
+          }, 90);
+        });
+      })(cols[i]);
+    }
+  }
+
   /* ---------- render ---------- */
   var screenEl = document.getElementById("screen");
   var railEl = document.getElementById("rail");
   var noteEl = document.getElementById("sidenote");
 
   var sheetWasOpen = false;   // stand im letzten Durchlauf ein Erstellungs-Sheet offen?
+  var lastOverlay = null;     // "extend" | "multi" | null — fuer dieselbe Regel bei den Overlays
 
   function render(){
     var inSheet = !!SC[state.screen];
@@ -1681,10 +1753,25 @@
     var html = '<div class="screen-inner'+(stay?' no-fade':'')+'">'+ base +'</div>';
     if(inSheet) html += sheetWrap(SC[state.screen](), stay);
     sheetWasOpen = inSheet;
-    if(state.sheet==="extend") html += sheetExtend();
-    if(state.sheet==="multi") html += sheetMulti();
+    if(state.sheet==="extend") html += sheetExtend(lastOverlay==="extend");
+    if(state.sheet==="multi") html += sheetMulti(lastOverlay==="multi");
+    lastOverlay = state.sheet;
     if(state.toast) html += '<div class="toast">'+state.toast+'</div>';
+
+    /* Scrollpositionen ueber das Neu-Rendern hinweg halten — sonst springt der
+       Inhalt bei jedem Tap auf einen Chip zurueck nach oben. */
+    var keep = [];
+    [".ov-card .sheet-body", ".screen-inner .body", ".thread"].forEach(function(sel){
+      var el = screenEl.querySelector(sel);
+      if(el) keep.push([sel, el.scrollTop]);
+    });
+
     screenEl.innerHTML = html;
+
+    keep.forEach(function(pair){
+      var el = screenEl.querySelector(pair[0]);
+      if(el) el.scrollTop = pair[1];
+    });
 
     var g = document.getElementById("gname");
     if(g){
@@ -1696,6 +1783,14 @@
     if(state.screen === "reminder"){
       var th = screenEl.querySelector(".thread");
       if(th) th.scrollTop = th.scrollHeight;
+    }
+
+    if(state.picker === "time") initWheels();
+
+    /* neu aufgeklappten Picker sanft ins Bild holen — nur wenn er nicht ohnehin sichtbar ist */
+    if(state.picker){
+      var pan = screenEl.querySelector(".dtf-panel");
+      if(pan && pan.scrollIntoView) pan.scrollIntoView({block:"nearest", behavior:"smooth"});
     }
 
     renderRail();
@@ -1764,7 +1859,6 @@
           if(state.calMonth < "2026-08") state.calMonth = "2026-08";
         }
         render();
-        if(state.picker) setTimeout(scrollBodyToEnd, 60);
         break;
       case "cal-prev":
         if(state.calMonth > "2026-08"){ state.calMonth = shiftMonth(state.calMonth,-1); render(); }
@@ -1781,9 +1875,8 @@
         state.endDate = el.getAttribute("data-date");
         state.picker = null; render();               // Auswahl klappt den Picker wieder zu
         break;
-      case "pick-time":
-        state.endTime = el.getAttribute("data-time");
-        state.picker = null; render();
+      case "pick-unit":
+        setUnit(el.getAttribute("data-unit"), el.getAttribute("data-v"));
         break;
       case "create":
         if(state.groupType==="temp"){
