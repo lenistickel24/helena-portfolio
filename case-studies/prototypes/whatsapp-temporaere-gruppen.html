@@ -1125,8 +1125,7 @@
       case "chatsReminder": return state.multi
         ? ["Mehrere am selben Tag","Eine Zeile statt einem Stapel","Enden mehrere Gruppen am selben Tag, werden Push und Übersichts-Zeile zu <b>einem</b> Hinweis gebündelt — sonst stapeln sich nach einem Festival-Wochenende drei Banner übereinander. Antippen öffnet die Liste mit „Verlängern“ je Gruppe."]
         : ["Ein Tag vorher — in der Liste","Dort, wo man hinschaut","Die Erinnerung kommt als Push (ignoriert die Stummschaltung) und als Zeile in der Chatübersicht — nicht nur im Chat, den man ja genau deshalb nicht öffnet. Die Gruppe rückt nach oben. Das <b>X</b> blendet nur die Zeile aus, nicht das Enddatum."];
-      case "reminder": return ["Ein Tag vorher — im Chat","Gemeinsame Erinnerung","Alle sehen den Hinweis <b>und die Aufforderung, jetzt zu sichern, was man behalten will</b>. Nur Admins sehen „Verlängern“. Reagiert niemand, wird die Gruppe am Stichtag gelöscht (unten verlinkt)."];
-      case "deleted": return ["Der Stichtag","Weg heißt weg","Kein Archiv, keine Nachfrist, keine Reaktivierung. Die Gruppe ist für alle Mitglieder gelöscht — Verlauf und Medien. Wer etwas behalten wollte, hat es nach der Erinnerung gesichert. Der Hinweis ist eine Quittung, kein Zustand: <b>X</b> schließt ihn."];
+      case "reminder": return ["Ein Tag vorher — im Chat","Gemeinsame Erinnerung","Alle Mitglieder sehen denselben Hinweis, aber nur Admins sehen „Verlängern“. Der Hinweis lässt sich schließen — das Enddatum steht ja weiter im Header. Reagiert niemand, wird die Gruppe am Stichtag gelöscht (unten verlinkt)."];
     }
     return ["","",""];
   }
@@ -1441,15 +1440,12 @@
   R.deleted = function(){
     var rows = visibleChats().map(function(c){ return chatRow(c); }).join("");
     var txt = state.multi
-      ? '2 Gruppen sind zu Ende gegangen.'
-      : '„'+gname()+'“ ist zu Ende gegangen.';
-    var sub = state.multi
-      ? 'Beide waren bis gestern befristet. Sie sind jetzt bei allen aus der Liste verschwunden.'
-      : 'Die Gruppe war bis zum '+fmtShort(state.endDate)+' befristet — so, wie ihr es beim Erstellen festgelegt habt. Sie ist jetzt bei allen aus der Liste verschwunden.';
+      ? '2 Gruppen waren bis zum '+fmt(state.endDate)+' angelegt und wurden automatisch gelöscht.'
+      : 'Die Gruppe „'+gname()+'“ war bis zum '+fmt(state.endDate)+' angelegt und wurde automatisch gelöscht.';
     var notice = state.delDismissed ? "" :
       '<div class="banner">'+
         '<span class="bi">'+I.clock+'</span>'+
-        '<span class="bt">'+txt+'<small>'+sub+'</small></span>'+
+        '<span class="bt">'+txt+'</span>'+
         '<button class="bn-x tap-target" data-act="dismiss-deleted" aria-label="Hinweis schließen">'+I.close+'</button>'+
       '</div>';
     return statusbar("9:41")+
@@ -1544,7 +1540,7 @@
       '<div class="banner">'+
         '<span class="bi">'+I.clock+'</span>'+
         '<span class="bt">„'+gname()+'“ endet morgen um '+state.endTime+' Uhr.'+
-          '<small>Danach wird die Gruppe gelöscht — sichert bis dahin Fotos und alles, was ihr behalten wollt. Nur Admins können verlängern.</small></span>'+
+          '<small>Nur Admins können verlängern.</small></span>'+
         '<button class="bb tap-target hint" data-act="open-extend">Verlängern</button>'+
         '<button class="bn-x tap-target" data-act="dismiss-chat-hint" aria-label="Hinweis schließen">'+I.close+'</button>'+
       '</div>')+
@@ -1718,7 +1714,10 @@
 
   function renderNote(){
     var nx = note();
-    noteEl.innerHTML = '<p class="sn-k">'+nx[0]+'</p><p class="sn-h">'+nx[1]+'</p><p class="sn-p">'+nx[2]+'</p>';
+    /* Screens ohne Notiz lassen den Block ganz weg, statt leere Absaetze zu zeigen */
+    noteEl.innerHTML = nx[1]
+      ? '<p class="sn-k">'+nx[0]+'</p><p class="sn-h">'+nx[1]+'</p><p class="sn-p">'+nx[2]+'</p>'
+      : '';
   }
 
   function go(s){ state.screen = s; state.sheet = null; state.picker = null; render(); }
