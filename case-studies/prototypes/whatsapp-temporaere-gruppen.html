@@ -54,6 +54,14 @@
     --d-accent-ink:#1A1A1A;
     --d-accent-wash:#EAEAEA;
     --d-accent-line:#CBCBCB;
+    /* ---- eine kleine Skala, damit alles aus einem Guss wirkt ----
+       Radien:  Flaeche 14px · Bedienelement 9px · Pille 20px · Kreis 50%
+       Rahmen:  1px normal · 1.5px fuer auswaehlbare Karten und Radios       */
+    --r-surface:14px;
+    --r-control:9px;
+    --r-pill:20px;
+    --bw:1px;
+    --bw-strong:1.5px;
   }
 
   *{box-sizing:border-box}
@@ -143,7 +151,7 @@
   body.testmode .tb:hover{opacity:1}
   @media (min-width:641px){
     body.testmode{display:flex;align-items:center;justify-content:center;min-height:100vh}
-    body.testmode .device{height:min(96vh,860px);border-radius:14px;overflow:hidden}
+    body.testmode .device{height:min(96vh,860px);border-radius:var(--r-surface);overflow:hidden}
     body.testmode .screen{border-radius:14px}
   }
 
@@ -284,7 +292,7 @@
   .search{
     margin:2px 16px 8px;
     background:var(--d-field);
-    border-radius:11px;
+    border-radius:var(--r-control);
     padding:9px 13px;
     display:flex;align-items:center;gap:9px;
     color:var(--d-soft);font-size:14px;
@@ -336,7 +344,7 @@
     color:var(--d-accent-ink);
     border:1px solid var(--d-accent-line);
     font-size:11px;font-weight:600;
-    padding:2px 7px 2px 6px;border-radius:9px;
+    padding:2px 7px 2px 6px;border-radius:var(--r-control);
     white-space:nowrap;
   }
   .exp svg{width:11px;height:11px}
@@ -347,7 +355,7 @@
   .menu{
     margin:6px 16px 4px;
     background:var(--d-field);
-    border-radius:14px;
+    border-radius:var(--r-surface);
     overflow:hidden;
   }
   .mrow{
@@ -390,7 +398,7 @@
   .tick{
     margin-left:auto;flex-shrink:0;
     width:22px;height:22px;border-radius:50%;
-    border:1.6px solid var(--d-line);
+    border:var(--bw-strong) solid var(--d-line);
     display:flex;align-items:center;justify-content:center;
   }
   .ctc{transition:background .14s}
@@ -427,12 +435,12 @@
     display:flex;align-items:center;gap:14px;
     margin:6px 16px 16px;
     background:var(--d-field);
-    border-radius:14px;
+    border-radius:var(--r-surface);
     padding:14px 16px;
   }
   .gi-cam{
     width:52px;height:52px;border-radius:50%;flex-shrink:0;
-    border:1.6px solid var(--d-accent-line);
+    border:var(--bw-strong) solid var(--d-accent-line);
     display:flex;align-items:center;justify-content:center;
     color:var(--d-accent);
   }
@@ -447,7 +455,7 @@
   .opt{
     margin:0 16px 16px;
     background:var(--d-field);
-    border-radius:14px;overflow:hidden;
+    border-radius:var(--r-surface);overflow:hidden;
   }
   .optrow{
     display:flex;align-items:center;gap:10px;
@@ -489,7 +497,7 @@
   .perm-hint{
     max-height:0;overflow:hidden;opacity:0;
     transition:max-height .3s ease,opacity .22s ease,margin .3s ease;
-    border:1px dashed transparent;border-radius:13px;
+    border:var(--bw) dashed transparent;border-radius:var(--r-surface);
     font-size:12px;line-height:1.5;color:var(--d-soft);
   }
   .perm-hint.show{max-height:180px;opacity:1;margin-top:11px;padding:12px 14px;border-color:var(--d-accent-line)}
@@ -503,8 +511,8 @@
     width:100%;text-align:left;cursor:pointer;
     font-family:var(--font-ui);
     background:var(--d-screen);
-    border:1.5px solid var(--d-line);
-    border-radius:15px;
+    border:var(--bw-strong) solid var(--d-line);
+    border-radius:var(--r-surface);
     padding:15px 15px;
     transition:border-color .18s ease,background .18s ease;
   }
@@ -528,7 +536,7 @@
   .optcard .oc-r{
     grid-column:3;grid-row:1;
     width:22px;height:22px;border-radius:50%;
-    border:1.7px solid var(--d-line);
+    border:var(--bw-strong) solid var(--d-line);
     display:flex;align-items:center;justify-content:center;flex-shrink:0;
     transition:border-color .18s ease;
   }
@@ -539,32 +547,47 @@
 
   /* Laufzeit sub-panel — appears only when "Temporär" is chosen */
   .lzwrap{max-height:0;overflow:hidden;opacity:0;transition:max-height .3s ease,opacity .22s ease,margin .3s ease}
-  .lzwrap.show{max-height:280px;opacity:1;margin-top:11px}
+  .lzwrap.show{max-height:660px;opacity:1;margin-top:11px}   /* muss den aufgeklappten Kalender fassen */
+  /* ---------- Datum/Uhrzeit ----------
+     Muster aus WhatsApps "Ereignis erstellen": eine Zeile mit Label links und
+     zwei Chips rechts; ein Tap auf einen Chip klappt den passenden Picker INLINE
+     darunter auf, statt ein Modal darueber zu legen. Palette bleibt Graustufe. */
   .lzcard{
-    border:1.5px solid var(--d-line);
-    border-radius:15px;
-    padding:6px 4px;
+    border:var(--bw) solid var(--d-line);
+    border-radius:var(--r-surface);
+    padding:2px 14px;
     background:var(--d-screen);
   }
-  .lz-label{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--d-faint);padding:9px 12px 5px}
-  .lz-row{
-    display:flex;align-items:center;gap:11px;
-    width:100%;border:0;background:transparent;cursor:pointer;text-align:left;
-    font-family:var(--font-ui);
-    padding:11px 12px;position:relative;
+  .dtf-row{
+    display:flex;align-items:center;gap:8px;
+    padding:13px 0;
   }
-  .lz-row + .lz-row::before{content:"";position:absolute;left:44px;right:12px;top:0;height:1px;background:var(--d-line)}
-  .lz-row .lz-ic{width:20px;height:20px;color:var(--d-ink);flex-shrink:0}
-  .lz-row .lz-ic svg{width:19px;height:19px;display:block}
-  .lz-row .lz-k{font-size:14px;color:var(--d-ink)}
-  .lz-row .lz-v{margin-left:auto;font-size:14px;font-weight:600;color:var(--d-ink)}
-  .lz-row .lz-cv{color:var(--d-faint);display:flex;flex-shrink:0}
-  .lz-row .lz-cv svg{width:14px;height:14px;display:block}
-  .lz-hint{font-size:11.7px;line-height:1.45;color:var(--d-soft);padding:8px 12px 10px;margin:0}
+  .dtf-label{font-size:14px;color:var(--d-ink);margin-right:auto}
+  .dtf-chip{
+    border:1px solid transparent;cursor:pointer;
+    background:var(--d-field);color:var(--d-ink);
+    font-family:var(--font-ui);font-size:13.5px;font-weight:500;
+    padding:7px 11px;border-radius:var(--r-control);
+    transition:background .15s ease,border-color .15s ease,color .15s ease;
+  }
+  .dtf-chip.on{
+    background:var(--d-accent-wash);
+    border-color:var(--d-accent-line);
+    color:var(--d-accent-ink);font-weight:650;
+  }
+  .dtf-panel{
+    border-top:1px solid var(--d-line);
+    padding:12px 0 6px;
+  }
+  .lz-hint{
+    font-size:11.7px;line-height:1.45;color:var(--d-soft);
+    border-top:1px solid var(--d-line);
+    padding:10px 0 12px;margin:0;
+  }
 
   /* calendar (date sheet) */
-  .cal-head{display:flex;align-items:center;justify-content:space-between;padding:2px 2px 12px}
-  .cal-head b{font-size:14.5px;font-weight:650}
+  .cal-head{display:flex;align-items:center;gap:6px;padding:0 2px 10px}
+  .cal-head b{font-size:14.5px;font-weight:650;margin-right:auto}
   .cal-nav{
     width:32px;height:32px;border-radius:50%;border:0;cursor:pointer;
     background:var(--d-field);color:var(--d-ink);
@@ -586,17 +609,16 @@
   .cal-cell:not(.past):not(.sel):hover{background:var(--d-field)}
   .cal-cell.sel{background:var(--d-ink);color:#fff;font-weight:650}
 
-  /* time list (uhrzeit sheet) */
-  .time-list{max-height:264px;overflow-y:auto;margin:0 -4px;-webkit-overflow-scrolling:touch}
-  .time-list::-webkit-scrollbar{width:0}
+  /* Uhrzeit inline: 24 Stunden als Raster — alles sichtbar, kein Scrollen */
+  .time-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
   .time-opt{
-    width:100%;border:0;background:transparent;cursor:pointer;text-align:left;
-    font-family:var(--font-ui);font-size:14.5px;color:var(--d-ink);
-    padding:12px 8px;display:flex;align-items:center;position:relative;
+    border:1px solid var(--d-line);background:var(--d-screen);cursor:pointer;
+    font-family:var(--font-ui);font-size:13px;color:var(--d-ink);
+    padding:9px 0;border-radius:var(--r-control);text-align:center;
+    transition:background .12s ease,border-color .12s ease;
   }
-  .time-opt + .time-opt::before{content:"";position:absolute;left:8px;right:8px;top:0;height:1px;background:var(--d-line)}
-  .time-opt.sel{font-weight:650}
-  .time-opt svg{width:15px;height:15px;margin-left:auto;color:var(--d-ink)}
+  .time-opt:hover{background:var(--d-field)}
+  .time-opt.sel{background:var(--d-ink);border-color:var(--d-ink);color:#fff;font-weight:650}
 
   /* group chat screen */
   .chat-head{
@@ -634,7 +656,7 @@
   .bub{
     max-width:74%;
     font-size:13.5px;line-height:1.4;
-    padding:8px 12px;border-radius:13px;
+    padding:8px 12px;border-radius:var(--r-control);
   }
   .bub.them{align-self:flex-start;background:var(--d-screen);border-bottom-left-radius:4px}
   .bub.me{align-self:flex-end;background:#ECECEC;border-bottom-right-radius:4px}
@@ -647,7 +669,7 @@
     border-top:1px solid var(--d-line);
   }
   .composer .cbox{
-    flex:1;background:var(--d-field);border-radius:18px;
+    flex:1;background:var(--d-field);border-radius:var(--r-pill);
     padding:8px 14px;font-size:13.5px;color:var(--d-faint);
   }
   .composer .csend{
@@ -685,7 +707,7 @@
     border:0;cursor:pointer;flex-shrink:0;
     background:var(--d-accent);color:#fff;
     font-family:var(--font-ui);font-size:12.5px;font-weight:650;
-    padding:7px 13px;border-radius:9px;
+    padding:7px 13px;border-radius:var(--r-control);
   }
 
   .opt .lz-row + .lz-row::before{left:12px}
@@ -711,7 +733,7 @@
     border:0;cursor:pointer;flex-shrink:0;
     background:var(--d-ink);color:#fff;
     font-family:var(--font-ui);font-size:11.5px;font-weight:650;
-    padding:6px 12px;border-radius:8px;
+    padding:6px 12px;border-radius:var(--r-control);
   }
   .rbanner .rb-cv{color:var(--d-soft);flex-shrink:0;display:flex}
   .rbanner .rb-cv svg{width:14px;height:14px;display:block}
@@ -742,7 +764,7 @@
     border:0;cursor:pointer;flex-shrink:0;
     background:var(--d-ink);color:#fff;
     font-family:var(--font-ui);font-size:11.5px;font-weight:650;
-    padding:7px 12px;border-radius:8px;
+    padding:7px 12px;border-radius:var(--r-control);
   }
   .mg-row .mg-b.ghost{
     background:transparent;color:var(--d-soft);
@@ -787,7 +809,7 @@
     width:100%;border:0;cursor:pointer;
     background:var(--d-ink);color:#fff;
     font-family:var(--font-ui);font-size:15px;font-weight:650;
-    padding:13px;border-radius:13px;
+    padding:13px;border-radius:var(--r-surface);
   }
   .ov-opt svg{width:16px;height:16px;color:var(--d-accent);flex-shrink:0}
 
@@ -796,7 +818,7 @@
     position:absolute;left:50%;bottom:34px;transform:translateX(-50%);
     background:var(--d-ink);color:#fff;
     font-size:12.5px;font-weight:500;
-    padding:9px 16px;border-radius:11px;
+    padding:9px 16px;border-radius:var(--r-control);
     white-space:nowrap;
     animation:fade .18s ease;
     z-index:8;
@@ -982,6 +1004,8 @@
   };
 
   var MON = ["Jan","Feb","März","Apr","Mai","Juni","Juli","Aug","Sept","Okt","Nov","Dez"];
+  /* im Kalenderkopf ausgeschrieben, wie bei WhatsApp */
+  var MON_LANG = ["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
   var TODAY = new Date("2026-08-30T00:00:00");
   function fmt(iso){ var d=new Date(iso+"T00:00:00"); return d.getDate()+". "+MON[d.getMonth()]+" "+d.getFullYear(); }
   function fmtShort(iso){ var d=new Date(iso+"T00:00:00"); return d.getDate()+". "+MON[d.getMonth()]; }
@@ -1003,8 +1027,8 @@
     ginfoFrom:"group",     // woher die Gruppeninfo geoeffnet wurde (Chat oder Erinnerung)
     remDismissed:false,    // reminder line in the chat overview dismissed
     delDismissed:false,    // "group was deleted" line in the chat overview dismissed
-    sheet:null,            // "date" | "time" | "extend" | "multi"
-    sheetBack:null,        // sheet to return to after picking a date/time
+    sheet:null,            // "extend" | "multi"
+    picker:null,           // inline aufgeklappt: "date" | "time" | null
     preExtend:null,        // snapshot of date+time so "verlängern" can be cancelled
     toast:null
   };
@@ -1271,18 +1295,7 @@
     }
 
     var lz = '<div class="lzwrap'+(gt==="temp"?' show':'')+'">'+
-      '<div class="lzcard">'+
-        '<div class="lz-label">Laufzeit</div>'+
-        '<button class="lz-row tap-target" data-act="open-date">'+
-          '<span class="lz-ic">'+I.cal+'</span><span class="lz-k">Datum</span>'+
-          '<span class="lz-v">'+fmt(state.endDate)+'</span><span class="lz-cv">'+I.chev+'</span>'+
-        '</button>'+
-        '<button class="lz-row tap-target" data-act="open-time">'+
-          '<span class="lz-ic">'+I.clock+'</span><span class="lz-k">Uhrzeit <span style="opacity:.6">(optional)</span></span>'+
-          '<span class="lz-v">'+state.endTime+' Uhr</span><span class="lz-cv">'+I.chev+'</span>'+
-        '</button>'+
-        '<p class="lz-hint">Die Gruppe endet an diesem Tag und wird dann automatisch gelöscht, falls niemand verlängert. Ein Tag nach dem eigentlichen Anlass ist meist eine gute Wahl.</p>'+
-      '</div>'+
+      dateTimeField('Endet:', 'Die Gruppe endet an diesem Tag und wird dann automatisch gelöscht, falls niemand verlängert. Ein Tag nach dem eigentlichen Anlass ist meist eine gute Wahl.')+
     '</div>';
 
     var permHint = '<div class="perm-hint'+(gt==="perm"?' show':'')+'">'+
@@ -1505,11 +1518,11 @@
       home();
   };
 
-  /* ---------- sheets ---------- */
-  function sheetDate(){
+  /* ---------- Datum/Uhrzeit-Feld (Chips + inline Picker) ---------- */
+  function calPanel(){
     var ym = state.calMonth;
     var y = +ym.slice(0,4), m = +ym.slice(5,7)-1;
-    var startDow = (new Date(y,m,1).getDay()+6)%7;   // Monday-first
+    var startDow = (new Date(y,m,1).getDay()+6)%7;   // Montag zuerst
     var dim = new Date(y,m+1,0).getDate();
     var todayIso = "2026-08-30";
     var cells = "";
@@ -1517,53 +1530,48 @@
     for(var d=1;d<=dim;d++){
       var iso = ym+"-"+String(d).padStart(2,"0");
       if(iso < todayIso){ cells += '<span class="cal-cell past">'+d+'</span>'; continue; }
-      var sel = iso === state.endDate;
-      cells += '<button class="cal-cell'+(sel?' sel':'')+' tap-target" data-act="pick-date" data-date="'+iso+'">'+d+'</button>';
+      cells += '<button class="cal-cell'+(iso===state.endDate?' sel':'')+' tap-target" data-act="pick-date" data-date="'+iso+'">'+d+'</button>';
     }
     var canPrev = ym > "2026-08";
     var dows = ["Mo","Di","Mi","Do","Fr","Sa","So"].map(function(x){return '<span>'+x+'</span>';}).join("");
-    return '<div class="ov" data-act="close-sheet"><div class="ov-card" data-stop>'+
-      '<div class="grab"><i></i></div>'+
-      '<h3>Enddatum wählen</h3>'+
+    return '<div class="dtf-panel">'+
       '<div class="cal-head">'+
+        '<b>'+MON_LANG[m]+' '+y+'</b>'+
         '<button class="cal-nav tap-target" data-act="cal-prev"'+(canPrev?'':' disabled')+' aria-label="Vorheriger Monat">'+I.back+'</button>'+
-        '<b>'+MON[m]+' '+y+'</b>'+
         '<button class="cal-nav tap-target" data-act="cal-next" aria-label="Nächster Monat">'+I.chev+'</button>'+
       '</div>'+
       '<div class="cal-dow">'+dows+'</div>'+
       '<div class="cal-grid">'+cells+'</div>'+
-    '</div></div>';
+    '</div>';
   }
-  function sheetTime(){
+  function timePanel(){
     var rows = "";
     for(var h=0;h<24;h++){
       var t = String(h).padStart(2,"0")+":00";
-      var sel = t===state.endTime;
-      rows += '<button class="time-opt'+(sel?' sel':'')+' tap-target" data-act="pick-time" data-time="'+t+'">'+t+' Uhr'+(sel?I.check:'')+'</button>';
+      rows += '<button class="time-opt'+(t===state.endTime?' sel':'')+' tap-target" data-act="pick-time" data-time="'+t+'">'+t+'</button>';
     }
-    return '<div class="ov" data-act="close-sheet"><div class="ov-card" data-stop>'+
-      '<div class="grab"><i></i></div>'+
-      '<h3>Uhrzeit wählen</h3>'+
-      '<div class="time-list">'+rows+'</div>'+
-    '</div></div>';
+    return '<div class="dtf-panel"><div class="time-grid">'+rows+'</div></div>';
   }
-  /* same date + time step as when the group was created — no shortcut presets,
-     so „verlängern" feels like the decision it is */
+  /* label: "Endet:" im Erstellungsflow, "Neues Ende:" beim Verlaengern */
+  function dateTimeField(label, hint){
+    return '<div class="lzcard">'+
+      '<div class="dtf-row">'+
+        '<span class="dtf-label">'+label+'</span>'+
+        '<button class="dtf-chip tap-target'+(state.picker==="date"?' on':'')+'" data-act="toggle-picker" data-mode="date">'+fmt(state.endDate)+'</button>'+
+        '<button class="dtf-chip tap-target'+(state.picker==="time"?' on':'')+'" data-act="toggle-picker" data-mode="time">'+state.endTime+'</button>'+
+      '</div>'+
+      (state.picker==="date" ? calPanel() : state.picker==="time" ? timePanel() : "")+
+      (hint ? '<p class="lz-hint">'+hint+'</p>' : '')+
+    '</div>';
+  }
+
+  /* ---------- sheets ---------- */
   function sheetExtend(){
     return '<div class="ov" data-act="close-sheet"><div class="ov-card" data-stop>'+
       '<div class="grab"><i></i></div>'+
       '<h3>„'+gname()+'“ verlängern</h3>'+
       '<p class="sub">Das neue Enddatum gilt für die ganze Gruppe. Vor dem neuen Termin wird erneut erinnert.</p>'+
-      '<div class="lzcard" style="margin-bottom:13px">'+
-        '<button class="lz-row tap-target" data-act="open-date">'+
-          '<span class="lz-ic">'+I.cal+'</span><span class="lz-k">Datum</span>'+
-          '<span class="lz-v">'+fmt(state.endDate)+'</span><span class="lz-cv">'+I.chev+'</span>'+
-        '</button>'+
-        '<button class="lz-row tap-target" data-act="open-time">'+
-          '<span class="lz-ic">'+I.clock+'</span><span class="lz-k">Uhrzeit <span style="opacity:.6">(optional)</span></span>'+
-          '<span class="lz-v">'+state.endTime+' Uhr</span><span class="lz-cv">'+I.chev+'</span>'+
-        '</button>'+
-      '</div>'+
+      '<div style="margin-bottom:13px">'+dateTimeField('Neues Ende:', '')+'</div>'+
       '<button class="sheet-cta tap-target hint" data-act="confirm-extend">Verlängern</button>'+
       '<button class="ov-opt tap-target" data-act="pick-extend" data-perm="1">'+I.infinity+' Stattdessen dauerhaft behalten<span class="od">kein Enddatum</span></button>'+
     '</div></div>';
@@ -1601,8 +1609,6 @@
     var html = '<div class="screen-inner'+(stay?' no-fade':'')+'">'+ base +'</div>';
     if(inSheet) html += sheetWrap(SC[state.screen](), stay);
     sheetWasOpen = inSheet;
-    if(state.sheet==="date") html += sheetDate();
-    if(state.sheet==="time") html += sheetTime();
     if(state.sheet==="extend") html += sheetExtend();
     if(state.sheet==="multi") html += sheetMulti();
     if(state.toast) html += '<div class="toast">'+state.toast+'</div>';
@@ -1611,12 +1617,6 @@
     var g = document.getElementById("gname");
     if(g){
       g.addEventListener("input", function(){ state.groupName = g.value; });
-    }
-
-    if(state.sheet==="time"){
-      var tl = screenEl.querySelector(".time-list");
-      var sel = tl && tl.querySelector(".time-opt.sel");
-      if(tl && sel) tl.scrollTop = sel.offsetTop - tl.clientHeight/2 + sel.offsetHeight/2;
     }
 
     renderRail();
@@ -1640,7 +1640,7 @@
     noteEl.innerHTML = '<p class="sn-k">'+nx[0]+'</p><p class="sn-h">'+nx[1]+'</p><p class="sn-p">'+nx[2]+'</p>';
   }
 
-  function go(s){ state.screen = s; state.sheet = null; render(); }
+  function go(s){ state.screen = s; state.sheet = null; state.picker = null; render(); }
   function flash(msg){
     state.toast = msg;
     render();
@@ -1674,42 +1674,34 @@
         state.groupType = el.getAttribute("data-type");
         syncGroupType();
         break;
-      case "open-date":
-        state.sheetBack = (state.sheet === "extend") ? "extend" : null;
-        state.sheet = "date";
-        state.calMonth = state.endDate.slice(0,7);
-        if(state.calMonth < "2026-08") state.calMonth = "2026-08";
+      case "toggle-picker":
+        var mode = el.getAttribute("data-mode");
+        state.picker = (state.picker === mode) ? null : mode;   // nochmal tippen klappt zu
+        if(state.picker === "date"){
+          state.calMonth = state.endDate.slice(0,7);
+          if(state.calMonth < "2026-08") state.calMonth = "2026-08";
+        }
         render();
-        break;
-      case "open-time":
-        state.sheetBack = (state.sheet === "extend") ? "extend" : null;
-        state.sheet = "time"; render();
+        if(state.picker) setTimeout(scrollBodyToEnd, 60);
         break;
       case "cal-prev":
         if(state.calMonth > "2026-08"){ state.calMonth = shiftMonth(state.calMonth,-1); render(); }
         break;
       case "cal-next": state.calMonth = shiftMonth(state.calMonth,1); render(); break;
       case "close-sheet":
-        if(state.sheetBack){                        // date/time opened from the extend sheet
-          state.sheet = state.sheetBack; state.sheetBack = null; render(); break;
-        }
-        if(state.sheet === "extend" && state.preExtend){   // cancelled: undo the picked date
+        if(state.sheet === "extend" && state.preExtend){   // abgebrochen: Datum zuruecksetzen
           state.endDate = state.preExtend.d; state.endTime = state.preExtend.t;
         }
         state.preExtend = null;
-        state.sheet = null; render();
+        state.sheet = null; state.picker = null; render();
         break;
       case "pick-date":
         state.endDate = el.getAttribute("data-date");
-        state.sheet = state.sheetBack || null; state.sheetBack = null;
-        render();
-        if(!state.sheet) setTimeout(scrollBodyToEnd, 30);
+        state.picker = null; render();               // Auswahl klappt den Picker wieder zu
         break;
       case "pick-time":
         state.endTime = el.getAttribute("data-time");
-        state.sheet = state.sheetBack || null; state.sheetBack = null;
-        render();
-        if(!state.sheet) setTimeout(scrollBodyToEnd, 30);
+        state.picker = null; render();
         break;
       case "create":
         if(state.groupType==="temp"){
@@ -1726,10 +1718,10 @@
       case "open-reminder-chat": go("reminder"); break;
       case "open-extend":
         state.preExtend = {d:state.endDate, t:state.endTime};
-        state.sheet = "extend"; render();
+        state.sheet = "extend"; state.picker = null; render();
         break;
       case "confirm-extend":
-        state.preExtend = null;
+        state.preExtend = null; state.picker = null;
         state.sheet = null; go("group");
         flash("Endet jetzt am "+fmtShort(state.endDate)+", "+state.endTime+" Uhr");
         break;
@@ -1787,7 +1779,7 @@
     state.endDate = "2026-10-14"; state.endTime = "18:00"; state.calMonth = "2026-10";
     state.deleted = false; state.multi = false; state.ginfoFrom = "group";
     state.remDismissed = false; state.delDismissed = false;
-    state.sheet = null; state.sheetBack = null; state.preExtend = null; state.toast = null;
+    state.sheet = null; state.picker = null; state.preExtend = null; state.toast = null;
     go("chats");
   });
 
