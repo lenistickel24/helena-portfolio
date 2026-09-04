@@ -354,7 +354,7 @@
   .sheet-grab i{width:38px;height:4px;border-radius:2px;background:#DADADA}
   .menu{
     margin:6px 16px 4px;
-    background:var(--d-field);
+    background:var(--d-screen);
     border-radius:var(--r-surface);
     overflow:hidden;
   }
@@ -379,14 +379,21 @@
 
   .sect{
     font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
-    color:var(--d-faint);
-    padding:14px 18px 6px;
+    color:var(--d-soft);
+    padding:16px 18px 7px;
   }
 
   /* contact rows */
+  /* Kontaktzeilen liegen in einer weissen Gruppe auf grauer Flaeche */
+  .ctc-group{
+    margin:0 16px 4px;
+    background:var(--d-screen);
+    border-radius:var(--r-surface);
+    overflow:hidden;
+  }
   .ctc{
     display:flex;align-items:center;gap:13px;
-    padding:10px 18px;
+    padding:10px 16px;
     width:100%;border:0;background:transparent;cursor:pointer;text-align:left;
     font-family:var(--font-ui);
     position:relative;
@@ -402,7 +409,7 @@
     display:flex;align-items:center;justify-content:center;
   }
   .ctc{transition:background .14s}
-  .ctc:active{background:var(--d-field)}
+  .ctc:active{background:var(--d-grey)}
   .ctc .tick{transition:background .16s,border-color .16s,transform .16s}
   .ctc[aria-pressed="true"] .tick{background:var(--d-ink);border-color:var(--d-ink)}
   .ctc[aria-pressed="true"]:active .tick{transform:scale(.86)}
@@ -434,7 +441,7 @@
   .gi-name{
     display:flex;align-items:center;gap:14px;
     margin:6px 16px 16px;
-    background:var(--d-field);
+    background:var(--d-screen);
     border-radius:var(--r-surface);
     padding:14px 16px;
   }
@@ -454,7 +461,7 @@
   .gi-name input::placeholder{color:var(--d-faint)}
   .opt{
     margin:0 16px 16px;
-    background:var(--d-field);
+    background:var(--d-screen);
     border-radius:var(--r-surface);overflow:hidden;
   }
   .optrow{
@@ -477,6 +484,8 @@
     display:flex;flex-direction:column;align-items:center;gap:4px;
     padding:18px 16px 20px;
   }
+  .body.settings{background:var(--d-grey)}
+  .screen:has(.body.settings) .nav .circ{background:var(--d-screen)}
   .gi-head .gi-av{width:64px;height:64px}
   .gi-head .gi-av svg{width:30px;height:30px}
   .gi-head b{font-size:18px;font-weight:650;margin-top:6px}
@@ -640,7 +649,7 @@
   .chat-head .ch-s .exp svg{width:10px;height:10px}
   .thread{
     flex:1;overflow-y:auto;
-    background:var(--d-grey);
+    background:var(--d-screen);
     padding:16px 16px 8px;
     display:flex;flex-direction:column;gap:10px;
   }
@@ -658,11 +667,11 @@
     font-size:13.5px;line-height:1.4;
     padding:8px 12px;border-radius:var(--r-control);
   }
-  .bub.them{align-self:flex-start;background:var(--d-screen);border-bottom-left-radius:4px}
-  .bub.me{align-self:flex-end;background:#ECECEC;border-bottom-right-radius:4px}
+  .bub.them{align-self:flex-start;background:var(--d-screen);border:var(--bw) solid var(--d-line);border-bottom-left-radius:4px}
+  .bub.me{align-self:flex-end;background:var(--d-field);border:var(--bw) solid var(--d-field);border-bottom-right-radius:4px}
   .bub .bn{display:block;font-size:11.5px;font-weight:650;color:#8A8A8A;margin-bottom:1px}
   .composer{
-    flex-shrink:0;
+    flex-shrink:0;border-top:var(--bw) solid var(--d-line);
     display:flex;align-items:center;gap:9px;
     padding:9px 14px;
     background:var(--d-screen);
@@ -896,9 +905,13 @@
     display:flex;flex-direction:column;
     height:84%;
     padding:8px 0 0;
+    background:var(--d-grey);          /* invertiert: Flaeche grau, Gruppen darauf weiss */
   }
   .ov-card.tall .nav{padding-left:16px;padding-right:16px}
-  .ov-card.tall .search{margin-left:16px;margin-right:16px}
+  .ov-card.tall .search{margin-left:16px;margin-right:16px;background:var(--d-screen)}
+  /* runde Buttons brauchen auf grauem Grund eine weisse Flaeche */
+  .ov-card.tall .nav .circ,
+  .body.settings .circ{background:var(--d-screen)}
   .ov-card.tall .sheet-body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:16px}
 
   /* ---------- phone: the device frame gets out of the way ----------
@@ -1182,7 +1195,7 @@
           '<button class="mrow tap-target" style="cursor:default">'+I.broadcast+' Neuer Broadcast</button>'+
         '</div>'+
         '<div class="sect">Häufig kontaktiert</div>'+
-        freq+
+        '<div class="ctc-group">'+freq+'</div>'+
       '</div>';
   };
 
@@ -1201,7 +1214,7 @@
           '<span class="tick">'+I.check+'</span>'+
         '</button>';
       }).join("");
-      return '<div class="sect">'+g+'</div>'+rows;
+      return '<div class="sect">'+g+'</div><div class="ctc-group">'+rows+'</div>';
     }).join("");
 
     var chips = '<div class="chips selbar'+(n?' has':'')+'">'+
@@ -1410,12 +1423,15 @@
   R.deleted = function(){
     var rows = visibleChats().map(function(c){ return chatRow(c); }).join("");
     var txt = state.multi
-      ? '2 Gruppen wurden an ihrem Stichtag gelöscht.'
-      : '„'+gname()+'“ wurde am Stichtag gelöscht.';
+      ? '2 Gruppen sind zu Ende gegangen.'
+      : '„'+gname()+'“ ist zu Ende gegangen.';
+    var sub = state.multi
+      ? 'Beide waren bis gestern befristet. Sie sind jetzt bei allen aus der Liste verschwunden.'
+      : 'Die Gruppe war bis zum '+fmtShort(state.endDate)+' befristet — so, wie ihr es beim Erstellen festgelegt habt. Sie ist jetzt bei allen aus der Liste verschwunden.';
     var notice = state.delDismissed ? "" :
       '<div class="banner">'+
-        '<span class="bi">'+I.trash+'</span>'+
-        '<span class="bt">'+txt+'<small>Für alle Mitglieder entfernt — Verlauf und Medien. Kein Archiv, keine Wiederherstellung.</small></span>'+
+        '<span class="bi">'+I.clock+'</span>'+
+        '<span class="bt">'+txt+'<small>'+sub+'</small></span>'+
         '<button class="bn-x tap-target" data-act="dismiss-deleted" aria-label="Hinweis schließen">'+I.close+'</button>'+
       '</div>';
     return statusbar("9:41")+
@@ -1469,7 +1485,7 @@
         '<div class="title" style="flex:1;text-align:center">Gruppeninfo</div>'+
         '<div style="width:34px"></div>'+
       '</div>'+
-      '<div class="body">'+
+      '<div class="body settings">'+
         '<div class="gi-head">'+
           '<span class="av grp gi-av">'+I.grp+'</span>'+
           '<b>'+gname()+'</b>'+
@@ -1503,7 +1519,7 @@
       '</div>'+
       '<div class="banner">'+
         '<span class="bi">'+I.clock+'</span>'+
-        '<span class="bt">„'+gname()+'“ endet morgen um '+state.endTime+' Uhr. Danach wird die Gruppe gelöscht — sichert bis dahin Fotos und alles, was ihr behalten wollt.<small>Nur Admins können verlängern — alle anderen sehen nur den Hinweis.</small></span>'+
+        '<span class="bt">„'+gname()+'“ endet morgen um '+state.endTime+' Uhr. Danach wird die Gruppe gelöscht — sichert bis dahin Fotos und alles, was ihr behalten wollt.<small>Nur Admins können verlängern.</small></span>'+
         '<button class="bb tap-target hint" data-act="open-extend">Verlängern</button>'+
       '</div>'+
       '<div class="thread">'+
