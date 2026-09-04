@@ -318,12 +318,12 @@
   .crow + .crow::before{content:"";position:absolute;left:72px;right:0;top:0;height:1px;background:var(--d-line)}
   .av{
     width:46px;height:46px;border-radius:50%;flex-shrink:0;
-    background:var(--d-grey);
+    background:#C9C9C9;                 /* dunkler als die weissen Karten dahinter */
     display:flex;align-items:center;justify-content:center;
-    font-size:16px;font-weight:600;color:var(--d-soft);
+    font-size:16px;font-weight:600;color:#FFFFFF;
   }
-  .av.grp{background:var(--d-grey)}
-  .av.grp svg{width:22px;height:22px;color:var(--d-faint)}
+  .av.grp{background:#C9C9C9}
+  .av.grp svg{width:22px;height:22px;color:#FFFFFF}
   .cmain{flex:1;min-width:0}
   .cline1{display:flex;align-items:baseline;gap:8px}
   .cname{font-size:15.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -1033,7 +1033,7 @@
     groupName:"",
     groupType:null,       // "perm" | "temp" — no default (concept: conscious choice)
     endDate:"2026-10-14",
-    endTime:"18:00",
+    endTime:"23:59",
     calMonth:"2026-10",   // month shown in the date picker
     deleted:false,         // temp group has reached its end date and been deleted for everyone
     multi:false,           // variant: several temp groups end on the same day
@@ -1042,6 +1042,8 @@
     delDismissed:false,    // "group was deleted" line in the chat overview dismissed
     sheet:null,            // "extend" | "multi"
     picker:null,           // inline aufgeklappt: "date" | "time" | null
+    extendMode:null,       // Auswahl im Verlaengern-Sheet: "temp" | "perm"
+    ginfoSeen:false,       // Gruppeninfo schon besucht? dann nicht mehr auf den Header hinweisen
     preExtend:null,        // snapshot of date+time so "verlängern" can be cancelled
     toast:null
   };
@@ -1442,22 +1444,27 @@
       home();
   };
 
+  /* WhatsApp-artige Systemnachricht — steht wortgleich in jedem Zustand der Gruppe */
+  function sysNote(){
+    if(state.groupType==="perm") return "";
+    return '<div class="sys temp">Diese Gruppe endet am '+fmt(state.endDate)+', '+state.endTime+' Uhr. '+
+      'Alle Mitglieder werden am Tag davor erinnert. Verlängert kein Admin, wird die Gruppe an diesem Tag für alle gelöscht.</div>';
+  }
+
   R.group = function(){
     var temp = state.groupType==="temp";
     var members = memberLabel();
     var sub = temp
       ? '<span class="ch-s"><span class="exp">'+I.clock+' Endet '+fmtShort(state.endDate)+'</span> · '+members+'</span>'
       : '<span class="ch-s">'+members+'</span>';
-    var sysTemp = temp
-      ? '<div class="sys temp">Diese Gruppe endet am '+fmt(state.endDate)+', '+state.endTime+' Uhr. Alle Mitglieder werden am Tag davor erinnert. Verlängert kein Admin, wird die Gruppe an diesem Tag für alle gelöscht.</div>'
-      : '';
+    var sysTemp = sysNote();
     var preview = temp
       ? '<button class="preview-link tap-target" data-act="to-reminder">'+I.clock+' Vorschau: 1 Tag vor dem Stichtag '+I.chev+'</button>'
       : '';
     return statusbar("9:41")+
       '<div class="nav chat-head">'+
         '<button class="circ tap-target" data-act="back" aria-label="Zurück">'+I.back+'</button>'+
-        '<button class="chat-id tap-target'+(temp?' hint':'')+'" data-act="open-ginfo">'+
+        '<button class="chat-id tap-target'+(temp && !state.ginfoSeen ? ' hint':'')+'" data-act="open-ginfo">'+
           '<span class="av grp">'+I.grp+'</span>'+
           '<span><span class="ch-t">'+gname()+'</span>'+sub+'</span>'+
         '</button>'+
@@ -1522,12 +1529,21 @@
         '<span class="bt">„'+gname()+'“ endet morgen um '+state.endTime+' Uhr. Danach wird die Gruppe gelöscht — sichert bis dahin Fotos und alles, was ihr behalten wollt.<small>Nur Admins können verlängern.</small></span>'+
         '<button class="bb tap-target hint" data-act="open-extend">Verlängern</button>'+
       '</div>'+
+      /* Dieselbe Systemnachricht wie beim Anlegen — sie bleibt unveraendert stehen.
+         Nach vielen Nachrichten ist sie hochgescrollt und faellt nicht mehr auf. */
       '<div class="thread">'+
-        '<div class="sys temp">Erinnerung an alle: Diese Gruppe endet morgen und wird dann gelöscht, falls kein Admin verlängert. Sichert bis dahin Fotos, Sprachnachrichten und Infos, die ihr behalten wollt.</div>'+
-        '<div class="bub them"><span class="bn">Mama</span>Schade! War schön mit euch</div>'+
+        '<div class="sys">Du hast die Gruppe „'+gname()+'“ erstellt</div>'+
+        sysNote()+
+        '<div class="bub them"><span class="bn">Sara</span>Ich hab die Flüge gebucht!</div>'+
+        '<div class="bub me">Perfekt, danke dir</div>'+
+        '<div class="bub them"><span class="bn">Alex</span>Packliste kommt heute Abend</div>'+
+        '<div class="bub me">Top. Wer nimmt den großen Koffer mit?</div>'+
+        '<div class="bub them"><span class="bn">Sara</span>Ich hab noch Platz, kann was mitnehmen</div>'+
+        '<div class="bub them"><span class="bn">Tom</span>Treffen wir uns direkt am Gate?</div>'+
+        '<div class="bub me">Ja, 45 Minuten vorher</div>'+
+        '<div class="bub them"><span class="bn">Mama</span>Schade, dass es schon vorbei ist! War schön mit euch</div>'+
         '<div class="bub them"><span class="bn">Tom</span>Ich hab die Fotos gerade in meine Galerie gespeichert</div>'+
         '<div class="bub me">Gute Idee, mach ich auch</div>'+
-        '<div style="flex:1"></div>'+
         '<button class="preview-link tap-target" data-act="simulate-delete">'+I.trash+' Vorschau: Niemand verlängert — Stichtag erreicht '+I.chev+'</button>'+
       '</div>'+
       '<div class="composer"><span class="cbox">Nachricht</span><span class="csend">'+I.send+'</span></div>'+
@@ -1566,6 +1582,8 @@
       var t = String(h).padStart(2,"0")+":00";
       rows += '<button class="time-opt'+(t===state.endTime?' sel':'')+' tap-target" data-act="pick-time" data-time="'+t+'">'+t+'</button>';
     }
+    /* Standard: Tagesende — passt zu "die Gruppe endet an diesem Tag" */
+    rows += '<button class="time-opt'+("23:59"===state.endTime?' sel':'')+' tap-target" data-act="pick-time" data-time="23:59">23:59</button>';
     return '<div class="dtf-panel"><div class="time-grid">'+rows+'</div></div>';
   }
   /* label: "Endet:" im Erstellungsflow, "Neues Ende:" beim Verlaengern */
@@ -1583,13 +1601,33 @@
 
   /* ---------- sheets ---------- */
   function sheetExtend(){
-    return '<div class="ov" data-act="close-sheet"><div class="ov-card" data-stop>'+
+    var m = state.extendMode;                     // "temp" | "perm"
+    function card(type, icon, title, desc){
+      return '<button class="optcard tap-target" role="radio" aria-checked="'+(m===type)+'" data-act="set-extend" data-type="'+type+'">'+
+        '<span class="oc-ic">'+icon+'</span>'+
+        '<span class="oc-t">'+title+'</span>'+
+        '<span class="oc-r"></span>'+
+        '<span class="oc-d">'+desc+'</span>'+
+      '</button>';
+    }
+    return '<div class="ov" data-act="close-sheet"><div class="ov-card tall" data-stop>'+
       '<div class="grab"><i></i></div>'+
-      '<h3>„'+gname()+'“ verlängern</h3>'+
-      '<p class="sub">Das neue Enddatum gilt für die ganze Gruppe. Vor dem neuen Termin wird erneut erinnert.</p>'+
-      '<div style="margin-bottom:13px">'+dateTimeField('Neues Ende:', '')+'</div>'+
-      '<button class="sheet-cta tap-target hint" data-act="confirm-extend">Verlängern</button>'+
-      '<button class="ov-opt tap-target" data-act="pick-extend" data-perm="1">'+I.infinity+' Stattdessen dauerhaft behalten<span class="od">kein Enddatum</span></button>'+
+      '<div class="nav">'+
+        '<button class="circ tap-target" data-act="close-sheet" aria-label="Schließen">'+I.close+'</button>'+
+        '<div class="title" style="flex:1;text-align:center">Verlängern</div>'+
+        '<button class="pill tap-target'+(m?' hint':'')+'" data-act="confirm-extend"'+(m?'':' disabled')+'>Fertig</button>'+
+      '</div>'+
+      '<div class="sheet-body"><div class="gt-body">'+
+        '<p class="gt-q">Wie soll es mit „'+gname()+'“ weitergehen?</p>'+
+        '<p class="gt-lead">Die Änderung gilt für die ganze Gruppe.</p>'+
+        '<div class="opts" role="radiogroup" aria-label="Verlängern">'+
+          card("temp", I.clock, "Neues Enddatum", "Die Gruppe läuft bis zum neuen Datum weiter. Vorher wird erneut erinnert.")+
+          card("perm", I.infinity, "Dauerhaft behalten", "Kein Enddatum mehr. Bleibt bestehen, bis ihr sie selbst löscht.")+
+        '</div>'+
+        '<div class="lzwrap'+(m==="temp"?' show':'')+'">'+
+          dateTimeField('Neues Ende:', '')+
+        '</div>'+
+      '</div></div>'+
     '</div></div>';
   }
   /* several groups ending on the same day: one bundled list instead of one line per group */
@@ -1633,6 +1671,13 @@
     var g = document.getElementById("gname");
     if(g){
       g.addEventListener("input", function(){ state.groupName = g.value; });
+    }
+
+    /* Erinnerungs-Screen: ans Ende des Verlaufs springen. Nach vielen Nachrichten
+       ist die Systemnachricht hochgescrollt — so sieht man das aktuelle Gespraech. */
+    if(state.screen === "reminder"){
+      var th = screenEl.querySelector(".thread");
+      if(th) th.scrollTop = th.scrollHeight;
     }
 
     renderRail();
@@ -1722,32 +1767,38 @@
       case "create":
         if(state.groupType==="temp"){
           go("group");                       // wie in WhatsApp: man landet in der neuen Gruppe
-          flash("Gruppe erstellt — endet am "+fmtShort(state.endDate));
         }
         break;
       case "open-group": go("group"); break;
       case "open-ginfo":
         state.ginfoFrom = state.screen;      // zurueck dorthin, wo man herkam
+        state.ginfoSeen = true;              // Hinweis auf den Header wird nicht mehr gebraucht
         go("ginfo");
         break;
       case "to-reminder": go("chatsReminder"); break;
       case "open-reminder-chat": go("reminder"); break;
       case "open-extend":
         state.preExtend = {d:state.endDate, t:state.endTime};
-        state.sheet = "extend"; state.picker = null; render();
+        state.sheet = "extend"; state.picker = null; state.extendMode = null; render();
+        break;
+      case "set-extend":
+        state.extendMode = el.getAttribute("data-type");
+        if(state.extendMode === "perm") state.picker = null;
+        render();
+        if(state.extendMode === "temp") setTimeout(scrollBodyToEnd, 330);
         break;
       case "confirm-extend":
-        state.preExtend = null; state.picker = null;
-        state.sheet = null; go("group");
-        flash("Endet jetzt am "+fmtShort(state.endDate)+", "+state.endTime+" Uhr");
-        break;
-      case "pick-extend":
-        if(el.getAttribute("data-perm")){
+        if(!state.extendMode) break;
+        if(state.extendMode === "perm"){
           if(state.preExtend){ state.endDate = state.preExtend.d; state.endTime = state.preExtend.t; }
-          state.preExtend = null;
           state.groupType = "perm";
-          state.sheet = null; go("group");
+          state.preExtend = null; state.picker = null; state.sheet = null;
+          go("group");
           flash("„"+gname()+"“ ist jetzt dauerhaft");
+        } else {
+          state.preExtend = null; state.picker = null; state.sheet = null;
+          go("group");
+          flash("Endet jetzt am "+fmtShort(state.endDate)+", "+state.endTime+" Uhr");
         }
         break;
       case "simulate-delete":
@@ -1792,8 +1843,9 @@
   });
   document.getElementById("btn-reset").addEventListener("click", function(){
     state.selected = {}; state.groupName = ""; state.groupType = null;
-    state.endDate = "2026-10-14"; state.endTime = "18:00"; state.calMonth = "2026-10";
+    state.endDate = "2026-10-14"; state.endTime = "23:59"; state.calMonth = "2026-10";
     state.deleted = false; state.multi = false; state.ginfoFrom = "group";
+    state.extendMode = null; state.ginfoSeen = false;
     state.remDismissed = false; state.delDismissed = false;
     state.sheet = null; state.picker = null; state.preExtend = null; state.toast = null;
     go("chats");
