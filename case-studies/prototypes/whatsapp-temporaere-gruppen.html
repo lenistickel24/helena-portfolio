@@ -276,7 +276,10 @@
     font-family:var(--font-ui);font-size:13.5px;font-weight:600;
     padding:7px 15px;border-radius:20px;
   }
-  .nav .pill[disabled]{background:var(--d-field);color:var(--d-faint);cursor:default}
+  .nav .pill[disabled]{
+    background:transparent;color:var(--d-faint);cursor:default;
+    box-shadow:inset 0 0 0 var(--bw) var(--d-line);
+  }
   .nav .link{
     border:0;background:transparent;cursor:pointer;
     color:var(--d-accent);font-family:var(--font-ui);font-size:15px;font-weight:600;
@@ -514,28 +517,27 @@
 
   /* two equal option cards — no default, a genuine either/or choice */
   .opts{display:flex;flex-direction:column;gap:11px}
+  /* Karte = Behaelter. Kopfzeile waehlt aus, das Datumsfeld sitzt darin —
+     so gehoert das Datum sichtbar zur getroffenen Wahl. Radio steht vorn. */
   .optcard{
-    display:grid;grid-template-columns:24px 1fr 22px;column-gap:12px;row-gap:0;
-    align-items:center;
-    width:100%;text-align:left;cursor:pointer;
-    font-family:var(--font-ui);
     background:var(--d-screen);
     border:var(--bw-strong) solid var(--d-line);
     border-radius:var(--r-surface);
-    padding:15px 15px;
+    overflow:hidden;
     transition:border-color .18s ease,background .18s ease;
   }
   .optcard:hover{border-color:var(--d-faint)}
-  .optcard[aria-checked="true"]{border-color:var(--d-ink);background:#FAFAFA}
-  .optcard.info{
-    grid-template-columns:24px 1fr;
-    cursor:default;background:#FAFAFA;border-color:var(--d-line);
+  .optcard[aria-checked="true"]{border-color:var(--d-ink)}
+  .oc-head{
+    display:grid;grid-template-columns:22px 24px 1fr;column-gap:12px;row-gap:0;
+    align-items:center;
+    width:100%;text-align:left;cursor:pointer;border:0;background:transparent;
+    font-family:var(--font-ui);
+    padding:15px;
   }
-  .optcard.info:hover{border-color:var(--d-line)}
-  .optcard.info .oc-d{grid-column:2 / 3}
-  .optcard .oc-ic{grid-column:1;grid-row:1;color:var(--d-ink);width:24px;height:24px;display:flex;align-items:center;justify-content:center}
+  .optcard .oc-ic{grid-column:2;grid-row:1;color:var(--d-ink);width:24px;height:24px;display:flex;align-items:center;justify-content:center}
   .optcard .oc-ic svg{width:22px;height:22px;display:block}
-  .optcard .oc-t{grid-column:2;grid-row:1;font-size:15.5px;font-weight:650;color:var(--d-ink)}
+  .optcard .oc-t{grid-column:3;grid-row:1;font-size:15.5px;font-weight:650;color:var(--d-ink)}
   .optcard .oc-t .neu{
     display:inline-block;margin-left:7px;vertical-align:middle;
     font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
@@ -543,7 +545,7 @@
     padding:2px 5px;border-radius:5px;
   }
   .optcard .oc-r{
-    grid-column:3;grid-row:1;
+    grid-column:1;grid-row:1;
     width:22px;height:22px;border-radius:50%;
     border:var(--bw-strong) solid var(--d-line);
     display:flex;align-items:center;justify-content:center;flex-shrink:0;
@@ -553,10 +555,18 @@
   .optcard .oc-r::after{content:"";width:11px;height:11px;border-radius:50%;background:var(--d-ink);transform:scale(0);transition:transform .18s cubic-bezier(.2,.9,.3,1.4)}
   .optcard[aria-checked="true"] .oc-r::after{transform:scale(1)}
   .optcard .oc-d{grid-column:2 / 4;grid-row:2;font-size:12.6px;line-height:1.5;color:var(--d-soft);margin-top:5px}
+  /* Datum/Uhrzeit als Fortsetzung derselben Karte */
+  .oc-extra{
+    max-height:0;overflow:hidden;opacity:0;
+    transition:max-height .3s ease,opacity .22s ease;
+  }
+  .oc-extra.show{max-height:660px;opacity:1}
+  .oc-extra .dtf-inner{
+    border-top:var(--bw) solid var(--d-line);
+    margin:0 15px;padding:2px 0 4px;
+  }
 
   /* Laufzeit sub-panel — appears only when "Temporär" is chosen */
-  .lzwrap{max-height:0;overflow:hidden;opacity:0;transition:max-height .3s ease,opacity .22s ease,margin .3s ease}
-  .lzwrap.show{max-height:660px;opacity:1;margin-top:11px}   /* muss den aufgeklappten Kalender fassen */
   /* ---------- Datum/Uhrzeit ----------
      Muster aus WhatsApps "Ereignis erstellen": eine Zeile mit Label links und
      zwei Chips rechts; ein Tap auf einen Chip klappt den passenden Picker INLINE
@@ -710,8 +720,8 @@
   }
   .banner .bi{color:var(--d-accent);flex-shrink:0}
   .banner .bi svg{width:16px;height:16px;display:block}
-  .banner .bt{flex:1;font-size:12.5px;line-height:1.35;color:var(--d-accent-ink)}
-  .banner .bt small{display:block;color:#707070;font-size:10.5px;margin-top:1px}
+  .banner .bt{flex:1;font-size:12.8px;font-weight:600;line-height:1.35;color:var(--d-accent-ink)}
+  .banner .bt small{display:block;color:#6E6E6E;font-size:11px;font-weight:400;line-height:1.4;margin-top:3px}
   .banner .bb{
     border:0;cursor:pointer;flex-shrink:0;
     background:var(--d-accent);color:#fff;
@@ -1039,6 +1049,7 @@
     multi:false,           // variant: several temp groups end on the same day
     ginfoFrom:"group",     // woher die Gruppeninfo geoeffnet wurde (Chat oder Erinnerung)
     remDismissed:false,    // reminder line in the chat overview dismissed
+    chatHintDismissed:false,   // Hinweis im Chat geschlossen
     delDismissed:false,    // "group was deleted" line in the chat overview dismissed
     sheet:null,            // "extend" | "multi"
     picker:null,           // inline aufgeklappt: "date" | "time" | null
@@ -1300,18 +1311,17 @@
     /* Kein separater Onboarding-Hinweis: die Beschreibung IN der Karte erklaert
        das Feature schon vollstaendig, und zwar im Moment der Entscheidung.
        Ein Tooltip daneben waere dieselbe Information ein zweites Mal. */
-    function card(type, icon, title, desc, neu){
-      return '<button class="optcard tap-target" role="radio" aria-checked="'+(gt===type)+'" data-act="set-type" data-type="'+type+'">'+
-        '<span class="oc-ic">'+icon+'</span>'+
-        '<span class="oc-t">'+title+(neu?' <span class="neu">Neu</span>':'')+'</span>'+
-        '<span class="oc-r"></span>'+
-        '<span class="oc-d">'+desc+'</span>'+
-      '</button>';
+    function card(type, icon, title, desc, neu, extra){
+      return '<div class="optcard" role="radio" aria-checked="'+(gt===type)+'">'+
+        '<button class="oc-head tap-target" data-act="set-type" data-type="'+type+'">'+
+          '<span class="oc-r"></span>'+
+          '<span class="oc-ic">'+icon+'</span>'+
+          '<span class="oc-t">'+title+(neu?' <span class="neu">Neu</span>':'')+'</span>'+
+          '<span class="oc-d">'+desc+'</span>'+
+        '</button>'+
+        (extra ? '<div class="oc-extra'+(gt===type?' show':'')+'">'+extra+'</div>' : '')+
+      '</div>';
     }
-
-    var lz = '<div class="lzwrap'+(gt==="temp"?' show':'')+'">'+
-      dateTimeField('Endet:', 'Die Gruppe endet an diesem Tag und wird dann automatisch gelöscht, falls niemand verlängert. Ein Tag nach dem eigentlichen Anlass ist meist eine gute Wahl.')+
-    '</div>';
 
     var permHint = '<div class="perm-hint'+(gt==="perm"?' show':'')+'">'+
       'In diesem Prototyp geht es nur um <b>temporäre</b> Gruppen. Für eine dauerhafte Gruppe gäbe es hier nichts weiter einzustellen — wähle „Temporär“, um fortzufahren.'+
@@ -1327,9 +1337,9 @@
         '<p class="gt-lead">Keine Option ist vorausgewählt.</p>'+
         '<div class="opts" role="radiogroup" aria-label="Gruppentyp">'+
           card("perm", I.infinity, "Dauerhaft", "Bleibt bestehen, bis ihr sie selbst löscht. Kein Enddatum.")+
-          card("temp", I.clock, "Temporär", "Endet an einem festgelegten Datum — danach wird die Gruppe für alle gelöscht. Vorher werden alle erinnert.", true)+
+          card("temp", I.clock, "Temporär", "Endet an einem festgelegten Datum — danach wird die Gruppe für alle gelöscht. Vorher werden alle erinnert.", true,
+               dateTimeField('Endet:', 'Ein Tag nach dem eigentlichen Anlass ist meist eine gute Wahl.', true))+
         '</div>'+
-        lz+
         permHint+
       '</div></div>';
   };
@@ -1350,19 +1360,25 @@
   }
 
   /* update grouptype selection in place — Laufzeit / Hinweis slide, "Erstellen" enables only for Temporär */
-  function syncGroupType(){
-    var gt = state.groupType;
+  /* Auswahl in-place umschalten, damit der Bereich in der Karte animiert aufklappt */
+  function syncCards(sel, mode, actionSel, enableOn){
     var cards = screenEl.querySelectorAll('.optcard');
     for(var i=0;i<cards.length;i++){
-      cards[i].setAttribute('aria-checked', String(cards[i].getAttribute('data-type')===gt));
+      var head = cards[i].querySelector('[data-act="'+sel+'"]');
+      var on = head && head.getAttribute('data-type')===mode;
+      cards[i].setAttribute('aria-checked', String(!!on));
+      var ex = cards[i].querySelector('.oc-extra');
+      if(ex) ex.classList.toggle('show', !!on);
     }
-    var lzw = screenEl.querySelector('.lzwrap');
-    if(lzw) lzw.classList.toggle('show', gt==="temp");
+    var pill = screenEl.querySelector('[data-act="'+actionSel+'"]');
+    if(pill){ pill.disabled = !enableOn; pill.classList.toggle('hint', !!enableOn); }
+    if(mode==="temp") setTimeout(scrollBodyToEnd, 330);
+  }
+  function syncGroupType(){
+    var gt = state.groupType;
+    syncCards("set-type", gt, "create", gt==="temp");
     var ph = screenEl.querySelector('.perm-hint');
     if(ph) ph.classList.toggle('show', gt==="perm");
-    var pill = screenEl.querySelector('[data-act="create"]');
-    if(pill){ pill.disabled = (gt!=="temp"); pill.classList.toggle('hint', gt==="temp"); }
-    if(gt==="temp") setTimeout(scrollBodyToEnd, 330);
   }
 
   R.chatsAfter = function(){
@@ -1524,11 +1540,14 @@
           '<span class="ch-s"><span class="exp">'+I.clock+' Endet morgen</span> · '+memberLabel()+'</span></span>'+
         '</button>'+
       '</div>'+
+      (state.chatHintDismissed ? "" :
       '<div class="banner">'+
         '<span class="bi">'+I.clock+'</span>'+
-        '<span class="bt">„'+gname()+'“ endet morgen um '+state.endTime+' Uhr. Danach wird die Gruppe gelöscht — sichert bis dahin Fotos und alles, was ihr behalten wollt.<small>Nur Admins können verlängern.</small></span>'+
+        '<span class="bt">„'+gname()+'“ endet morgen um '+state.endTime+' Uhr.'+
+          '<small>Danach wird die Gruppe gelöscht — sichert bis dahin Fotos und alles, was ihr behalten wollt. Nur Admins können verlängern.</small></span>'+
         '<button class="bb tap-target hint" data-act="open-extend">Verlängern</button>'+
-      '</div>'+
+        '<button class="bn-x tap-target" data-act="dismiss-chat-hint" aria-label="Hinweis schließen">'+I.close+'</button>'+
+      '</div>')+
       /* Dieselbe Systemnachricht wie beim Anlegen — sie bleibt unveraendert stehen.
          Nach vielen Nachrichten ist sie hochgescrollt und faellt nicht mehr auf. */
       '<div class="thread">'+
@@ -1587,8 +1606,8 @@
     return '<div class="dtf-panel"><div class="time-grid">'+rows+'</div></div>';
   }
   /* label: "Endet:" im Erstellungsflow, "Neues Ende:" beim Verlaengern */
-  function dateTimeField(label, hint){
-    return '<div class="lzcard">'+
+  function dateTimeField(label, hint, bare){
+    return '<div class="'+(bare ? 'dtf-inner' : 'lzcard')+'">'+
       '<div class="dtf-row">'+
         '<span class="dtf-label">'+label+'</span>'+
         '<button class="dtf-chip tap-target'+(state.picker==="date"?' on':'')+'" data-act="toggle-picker" data-mode="date">'+fmt(state.endDate)+'</button>'+
@@ -1602,13 +1621,16 @@
   /* ---------- sheets ---------- */
   function sheetExtend(){
     var m = state.extendMode;                     // "temp" | "perm"
-    function card(type, icon, title, desc){
-      return '<button class="optcard tap-target" role="radio" aria-checked="'+(m===type)+'" data-act="set-extend" data-type="'+type+'">'+
-        '<span class="oc-ic">'+icon+'</span>'+
-        '<span class="oc-t">'+title+'</span>'+
-        '<span class="oc-r"></span>'+
-        '<span class="oc-d">'+desc+'</span>'+
-      '</button>';
+    function card(type, icon, title, desc, extra){
+      return '<div class="optcard" role="radio" aria-checked="'+(m===type)+'">'+
+        '<button class="oc-head tap-target" data-act="set-extend" data-type="'+type+'">'+
+          '<span class="oc-r"></span>'+
+          '<span class="oc-ic">'+icon+'</span>'+
+          '<span class="oc-t">'+title+'</span>'+
+          '<span class="oc-d">'+desc+'</span>'+
+        '</button>'+
+        (extra ? '<div class="oc-extra'+(m===type?' show':'')+'">'+extra+'</div>' : '')+
+      '</div>';
     }
     return '<div class="ov" data-act="close-sheet"><div class="ov-card tall" data-stop>'+
       '<div class="grab"><i></i></div>'+
@@ -1621,11 +1643,9 @@
         '<p class="gt-q">Wie soll es mit „'+gname()+'“ weitergehen?</p>'+
         '<p class="gt-lead">Die Änderung gilt für die ganze Gruppe.</p>'+
         '<div class="opts" role="radiogroup" aria-label="Verlängern">'+
-          card("temp", I.clock, "Neues Enddatum", "Die Gruppe läuft bis zum neuen Datum weiter. Vorher wird erneut erinnert.")+
+          card("temp", I.clock, "Neues Enddatum", "Die Gruppe läuft bis zum neuen Datum weiter. Vorher wird erneut erinnert.",
+               dateTimeField('Neues Ende:', '', true))+
           card("perm", I.infinity, "Dauerhaft behalten", "Kein Enddatum mehr. Bleibt bestehen, bis ihr sie selbst löscht.")+
-        '</div>'+
-        '<div class="lzwrap'+(m==="temp"?' show':'')+'">'+
-          dateTimeField('Neues Ende:', '')+
         '</div>'+
       '</div></div>'+
     '</div></div>';
@@ -1783,9 +1803,8 @@
         break;
       case "set-extend":
         state.extendMode = el.getAttribute("data-type");
-        if(state.extendMode === "perm") state.picker = null;
-        render();
-        if(state.extendMode === "temp") setTimeout(scrollBodyToEnd, 330);
+        if(state.extendMode === "perm"){ state.picker = null; render(); }
+        syncCards("set-extend", state.extendMode, "confirm-extend", true);
         break;
       case "confirm-extend":
         if(!state.extendMode) break;
@@ -1817,6 +1836,10 @@
         state.remDismissed = false;
         render();
         break;
+      case "dismiss-chat-hint":
+        state.chatHintDismissed = true;
+        render();
+        break;
       case "dismiss-reminder":
         state.remDismissed = true;
         render();
@@ -1846,7 +1869,7 @@
     state.endDate = "2026-10-14"; state.endTime = "23:59"; state.calMonth = "2026-10";
     state.deleted = false; state.multi = false; state.ginfoFrom = "group";
     state.extendMode = null; state.ginfoSeen = false;
-    state.remDismissed = false; state.delDismissed = false;
+    state.remDismissed = false; state.delDismissed = false; state.chatHintDismissed = false;
     state.sheet = null; state.picker = null; state.preExtend = null; state.toast = null;
     go("chats");
   });
