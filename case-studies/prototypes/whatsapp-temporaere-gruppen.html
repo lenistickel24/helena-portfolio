@@ -722,6 +722,7 @@
   .banner .bi svg{width:16px;height:16px;display:block}
   .banner .bt{flex:1;font-size:12.8px;font-weight:600;line-height:1.35;color:var(--d-accent-ink)}
   .banner .bt small{display:block;color:#6E6E6E;font-size:11px;font-weight:400;line-height:1.4;margin-top:3px}
+  .banner .bt small + small{color:var(--d-faint);margin-top:1px}
   .banner .bb{
     border:0;cursor:pointer;flex-shrink:0;
     background:var(--d-accent);color:#fff;
@@ -1125,7 +1126,7 @@
       case "chatsReminder": return state.multi
         ? ["Mehrere am selben Tag","Eine Zeile statt einem Stapel","Enden mehrere Gruppen am selben Tag, werden Push und Übersichts-Zeile zu <b>einem</b> Hinweis gebündelt — sonst stapeln sich nach einem Festival-Wochenende drei Banner übereinander. Antippen öffnet die Liste mit „Verlängern“ je Gruppe."]
         : ["Ein Tag vorher — in der Liste","Dort, wo man hinschaut","Die Erinnerung kommt als Push (ignoriert die Stummschaltung) und als Zeile in der Chatübersicht — nicht nur im Chat, den man ja genau deshalb nicht öffnet. Die Gruppe rückt nach oben. Das <b>X</b> blendet nur die Zeile aus, nicht das Enddatum."];
-      case "reminder": return ["Ein Tag vorher — im Chat","Gemeinsame Erinnerung","Alle Mitglieder sehen denselben Hinweis, aber nur Admins sehen „Verlängern“. Der Hinweis lässt sich schließen — das Enddatum steht ja weiter im Header. Reagiert niemand, wird die Gruppe am Stichtag gelöscht (unten verlinkt)."];
+      case "reminder": return ["Ein Tag vorher — im Chat","Gemeinsame Erinnerung","Alle sehen dasselbe: wann Schluss ist und dass jetzt der Moment zum Sichern ist. Nur Admins sehen „Verlängern“. Der Hinweis lässt sich schließen — das Enddatum steht ja weiter im Header. Reagiert niemand, wird die Gruppe am Stichtag gelöscht (unten verlinkt)."];
     }
     return ["","",""];
   }
@@ -1540,6 +1541,7 @@
       '<div class="banner">'+
         '<span class="bi">'+I.clock+'</span>'+
         '<span class="bt">„'+gname()+'“ endet morgen um '+state.endTime+' Uhr.'+
+          '<small>Sichert, was ihr behalten wollt.</small>'+
           '<small>Nur Admins können verlängern.</small></span>'+
         '<button class="bb tap-target hint" data-act="open-extend">Verlängern</button>'+
         '<button class="bn-x tap-target" data-act="dismiss-chat-hint" aria-label="Hinweis schließen">'+I.close+'</button>'+
