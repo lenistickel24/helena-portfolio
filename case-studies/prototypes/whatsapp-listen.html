@@ -1,0 +1,1667 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Listen im Chat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;450;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  /* ---------- page chrome tokens (theme-aware) ---------- */
+  :root{
+    --bg:#EDEDED;
+    --text:#1F1F1F;
+    --text-soft:#6B6B6B;
+    --hairline:#D6D6D6;
+    --card:#F4F4F4;
+    --chrome-accent:#1F1F1F;
+    --focus:#1F1F1F;
+    --font-display:"Fraunces",Georgia,"Times New Roman",serif;
+    --font-ui:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    --font-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#1A1A1A;
+      --text:#ECECEC;
+      --text-soft:#9A9A9A;
+      --hairline:#333333;
+      --card:#202020;
+      --chrome-accent:#ECECEC;
+      --focus:#ECECEC;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#1A1A1A;
+    --text:#ECECEC;
+    --text-soft:#9A9A9A;
+    --hairline:#333333;
+    --card:#202020;
+    --chrome-accent:#ECECEC;
+    --focus:#ECECEC;
+  }
+
+  /* ---------- device tokens (fixed single-world light "app", pure greyscale) ---------- */
+  :root{
+    --d-screen:#FFFFFF;
+    --d-grey:#EFEFEF;
+    --d-ink:#1A1A1A;
+    --d-soft:#8A8A8A;
+    --d-faint:#B3B3B3;
+    --d-line:#E6E6E6;
+    --d-field:#F0F0F0;
+    /* "feature-touch" emphasis — carried by fill / border / icon, never hue */
+    --d-accent:#1A1A1A;
+    --d-accent-ink:#1A1A1A;
+    --d-accent-wash:#EAEAEA;
+    --d-accent-line:#CBCBCB;
+  }
+
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font-ui);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  button{font:inherit}
+
+  .wrap{max-width:940px;margin:0 auto;padding:44px 24px 72px}
+
+  /* ---------- intro ---------- */
+  .intro{max-width:600px;margin:0 auto 30px;text-align:center}
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--chrome-accent);margin:0 0 14px;
+  }
+  .intro h1{
+    font-family:var(--font-display);font-optical-sizing:auto;
+    font-weight:600;font-size:clamp(30px,5vw,44px);line-height:1.08;
+    letter-spacing:-.01em;text-wrap:balance;margin:0 0 12px;
+  }
+  .intro p{font-size:15px;color:var(--text-soft);margin:0;text-wrap:pretty}
+
+  /* ---------- stage layout ---------- */
+  .stage{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 356px minmax(0,1fr);
+    gap:24px;align-items:start;justify-content:center;
+  }
+  @media (max-width:900px){
+    .stage{grid-template-columns:1fr;max-width:356px;margin:0 auto}
+    .rail{order:3}
+    .sidenote{order:2}
+  }
+
+  /* ---------- ?test — clean app, nothing that gives the design away ---------- */
+  body.testmode .intro,
+  body.testmode .rail,
+  body.testmode .sidenote,
+  body.testmode .colophon{display:none}
+  body.testmode .wrap{padding:0;max-width:none}
+  body.testmode .stage{grid-template-columns:1fr;max-width:none;gap:0}
+  body.testmode .device-col{gap:0}
+  body.testmode .device{
+    width:min(100vw,420px);height:100vh;height:100dvh;
+    border-radius:0;padding:0;background:transparent;box-shadow:none;margin:0 auto;
+  }
+  body.testmode .screen{border-radius:0}
+  /* keine Tap-Hinweise im Test — sonst misst man nicht, ob Leute den Weg finden,
+     sondern nur, ob sie einem blinkenden Ring folgen können */
+  body.testmode .hint::after{display:none!important}
+  body.testmode .toolbar{position:fixed;right:12px;bottom:12px;z-index:20;gap:8px}
+  body.testmode .tb{background:var(--bg);opacity:.5;padding:7px 11px;font-size:12px;border-radius:20px}
+  body.testmode .tb:hover{opacity:1}
+  @media (min-width:641px){
+    body.testmode{display:flex;align-items:center;justify-content:center;min-height:100vh}
+    body.testmode .device{height:min(96vh,860px);border-radius:14px;overflow:hidden}
+    body.testmode .screen{border-radius:14px}
+  }
+
+  /* ---------- step rail ---------- */
+  .rail{display:flex;flex-direction:column;gap:2px;padding-top:8px}
+  .rail-title{
+    font-family:var(--font-mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;
+    color:var(--text-soft);margin:0 0 9px 12px;
+  }
+  .rail-title + .rail-title,
+  .step + .rail-title{margin-top:22px}
+  .step{
+    display:flex;align-items:center;gap:11px;width:100%;
+    border:0;background:transparent;color:var(--text-soft);
+    font-family:var(--font-ui);font-size:13.5px;font-weight:500;text-align:left;
+    padding:9px 12px;border-radius:9px;cursor:pointer;
+  }
+  .step:hover{background:color-mix(in srgb,var(--text) 6%,transparent)}
+  .step .dot{
+    width:9px;height:9px;border-radius:50%;
+    border:1.5px solid var(--hairline);flex-shrink:0;
+    transition:background .2s,border-color .2s;
+  }
+  .step[aria-current="true"]{color:var(--text);font-weight:600}
+  .step[aria-current="true"] .dot{background:var(--chrome-accent);border-color:var(--chrome-accent)}
+  .step.done .dot{background:var(--text-soft);border-color:var(--text-soft)}
+  .step .idx{font-family:var(--font-mono);font-size:10.5px;color:var(--d-faint);margin-left:auto}
+  .step:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+  /* Personen-Umschalter benutzt dieselbe Zeile, nur mit Avatar statt Punkt */
+  .step .mini{
+    width:20px;height:20px;border-radius:50%;flex-shrink:0;
+    background:var(--hairline);color:var(--text);
+    font-size:9.5px;font-weight:650;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .step[aria-current="true"] .mini{background:var(--chrome-accent);color:var(--bg)}
+
+  /* ---------- device ---------- */
+  .device-col{display:flex;flex-direction:column;align-items:center;gap:18px}
+  .device{
+    width:356px;height:722px;border-radius:52px;
+    background:#0C0C0D;padding:11px;
+    box-shadow:0 34px 60px -26px rgba(28,24,20,.42),0 4px 12px rgba(28,24,20,.12);
+    flex-shrink:0;
+  }
+  .screen{
+    position:relative;width:100%;height:100%;
+    background:var(--d-screen);border-radius:42px;overflow:hidden;
+    font-family:var(--font-ui);color:var(--d-ink);
+    display:flex;flex-direction:column;
+  }
+  .screen-inner{display:flex;flex-direction:column;height:100%;animation:fade .16s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+  /* status bar */
+  .statusbar{
+    flex-shrink:0;height:38px;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:0 26px 0 30px;font-size:13px;font-weight:600;letter-spacing:.01em;
+  }
+  .statusbar .sig{display:flex;gap:5px;align-items:center}
+  .statusbar .bars{display:flex;gap:2px;align-items:flex-end;height:10px}
+  .statusbar .bars i{width:3px;background:var(--d-ink);border-radius:1px}
+  .statusbar .bars i:nth-child(1){height:4px}
+  .statusbar .bars i:nth-child(2){height:6px}
+  .statusbar .bars i:nth-child(3){height:8px}
+  .statusbar .bars i:nth-child(4){height:10px}
+  .statusbar .batt{width:22px;height:11px;border:1.3px solid var(--d-ink);border-radius:3px;position:relative}
+  .statusbar .batt::after{content:"";position:absolute;right:-3.4px;top:3px;width:2px;height:5px;background:var(--d-ink);border-radius:0 1px 1px 0}
+  .statusbar .batt i{position:absolute;inset:1.6px;width:70%;background:var(--d-ink);border-radius:1px}
+
+  /* nav bar */
+  .nav{flex-shrink:0;display:flex;align-items:center;gap:10px;padding:6px 16px 12px;min-height:46px}
+  .circ{
+    width:34px;height:34px;border-radius:50%;background:var(--d-grey);
+    display:flex;align-items:center;justify-content:center;
+    border:0;cursor:pointer;flex-shrink:0;color:var(--d-ink);
+  }
+  .circ svg{width:16px;height:16px}
+  .nav .grow{flex:1}
+  .pill{
+    border:0;cursor:pointer;flex-shrink:0;background:var(--d-ink);color:#fff;
+    font-family:var(--font-ui);font-size:13.5px;font-weight:600;
+    padding:7px 15px;border-radius:20px;
+  }
+  .pill[disabled]{background:var(--d-line);color:var(--d-soft);cursor:default}
+  .link{
+    border:0;background:transparent;cursor:pointer;color:var(--d-accent);
+    font-family:var(--font-ui);font-size:15px;font-weight:600;padding:6px 4px;
+  }
+  .nav-lg{font-size:26px;font-weight:700;letter-spacing:-.02em;padding:2px 20px 8px}
+
+  .body{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
+  .body::-webkit-scrollbar{width:0}
+
+  .search{
+    margin:2px 16px 8px;background:var(--d-field);border-radius:11px;
+    padding:9px 13px;display:flex;align-items:center;gap:9px;
+    color:var(--d-soft);font-size:14px;
+  }
+  .search svg{width:15px;height:15px;flex-shrink:0}
+
+  .home{flex-shrink:0;display:flex;justify-content:center;padding:8px 0 10px}
+  .home i{width:120px;height:4px;border-radius:2px;background:#D9D9D9}
+
+  /* chat list rows */
+  .clist{padding:2px 0 6px}
+  .crow{
+    display:flex;align-items:center;gap:12px;padding:11px 18px;
+    width:100%;border:0;background:transparent;cursor:pointer;text-align:left;
+    font-family:var(--font-ui);position:relative;
+  }
+  .crow + .crow::before{content:"";position:absolute;left:72px;right:0;top:0;height:1px;background:var(--d-line)}
+  .av{
+    width:46px;height:46px;border-radius:50%;flex-shrink:0;background:var(--d-grey);
+    display:flex;align-items:center;justify-content:center;
+    font-size:16px;font-weight:600;color:var(--d-soft);
+  }
+  .av.grp svg{width:22px;height:22px;color:var(--d-faint)}
+  .cmain{flex:1;min-width:0}
+  .cline1{display:flex;align-items:baseline;gap:8px}
+  .cname{font-size:15.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .ctime{margin-left:auto;font-size:11.5px;color:var(--d-soft);flex-shrink:0}
+  .cline2{display:flex;align-items:center;gap:8px;margin-top:2px}
+  .cmsg{flex:1;min-width:0;font-size:13.5px;color:var(--d-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .unread{
+    flex-shrink:0;min-width:19px;height:19px;padding:0 5px;border-radius:10px;
+    background:var(--d-ink);color:#fff;font-size:11px;font-weight:600;
+    display:flex;align-items:center;justify-content:center;
+  }
+  /* Listen-Badge — dieselbe Bauform wie der Ablauf-Badge bei den temporaeren Gruppen */
+  .lbadge{
+    display:inline-flex;align-items:center;gap:4px;flex-shrink:0;
+    background:var(--d-accent-wash);color:var(--d-accent-ink);
+    border:1px solid var(--d-accent-line);
+    font-size:11px;font-weight:600;padding:2px 7px 2px 6px;border-radius:9px;white-space:nowrap;
+  }
+  .lbadge svg{width:11px;height:11px}
+
+  /* ---------- group chat ---------- */
+  .chat-head{display:flex;align-items:center;gap:11px;padding:6px 16px 11px}
+  .chat-id{
+    flex:1;display:flex;align-items:center;gap:11px;min-width:0;
+    border:0;background:transparent;cursor:pointer;text-align:left;
+    font-family:var(--font-ui);padding:2px 0;
+  }
+  .chat-head .av{width:36px;height:36px;font-size:14px}
+  .chat-id > span:last-child{display:flex;flex-direction:column;min-width:0}
+  .chat-head .ch-t{display:block;font-size:16px;font-weight:600;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .chat-head .ch-s{display:block;font-size:11.5px;color:var(--d-soft);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+  /* Listen-Leiste — die eigentliche neue Flaeche. Eigene Spur zwischen Kopfzeile
+     und Verlauf, damit sie keinen der drei Pin-Plaetze verbraucht. */
+  .listbar{
+    flex-shrink:0;width:100%;
+    display:flex;align-items:center;gap:11px;
+    padding:10px 14px;
+    border:0;border-top:1px solid var(--d-accent-line);border-bottom:1px solid var(--d-accent-line);
+    background:var(--d-accent-wash);
+    font-family:var(--font-ui);text-align:left;cursor:pointer;color:var(--d-ink);
+    position:relative;
+  }
+  .listbar .lb-ic{
+    width:30px;height:30px;border-radius:9px;flex-shrink:0;
+    background:var(--d-ink);color:#fff;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .listbar .lb-ic svg{width:16px;height:16px}
+  .listbar .lb-t{flex:1;min-width:0}
+  .listbar .lb-n{display:block;font-size:14px;font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .listbar .lb-cv{color:var(--d-soft);flex-shrink:0;display:flex}
+  .listbar .lb-cv svg{width:14px;height:14px;display:block}
+
+  .thread{
+    flex:1;overflow-y:auto;background:var(--d-screen);
+    padding:16px 16px 8px;display:flex;flex-direction:column;gap:10px;
+  }
+  .thread::-webkit-scrollbar{width:0}
+  .sys{
+    align-self:center;background:var(--d-grey);color:#666666;
+    font-size:11.5px;line-height:1.4;padding:6px 12px;border-radius:9px;
+    max-width:88%;text-align:center;
+  }
+  .sys b{font-weight:650;color:#4A4A4A}
+  .sys.neu{background:var(--d-accent-wash);color:var(--d-accent-ink);border:1px solid var(--d-accent-line)}
+  .bub{max-width:74%;font-size:13.5px;line-height:1.4;padding:8px 12px;border-radius:13px}
+  /* auf weißem Grund braucht die eingehende Blase eine Kante, sonst schwebt sie */
+  .bub.them{
+    align-self:flex-start;background:var(--d-screen);
+    border:1px solid var(--d-line);border-bottom-left-radius:4px;
+  }
+  .bub.me{align-self:flex-end;background:var(--d-grey);border-bottom-right-radius:4px}
+  .bub .bn{display:block;font-size:11.5px;font-weight:650;color:#8A8A8A;margin-bottom:1px}
+  /* Listen-Karte im Verlauf — einmal beim Anlegen gepostet */
+  .lcard{
+    align-self:flex-start;max-width:80%;
+    background:var(--d-screen);border:1px solid var(--d-line);border-radius:13px;
+    border-bottom-left-radius:4px;overflow:hidden;
+  }
+  .lcard .lc-h{display:flex;align-items:center;gap:10px;padding:10px 12px}
+  .lcard .lc-ic{
+    width:32px;height:32px;border-radius:9px;flex-shrink:0;
+    background:var(--d-accent-wash);border:1px solid var(--d-accent-line);color:var(--d-ink);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .lcard .lc-ic svg{width:16px;height:16px}
+  .lcard .lc-n{display:block;font-size:13.5px;font-weight:650}
+  .lcard .lc-s{display:block;font-size:11.5px;color:var(--d-soft);margin-top:1px}
+  .lcard .lc-b{
+    width:100%;border:0;border-top:1px solid var(--d-line);background:transparent;
+    font-family:var(--font-ui);font-size:13px;font-weight:650;color:var(--d-ink);
+    padding:9px;cursor:pointer;
+  }
+  .lcard .lc-b:active{background:var(--d-field)}
+
+  .composer{
+    flex-shrink:0;display:flex;align-items:center;gap:9px;
+    padding:9px 14px;background:var(--d-screen);border-top:1px solid var(--d-line);
+  }
+  .composer .cplus{
+    width:32px;height:32px;border-radius:50%;flex-shrink:0;
+    border:0;background:var(--d-field);color:var(--d-ink);cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .composer .cplus svg{width:17px;height:17px}
+  .composer .cbox{flex:1;background:var(--d-field);border-radius:18px;padding:8px 14px;font-size:13.5px;color:var(--d-faint)}
+  .composer .csend{
+    width:32px;height:32px;border-radius:50%;background:var(--d-ink);
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  .composer .csend svg{width:15px;height:15px;color:#fff}
+
+  /* ---------- bottom sheet (inside device) ---------- */
+  .ov{
+    position:absolute;inset:0;background:rgba(24,20,16,.34);
+    display:flex;flex-direction:column;justify-content:flex-end;
+    animation:shade .26s ease;z-index:5;
+  }
+  @keyframes shade{from{background-color:rgba(24,20,16,0)}to{background-color:rgba(24,20,16,.34)}}
+  .ov.lvl2{z-index:7}
+  .ov-card{
+    background:var(--d-screen);border-radius:24px 24px 0 0;overflow:hidden;
+    padding:8px 0 0;animation:rise .26s cubic-bezier(.2,.7,.3,1);
+    display:flex;flex-direction:column;max-height:88%;
+  }
+  @keyframes rise{from{transform:translateY(100%)}to{transform:none}}
+  .ov.instant,.ov.instant .ov-card{animation:none}
+  .ov-card .grab{display:flex;justify-content:center;padding:4px 0 10px;flex-shrink:0}
+  .ov-card .grab i{width:38px;height:4px;border-radius:2px;background:#DADADA}
+  .sh-head{
+    position:relative;flex-shrink:0;display:flex;align-items:center;gap:6px;
+    padding:0 13px 11px;min-height:34px;
+    border-bottom:1px solid var(--d-line);
+  }
+  .sh-head .sh-t{flex:1;min-width:0}
+  .sh-head h3{font-size:17px;font-weight:650;letter-spacing:-.01em;margin:0}
+  .sh-head .grow{flex:1}
+  .sh-head .link{padding-top:0}
+  /* absolut zentriert, damit der Titel nicht von der Breite der Knöpfe abhängt */
+  .sh-title{
+    position:absolute;left:50%;transform:translateX(-50%);
+    max-width:52%;text-align:center;pointer-events:none;
+    font-size:16.5px;font-weight:650;letter-spacing:-.015em;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+
+  /* ---------- Listen-Eintraege ---------- */
+  .items{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:4px}
+  .items::-webkit-scrollbar{width:0}
+  .sect{
+    font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--d-faint);padding:14px 18px 6px;
+  }
+  .irow{
+    display:flex;align-items:center;gap:12px;
+    padding:9px 16px 9px 18px;position:relative;
+  }
+  .irow + .irow::before{content:"";position:absolute;left:52px;right:0;top:0;height:1px;background:var(--d-line)}
+  .tick{
+    flex-shrink:0;width:22px;height:22px;border-radius:50%;
+    border:1.6px solid var(--d-line);background:transparent;cursor:pointer;padding:0;
+    display:flex;align-items:center;justify-content:center;
+    transition:background .16s,border-color .16s,transform .16s;
+  }
+  .tick svg{width:12px;height:12px;color:#fff;opacity:0;transition:opacity .14s}
+  .tick[aria-pressed="true"]{background:var(--d-ink);border-color:var(--d-ink)}
+  .tick[aria-pressed="true"] svg{opacity:1}
+  .tick:active{transform:scale(.86)}
+  .itxt{flex:1;min-width:0}
+  .itxt .it-n{display:block;font-size:14.5px;font-weight:500;line-height:1.3;color:var(--d-ink)}
+  .itxt .it-s{display:block;font-size:11.5px;color:var(--d-soft);margin-top:2px}
+  .irow.done .it-n{text-decoration:line-through;color:var(--d-soft);font-weight:450}
+  /* Zuweisungs-Slot: leer = gestrichelter Kreis, andere = graue Initiale,
+     ich selbst = gefuellt. Der Unterschied traegt ueber Fuellung, nicht ueber Farbe. */
+  .slot{
+    flex-shrink:0;border:0;background:transparent;padding:0;cursor:pointer;
+    display:flex;align-items:center;gap:7px;font-family:var(--font-ui);
+  }
+  .slot .sl-n{font-size:12px;color:var(--d-soft);max-width:76px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .slot .sl-a{
+    width:29px;height:29px;border-radius:50%;flex-shrink:0;
+    background:var(--d-grey);color:#6E6E6E;
+    font-size:11.5px;font-weight:650;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .slot .sl-a.mine{background:var(--d-ink);color:#fff}
+  .slot .sl-a.empty{
+    background:transparent;border:1.5px dashed var(--d-faint);color:var(--d-faint);
+    font-size:16px;font-weight:400;
+  }
+  /* ---------- Popover ----------
+     Sortieren, Zuweisen und das ⋯-Menü liegen als kleines Fenster über der Liste,
+     nicht als weiteres Sheet: drei gestapelte Sheets lesen sich als Bauwerk,
+     ein Popover als Nebenbemerkung. */
+  .pop-scrim{position:absolute;inset:0;z-index:8;background:rgba(24,20,16,.16);animation:fade .14s ease}
+  .pop{
+    position:absolute;z-index:9;min-width:208px;max-width:264px;max-height:74%;
+    background:var(--d-screen);border-radius:14px;overflow:hidden;
+    box-shadow:0 18px 40px -12px rgba(20,20,20,.42),0 3px 10px rgba(20,20,20,.16);
+    display:flex;flex-direction:column;
+    animation:popIn .18s cubic-bezier(.2,.8,.3,1.08);
+  }
+  @keyframes popIn{from{opacity:0;transform:scale(.93)}to{opacity:1;transform:none}}
+  .pop-h{
+    flex-shrink:0;font-size:10.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--d-faint);padding:11px 14px 6px;
+  }
+  .pop-list{overflow-y:auto}
+  .pop-list::-webkit-scrollbar{width:0}
+  .pop-opt{
+    display:flex;align-items:center;gap:10px;width:100%;position:relative;
+    border:0;background:transparent;cursor:pointer;text-align:left;
+    font-family:var(--font-ui);font-size:14.5px;color:var(--d-ink);padding:10px 14px;
+  }
+  .pop-opt + .pop-opt::before{content:"";position:absolute;left:14px;right:0;top:0;height:1px;background:var(--d-line)}
+  .pop-opt:active{background:var(--d-field)}
+  .pop-opt.sel{font-weight:650}
+  .pop-opt .po-t{flex:1;min-width:0}
+  .pop-opt .po-s{display:block;font-size:11.5px;font-weight:400;color:var(--d-soft);margin-top:1px}
+  .pop-opt .po-m{flex-shrink:0;display:flex;color:var(--d-ink)}
+  .pop-opt .po-m svg{width:15px;height:15px;display:block}
+  .pop-opt .po-a{
+    width:26px;height:26px;border-radius:50%;flex-shrink:0;
+    background:var(--d-grey);color:#6E6E6E;font-size:11px;font-weight:650;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .pop-opt .po-a.mine{background:var(--d-ink);color:#fff}
+  .pop-opt .po-a.empty{background:transparent;border:1.5px dashed var(--d-faint);color:var(--d-faint);font-size:14px;font-weight:400}
+  .pop-sep{flex-shrink:0;height:6px;background:var(--d-field)}
+  .pop-foot{
+    flex-shrink:0;font-size:11px;line-height:1.45;color:var(--d-soft);
+    padding:9px 14px 11px;border-top:1px solid var(--d-line);
+  }
+  .hicon{
+    flex-shrink:0;width:30px;height:30px;border-radius:50%;border:0;cursor:pointer;
+    background:var(--d-field);color:var(--d-ink);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .hicon svg{width:16px;height:16px;display:block}
+
+  .empty-note{padding:18px 18px 6px;font-size:13px;line-height:1.5;color:var(--d-soft)}
+
+  /* Eingabezeile am Sheet-Boden */
+  .addbar{
+    flex-shrink:0;display:flex;align-items:center;gap:9px;
+    padding:9px 14px 16px;background:var(--d-screen);border-top:1px solid var(--d-line);
+  }
+  .addbar input{
+    flex:1;min-width:0;border:0;background:var(--d-field);border-radius:18px;
+    padding:9px 14px;font-family:var(--font-ui);font-size:13.5px;color:var(--d-ink);
+  }
+  .addbar input::placeholder{color:var(--d-faint)}
+  .addbar .aplus{
+    width:32px;height:32px;border-radius:50%;flex-shrink:0;
+    border:0;background:var(--d-field);color:var(--d-ink);cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .addbar .aplus svg{width:17px;height:17px;display:block}
+  .addbar .aplus:active{background:var(--d-line)}
+  .addbar input:focus{outline:none;box-shadow:0 0 0 1.5px var(--d-accent-line)}
+  .addbar .csend{border:0;cursor:pointer}
+  /* Mehrzeiliges Einfuegen: Angebot statt stillem Aufsplitten */
+  .paste{
+    flex-shrink:0;display:flex;align-items:center;gap:10px;
+    padding:10px 14px;background:var(--d-accent-wash);
+    border-top:1px solid var(--d-accent-line);
+  }
+  .paste .pt{flex:1;font-size:12.5px;line-height:1.35;color:var(--d-accent-ink)}
+  .paste button{
+    border:0;cursor:pointer;flex-shrink:0;font-family:var(--font-ui);
+    font-size:12.5px;font-weight:650;padding:7px 12px;border-radius:8px;
+  }
+  .paste .yes{background:var(--d-ink);color:#fff}
+  .paste .no{background:transparent;color:var(--d-soft);border:1px solid var(--d-accent-line)}
+
+  /* Zuweisen-Sheet */
+  .ov-opt{
+    display:flex;align-items:center;gap:11px;width:100%;
+    border:0;background:transparent;cursor:pointer;text-align:left;
+    font-family:var(--font-ui);font-size:14.5px;font-weight:500;color:var(--d-ink);
+    padding:11px 18px;position:relative;
+  }
+  .ov-opt + .ov-opt::before{content:"";position:absolute;left:52px;right:18px;top:0;height:1px;background:var(--d-line)}
+  .ov-opt.me{font-weight:650}
+  .ov-opt .oo-a{
+    width:30px;height:30px;border-radius:50%;flex-shrink:0;background:var(--d-grey);
+    color:#6E6E6E;font-size:12px;font-weight:650;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .ov-opt.me .oo-a{background:var(--d-ink);color:#fff}
+  .ov-opt .oo-a.empty{background:transparent;border:1.5px dashed var(--d-faint);color:var(--d-faint);font-size:16px;font-weight:400}
+  .ov-opt .oo-t{flex:1;min-width:0}
+  .ov-opt .oo-s{font-size:12px;color:var(--d-soft);font-weight:450}
+  .ov-opt .oo-m{flex-shrink:0;color:var(--d-ink);display:flex}
+  .ov-opt .oo-m svg{width:16px;height:16px;display:block}
+
+  /* Anhang-Sheet — 4 Spalten wie im echten Menue */
+  .attach{display:grid;grid-template-columns:repeat(4,1fr);gap:18px 4px;padding:16px 12px 26px;background:var(--d-grey)}
+  .ov-card.menu{background:var(--d-grey)}
+  .attach button{
+    border:0;background:transparent;cursor:pointer;font-family:var(--font-ui);
+    display:flex;flex-direction:column;align-items:center;gap:7px;
+    font-size:12px;color:var(--d-ink);
+  }
+  .attach .ag{
+    width:52px;height:52px;border-radius:50%;background:var(--d-screen);color:var(--d-soft);
+    display:flex;align-items:center;justify-content:center;position:relative;
+  }
+  .attach .ag svg{width:22px;height:22px}
+  .attach button{font-size:11.5px;line-height:1.2;text-align:center}
+  .attach .is-hot .ag{background:var(--d-ink);color:#fff}
+  .attach .is-hot{font-weight:650}
+  .attach .neu{
+    position:absolute;top:-3px;right:-6px;
+    font-size:8.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+    background:var(--d-ink);color:#fff;padding:2px 5px;border-radius:5px;
+  }
+  /* ---------- "Liste erstellen" — dieselbe Bauform wie "Abstimmung erstellen" ----------
+     Grauer Grund, weisse gruppierte Felder, Abschnittslabels in Grossbuchstaben,
+     Abbrechen links als Kreis, Bestaetigung rechts als Pille. */
+  .ov-card.tall{
+    height:92%;max-height:92%;padding:0;background:var(--d-grey);
+    border-radius:24px 24px 0 0;overflow:hidden;
+    animation:rise .3s cubic-bezier(.2,.7,.3,1);
+  }
+  .fhead{
+    flex-shrink:0;display:flex;align-items:center;gap:12px;
+    padding:12px 14px 12px;background:var(--d-grey);
+  }
+  .fhead b{font-size:17px;font-weight:700;letter-spacing:-.015em}
+  /* auf grauem Grund braucht der Kreis die helle Fuellung, sonst verschwindet er */
+  .fhead .circ{background:var(--d-screen)}
+  .fhead .grow{flex:1}
+  .form{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:4px 16px 24px;background:var(--d-grey)}
+  .form::-webkit-scrollbar{width:0}
+  .flabel{
+    font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;
+    color:var(--d-soft);margin:14px 4px 7px;
+  }
+  .fgroup{background:var(--d-screen);border-radius:14px;overflow:hidden}
+  .frow{position:relative;display:flex;align-items:center;gap:10px;padding:0 14px}
+  .frow + .frow::before{content:"";position:absolute;left:14px;right:0;top:0;height:1px;background:var(--d-line)}
+  .finput{
+    flex:1;min-width:0;border:0;background:transparent;
+    font-family:var(--font-ui);font-size:15px;color:var(--d-ink);
+    padding:14px 0;
+  }
+  .finput:focus{outline:none}
+  .finput::placeholder{color:var(--d-faint)}
+  .frow.toggle{padding:12px 14px;font-size:14.5px;font-weight:500}
+  .frow.toggle span{flex:1;min-width:0;line-height:1.3}
+  .switch{
+    flex-shrink:0;width:45px;height:27px;border-radius:99px;
+    border:0;background:var(--d-line);position:relative;cursor:pointer;padding:0;
+    transition:background .2s ease;
+  }
+  .switch i{
+    position:absolute;top:3px;left:3px;width:21px;height:21px;border-radius:50%;
+    background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.28);transition:transform .2s ease;
+  }
+  .switch[aria-pressed="true"]{background:var(--d-ink)}
+  .switch[aria-pressed="true"] i{transform:translateX(18px)}
+  .fhint{font-size:11.5px;line-height:1.5;color:var(--d-soft);margin:10px 4px 0}
+  .frow.enter{overflow:hidden;animation:rowIn .26s cubic-bezier(.2,.7,.3,1)}
+  @keyframes rowIn{
+    from{opacity:0;max-height:0;transform:translateY(-5px)}
+    to{opacity:1;max-height:56px;transform:none}
+  }
+
+  .namebox{padding:6px 18px 18px}
+  .namebox input{
+    width:100%;border:0;background:var(--d-field);border-radius:13px;
+    padding:13px 15px;font-family:var(--font-ui);font-size:15px;color:var(--d-ink);
+  }
+  .namebox input:focus{outline:none;box-shadow:0 0 0 1.5px var(--d-accent-line)}
+  .namebox input::placeholder{color:var(--d-faint)}
+  .namebox .nb-h{font-size:11.5px;line-height:1.5;color:var(--d-soft);margin:9px 2px 14px}
+  .sheet-cta{
+    width:100%;border:0;cursor:pointer;background:var(--d-ink);color:#fff;
+    font-family:var(--font-ui);font-size:15px;font-weight:650;padding:13px;border-radius:13px;
+  }
+  .sheet-cta[disabled]{background:var(--d-field);color:var(--d-faint);cursor:default}
+
+  /* toast */
+  .toast{
+    position:absolute;left:50%;bottom:34px;transform:translateX(-50%);
+    background:var(--d-ink);color:#fff;font-size:12.5px;font-weight:500;line-height:1.4;
+    padding:9px 16px;border-radius:11px;max-width:82%;text-align:center;
+    animation:fade .18s ease;z-index:9;
+  }
+
+  /* tap hint */
+  .hint{position:relative}
+  .hint::after{
+    content:"";position:absolute;inset:-4px;border-radius:inherit;
+    box-shadow:0 0 0 2px var(--d-accent);opacity:0;
+    animation:pulse 2s ease-in-out infinite;pointer-events:none;
+  }
+  .listbar.hint::after{inset:0;border-radius:0}
+  .hicon.hint::after{inset:-3px}
+  .crow.hint::after{inset:2px 6px;border-radius:12px}
+  @keyframes pulse{0%,100%{opacity:0}50%{opacity:.7}}
+  .tap-target:focus-visible{outline:2px solid var(--d-accent);outline-offset:-2px;border-radius:8px}
+
+  /* sidenote under device */
+  .sidenote{max-width:340px;padding-top:8px}
+  .sn-k{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--text-soft);margin:0 0 7px}
+  .sn-h{font-family:var(--font-display);font-weight:600;font-size:19px;line-height:1.2;margin:0 0 8px;text-wrap:balance}
+  .sn-p{font-size:13.5px;line-height:1.55;color:var(--text-soft);margin:0}
+  .sn-p + .sn-p{margin-top:10px}
+  .sn-p b{color:var(--text);font-weight:600}
+
+  .toolbar{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+  .tb{
+    border:1px solid var(--hairline);background:transparent;color:var(--text);
+    font-family:var(--font-ui);font-size:13px;font-weight:500;
+    padding:8px 15px;border-radius:9px;cursor:pointer;
+    display:flex;align-items:center;gap:6px;
+  }
+  .tb:hover{background:color-mix(in srgb,var(--text) 6%,transparent)}
+  .tb[disabled]{opacity:.4;cursor:default}
+  .tb:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+  .tb svg{width:13px;height:13px}
+
+  .colophon{
+    max-width:600px;margin:52px auto 0;padding-top:20px;border-top:1px solid var(--hairline);
+    font-size:12px;color:var(--text-soft);text-align:center;line-height:1.6;
+  }
+  .colophon code{font-family:var(--font-mono);font-size:11px}
+
+  /* ---------- kein doppeltes Chrome ----------
+     Wo kein Geraeterahmen gezeichnet wird (Test-Modus, echtes Handy), liefern
+     Browser und Betriebssystem Statusleiste und Home-Indikator schon selbst. */
+  body.testmode .statusbar, body.testmode .home{display:none}
+  body.testmode .screen{padding-top:18px}
+  @media (max-width:640px){
+    .statusbar,.home{display:none}
+    .screen{padding-top:18px}
+  }
+
+  /* ---------- phone: der Geraeterahmen geht aus dem Weg ----------
+     Steht bewusst am Ende: die Basisregel .device{width:356px} kommt weiter oben. */
+  @media (max-width:640px){
+    .wrap{padding:0}
+    .intro{padding:26px 20px 18px;margin-bottom:0}
+    .intro h1{font-size:27px}
+    .intro p{font-size:14px}
+    .stage{max-width:none;gap:0}
+    .device-col{gap:14px}
+    .device{width:100%;height:86vh;height:86dvh;border-radius:0;padding:0;background:transparent;box-shadow:none}
+    .screen{border-radius:0}
+    .toolbar{padding:12px 0}
+    .sidenote{max-width:none;padding:4px 20px 0}
+    .rail{padding:8px 12px 0}
+    .colophon{margin:34px 20px 0;max-width:none;padding-bottom:28px}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    *,*::after{animation:none!important;transition:none!important}
+    .frow.enter{overflow:visible}
+    .hint::after{opacity:.55}
+    .screen-inner{opacity:1;transform:none}
+  }
+</style>
+
+<div class="wrap">
+  <div class="intro">
+    <p class="eyebrow">Feature-Konzept · Klick-Prototyp</p>
+    <h1>Listen im Chat</h1>
+    <p>Eine gemeinsame Liste, die im Chat gepinnt bleibt: Alle können etwas eintragen, jede:r kann etwas übernehmen, und Einträge lassen sich Personen zuordnen — jederzeit änderbar. Der Flow vom Anlegen über Übernehmen und Zuweisen bis zum Abhaken, Schritt für Schritt durchklickbar.</p>
+  </div>
+
+  <div class="stage">
+    <nav class="rail" id="rail" aria-label="Schritte"></nav>
+
+    <div class="device-col">
+      <div class="device">
+        <div class="screen" id="screen"></div>
+      </div>
+      <div class="toolbar">
+        <button class="tb" id="btn-back">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+          Zurück
+        </button>
+        <button class="tb" id="btn-reset">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
+          Neu starten
+        </button>
+      </div>
+    </div>
+
+    <aside class="sidenote" id="sidenote"></aside>
+  </div>
+
+  <p class="colophon">
+    Reiner Graustufen-Prototyp — es geht ausschließlich um Interaktionslogik und Konzept,
+    nicht um visuelles Design. Bewusst keine 1:1-Nachbildung der WhatsApp-Marke.
+    Alle Personen- und Gruppennamen sind Fake-Namen. Konzept: <code>03_Konzept.md</code>.
+  </p>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ?test — Intro, Flow-Leiste, Designnotizen und alle Tap-Hinweise ausblenden.
+     Wichtig fürs User-Testing: die Notizen erklären jede Design-Entscheidung.
+     Wer sie vorher liest, kann den Prototyp nicht mehr unvoreingenommen benutzen. */
+  var TEST = /[?&]test\b/.test(location.search);
+  if(TEST) document.body.classList.add("testmode");
+
+  /* ---------- Icons ---------- */
+  var I = {
+    list:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M3.5 6.2l1 1 2-2.4"/><path d="M3.5 12.2l1 1 2-2.4"/><circle cx="4.5" cy="18" r="1.3"/></svg>',
+    check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5L9.5 18 20 6.5"/></svg>',
+    chev:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>',
+    back:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>',
+    x:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+    plus:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>',
+    send:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="M6 11l6-6 6 6"/></svg>',
+    search:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.4-3.4"/></svg>',
+    group:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 19c0-3.1 2.7-5 6-5s6 1.9 6 5"/><path d="M16 5.6A3.2 3.2 0 0 1 16 12"/><path d="M17.5 14.4c2.1.6 3.5 2.2 3.5 4.6"/></svg>',
+    cam:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5h3.2l1.4-2h8.8l1.4 2H21v10H3z"/><circle cx="12" cy="13" r="3.2"/></svg>',
+    pic:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="15" rx="2.5"/><circle cx="8.5" cy="10" r="1.6"/><path d="M4 17l5-4.5 4.5 4 3-2.5L20 18"/></svg>',
+    pin:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>',
+    person:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="10" r="3.2"/><path d="M6.2 18.6a6.2 6.2 0 0 1 11.6 0"/></svg>',
+    doc:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg>',
+    poll:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M5 8h13M5 13h9M5 18h5"/></svg>',
+    cal:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>',
+    more:'<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="5.5" cy="12" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="18.5" cy="12" r="1.7"/></svg>',
+    sort:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20V4M4 7l3-3 3 3"/><path d="M17 4v16M14 17l3 3 3-3"/></svg>'
+  };
+
+  /* ---------- Themen ----------
+     Muss auf dem Gerät laufen: WhatsApp ist Ende-zu-Ende-verschlüsselt, der Server
+     sieht die Einträge nie und kann sie folglich auch nicht einsortieren. Also ein
+     kleines mitgeliefertes Stichwortverzeichnis pro Sprache — das liegt manchmal
+     daneben, deshalb ist "Sonstiges" sichtbar und alles von Hand korrigierbar. */
+  /* Geprüft wird von spezifisch nach allgemein — sonst gewinnt "Salat" in
+     "Salatschüssel" und das Geschirr landet beim Essen. Angezeigt wird in
+     THEMEN_ORDER, das ist bewusst eine andere Reihenfolge. */
+  var THEMEN = [
+    ["Geschirr & Deko", /teller|becher|besteck|gabel|messer|serviette|schüssel|schale|tisch|decke|kerze|lichterkette|müllbeutel/i],
+    ["Grillen",         /grill|kohle|anzünd|holzkohle|zange|alufolie|feuer/i],
+    ["Getränke",        /bier|wein|sekt|wasser|sprudel|saft|limo|cola|eis|kühl|schorle|bowle/i],
+    ["Essen",           /salat|brötchen|brot|baguette|würstchen|wurst|fleisch|halloumi|käse|spieß|gemüse|obst|kuchen|nachtisch|dip|chips|snack|senf|ketchup|soße|sauce|tofu|oliven/i]
+  ];
+  function themaVon(name){
+    for(var i=0;i<THEMEN.length;i++) if(THEMEN[i][1].test(name)) return THEMEN[i][0];
+    return "Sonstiges";
+  }
+  var THEMEN_ORDER = ["Essen","Getränke","Grillen","Geschirr & Deko","Sonstiges"];
+
+  /* ---------- Personen (Fake-Namen) ---------- */
+  var MEMBERS = [
+    {id:"mira",  name:"Mira",   ini:"M", rolle:"Gastgeberin"},
+    {id:"jonas", name:"Jonas",  ini:"J", rolle:""},
+    {id:"elif",  name:"Elif",   ini:"E", rolle:""},
+    {id:"tobias",name:"Tobias", ini:"T", rolle:""},
+    {id:"nora",  name:"Nora",   ini:"N", rolle:""},
+    {id:"sami",  name:"Sami",   ini:"S", rolle:""}
+  ];
+  function M(id){for(var i=0;i<MEMBERS.length;i++) if(MEMBERS[i].id===id) return MEMBERS[i]; return null;}
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];});}
+
+  /* Was die anderen ergänzen, nachdem die Liste angelegt wurde. */
+  var VON_DEN_ANDEREN = [
+    ["Kartoffelsalat","für ~12 Personen","jonas",false],
+    ["Brötchen, 30 Stück","","elif",false],
+    ["Grillkohle, 3 kg","","tobias",false],
+    ["Anzündwürfel","","tobias",false],
+    ["Gemüsespieße","4 von uns essen vegetarisch","nora",false],
+    ["Halloumi, 2 Packungen","","nora",false],
+    ["Würstchen, 20 Stück","","",false],
+    ["Ketchup + Senf","","",false],
+    ["Große Salatschüssel","nur leihen, nicht kaufen","mira",false],
+    ["Eis, 5 kg","","",false],
+    ["Sprudel, 6 Flaschen","","sami",false],
+    ["Kasten Bier","","sami",true],
+    ["Pappteller + Becher","","mira",true],
+    ["Bluetooth-Box","","",false]
+  ];
+  var SEED_MSGS = [
+    {t:"sys",text:"<b>Mira</b> hat die Gruppe erstellt · Samstag"},
+    {t:"msg",from:"mira", text:"Sommerfest steht! Am 14., ab 16 Uhr, der Garten ist unser ☀️"},
+    {t:"msg",from:"jonas",text:"Endlich. Ich mach den Kartoffelsalat"},
+    {t:"msg",from:"nora", text:"Ich bring was Vegetarisches mit. Sind wir jetzt 12 oder 14?"},
+    {t:"msg",from:"sami", text:"Bier ist erledigt, liegt schon im Auto 🍺"},
+    /* Steht bewusst zuletzt: Der Verlauf endet mit der Ankündigung und zeigt
+       damit auf das +, mit dem die Liste angelegt wird. */
+    {t:"msg",from:"mira", text:"12 Erwachsene + Elifs zwei. Ich pack das gleich in eine Liste, bevor es hier untergeht"}
+  ];
+
+  /* ---------- Flow-Schritte + Designnotizen ---------- */
+  var STEPS = [
+    {id:"chats", label:"Chatliste", hint:"crow",
+     k:"Ausgangspunkt",
+     h:"Noch gibt es keine Liste — nur einen Chat, in dem geplant wird",
+     p:["Der Flow beginnt bewusst <b>vor</b> dem Feature. Im Verlauf steht die Absprache als Nachrichten, so wie heute: Jonas macht den Kartoffelsalat, Nora fragt nach der Personenzahl, und niemand weiß, was noch fehlt.",
+        "Der Listen-Badge in dieser Übersicht taucht erst auf, wenn es eine Liste gibt — Schritt 9."]},
+    {id:"chat", label:"Gruppe öffnen", hint:"cplus",
+     k:"Wo es entsteht",
+     h:"Angelegt wird sie da, wo Umfrage und Termin schon wohnen",
+     p:["Das <b>+</b> links in der Nachrichtenzeile ist der Ort, an dem in WhatsApp strukturierte Objekte entstehen. Die Liste erfindet keinen neuen Ort, sie reiht sich ein.",
+        "Das ist zugleich das stärkste Machbarkeits-Argument des ganzen Konzepts: Umfragen und Termine haben den schwierigen Teil längst gelöst — Objekte, die im Chat leben, eigenen Zustand halten und Interaktion erlauben, ohne dass jemand eine Nachricht schreibt."]},
+    {id:"erstellen", label:"Liste erstellen", hint:"attach-liste",
+     k:"Das Formular",
+     h:"Gebaut wie „Abstimmung erstellen“ — nicht neu erfunden",
+     p:["Dieselbe Bauform: Bottom-Sheet, Abbrechen links, <b>Erstellen</b> oben rechts, Abschnitte in Großbuchstaben, weiße gruppierte Felder auf grauem Grund. Wer schon mal eine Abstimmung gemacht hat, muss hier nichts lernen.",
+        "Die Einträge funktionieren wie die Optionen einer Abstimmung: Sobald in die letzte Zeile getippt wird, kommt eine neue dazu.",
+        "<b>Ohne Greifer zum Umsortieren</b> — eine Zwischenfassung hatte sie. Verworfen, weil sie am falschen Ende saßen: Beim Anlegen hat die Liste fünf selbst getippte Einträge, deren Reihenfolge niemanden stört. Interessant würde Sortieren erst später bei vierzehn Einträgen, und dort gab es die Funktion nicht. Zieht man sie konsequent auch in die Liste, wird es schlimmer: In einer Liste, an der sechs Leute schreiben, ist eine Handreihenfolge nach einem Tag zerschrieben. Ordnung entsteht hier über die <b>Ansichten</b> — automatisch, und für jede Person einzeln.",
+        "<b>Die Sortierung steht bewusst nicht hier.</b> Wie die Liste gruppiert angezeigt wird, stellt sich jede:r in der Liste selbst ein — das ist eine Ansicht und keine Eigenschaft der Liste. Ins Anlegen gehört nur, was für alle gilt.",
+        "Der Schalter ist damit die einzige Einstellung — und seine Voreinstellung (<b>an</b>) ist die eigentliche Aussage des Features.",
+        "<b>Ehrliche Nebenwirkung:</b> Das Anhang-Menü hat acht Plätze in einem 4×2-Raster. Die Liste ist die neunte Sache, also muss eine weichen — hier <b>KI-Bilder</b>. Ein neues Feature im Anhang-Menü bekommt man nicht umsonst; wer das nicht benennt, verkauft einen Vorschlag ohne seinen Preis."]},
+    {id:"leiste", label:"Die Listen-Leiste", hint:"listbar",
+     k:"Der neue Platz",
+     h:"Eine eigene Spur zwischen Kopfzeile und Verlauf",
+     p:["Die Leiste ist die einzige wirklich neue Fläche — und das Feature steht und fällt mit ihr. Wäre die Liste nur eine Nachricht im Verlauf, hätte sie genau das Problem, das sie lösen soll: Sie rutscht nach oben weg.",
+        "Bewusst <b>kein</b> gepinnter Beitrag. WhatsApp erlaubt drei Pins, die Leute längst für anderes benutzen. Die Liste verbraucht keinen davon."]},
+    {id:"uebernehmen", label:"Etwas übernehmen", hint:"slot-frei",
+     k:"Der Kern",
+     h:"Zwei Taps — sonst tippen die Leute wieder „ich bring Brot mit“",
+     p:["Der Maßstab ist nicht eine To-do-App, sondern die acht Sekunden, die eine Nachricht kostet. Gestrichelter Kreis antippen, <b>Ich</b> wählen, fertig.",
+        "In Graustufen trägt die <b>Füllung</b> die Information: gestrichelt = frei, grau = jemand anderes, gefüllt = ich selbst. Kein Farbton nötig.",
+        "Die Liste liegt als Sheet über dem Chat, statt ihn zu ersetzen — ein Vollbild-Screen liest sich wie „du verlässt jetzt den Chat“ und verteuert eine Zehn-Sekunden-Handlung."]},
+    {id:"zuweisen", label:"Jemandem zuweisen", hint:"slot-tobias",
+     k:"Soziale Regel",
+     h:"Alle dürfen alles umverteilen — niemand muss fragen",
+     p:["Ein Rechtemodell wäre in einem Freundeskreis sozial falsch und technisch teuer. Stattdessen ist die Änderung einfach <b>sichtbar</b>: Im Chat steht, wer was zu wem verschoben hat.",
+        "Zuweisen ist die <b>einzige</b> Handlung, die eine echte Push-Benachrichtigung auslöst — weil sie als Einzige einer namentlich genannten Person eine Aufgabe gibt."]},
+    {id:"hinzufuegen", label:"Etwas hinzufügen", hint:"addinput",
+     k:"Realistischer Einstieg",
+     h:"Mehrzeilig einfügen wird angeboten, nicht heimlich gemacht",
+     p:["Das Erste, was Leute tun, ist ihre bestehende Liste hineinkopieren — aus Notizen, aus einer alten Nachricht. Mehrere Zeilen lösen deshalb ein Angebot aus: <b>„Das sind 6 Zeilen. Als 6 Einträge anlegen?“</b>",
+        "Nicht stillschweigend aufsplitten: Manchmal <i>ist</i> ein eingefügter Block genau ein Eintrag. Das Eingabefeld behält den Fokus, damit mehrere Einträge im Tipptempo reingehen."]},
+    {id:"abhaken", label:"Abhaken", hint:"tick-frei",
+     k:"Zwei Achsen",
+     h:"Gekauft und übernommen sind absichtlich getrennt",
+     p:["Der Kreis links heißt „ist erledigt“, der Avatar rechts heißt „gehört mir“. Beides ist unabhängig: Sami kann auf dem Weg das Eis mitnehmen, das nie jemand übernommen hatte.",
+        "Ein einspuriger Zustand (frei → übernommen → erledigt) liest sich im Diagramm einfacher und scheitert sofort im Supermarkt."]},
+    {id:"ansicht", label:"Ansicht wechseln", hint:"views",
+     k:"Jede:r für sich",
+     h:"Ein Sortier-Symbol im Kopf, kein Reiter über der Liste",
+     p:["Eine erste Fassung machte die Sortierung zur Eigenschaft der <i>Liste</i>, damit alle dasselbe sehen. Falsch herum gedacht: Eine Ansicht ist genau das, was persönlich sein muss. Sonst nimmt eine Person allen anderen ihre Sortierung weg — und in einer Liste, an der sechs Leute mitschreiben, passiert das am ersten Tag.",
+        "<b>Nach Personen</b> ist die Ansicht, die den eigentlichen Job erledigt: <i>Was muss ich besorgen?</i> Deshalb steht <b>Ich</b> ganz oben und <b>Noch frei</b> direkt darunter — das sind die beiden Fragen, die überhaupt jemand an so eine Liste hat. Die Ansicht der Gastgeberin und die einer Person, die eine Sache übernommen hat, sind schlicht nicht dieselbe.",
+        "Die gezogene Reihenfolge bleibt darunter das Gespeicherte; Themen und Personen gruppieren nur die Anzeige. Weil es niemanden außer der eigenen Ansicht betrifft, kostet das Umschalten keine Systemzeile. Dass die Einstellung wirklich nur die eigene ist, kann ein Prototyp auf einem Gerät nicht zeigen — das ist eine Behauptung, und sie wird im Test abgefragt statt vorgeführt.",
+        "<b>Warum ein Popover und keine Reiter über der Liste:</b> Drei Reiter kosten dauerhaft eine Zeile und behaupten, die Ansicht sei eine ständige Entscheidung. Sie wird aber einmal getroffen und dann selten geändert. Ein Symbol im Kopf kostet nichts und lässt der Liste den Platz — und dieselbe Bauform trägt auch das Zuweisen und das ⋯-Menü, statt drei Sheets übereinanderzustapeln."]},
+    {id:"uebersicht", label:"In der Übersicht", hint:"",
+     k:"Von außen",
+     h:"Der Badge zeigt genau das, was gerade passiert ist",
+     p:["Einmal aus der Gruppe zurück — wie in der echten App. Die Zahl im Badge ist das Ergebnis der eigenen Handlungen von eben: <b>„3 offen“</b> heißt drei Einträge, die noch niemand übernommen hat.",
+        "Bewusst die Zahl der <b>offenen</b> Einträge, nicht die Gesamtzahl: „14 Einträge“ ist eine Größenangabe, „3 offen“ ist eine Aufforderung.",
+        "<b>Zu prüfen:</b> Der Badge ist eine Erweiterung über das Kernkonzept hinaus. Er kostet Aufmerksamkeit in einer Liste, in der jede Zeile darum kämpft — im Test entscheidet sich, ob er bleibt."]},
+    {id:"beenden", label:"Liste beenden", hint:"beenden",
+     k:"Endlichkeit",
+     h:"Listen sind sterblich — wie die Anlässe, für die sie entstehen",
+     p:["Nach dem Fest verschwindet die Leiste; im Verlauf bleibt eine Abschlusskarte. Nachlesbar, aber aus dem Weg.",
+        "Ohne diesen Schritt wird aus einem Chat-Feature schleichend ein Aufgabenverwalter, den niemand wollte — und der Chat trägt für immer eine Leiste über einer Liste von letztem Sommer."]}
+  ];
+
+  /* ---------- State ---------- */
+  var st, hist;
+  function frischeMsgs(){
+    return SEED_MSGS.map(function(m){var c={};for(var k in m)c[k]=m[k];return c;});
+  }
+  function seed(){
+    st = {
+      screen:"chats", sheet:null, me:"mira", step:"chats",
+      active:0, lists:[],
+      msgs: frischeMsgs(),
+      /* Die Ansicht gehoert der Person, nicht der Liste — jede:r sortiert fuer sich. */
+      view:{mira:"reihenfolge", jonas:"reihenfolge", elif:"reihenfolge",
+            tobias:"reihenfolge", nora:"reihenfolge", sami:"reihenfolge"},
+      pop:null, draft:"", pending:null, focusAdd:false, toast:null, instant:false,
+      newName:"", newItems:["",""], newOpen:true, focusRow:null
+    };
+    hist = [];
+  }
+  function hasList(){ return st.lists.length > 0; }
+  function L(){ return st.lists[st.active]; }
+  function open(){ return L().items.filter(function(i){return !i.done;}); }
+  function freeCount(){ return open().filter(function(i){return !i.by;}).length; }
+  function claimed(){ return L().items.filter(function(i){return i.by;}).length; }
+
+  /* ---------- Systemzeilen, gebündelt ---------- */
+  function joinNames(a){
+    if(a.length===1) return esc(a[0]);
+    if(a.length===2) return esc(a[0])+" und "+esc(a[1]);
+    return a.slice(0,-1).map(esc).join(", ")+" und "+esc(a[a.length-1]);
+  }
+  function sys(sig, build, names){
+    var last = st.msgs[st.msgs.length-1];
+    if(last && last.t==="sys" && last.sig===sig){
+      last.names = last.names.concat(names);
+      last.text = build(last.names);
+      return;
+    }
+    st.msgs.push({t:"sys", sig:sig, names:names.slice(), text:build(names)});
+  }
+  function plain(text, neu){ st.msgs.push({t:"sys", text:text, neu:!!neu}); }
+
+  /* ---------- Liste anlegen ---------- */
+  var uid = 0;
+  function createList(name, eigene, offenFuerAlle){
+    var items = eigene.map(function(t){ return {id:"e"+(uid++), name:t, note:"", by:null, done:false}; });
+    st.lists.push({name:name, closed:false, offen:offenFuerAlle !== false, items:items});
+    st.active = st.lists.length - 1;
+    st.msgs.push({t:"card", list:st.active});
+    plain("<b>"+esc(M(st.me).name)+"</b> hat die Liste „"+esc(name)+"“ angelegt · alle können ergänzen", true);
+    /* Die anderen ergänzen — das ist der Punkt des Features und muss vorkommen,
+       sonst bleibt es die getippte Nachricht mit besserer Typografie. */
+    VON_DEN_ANDEREN.forEach(function(r){
+      st.lists[st.active].items.push({id:"a"+(uid++), name:r[0], note:r[1], by:r[2]||null, done:r[3]});
+    });
+    plain("<b>Elif</b>, <b>Tobias</b> und <b>3 weitere</b> haben "+VON_DEN_ANDEREN.length+" Einträge hinzugefügt");
+  }
+  /* Wer über die Flow-Leiste mitten hinein springt, braucht trotzdem eine Liste. */
+  function ensureList(){ if(!hasList()) createList("Wer bringt was mit", [], true); }
+  /* ...und wer zurück vor das Anlegen springt, muss den Zustand von davor sehen.
+     Sonst ist die Liste beim zweiten Durchgang schon da und der Anlege-Flow,
+     um den es hier geht, lässt sich gar nicht mehr durchspielen. */
+  function resetVorListe(){
+    if(!hasList()) return false;
+    st.lists = []; st.active = 0;
+    st.msgs = frischeMsgs();
+    st.pending = null; st.draft = "";
+    return true;
+  }
+
+  /* ---------- Rail ---------- */
+  var railEl = document.getElementById("rail");
+  function renderRail(){
+    var idx = STEPS.map(function(s){return s.id;}).indexOf(st.step);
+    var h = '<p class="rail-title">Flow</p>';
+    STEPS.forEach(function(s,i){
+      h += '<button class="step'+(i<idx?" done":"")+'" data-step="'+s.id+'"'+(i===idx?' aria-current="true"':'')+'>'+
+           '<span class="dot"></span>'+esc(s.label)+'<span class="idx">'+(i+1)+'</span></button>';
+    });
+    railEl.innerHTML = h;
+  }
+  var sideEl = document.getElementById("sidenote");
+  function renderSide(){
+    var s = STEPS.filter(function(x){return x.id===st.step;})[0] || STEPS[0];
+    sideEl.innerHTML = '<p class="sn-k">'+esc(s.k)+'</p><h2 class="sn-h">'+esc(s.h)+'</h2>'+
+      s.p.map(function(t){return '<p class="sn-p">'+t+'</p>';}).join("");
+  }
+  function hintOf(){  /* "views" markiert die Ansichts-Chips, "beenden" das ⋯-Menü */
+    if(TEST) return "";
+    var s = STEPS.filter(function(x){return x.id===st.step;})[0];
+    return s ? s.hint : "";
+  }
+
+  /* ---------- Render ---------- */
+  var screenEl = document.getElementById("screen");
+
+  function statusbar(){
+    return '<div class="statusbar"><span>16:05</span><span class="sig">'+
+      '<span class="bars"><i></i><i></i><i></i><i></i></span>'+
+      '<span class="batt"><i></i></span></span></div>';
+  }
+  function home(){ return '<div class="home"><i></i></div>'; }
+
+  function chatsScreen(){
+    var hint = hintOf()==="crow" ? " hint" : "";
+    var badge = (hasList() && !L().closed)
+      ? '<span class="lbadge">'+I.list+freeCount()+' offen</span>' : "";
+    var last = hasList()
+      ? "Elif, Tobias und 3 weitere haben Einträge hinzugefügt"
+      : "Mira: Ich pack das gleich in eine Liste";
+    var h = '<div class="screen-inner">'+statusbar()+
+      '<div class="nav nav-lg">Chats</div>'+
+      '<div class="search">'+I.search+'Suchen</div>'+
+      '<div class="body"><div class="clist">'+
+        '<button class="crow tap-target'+hint+'" data-go="chat">'+
+          '<span class="av grp">'+I.group+'</span>'+
+          '<span class="cmain">'+
+            '<span class="cline1"><span class="cname">Sommerfest bei Mira</span><span class="ctime">16:05</span></span>'+
+            '<span class="cline2"><span class="cmsg">'+esc(last)+'</span>'+badge+'<span class="unread">3</span></span>'+
+          '</span>'+
+        '</button>'+
+        row("Mama","Rufst du morgen kurz an?","Gestern")+
+        row("Lauftreff Dienstag","Nora: Diese Woche 19 Uhr","Gestern")+
+        row("WG Ahornweg","Kim: Spülmaschine läuft","Mo")+
+        row("Kim","Alles gut bei dir?","So")+
+      '</div></div>'+home()+'</div>';
+    return h;
+    function row(n,m,t){
+      return '<button class="crow" tabindex="-1"><span class="av">'+esc(n.slice(0,1))+'</span>'+
+        '<span class="cmain"><span class="cline1"><span class="cname">'+esc(n)+'</span>'+
+        '<span class="ctime">'+t+'</span></span>'+
+        '<span class="cline2"><span class="cmsg">'+esc(m)+'</span></span></span></button>';
+    }
+  }
+
+  function threadHTML(){
+    var h = "";
+    st.msgs.forEach(function(m){
+      if(m.t==="sys"){ h += '<div class="sys'+(m.neu?" neu":"")+'">'+m.text+'</div>'; return; }
+      if(m.t==="card"){
+        var l = st.lists[m.list]; if(!l) return;
+        h += '<div class="lcard"><div class="lc-h"><span class="lc-ic">'+I.list+'</span>'+
+          '<span><span class="lc-n">'+esc(l.name)+'</span>'+
+          '<span class="lc-s">'+l.items.length+' Einträge · '+
+          (l.closed ? 'beendet' : l.items.filter(function(i){return i.by;}).length+' übernommen')+'</span></span></div>'+
+          (l.closed ? '' : '<button class="lc-b tap-target" data-open="'+m.list+'">Liste öffnen</button>')+
+          '</div>';
+        return;
+      }
+      var mine = m.from===st.me;
+      h += '<div class="bub '+(mine?"me":"them")+'">'+
+        (mine?'':'<span class="bn">'+esc(M(m.from).name)+'</span>')+esc(m.text)+'</div>';
+    });
+    return h;
+  }
+
+  function chatScreen(){
+    var bar = "";
+    if(hasList() && !L().closed){
+      var l = L();
+      bar = '<button class="listbar tap-target'+(hintOf()==="listbar"?" hint":"")+'" data-sheet="liste">'+
+        '<span class="lb-ic">'+I.list+'</span>'+
+        '<span class="lb-t"><span class="lb-n">'+esc(l.name)+'</span></span>'+
+        '<span class="lb-cv">'+I.chev+'</span>'+
+      '</button>';
+    }
+    return '<div class="screen-inner">'+statusbar()+
+      '<div class="chat-head">'+
+        '<button class="circ tap-target" data-go="chats">'+I.back+'</button>'+
+        '<span class="chat-id"><span class="av grp">'+I.group+'</span>'+
+          '<span><span class="ch-t">Sommerfest bei Mira</span>'+
+          '<span class="ch-s">Mira, Jonas, Elif, Tobias, Nora, Sami</span></span></span>'+
+      '</div>'+ bar +
+      '<div class="thread" id="thread">'+threadHTML()+'</div>'+
+      '<div class="composer">'+
+        '<button class="cplus tap-target'+(hintOf()==="cplus"?" hint":"")+'" data-sheet="anhang" aria-label="Anhängen">'+I.plus+'</button>'+
+        '<span class="cbox">Nachricht</span>'+
+        '<span class="csend">'+I.send+'</span>'+
+      '</div>'+home()+'</div>';
+  }
+
+  /* ---------- Listen-Sheet ---------- */
+  /* ohneName: in der Personen-Ansicht sagt schon die Gruppenüberschrift, wer es hat —
+     das Textlabel wäre Doppelung. Der Avatar bleibt, er ist der Zuweisungs-Knopf. */
+  function itemRow(it, ohneName){
+    var m = M(it.by), hint = hintOf();
+    var tickHint = (hint==="tick-frei" && it.name.indexOf("Würstchen")===0) ? " hint" : "";
+    var slotHint = ((hint==="slot-frei"   && it.name.indexOf("Eis,")===0) ||
+                    (hint==="slot-tobias" && it.name.indexOf("Grillkohle")===0)) ? " hint" : "";
+    var av = m
+      ? '<span class="sl-a'+(it.by===st.me?" mine":"")+'">'+m.ini+'</span>'
+      : '<span class="sl-a empty">+</span>';
+    var lbl = (m && !ohneName) ? '<span class="sl-n">'+(it.by===st.me?"Ich":esc(m.name))+'</span>' : '';
+    return '<div class="irow'+(it.done?" done":"")+'" data-row="'+it.id+'">'+
+      '<button class="tick tap-target'+tickHint+'" data-tick="'+it.id+'" aria-pressed="'+(it.done?"true":"false")+'" '+
+        'aria-label="'+esc(it.name)+' als erledigt markieren">'+I.check+'</button>'+
+      '<span class="itxt"><span class="it-n">'+esc(it.name)+'</span>'+
+        (it.note?'<span class="it-s">'+esc(it.note)+'</span>':'')+'</span>'+
+      '<button class="slot tap-target'+slotHint+'" data-slot="'+it.id+'" '+
+        'aria-label="'+(m?"Übernommen von "+esc(m.name)+", ändern":"Noch frei, übernehmen")+'">'+
+        lbl+av+'</button></div>';
+  }
+
+  /* Nur der Inhalt der Liste. Getrennt vom Sheet, damit beim Eintragen und Abhaken
+     ausschließlich dieser Teil neu geschrieben wird — würde das ganze Sheet neu
+     erzeugt, liefe bei jeder Änderung seine Auffahr-Animation erneut. Genau das
+     hat sich ruckelig angefühlt. */
+  function itemsHTML(){
+    var l = L(), o = open(), d = l.items.filter(function(i){return i.done;});
+    var view = st.view[st.me] || "reihenfolge";
+    var body = "";
+
+    if(!l.items.length){
+      return '<p class="empty-note">Noch nichts drin. Trag unten den ersten Eintrag ein — '+
+             'alle in der Gruppe können ergänzen und übernehmen.</p>';
+    }
+    if(view === "themen"){
+      THEMEN_ORDER.forEach(function(t){
+        var g = o.filter(function(i){ return themaVon(i.name)===t; });
+        if(g.length) body += '<div class="sect">'+esc(t)+' · '+g.length+'</div>'+
+                             g.map(function(i){ return itemRow(i); }).join("");
+      });
+    }else if(view === "personen"){
+      /* "Ich" zuerst, dann "Noch frei": die beiden Fragen, die überhaupt jemand
+         an so eine Liste hat — was muss ich besorgen, und was fehlt noch. */
+      var ohne = function(list){ return list.map(function(i){ return itemRow(i, true); }).join(""); };
+      var meins = o.filter(function(i){ return i.by === st.me; });
+      if(meins.length) body += '<div class="sect">Ich · '+meins.length+'</div>'+ohne(meins);
+      var frei = o.filter(function(i){ return !i.by; });
+      if(frei.length) body += '<div class="sect">Noch frei · '+frei.length+'</div>'+ohne(frei);
+      MEMBERS.forEach(function(m){
+        if(m.id === st.me) return;
+        var g = o.filter(function(i){ return i.by === m.id; });
+        if(g.length) body += '<div class="sect">'+esc(m.name)+' · '+g.length+'</div>'+ohne(g);
+      });
+    }else{
+      body = '<div class="sect">Mitbringen · '+o.length+'</div>'+
+             o.map(function(i){ return itemRow(i); }).join("");
+    }
+    /* Erledigtes steht in jeder Ansicht unten und aus dem Weg. */
+    if(d.length) body += '<div class="sect">Erledigt · '+d.length+'</div>'+
+                        d.map(function(i){ return itemRow(i); }).join("");
+    return body;
+  }
+
+  function listSheet(){
+    var l = L();
+    var paste = st.pending
+      ? '<div class="paste"><span class="pt">Das sind '+st.pending.length+' Zeilen. Als '+st.pending.length+' Einträge anlegen?</span>'+
+        '<button class="no" data-paste="0">Nein</button><button class="yes" data-paste="1">Anlegen</button></div>'
+      : '';
+
+    return sheet("liste",
+      '<div class="sh-head">'+
+        '<button class="hicon tap-target'+(hintOf()==="beenden"?" hint":"")+'" data-pop="menu" '+
+          'aria-label="Listenoptionen">'+I.more+'</button>'+
+        '<button class="hicon tap-target'+(hintOf()==="views"?" hint":"")+'" data-pop="sort" '+
+          'aria-label="Sortieren">'+I.sort+'</button>'+
+        '<span class="grow"></span>'+
+        '<button class="link tap-target" data-close="1">Fertig</button>'+
+        '<span class="sh-title">'+esc(l.name)+'</span>'+
+      '</div>'+
+      '<div class="items" id="items">'+itemsHTML()+'</div>'+
+      '<div id="pastebox">'+paste+'</div>'+
+      '<div class="addbar'+(hintOf()==="addinput"?" hint":"")+'">'+
+        '<button class="aplus tap-target" data-addfocus="1" aria-label="Eintrag hinzufügen">'+I.plus+'</button>'+
+        '<input id="addinput" placeholder="Eintrag hinzufügen" autocomplete="off" aria-label="Eintrag hinzufügen" value="'+esc(st.draft)+'">'+
+        '<button class="csend tap-target" data-add="1" aria-label="Hinzufügen">'+I.send+'</button>'+
+      '</div>');
+  }
+
+  /* ---------- Teil-Aktualisierung ----------
+     Alles, was sich innerhalb der offenen Liste abspielt — eintragen, übernehmen,
+     abhaken —, schreibt nur die Liste und den Verlauf dahinter neu. Das Sheet
+     selbst bleibt stehen, behält Scrollstand und Fokus im Eingabefeld. */
+  function closePop(){
+    var q = document.getElementById("pop"), sc = screenEl.querySelector(".pop-scrim");
+    if(q && q.parentNode) q.parentNode.removeChild(q);
+    if(sc && sc.parentNode) sc.parentNode.removeChild(sc);
+    st.pop = null;
+  }
+  function softRefresh(scrollTo){
+    if(st.sheet !== "liste") return false;
+    var box = document.getElementById("items");
+    if(!box) return false;
+    var keep = box.scrollTop;
+    box.innerHTML = itemsHTML();
+    box.scrollTop = keep;
+    var th = document.getElementById("thread");
+    if(th){ th.innerHTML = threadHTML(); th.scrollTop = th.scrollHeight; }
+    var pb = document.getElementById("pastebox");
+    if(pb) pb.innerHTML = st.pending
+      ? '<div class="paste"><span class="pt">Das sind '+st.pending.length+' Zeilen. Als '+st.pending.length+' Einträge anlegen?</span>'+
+        '<button class="no" data-paste="0">Nein</button><button class="yes" data-paste="1">Anlegen</button></div>'
+      : '';
+    if(scrollTo){
+      var row = box.querySelector('[data-row="'+scrollTo+'"]');
+      if(row){
+        var unten = row.offsetTop + row.offsetHeight;
+        if(unten > box.scrollTop + box.clientHeight) box.scrollTop = unten - box.clientHeight + 12;
+      }
+    }
+    renderRail(); renderSide();
+    return true;
+  }
+
+  /* ---------- Popover-Inhalte ---------- */
+  function popHTML(){
+    if(!st.pop) return "";
+    var inner = "";
+
+    if(st.pop.kind === "sort"){
+      var view = st.view[st.me] || "reihenfolge";
+      var opts = [
+        ["reihenfolge","Reihenfolge der Liste","so, wie sie angelegt wurde"],
+        ["themen","Nach Themen","Essen, Getränke, Grillen, Geschirr"],
+        ["personen","Nach Personen","Ich zuerst, dann was noch frei ist"]
+      ];
+      inner = '<p class="pop-h">Sortieren</p><div class="pop-list">'+
+        opts.map(function(o){
+          return '<button class="pop-opt tap-target'+(view===o[0]?" sel":"")+'" data-view="'+o[0]+'">'+
+            '<span class="po-t">'+esc(o[1])+'<span class="po-s">'+esc(o[2])+'</span></span>'+
+            (view===o[0]?'<span class="po-m">'+I.check+'</span>':'')+'</button>';
+        }).join("")+'</div>'+
+        '<p class="pop-foot">Nur für dich. Die anderen sehen die Liste so, wie sie sie eingestellt haben.</p>';
+
+    }else if(st.pop.kind === "assign"){
+      var it = find(st.pop.item);
+      if(!it) return "";
+      var me = M(st.me);
+      inner = '<p class="pop-h">Wer bringt das mit?</p><div class="pop-list">'+
+        '<button class="pop-opt tap-target sel" data-pick="'+st.me+'">'+
+          '<span class="po-a mine">'+me.ini+'</span>'+
+          '<span class="po-t">Ich<span class="po-s">'+esc(me.name)+'</span></span>'+
+          (it.by===st.me?'<span class="po-m">'+I.check+'</span>':'')+'</button>'+
+        MEMBERS.filter(function(m){ return m.id!==st.me; }).map(function(m){
+          return '<button class="pop-opt tap-target" data-pick="'+m.id+'">'+
+            '<span class="po-a">'+m.ini+'</span><span class="po-t">'+esc(m.name)+'</span>'+
+            (it.by===m.id?'<span class="po-m">'+I.check+'</span>':'')+'</button>';
+        }).join("")+
+        '<button class="pop-opt tap-target" data-pick="">'+
+          '<span class="po-a empty">+</span><span class="po-t">Noch frei</span>'+
+          (it.by?'':'<span class="po-m">'+I.check+'</span>')+'</button>'+
+      '</div>';
+
+    }else if(st.pop.kind === "menu"){
+      var l = L();
+      inner = '<div class="pop-list">'+
+        '<button class="pop-opt tap-target" data-listopen="1">'+
+          '<span class="po-t">Alle dürfen ergänzen<span class="po-s">'+
+          (l.offen ? "an — jede:r kann eintragen" : "aus — nur du kannst eintragen")+'</span></span>'+
+          (l.offen?'<span class="po-m">'+I.check+'</span>':'')+'</button>'+
+        '</div><div class="pop-sep"></div><div class="pop-list">'+
+        '<button class="pop-opt tap-target" data-end="1">'+
+          '<span class="po-t">Liste beenden<span class="po-s">Leiste weg, Karte bleibt im Verlauf</span></span>'+
+        '</button></div>';
+    }
+
+    return '<div class="pop-scrim" data-popclose="1"></div><div class="pop" id="pop">'+inner+'</div>';
+  }
+
+  /* Nach dem Rendern platzieren: die Maße stehen erst dann fest. */
+  function placePop(){
+    if(!st.pop) return;
+    var el = document.getElementById("pop"); if(!el) return;
+    var sw = screenEl.clientWidth, sh = screenEl.clientHeight;
+    var pw = el.offsetWidth, ph = el.offsetHeight;
+    var a = st.pop, left, top;
+    if(a.kind === "assign"){
+      left = a.ax + a.aw - pw;                        /* rechtsbündig zum Slot */
+      top  = a.ay + a.ah + 6;
+      if(top + ph > sh - 10) top = a.ay - ph - 6;     /* kippt nach oben, wenn unten kein Platz */
+    }else{
+      left = a.ax;
+      top  = a.ay + a.ah + 6;
+    }
+    left = Math.max(10, Math.min(left, sw - pw - 10));
+    top  = Math.max(10, Math.min(top,  sh - ph - 10));
+    el.style.left = left + "px";
+    el.style.top  = top + "px";
+  }
+
+  /* Anhang-Menü — acht Plätze im 4×2-Raster. Die Liste ist die neunte Sache,
+     also muss eine weichen: "KI-Bilder" ist raus. Siehe Designnotiz zu Schritt 3. */
+  function attachSheet(){
+    var g = [["Fotos",I.pic,0],["Kamera",I.cam,0],["Standort",I.pin,0],["Kontakt",I.person,0],
+             ["Dokument",I.doc,0],["Abstimmung",I.poll,0],["Liste",I.list,1],
+             ["Ereignis",I.cal,0]];
+    var hint = hintOf()==="attach-liste";
+    return sheet("anhang",
+      '<div class="attach">'+ g.map(function(x){
+        return '<button class="'+(x[2]?'is-hot tap-target'+(hint?' hint':''):'')+'"'+(x[2]?' data-new="1"':' tabindex="-1"')+'>'+
+          '<span class="ag">'+x[1]+(x[2]?'<span class="neu">Neu</span>':'')+'</span>'+esc(x[0])+'</button>';
+      }).join("") +'</div>', true, "menu");
+  }
+
+  function formRow(v, i){
+    return '<div class="frow">'+
+      '<input class="finput fitem" data-idx="'+i+'" placeholder="Hinzufügen" autocomplete="off" '+
+      'aria-label="Eintrag '+(i+1)+'" value="'+esc(v)+'"></div>';
+  }
+
+  /* "Liste erstellen" — Bauform von "Abstimmung erstellen" */
+  function createSheet(){
+    var rows = st.newItems.map(function(v,i){ return formRow(v,i); }).join("");
+    return sheet("erstellen",
+      '<div class="fhead">'+
+        '<button class="circ tap-target" data-close="2" aria-label="Abbrechen">'+I.x+'</button>'+
+        '<b>Liste erstellen</b><span class="grow"></span>'+
+        '<button class="pill tap-target" data-create="1"'+(st.newName.trim()?'':' disabled')+'>Erstellen</button>'+
+      '</div>'+
+      '<div class="form">'+
+        '<p class="flabel">Name</p>'+
+        '<div class="fgroup"><div class="frow">'+
+          '<input class="finput" id="newname" placeholder="Wie soll die Liste heißen?" autocomplete="off" '+
+          'aria-label="Name der Liste" value="'+esc(st.newName)+'"></div></div>'+
+        '<p class="flabel">Einträge</p>'+
+        '<div class="fgroup">'+rows+'</div>'+
+        '<div class="fgroup" style="margin-top:22px">'+
+          '<div class="frow toggle"><span>Alle dürfen Einträge hinzufügen</span>'+
+          '<button class="switch tap-target" data-toggle="offen" aria-pressed="'+(st.newOpen?"true":"false")+'" '+
+          'aria-label="Alle dürfen Einträge hinzufügen"><i></i></button></div>'+
+        '</div>'+
+        '<p class="fhint">Wie die Liste später gruppiert angezeigt wird — nach Themen oder nach Personen —, '+
+        'stellt sich jede:r in der Liste selbst ein; das ist keine Eigenschaft der Liste und steht deshalb '+
+        'nicht hier.</p>'+
+        '<p class="fhint">Die Liste bleibt oben im Chat, bis ihr sie beendet. Änderungen sieht die Gruppe als '+
+        'eine gebündelte Zeile im Verlauf — eine Benachrichtigung bekommt nur, wem jemand einen Eintrag gibt.</p>'+
+      '</div>', true, "tall");
+  }
+
+  function sheet(id, inner, lvl2, cls){
+    return '<div class="ov'+(lvl2?" lvl2":"")+(st.instant?" instant":"")+'" data-ov="'+id+'">'+
+      '<div class="ov-card'+(cls?" "+cls:"")+'">'+
+      (cls==="tall" ? "" : '<div class="grab"><i></i></div>')+inner+'</div></div>';
+  }
+
+  function render(){
+    var h = st.screen==="chats" ? chatsScreen() : chatScreen();
+    if(hasList() && st.sheet==="liste") h += listSheet();
+    if(st.sheet==="anhang")    h += attachSheet();
+    if(st.sheet==="erstellen") h += createSheet();
+    h += popHTML();
+    if(st.toast) h += '<div class="toast">'+st.toast+'</div>';
+    screenEl.innerHTML = h;
+    st.instant = false;
+    placePop();
+
+    var th = document.getElementById("thread");
+    if(th) th.scrollTop = th.scrollHeight;
+    if(st.focusAdd){
+      var ai = document.getElementById("addinput");
+      if(ai){ ai.focus(); ai.setSelectionRange(ai.value.length, ai.value.length); }
+      st.focusAdd = false;
+    }
+    if(st.focusRow !== null && st.focusRow !== undefined){
+      var fr = screenEl.querySelector('.fitem[data-idx="'+st.focusRow+'"]');
+      if(fr){ fr.focus(); fr.setSelectionRange(fr.value.length, fr.value.length); }
+      st.focusRow = null;
+    }
+    renderRail(); renderSide();
+  }
+
+  function find(id){ var a=L().items.filter(function(i){return i.id===id;}); return a[0]; }
+
+  var toastT;
+  function toast(t){
+    st.toast = t; clearTimeout(toastT);
+    toastT = setTimeout(function(){ st.toast=null; render(); }, 3200);
+  }
+
+  /* ---------- Flow-Fortschritt ----------
+     Der Schritt rückt nur weiter, wenn die Handlung zu dem passt, was gerade dran ist.
+     Sonst springt die Leiste bei freiem Herumklicken wild herum. */
+  var ORDER = STEPS.map(function(s){return s.id;});
+  function advance(from){
+    if([].concat(from).indexOf(st.step) === -1) return;
+    var i = ORDER.indexOf(st.step);
+    if(i > -1 && i < ORDER.length-1) st.step = ORDER[i+1];
+  }
+  function push(){ hist.push({screen:st.screen, sheet:st.sheet, step:st.step}); if(hist.length>40) hist.shift(); }
+
+  /* ---------- Aktionen ---------- */
+  function assign(id, who){
+    var it = find(id), was = it.by, myName = M(st.me).name;
+    if(was === who) return;
+    it.by = who;
+    if(who === st.me){
+      sys("claim:"+st.me, function(n){ return "<b>"+esc(myName)+"</b> bringt "+joinNames(n)+" mit"; }, [it.name]);
+      advance(["uebernehmen"]);
+    }else if(who){
+      plain("<b>"+esc(myName)+"</b> hat <b>"+esc(M(who).name)+"</b> um "+esc(it.name)+" gebeten"+
+            (was ? " (vorher "+esc(M(was).name)+")" : ""));
+      toast(esc(M(who).name)+" bekommt eine Benachrichtigung.<br>Sonst niemand.");
+      advance(["zuweisen"]);
+    }else{
+      plain("<b>"+esc(myName)+"</b> hat "+esc(it.name)+" wieder freigegeben");
+    }
+  }
+  /* Eintragen ohne Neuaufbau: Feld leeren, Fokus behalten, nur Liste und Verlauf
+     nachziehen. Vorher lief bei jedem Eintrag das ganze Sheet neu auf. */
+  function submitAdd(input, titles){
+    if(titles && titles.length) addItems(titles);
+    st.draft = "";
+    if(input){ input.value = ""; input.focus(); }
+    var letzte = titles && titles.length ? L().items[L().items.length-1].id : null;
+    if(!softRefresh(letzte)){ st.focusAdd = true; render(); }
+  }
+  function addItems(titles){
+    var l = L();
+    titles.forEach(function(t){ l.items.push({id:"n"+(uid++), name:t, note:"", by:null, done:false}); });
+    sys("add:"+st.me, function(n){
+      return "<b>"+esc(M(st.me).name)+"</b> hat "+(n.length===1 ? esc(n[0])+" hinzugefügt" : n.length+" Einträge hinzugefügt");
+    }, titles);
+    advance(["hinzufuegen"]);
+  }
+  function endList(){
+    var l = L();
+    l.closed = true;
+    plain("<b>"+esc(M(st.me).name)+"</b> hat die Liste „"+esc(l.name)+"“ beendet · "+
+          l.items.filter(function(i){return i.done;}).length+" von "+l.items.length+" erledigt");
+    st.sheet = null;   /* auch hier kein Hinweis — man sieht es */
+  }
+
+  /* ---------- Klicks im Gerät ---------- */
+  screenEl.addEventListener("click", function(e){
+    var t = e.target, el;
+
+    if((el = t.closest("[data-go]"))){
+      push(); st.screen = el.getAttribute("data-go"); st.sheet = null;
+      if(st.screen==="chat")  advance(["chats"]);
+      if(st.screen==="chats") advance(["ansicht"]);
+      return render();
+    }
+    if((el = t.closest("[data-sheet]"))){
+      push(); st.sheet = el.getAttribute("data-sheet");
+      if(st.sheet==="anhang") advance(["chat"]);
+      if(st.sheet==="liste")  advance(["leiste"]);
+      return render();
+    }
+    if((el = t.closest("[data-open]"))){
+      push(); st.active = parseInt(el.getAttribute("data-open"),10); st.sheet = "liste";
+      advance(["leiste"]);
+      return render();
+    }
+    if((el = t.closest("[data-close]"))){
+      push();
+      st.sheet = null;
+      st.instant = true;
+      return render();
+    }
+    if((el = t.closest("[data-tick]"))){
+      var it = find(el.getAttribute("data-tick"));
+      it.done = !it.done;
+      if(it.done){
+        sys("done:"+st.me, function(n){
+          return "<b>"+esc(M(st.me).name)+"</b> hat "+joinNames(n)+" abgehakt";
+        }, [it.name]);
+        advance(["abhaken"]);
+      }
+      st.instant = true;
+      if(!softRefresh()) render();
+      return;
+    }
+    if((el = t.closest("[data-slot]"))){
+      var sr2 = screenEl.getBoundingClientRect(), tr2 = el.getBoundingClientRect();
+      st.pop = {kind:"assign", item: el.getAttribute("data-slot"),
+                ax: tr2.left - sr2.left, ay: tr2.top - sr2.top, aw: tr2.width, ah: tr2.height};
+      return render();
+    }
+    if((el = t.closest("[data-pick]"))){
+      var target = st.pop && st.pop.item;
+      closePop(); st.instant = true;
+      assign(target, el.getAttribute("data-pick") || null);
+      if(!softRefresh()) render();
+      return;
+    }
+    if(t.closest("[data-addfocus]")){
+      var af = document.getElementById("addinput"); if(af) af.focus();
+      return;
+    }
+    if(t.closest("[data-add]")){
+      var ai = document.getElementById("addinput");
+      var v = ai ? ai.value.trim() : "";
+      if(!v) return;
+      submitAdd(ai, [v]);
+      return;
+    }
+    if((el = t.closest("[data-paste]"))){
+      var lines = (el.getAttribute("data-paste")==="1" && st.pending) ? st.pending : null;
+      st.pending = null;
+      submitAdd(document.getElementById("addinput"), lines);
+      return;
+    }
+    if(t.closest("[data-end]")){ push(); st.pop = null; endList(); return render(); }
+
+    /* --- Liste anlegen --- */
+    if(t.closest("[data-new]")){
+      push(); st.sheet = "erstellen";
+      st.newName = ""; st.newItems = ["",""]; st.newOpen = true;
+      render();
+      /* Fokus erst nach dem Auffahren — sonst scrollt der Browser mitten in
+         die Transform-Animation hinein und das Sheet springt. */
+      setTimeout(function(){
+        var nn = document.getElementById("newname"); if(nn) nn.focus();
+      }, 300);
+      return;
+    }
+    if((el = t.closest("[data-toggle]"))){
+      st.newOpen = !st.newOpen;
+      el.setAttribute("aria-pressed", st.newOpen?"true":"false");
+      return;   /* kein render() — sonst verliert das Formular Eingaben und Fokus */
+    }
+    if((el = t.closest("[data-pop]"))){
+      var sr = screenEl.getBoundingClientRect(), tr = el.getBoundingClientRect();
+      st.pop = {kind: el.getAttribute("data-pop"),
+                ax: tr.left - sr.left, ay: tr.top - sr.top, aw: tr.width, ah: tr.height};
+      return render();
+    }
+    if(t.closest("[data-popclose]")){ st.pop = null; st.instant = true; return render(); }
+    if((el = t.closest("[data-view]"))){
+      var v = el.getAttribute("data-view");
+      st.pop = null;
+      if(st.view[st.me] === v){ st.instant = true; return render(); }
+      st.view[st.me] = v;
+      /* Bewusst keine Systemzeile: Es aendert sich nichts daran, wer was mitbringt —
+         und es sieht ohnehin nur diese eine Person. */
+      st.instant = true;
+      /* „Nur für dich“ steht in der Fußzeile des Auswahlfensters, im Moment der
+         Entscheidung — dort gehört es hin, nicht als Nachklapp. */
+      advance(["ansicht"]);
+      return render();
+    }
+    if(t.closest("[data-listopen]")){
+      var ll = L(); ll.offen = !ll.offen;
+      /* Fenster bleibt offen: Der Haken springt um, das ist die Rückmeldung. */
+      st.instant = true;
+      return render();
+    }
+    if(t.closest("[data-create]")){
+      var nameEl = document.getElementById("newname");
+      var name = (nameEl ? nameEl.value.trim() : "") || "Neue Liste";
+      var eigene = [].slice.call(screenEl.querySelectorAll(".fitem"))
+                     .map(function(i){return i.value.trim();}).filter(Boolean);
+      createList(name, eigene, st.newOpen);
+      st.newName = ""; st.newItems = ["",""];
+      st.sheet = null;                       /* wie in der App: zurück in den Chat */
+      advance(["erstellen"]);
+      /* Kein Hinweis: Die Leiste erscheint, die Karte steht im Verlauf, die
+         Systemzeilen erzählen den Rest. Ein Toast würde nur nacherzählen,
+         was ohnehin zu sehen ist. */
+      return render();
+    }
+
+    /* Tap auf den abgedunkelten Bereich schließt das oberste Sheet */
+    if(t.classList && t.classList.contains("ov")){
+      push();
+      st.sheet = null;
+      return render();
+    }
+  });
+
+  screenEl.addEventListener("input", function(e){
+    var el = e.target;
+    if(el.id === "addinput"){ st.draft = el.value; return; }
+    if(el.id === "newname"){
+      st.newName = el.value;
+      var cta = screenEl.querySelector("[data-create]");
+      if(cta) cta.disabled = !el.value.trim();
+      return;
+    }
+    if(el.classList.contains("fitem")){
+      var idx = parseInt(el.getAttribute("data-idx"),10);
+      st.newItems[idx] = el.value;
+      /* Wie bei den Optionen einer Abstimmung erzeugt die letzte Zeile die nächste.
+         Bewusst direkt im DOM statt über render(): Ein Neuaufbau würde mitten im
+         Tippen den Fokus und die Cursorposition wegnehmen. */
+      var group = el.closest(".fgroup");
+      var rows = group ? group.querySelectorAll(".fitem") : [];
+      if(group && idx === rows.length-1 && el.value.trim()){
+        st.newItems.push("");
+        var row = document.createElement("div");
+        row.className = "frow enter";
+        row.innerHTML = '<input class="finput fitem" data-idx="'+(idx+1)+'" '+
+          'placeholder="Hinzufügen" autocomplete="off" aria-label="Eintrag '+(idx+2)+'">';
+        group.appendChild(row);
+        row.addEventListener("animationend", function(){ row.classList.remove("enter"); });
+      }
+    }
+  });
+
+  /* Mehrzeiliges Einfügen: Angebot statt stillem Aufsplitten */
+  screenEl.addEventListener("paste", function(e){
+    if(e.target.id !== "addinput") return;
+    var txt = (e.clipboardData || window.clipboardData).getData("text") || "";
+    var lines = txt.split(/\r?\n/).map(function(s){
+      return s.replace(/^\s*[-*•–]?\s*\d*[.)]?\s*/, "").trim();
+    }).filter(Boolean);
+    if(lines.length < 2) return;
+    e.preventDefault();
+    st.pending = lines; st.draft = ""; e.target.value = "";
+    if(!softRefresh()){ st.focusAdd = true; render(); }
+    e.target.focus();
+  });
+
+  screenEl.addEventListener("keydown", function(e){
+    if(e.key !== "Enter") return;
+    var el = e.target;
+    if(el.id === "addinput"){
+      e.preventDefault();
+      var v = el.value.trim(); if(!v) return;
+      submitAdd(el, [v]);
+      return;
+    }
+    if(el.id === "newname"){
+      e.preventDefault();
+      var f = screenEl.querySelector('.fitem[data-idx="0"]'); if(f) f.focus();
+      return;
+    }
+    if(el.classList.contains("fitem")){
+      e.preventDefault();
+      var idx = parseInt(el.getAttribute("data-idx"),10);
+      var nx = screenEl.querySelector('.fitem[data-idx="'+(idx+1)+'"]');
+      if(nx) nx.focus();
+    }
+  });
+
+  /* ---------- Rail ---------- */
+  railEl.addEventListener("click", function(e){
+    var s = e.target.closest("[data-step]");
+    if(!s) return;
+    push();
+    var id = s.getAttribute("data-step");
+    st.step = id;
+    /* Die drei Schritte vor dem Anlegen zeigen den Zustand ohne Liste,
+       alle danach den mit. */
+    var vorAnlegen = ORDER.indexOf(id) <= ORDER.indexOf("erstellen");
+    var weg = vorAnlegen ? resetVorListe() : (ensureList(), false);
+    if(id==="chats"){ st.screen="chats"; st.sheet=null; }
+    else if(id==="chat"){ st.screen="chat"; st.sheet=null; }
+    else if(id==="erstellen"){ st.screen="chat"; st.sheet="anhang"; }
+    else if(id==="leiste"){ st.screen="chat"; st.sheet=null; }
+    else if(id==="uebersicht"){ st.screen="chats"; st.sheet=null; }
+    else { st.screen="chat"; st.sheet="liste"; }
+    st.pop = null;
+    render();
+    if(weg) toast("Zurück vor das Anlegen —<br>die Liste gibt es hier noch nicht.");
+  });
+
+  /* ---------- Toolbar ---------- */
+  document.getElementById("btn-back").addEventListener("click", function(){
+    var h = hist.pop(); if(!h) return;
+    st.screen = h.screen; st.sheet = h.sheet; st.step = h.step; st.instant = true;
+    render();
+  });
+  document.getElementById("btn-reset").addEventListener("click", function(){
+    clearTimeout(toastT); seed(); render();
+  });
+  document.addEventListener("keydown", function(e){
+    if(e.key !== "Escape") return;
+    if(st.pop){ st.pop = null; st.instant = true; return render(); }
+    if(!st.sheet) return;
+    st.sheet = null; st.instant = true; render();
+  });
+
+  seed(); render();
+})();
+</script>

@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WhatsApp Listen — Case Study — Helena Stickelbroeck</title>
+  <meta name="description" content="Feature-Konzept für WhatsApp: eine gemeinsame Liste, die im Chat gepinnt bleibt — alle können eintragen, jede:r kann übernehmen, änderbar von allen." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+  <!-- Arbeitsstand: Erster Entwurf, aufgebaut aus den Projektdokumenten in
+       _Master/14 Projekte/whatsApp lists/ (00–07). Quelle der Wahrheit für Konzept und
+       Prototyp bleiben diese Dokumente. Offen, bevor das hier live gehen darf:
+       Chat-Audit-Zahlen (stat-Platzhalter in Abschnitt "Das Problem"), Zeitraum in der
+       Meta-Box, Interview-Ergebnisse. Wireframes hier sind Graustufen-Skizzen, nicht die
+       echten Prototyp-Screens — der echte, durchklickbare Prototyp liegt unter
+       prototypes/whatsapp-listen.html. -->
+
+  <header class="site-header">
+    <div class="wrap">
+      <a href="../index.html" class="logo">
+        <span class="logo-mark">H</span>
+        <span class="logo-name">Helena Stickelbroeck</span>
+      </a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../index.html#work">Case Studies</a></li>
+          <li><a href="../about.html">Über mich</a></li>
+          <li><a href="../index.html#contact" class="btn btn-ghost">Kontakt</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ============ HERO ============ -->
+    <section class="case-hero">
+      <a href="../index.html#work" class="back-link">← Zurück zur Übersicht</a>
+      <div class="wrap">
+        <p class="tag">WhatsApp</p>
+        <h1 class="page-heading">Listen im Chat – Feature-Konzept</h1>
+        <p class="case-lede">
+          Ein Feature-Konzept für WhatsApp: eine gemeinsame Liste, die im Chat gepinnt bleibt —
+          alle können etwas eintragen, jede:r kann etwas übernehmen, und wer was mitbringt,
+          lässt sich jederzeit ändern.
+        </p>
+
+        <div class="case-meta">
+          <div>
+            <div class="case-meta-label">Rolle</div>
+            <div class="case-meta-value">Product / UX Design (Eigeninitiative)</div>
+          </div>
+          <div>
+            <div class="case-meta-label">Jahr</div>
+            <div class="case-meta-value">2026</div>
+          </div>
+          <div>
+            <div class="case-meta-label">Zeitraum</div>
+            <div class="case-meta-value">[Zeitraum ergänzen]</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CONTENT ============ -->
+    <div class="case-body">
+      <div class="wrap">
+
+        <!-- 2 — Das Problem -->
+        <section class="case-section reveal">
+          <p class="tag">Das Problem</p>
+          <h2>Eine Liste, die niemandem gehört</h2>
+
+          <p>
+            Ein Sommerfest, zwölf Leute, eine WhatsApp-Gruppe. Nach zwei Tagen war die Frage
+            „wer bringt eigentlich was mit" dreimal beantwortet und keinmal geklärt: Die Liste
+            stand irgendwo weiter oben im Verlauf, war zweimal von Hand neu getippt worden, und
+            am Ende brachten zwei Leute Eis mit, während die Teller fehlten.
+          </p>
+          <p>
+            Das ist kein Einzelfall und auch kein besonders schwieriges Problem. Es ist nur
+            eines, das WhatsApp bisher nicht anfasst.
+          </p>
+
+          <div class="case-placeholder">
+            <span class="ph-tag">Noch offen</span>
+            <p>
+              Belegzahlen fehlen noch — Median Organisations-Nachrichten pro Anlass, Median
+              Listen-Versionen, Anteil der Fälle mit genau einer pflegenden Person. Kommt aus
+              dem Chat-Audit (ein Nachmittag, noch nicht erhoben). Ohne diese Zahl darf der Text
+              nicht veröffentlicht werden.
+            </p>
+          </div>
+
+          <p>Vier Muster wiederholen sich dabei, ganz gleich in welcher Gruppe:</p>
+          <ul>
+            <li><strong>Es sinkt.</strong> Die Liste steht 40 Nachrichten weiter oben. Sie zu suchen kostet mehr als zu fragen — also wird gefragt, was neue Nachrichten erzeugt, die sie weiter nach oben schieben.</li>
+            <li><strong>Es forkt.</strong> Fremde Nachrichten lassen sich nicht bearbeiten, also wird die Liste neu getippt. Danach gibt es vier Listen und keine Regel, welche gilt — außer dem Zeitstempel.</li>
+            <li><strong>Zuständigkeit ist Fließtext.</strong> „Brötchen mach ich" ist ein Satz, kein Feld. Er muss gelesen, verstanden und von Hand in die nächste Version übertragen werden.</li>
+            <li><strong>Die Arbeit landet bei einer Person.</strong> Ein Nutzen, den alle haben, wird von derjenigen gepflegt, die es am wenigsten aushält, wenn es liegen bleibt — unbezahlte Dateneingabe in einer Chat-App.</li>
+          </ul>
+        </section>
+
+        <!-- 3 — Vorgehen -->
+        <section class="case-section reveal">
+          <p class="tag">Vorgehen</p>
+          <h2>Vom Muster zum Prinzip</h2>
+          <p>
+            Bevor ich anfange, etwas zu bauen, wollte ich wissen, woran die bestehenden
+            Umgehungen scheitern. Eine neu getippte Nachricht forkt in Versionen. Eine
+            angepinnte Nachricht kann nur die absendende Person ändern, und nur kurz. Eine
+            Umfrage ist zum Auswählen gebaut, nicht zum Führen einer Menge. Ein Termin hat die
+            richtige Bauform, aber den falschen Inhalt: eine Sache mit Zusagen, nicht viele mit
+            Zuständigen. Und eine externe Listen-App scheitert am Netzwerkeffekt, sobald sechs
+            Leute sie für einen Nachmittag installieren müssten.
+          </p>
+          <p>
+            Der Präzedenzfall, der zählt: WhatsApp hat den schwierigen Teil bereits gelöst.
+            Termine und Umfragen sind strukturierte Objekte, die im Chat leben, als Karte
+            dargestellt werden und einen eigenen Zustand halten — ohne dass jemand dafür eine
+            Nachricht schreibt. Dieses Konzept verlangt keine neue Gattung, sondern die dritte
+            Instanz einer bestehenden.
+          </p>
+
+          <div class="case-callout">
+            <p class="case-callout-line">
+              Ein Chat ist ein Strom, Koordination braucht einen Zustand.
+            </p>
+            <p>
+              Nicht mehr die Liste kopieren, sondern die Änderungen melden — ein Objekt, viele
+              Schreibende. Der Verlauf trägt die Veränderungen, nicht die Kopien.
+            </p>
+          </div>
+
+          <p>
+            Die tragende Annahme darunter: Leute nutzen eine Struktur nur, wenn sie schneller
+            ist als ein getippter Satz. Der Maßstab ist keine To-do-App, sondern die acht
+            Sekunden für „ich bring Brot mit". Wird Übernehmen teurer als das, tippen die Leute
+            weiter — und die Liste veraltet wie vorher. Das ist die Annahme, an der das ganze
+            Konzept hängt, und sie ist noch nicht validiert.
+          </p>
+        </section>
+
+        <!-- 4 — User Flow -->
+        <section class="case-section reveal">
+          <p class="tag">User Flow</p>
+          <h2>Elf Schritte, ein Fluss</h2>
+          <p>
+            Der Flow beginnt bewusst vor dem Feature: Die Gruppe hat noch keine Liste, die
+            Absprache steht als Nachrichten im Verlauf. Die Liste entsteht im Flow — genau wie
+            eine Abstimmung oder ein Termin, über das Anhang-Menü.
+          </p>
+
+          <figure class="case-figure reveal">
+            <svg viewBox="0 0 720 210" xmlns="http://www.w3.org/2000/svg" role="img"
+                 aria-label="Elf Flow-Schritte in zwei Reihen. Reihe eins, vom Chat zur Liste: Chatliste, Gruppe öffnen, Liste erstellen (neuer Schritt), Listen-Leiste, Übernehmen. Reihe zwei, die Liste benutzen: Zuweisen, Hinzufügen, Abhaken, Ansicht wechseln, Übersicht, Beenden.">
+              <style>
+                .lf-k{ fill:#9c99a6; font-size:11px; letter-spacing:.06em; }
+                .lf-p{ fill:#fff; stroke:rgba(28,26,34,.16); }
+                .lf-t{ fill:#6a6874; font-size:11px; }
+                .lf-new .lf-p{ stroke:#1c1a22; stroke-width:2; }
+                .lf-new .lf-t{ fill:#1c1a22; font-weight:700; }
+                .lf-arr{ stroke:#c7c4cf; stroke-width:1.5; fill:none; }
+                .lf-tag{ fill:#8a8a8a; font-size:8.5px; font-weight:700; letter-spacing:.08em; }
+              </style>
+
+              <text class="lf-k" x="2" y="12">SCHRITT 1–5 · VOM CHAT ZUR LISTE</text>
+              <g transform="translate(0,32)">
+                <g><rect class="lf-p" x="0" y="0" width="112" height="38" rx="9"/><text class="lf-t" x="56" y="23" text-anchor="middle">Chatliste</text></g>
+                <path class="lf-arr" d="M116,19 h8 m-3,-3 l3,3 l-3,3"/>
+                <g><rect class="lf-p" x="128" y="0" width="112" height="38" rx="9"/><text class="lf-t" x="184" y="23" text-anchor="middle">Gruppe öffnen</text></g>
+                <path class="lf-arr" d="M244,19 h8 m-3,-3 l3,3 l-3,3"/>
+                <g class="lf-new"><rect class="lf-p" x="256" y="0" width="112" height="38" rx="9"/><text class="lf-t" x="312" y="23" text-anchor="middle">Liste erstellen</text><text class="lf-tag" x="312" y="-6" text-anchor="middle">NEUER SCHRITT</text></g>
+                <path class="lf-arr" d="M372,19 h8 m-3,-3 l3,3 l-3,3"/>
+                <g><rect class="lf-p" x="384" y="0" width="112" height="38" rx="9"/><text class="lf-t" x="440" y="23" text-anchor="middle">Listen-Leiste</text></g>
+                <path class="lf-arr" d="M500,19 h8 m-3,-3 l3,3 l-3,3"/>
+                <g><rect class="lf-p" x="512" y="0" width="112" height="38" rx="9"/><text class="lf-t" x="568" y="23" text-anchor="middle">Übernehmen</text></g>
+              </g>
+
+              <text class="lf-k" x="2" y="128">SCHRITT 6–11 · DIE LISTE BENUTZEN</text>
+              <g transform="translate(0,148)">
+                <g><rect class="lf-p" x="0" y="0" width="96" height="38" rx="9"/><text class="lf-t" x="48" y="23" text-anchor="middle">Zuweisen</text></g>
+                <path class="lf-arr" d="M100,19 h6 m-3,-3 l3,3 l-3,3"/>
+                <g><rect class="lf-p" x="110" y="0" width="96" height="38" rx="9"/><text class="lf-t" x="158" y="23" text-anchor="middle">Hinzufügen</text></g>
+                <path class="lf-arr" d="M210,19 h6 m-3,-3 l3,3 l-3,3"/>
+                <g><rect class="lf-p" x="220" y="0" width="96" height="38" rx="9"/><text class="lf-t" x="268" y="23" text-anchor="middle">Abhaken</text></g>
+                <path class="lf-arr" d="M320,19 h6 m-3,-3 l3,3 l-3,3"/>
+                <g><rect class="lf-p" x="330" y="0" width="112" height="38" rx="9"/><text class="lf-t" x="386" y="23" text-anchor="middle">Ansicht wechseln</text></g>
+                <path class="lf-arr" d="M446,19 h6 m-3,-3 l3,3 l-3,3"/>
+                <g><rect class="lf-p" x="456" y="0" width="96" height="38" rx="9"/><text class="lf-t" x="504" y="23" text-anchor="middle">Übersicht</text></g>
+                <path class="lf-arr" d="M556,19 h6 m-3,-3 l3,3 l-3,3"/>
+                <g><rect class="lf-p" x="566" y="0" width="96" height="38" rx="9"/><text class="lf-t" x="614" y="23" text-anchor="middle">Beenden</text></g>
+              </g>
+            </svg>
+            <figcaption>
+              Der neue Schritt „Liste erstellen" reiht sich in den vertrauten Ablauf für Umfrage
+              und Termin ein, statt einen eigenen zu erfinden.
+            </figcaption>
+          </figure>
+        </section>
+
+        <!-- 5 — Wireframes -->
+        <section class="case-section reveal">
+          <p class="tag">Wireframes</p>
+          <h2>Die Schlüssel-Screens</h2>
+          <p>
+            Skizzen in Graustufen — bewusst ohne Farbe und Feinschliff, im selben System wie das
+            Schwesterprojekt. Alle Namen sind erfunden.
+          </p>
+
+          <figure class="case-figure reveal">
+            <svg viewBox="0 0 720 486" xmlns="http://www.w3.org/2000/svg" role="img"
+                 aria-label="Drei Wireframe-Screens: das Anhang-Menü mit dem neuen Eintrag Liste, das Anlege-Formular nach Vorlage von Abstimmung erstellen, und die neue Listen-Leiste unter der Kopfzeile des Chats.">
+              <style>
+                .la-s{ fill:#fff; stroke:#c7c4cf; }
+                .la-new{ stroke:#1c1a22; stroke-width:2; }
+                .la-bar{ fill:#ececE5; }
+                .la-out{ fill:#e4e2dc; }
+                .la-band{ fill:#f6f5f1; }
+                .la-hair{ stroke:#e2e0da; stroke-width:1; }
+                .la-l{ fill:#6a6874; font-size:9.5px; }
+                .la-b{ fill:#1c1a22; font-size:11px; font-weight:700; }
+                .la-k{ fill:#9c99a6; font-size:8px; letter-spacing:.08em; }
+                .la-btn-off{ fill:#f0f0f0; stroke:#d3d1cb; }
+                .la-btn-off-t{ fill:#9c99a6; font-size:9px; font-weight:700; }
+                .la-chip{ fill:#fff; stroke:#c7c4cf; }
+                .la-tag{ fill:#8a8a8a; font-size:8px; font-weight:700; letter-spacing:.08em; }
+                .la-toggle{ fill:#1c1a22; }
+              </style>
+
+              <!-- Screen A: Anhang-Menü -->
+              <g transform="translate(0,34)">
+                <rect class="la-s" x="0" y="0" width="200" height="420" rx="18"/>
+                <text class="la-b" x="16" y="26">‹  Anhängen</text>
+                <line class="la-hair" x1="0" y1="40" x2="200" y2="40"/>
+                <g>
+                  <rect class="la-bar" x="16" y="58" width="34" height="34" rx="8"/><text class="la-l" x="33" y="106" text-anchor="middle">Fotos</text>
+                  <rect class="la-bar" x="58" y="58" width="34" height="34" rx="8"/><text class="la-l" x="75" y="106" text-anchor="middle">Kamera</text>
+                  <rect class="la-bar" x="100" y="58" width="34" height="34" rx="8"/><text class="la-l" x="117" y="106" text-anchor="middle">Standort</text>
+                  <rect class="la-bar" x="142" y="58" width="34" height="34" rx="8"/><text class="la-l" x="159" y="106" text-anchor="middle">Kontakt</text>
+                  <rect class="la-bar" x="16" y="142" width="34" height="34" rx="8"/><text class="la-l" x="33" y="190" text-anchor="middle">Dokument</text>
+                  <rect class="la-bar" x="58" y="142" width="34" height="34" rx="8"/><text class="la-l" x="75" y="190" text-anchor="middle">Umfrage</text>
+                  <text class="la-tag" x="117" y="130" text-anchor="middle">NEU</text>
+                  <rect class="la-s la-new" x="100" y="142" width="34" height="34" rx="8"/><text class="la-b" x="117" y="190" text-anchor="middle" style="font-size:9.5px">Liste</text>
+                  <rect class="la-bar" x="142" y="142" width="34" height="34" rx="8"/><text class="la-l" x="159" y="190" text-anchor="middle">Termin</text>
+                </g>
+              </g>
+
+              <!-- Screen B: Anlege-Formular -->
+              <g transform="translate(260,34)">
+                <rect class="la-s" x="0" y="0" width="200" height="420" rx="18"/>
+                <text class="la-b" x="16" y="26">✕  Liste erstellen</text>
+                <rect class="la-btn-off" x="146" y="14" width="40" height="22" rx="11"/>
+                <text class="la-btn-off-t" x="166" y="29" text-anchor="middle">Erstellen</text>
+                <line class="la-hair" x1="0" y1="40" x2="200" y2="40"/>
+                <text class="la-k" x="16" y="58">NAME</text>
+                <rect class="la-chip" x="16" y="64" width="168" height="30" rx="8"/>
+                <text class="la-l" x="24" y="83">Sommerfest</text>
+                <text class="la-k" x="16" y="112">EINTRÄGE</text>
+                <rect class="la-chip" x="16" y="120" width="168" height="26" rx="8"/><text class="la-l" x="24" y="137">Eis</text>
+                <rect class="la-chip" x="16" y="152" width="168" height="26" rx="8"/><text class="la-l" x="24" y="169">Grillkohle</text>
+                <rect class="la-chip" x="16" y="184" width="168" height="26" rx="8"/><text class="la-l" x="24" y="201" style="fill:#9c99a6">+ Eintrag hinzufügen</text>
+                <line class="la-hair" x1="16" y1="322" x2="184" y2="322"/>
+                <text class="la-l" x="16" y="342">Alle dürfen</text>
+                <text class="la-l" x="16" y="356">Einträge hinzufügen</text>
+                <rect class="la-toggle" x="146" y="338" width="40" height="22" rx="11"/>
+                <circle cx="177" cy="349" r="8" fill="#fff"/>
+              </g>
+
+              <!-- Screen C: Listen-Leiste -->
+              <g transform="translate(520,34)">
+                <rect class="la-s" x="0" y="0" width="200" height="420" rx="18"/>
+                <text class="la-b" x="16" y="26">‹  Sommerfest-Crew</text>
+                <line class="la-hair" x1="0" y1="40" x2="200" y2="40"/>
+                <rect class="la-band" x="0" y="40" width="200" height="34"/>
+                <circle class="la-bar" cx="28" cy="57" r="10"/>
+                <text class="la-l" x="44" y="61">Sommerfest-Einkauf</text>
+                <text class="la-l" x="182" y="61" text-anchor="end">›</text>
+                <line class="la-hair" x1="0" y1="74" x2="200" y2="74"/>
+                <rect class="la-bar" x="16" y="92" width="120" height="24" rx="10"/>
+                <rect class="la-bar" x="16" y="124" width="90" height="22" rx="10"/>
+                <rect class="la-out" x="84" y="154" width="100" height="24" rx="10"/>
+                <line class="la-hair" x1="0" y1="380" x2="200" y2="380"/>
+                <rect class="la-chip" x="16" y="388" width="150" height="24" rx="12"/>
+                <circle cx="182" cy="400" r="12" fill="#1c1a22"/>
+              </g>
+            </svg>
+            <figcaption>
+              „Liste" reiht sich als neunter Eintrag ins Anhang-Menü ein; das Formular übernimmt
+              Bauform und Bedienung von „Abstimmung erstellen" fast unverändert.
+            </figcaption>
+          </figure>
+
+          <figure class="case-figure reveal">
+            <svg viewBox="0 0 720 486" xmlns="http://www.w3.org/2000/svg" role="img"
+                 aria-label="Zwei Wireframe-Screens: die geöffnete Liste mit Einträgen, Abhak-Kreis und Zuweisungs-Slot, und das Zuweisen-Popover, das sich am angetippten Slot öffnet.">
+              <style>
+                .ll-s{ fill:#fff; stroke:#c7c4cf; }
+                .ll-bar{ fill:#ececE5; }
+                .ll-hair{ stroke:#e2e0da; stroke-width:1; }
+                .ll-l{ fill:#6a6874; font-size:9.5px; }
+                .ll-b{ fill:#1c1a22; font-size:10.5px; font-weight:700; }
+                .ll-dash{ fill:none; stroke:#9c99a6; stroke-width:1.5; stroke-dasharray:2.5,2.5; }
+                .ll-slot-other{ fill:#c7c4cf; }
+                .ll-slot-me{ fill:#1c1a22; }
+                .ll-card{ fill:#fff; stroke:#c7c4cf; }
+                .ll-k{ fill:#9c99a6; font-size:8px; letter-spacing:.08em; }
+              </style>
+
+              <!-- Screen D: Die Liste -->
+              <g transform="translate(120,34)">
+                <rect class="ll-s" x="0" y="0" width="200" height="420" rx="18"/>
+                <text class="ll-l" x="16" y="26">⋯&#160;&#160;⇅</text>
+                <text class="ll-b" x="100" y="26" text-anchor="middle">Sommerfest</text>
+                <text class="ll-l" x="184" y="26" text-anchor="end">Fertig</text>
+                <line class="ll-hair" x1="0" y1="40" x2="200" y2="40"/>
+
+                <circle class="ll-dash" cx="26" cy="66" r="9"/>
+                <text class="ll-b" x="44" y="63" style="font-size:9.5px">Eis (6 Sorten)</text>
+                <text class="ll-l" x="44" y="76" style="font-size:8px">für alle</text>
+                <circle class="ll-dash" cx="178" cy="66" r="11"/>
+
+                <circle class="ll-dash" cx="26" cy="106" r="9"/>
+                <text class="ll-b" x="44" y="110" style="font-size:9.5px">Grillkohle</text>
+                <circle class="ll-slot-other" cx="178" cy="106" r="11"/><text x="178" y="109" text-anchor="middle" style="font-size:8px;fill:#fff;font-weight:700">N</text>
+
+                <circle cx="26" cy="146" r="9" fill="#1c1a22"/><text x="26" y="149" text-anchor="middle" style="font-size:9px;fill:#fff">✓</text>
+                <text class="ll-b" x="44" y="150" style="font-size:9.5px">Brötchen, 30 Stück</text>
+                <circle class="ll-slot-me" cx="178" cy="146" r="11"/><text x="178" y="149" text-anchor="middle" style="font-size:8px;fill:#fff">✓</text>
+
+                <circle class="ll-dash" cx="26" cy="186" r="9"/>
+                <text class="ll-b" x="44" y="190" style="font-size:9.5px">Getränke</text>
+                <circle class="ll-dash" cx="178" cy="186" r="11"/>
+
+                <line class="ll-hair" x1="0" y1="380" x2="200" y2="380"/>
+                <circle class="ll-card" cx="26" cy="400" r="12"/><text x="26" y="404" text-anchor="middle" style="font-size:12px;fill:#6a6874">+</text>
+                <rect class="ll-card" x="46" y="388" width="112" height="24" rx="12"/>
+                <circle cx="182" cy="400" r="12" fill="#1c1a22"/>
+              </g>
+
+              <!-- Screen E: Zuweisen-Popover -->
+              <g transform="translate(400,34)">
+                <rect class="ll-s" x="0" y="0" width="200" height="420" rx="18"/>
+                <text class="ll-l" x="16" y="26">⋯&#160;&#160;⇅</text>
+                <text class="ll-b" x="100" y="26" text-anchor="middle">Sommerfest</text>
+                <text class="ll-l" x="184" y="26" text-anchor="end">Fertig</text>
+                <line class="ll-hair" x1="0" y1="40" x2="200" y2="40"/>
+                <circle class="ll-dash" cx="26" cy="66" r="9" opacity="0.4"/>
+                <rect class="ll-bar" x="44" y="60" width="90" height="9" rx="4" opacity="0.4"/>
+
+                <rect class="ll-card" x="30" y="88" width="150" height="164" rx="14"/>
+                <text class="ll-k" x="44" y="110">ZUWEISEN</text>
+                <circle cx="46" cy="132" r="7" fill="#1c1a22"/><text class="ll-b" x="60" y="136" style="font-size:9.5px">Ich</text>
+                <circle cx="46" cy="158" r="7" fill="#c7c4cf"/><text class="ll-l" x="60" y="162">Nora</text>
+                <circle cx="46" cy="184" r="7" fill="#c7c4cf"/><text class="ll-l" x="60" y="188">Tobias</text>
+                <line class="ll-hair" x1="44" y1="202" x2="166" y2="202"/>
+                <text class="ll-l" x="44" y="224">Noch frei</text>
+              </g>
+            </svg>
+            <figcaption>
+              Abhaken (links) und Zuweisen (rechts) sind unabhängige Zustände — Sami kann das Eis
+              mitnehmen, das nie jemand übernommen hatte. Zuweisen öffnet als Popover, kein
+              zweites Sheet über der Liste.
+            </figcaption>
+          </figure>
+
+          <figure class="case-figure reveal">
+            <svg viewBox="0 0 720 486" xmlns="http://www.w3.org/2000/svg" role="img"
+                 aria-label="Zwei Wireframe-Screens: das Ansicht-wechseln-Popover mit Reihenfolge, Themen und Personen, und die Chatübersicht mit dem Badge 4 offen bei der Gruppe mit aktiver Liste.">
+              <style>
+                .lv-s{ fill:#fff; stroke:#c7c4cf; }
+                .lv-bar{ fill:#ececE5; }
+                .lv-hair{ stroke:#e2e0da; stroke-width:1; }
+                .lv-l{ fill:#6a6874; font-size:9.5px; }
+                .lv-b{ fill:#1c1a22; font-size:11px; font-weight:700; }
+                .lv-card{ fill:#fff; stroke:#c7c4cf; }
+                .lv-k{ fill:#9c99a6; font-size:8px; letter-spacing:.08em; }
+                .lv-badge{ fill:#1c1a22; }
+                .lv-badge-t{ fill:#fff; font-size:8.5px; font-weight:700; }
+                .lv-band{ fill:#f6f5f1; }
+              </style>
+
+              <!-- Screen F: Ansicht wechseln -->
+              <g transform="translate(120,34)">
+                <rect class="lv-s" x="0" y="0" width="200" height="420" rx="18"/>
+                <text class="lv-b" x="16" y="26" style="text-decoration:underline">⇅</text>
+                <text class="lv-l" x="40" y="26">Sortieren</text>
+                <text class="lv-b" x="140" y="26" text-anchor="middle" style="font-size:10px">Sommerfest</text>
+                <line class="lv-hair" x1="0" y1="40" x2="200" y2="40"/>
+
+                <rect class="lv-card" x="14" y="50" width="170" height="130" rx="12"/>
+                <circle cx="30" cy="76" r="6" fill="#1c1a22"/><text class="lv-b" x="44" y="80" style="font-size:10px">Reihenfolge</text>
+                <circle cx="30" cy="106" r="6" fill="none" stroke="#c7c4cf"/><text class="lv-l" x="44" y="110">Themen</text>
+                <circle cx="30" cy="136" r="6" fill="none" stroke="#c7c4cf"/><text class="lv-l" x="44" y="140">Personen</text>
+                <line class="lv-hair" x1="26" y1="154" x2="174" y2="154"/>
+                <text class="lv-k" x="26" y="170">NUR FÜR DICH</text>
+              </g>
+
+              <!-- Screen G: Chatübersicht mit Badge -->
+              <g transform="translate(400,34)">
+                <rect class="lv-s" x="0" y="0" width="200" height="420" rx="18"/>
+                <text class="lv-b" x="16" y="26">Chats</text>
+                <line class="lv-hair" x1="0" y1="40" x2="200" y2="40"/>
+
+                <circle class="lv-bar" cx="26" cy="66" r="12"/>
+                <rect class="lv-bar" x="46" y="58" width="100" height="9" rx="4"/>
+                <rect class="lv-bar" x="46" y="72" width="70" height="8" rx="4"/>
+
+                <rect class="lv-band" x="6" y="92" width="188" height="48" rx="8"/>
+                <circle class="lv-bar" cx="26" cy="116" r="12"/>
+                <text class="lv-b" x="46" y="110" style="font-size:10px">Sommerfest-Crew</text>
+                <text class="lv-l" x="46" y="126" style="font-size:8.5px">Mira: bring ich gleich in eine Liste</text>
+                <rect class="lv-badge" x="150" y="106" width="38" height="20" rx="10"/>
+                <text class="lv-badge-t" x="169" y="120" text-anchor="middle">4 offen</text>
+
+                <circle class="lv-bar" cx="26" cy="166" r="12"/>
+                <rect class="lv-bar" x="46" y="158" width="110" height="9" rx="4"/>
+                <rect class="lv-bar" x="46" y="172" width="80" height="8" rx="4"/>
+
+                <circle class="lv-bar" cx="26" cy="206" r="12"/>
+                <rect class="lv-bar" x="46" y="198" width="90" height="9" rx="4"/>
+                <rect class="lv-bar" x="46" y="212" width="60" height="8" rx="4"/>
+              </g>
+            </svg>
+            <figcaption>
+              Die Ansicht hängt an der Person, nicht an der Liste. Die einzige Zahl, die eine
+              Entscheidung trägt — „4 offen" — steht in der Chatübersicht, nicht in der Liste
+              selbst.
+            </figcaption>
+          </figure>
+        </section>
+
+        <!-- 6 — Die Lösung -->
+        <section class="case-section reveal">
+          <p class="tag">Die Lösung</p>
+          <h2>Ein Objekt, viele Schreibende</h2>
+          <p>
+            Eine Liste entsteht wie eine Umfrage oder ein Termin und bleibt danach in einer
+            eigenen Leiste unter der Kopfzeile gepinnt — ein Tap öffnet sie als Sheet über dem
+            Chat. Alle dürfen eintragen, übernehmen und umverteilen, Übernehmen kostet zwei
+            Taps, und jede:r sortiert die Liste für sich — nach Reihenfolge, Themen oder
+            Personen. Der Chat selbst bleibt leise: Änderungen bündeln sich zu einer grauen
+            Systemzeile, eine echte Benachrichtigung geht nur an die Person, der etwas
+            zugewiesen wurde. Ist der Anlass vorbei, wird die Liste beendet — die Leiste
+            verschwindet, eine Abschlusskarte bleibt.
+          </p>
+
+          <h3>Wo die Entscheidungen lagen</h3>
+          <div class="decision-list">
+            <div class="decision">
+              <h3>Eine eigene Leiste, kein angepinnter Beitrag</h3>
+              <p class="why">WhatsApp erlaubt drei Pins, die Leute längst für anderes benutzen. Wäre die Liste nur eine Nachricht, hätte sie genau das Problem, das sie lösen soll.</p>
+            </div>
+            <div class="decision">
+              <h3>Gekauft und übernommen sind getrennt</h3>
+              <p class="why">Sami kann das Eis mitnehmen, das nie jemand übernommen hatte; ein Eintrag kann eine Woche übernommen sein, bevor er gekauft wird. Ein einspuriger Zustand (frei → übernommen → erledigt) liest sich im Diagramm einfacher und scheitert sofort im Supermarkt.</p>
+            </div>
+            <div class="decision">
+              <h3>Alle dürfen alles umverteilen, niemand muss fragen</h3>
+              <p class="why">Ein Rechtemodell wäre im Freundeskreis sozial falsch und technisch teuer. Stattdessen ist die Änderung sichtbar — „Mira hat Nora um Grillkohle gebeten (vorher Tobias)". Verbindlichkeit entsteht dadurch, dass alle es sehen.</p>
+            </div>
+            <div class="decision">
+              <h3>Die Ansicht gehört der Person, nicht der Liste</h3>
+              <p class="why">Eine geteilte Sortierung heißt, dass eine Person allen anderen ihre Ansicht wegnimmt — bei sechs Schreibenden passiert das am ersten Tag. Der gemeinsame Bezug sind die Einträge, nicht ihre Anordnung.</p>
+            </div>
+            <div class="decision">
+              <h3>Listen sind sterblich</h3>
+              <p class="why">Ohne diesen Schritt wird aus einem Chat-Feature schleichend ein Aufgabenverwalter, und der Chat trägt für immer eine Leiste über einer Liste von letztem Sommer.</p>
+            </div>
+          </div>
+
+          <h3>Vier Entscheidungen, die ich zurückgenommen habe</h3>
+          <p>
+            Alle vier fielen beim Durchklicken des Prototyps auf, nicht beim Nachdenken darüber
+            — der eigentliche Grund, warum der Prototyp früh entstanden ist.
+          </p>
+          <div class="decision-list">
+            <div class="decision">
+              <h3>Sortierung war Eigenschaft der Liste — jetzt gehört sie der Person</h3>
+              <p class="why">Mein Argument war, alle müssten dasselbe sehen. Das war falsch herum gedacht: Eine geteilte Ansicht heißt, dass eine Person allen anderen ihre Sortierung wegnimmt. Erst über diese Korrektur kam die Ansicht dazu, die den eigentlichen Job erledigt: nach Personen.</p>
+            </div>
+            <div class="decision">
+              <h3>Gestapelte Bottom-Sheets wurden zu Popover</h3>
+              <p class="why">Drei gestapelte Ebenen ließen eine Zwei-Sekunden-Handlung wie einen Vorgang aussehen. Sheets bleiben jetzt den drei Stellen vorbehalten, an denen wirklich ein neuer Kontext beginnt.</p>
+            </div>
+            <div class="decision">
+              <h3>Umsortieren per Greifer im Formular — gestrichen</h3>
+              <p class="why">Ziehen gab es nur beim Anlegen, also genau dort, wo die Reihenfolge niemanden interessiert — bei fünf gerade selbst getippten Einträgen. Eine Handreihenfolge ist in einer Liste mit sechs Schreibenden nach einem Tag zerschrieben. Ordnung entsteht über die Ansichten.</p>
+            </div>
+            <div class="decision">
+              <h3>Zähler standen an drei Stellen — jetzt an einer</h3>
+              <p class="why">In der Leiste, unter dem Listennamen und in den Gruppenüberschriften. Geblieben ist die eine Zahl, die eine Entscheidung trägt: „4 offen" in der Chatübersicht.</p>
+            </div>
+          </div>
+
+          <div class="case-callout">
+            <p class="case-callout-line">
+              Eine gemeinsame Liste, die im Chat gepinnt bleibt — alle können eintragen, jede:r
+              kann übernehmen, änderbar von allen.
+            </p>
+            <p>
+              Das Prinzip dahinter: Ein Chat ist ein Strom, Koordination braucht einen Zustand.
+            </p>
+          </div>
+        </section>
+
+        <!-- 7 — Prototyp -->
+        <section class="case-section reveal">
+          <p class="tag">Prototyp</p>
+          <h2>Durchklickbar, in Graustufen</h2>
+          <p>
+            Elf Schritte vom leeren Chat bis zur beendeten Liste, durchklickbar und im selben
+            Graustufen-System wie das Schwesterprojekt gebaut. Alle Interaktionen sind echt,
+            nicht vorgespielt: Jede Übernahme, Zuweisung, jeder Eintrag und jedes Abhaken ändert
+            denselben Datenbestand und schreibt die passende Systemzeile in den Chat dahinter.
+          </p>
+
+          <div class="case-cta">
+            <p>Am besten selbst durchklicken — der ganze Flow ist spielbar.</p>
+            <a href="prototypes/whatsapp-listen.html" target="_blank" rel="noopener" class="btn btn-primary">Prototyp öffnen <span class="btn-arrow">↗</span></a>
+          </div>
+        </section>
+
+        <!-- 8 — Validierung -->
+        <section class="case-section reveal">
+          <p class="tag">Nächster Schritt</p>
+          <h2>Was ich als Nächstes prüfen würde</h2>
+          <ul>
+            <li><strong>Chat-Audit:</strong> vier bis sechs abgeschlossene Koordinations-Threads auszählen — Nachrichten, Listen-Versionen, pflegende Personen, Doppelungen. Ein Nachmittag, liefert die Basiszahl, gegen die das Feature später gemessen wird.</li>
+            <li><strong>5–6 Discovery-Interviews:</strong> Bestätigt sich das Muster außerhalb der eigenen Chats? Ist der Aufwand ein empfundenes Problem, oder erlebt jemand das Hin und Her als geselligen Teil der Planung? Wer hat gepflegt, und wie hat sich das angefühlt?</li>
+            <li><strong>5 Usability-Tests am Prototyp:</strong> Wird die Listen-Leiste überhaupt gesehen? Fühlt sich Umverteilen erlaubt an? Wird das Sortier-Symbol im Kopf gefunden?</li>
+            <li><strong>Die Frage danach, ungefragt:</strong> „Hätte es dich genervt, in dieser Gruppe zu sein?" — Benachrichtigungstoleranz lässt sich nicht durchs Zusehen beim Tippen messen.</li>
+          </ul>
+        </section>
+
+        <!-- 9 — Scope -->
+        <section class="case-section reveal">
+          <p class="tag">Ehrlich benannt</p>
+          <h2>Wo das Konzept aufhört</h2>
+          <ul>
+            <li>Kein Umsortieren von Hand — Ordnung entsteht über die Ansichten, nicht über Handarbeit.</li>
+            <li>Kein Schiedsrichter: WhatsApp ist Ende-zu-Ende-verschlüsselt, zwei Geräte müssen offline zum selben Ergebnis kommen. Die Oberfläche muss ehrlich sagen können „das hat gerade jemand anders genommen" — das wird passieren, nicht nur ein Randfall sein.</li>
+            <li>Höchstens eine zuständige Person pro Eintrag — keine Mengen pro Person, keine Unter-Einträge.</li>
+            <li>„Nur Admins dürfen ändern" existiert nur als Schutz für sehr große Gruppen, nicht als Standard.</li>
+            <li>Kein Hi-Fi-Visual-Design — bewusste Entscheidung zugunsten von Problem und Konzept, wie beim Schwesterprojekt.</li>
+          </ul>
+          <p>
+            Das Schwesterprojekt <a href="whatsapp-temporaere-gruppen.html">WhatsApp: Temporäre
+            Gruppen</a> behandelt denselben Chat-Typ an einem anderen Punkt seines Lebens — was
+            passiert, nachdem der Anlass vorbei ist. Diese Case Study fragt, wie er brauchbar
+            wird, während geplant wird. Bewusst getrennt gehalten: zusammen wären es zwei halb
+            erzählte Konzepte statt zwei scharfen.
+          </p>
+        </section>
+
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <span>© 2026 Made with ♥ by Helena</span>
+    </div>
+  </footer>
+
+  <script src="../assets/main.js"></script>
+</body>
+</html>
