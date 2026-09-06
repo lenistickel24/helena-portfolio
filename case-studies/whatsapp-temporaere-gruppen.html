@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WhatsApp: Temporäre Gruppen — Case Study — Helena Stickelbroeck</title>
-  <meta name="description" content="Feature-Konzept für WhatsApp: Eine Gruppe kann von Anfang an ein Ende haben — und wenn nicht, räumt die App sie irgendwann leise weg, ohne dass etwas verloren geht." />
+  <meta name="description" content="Feature-Konzept für WhatsApp: Eine Gruppe kann bei der Erstellung ein Enddatum bekommen — und wenn dieser Tag kommt, löscht sie sich von selbst, für alle." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -12,9 +12,6 @@
 </head>
 <body>
 
-  <!-- Arbeitsstand: Neu aufgebaut als Erzählung — Problem/Geschichte, Weg zur Lösung, User Flow,
-       Wireframes (Graustufen-Skizzen), Lösung. Story-Entwurf und Wireframe-Texte sind Platzhalter
-       zum Überschreiben. Offen: echte Prototyp-Screens/Embed, finale Wortwahl der Geschichte. -->
 
   <header class="site-header">
     <div class="wrap">
@@ -41,8 +38,8 @@
         <p class="tag">WhatsApp</p>
         <h1 class="page-heading">Temporäre Gruppen – Feature-Konzept</h1>
         <p class="case-lede">
-          Ein Feature-Konzept: Eine Gruppe kann von Anfang an ein Ende haben — und wenn nicht,
-          räumt die App sie irgendwann leise weg, ohne dass etwas verloren geht.
+          Ein Feature-Konzept: Eine Gruppe kann bei der Erstellung ein Enddatum bekommen — und wenn
+          dieser Tag kommt, löscht sie sich von selbst, für alle.
         </p>
 
         <div class="case-meta">
@@ -56,7 +53,7 @@
           </div>
           <div>
             <div class="case-meta-label">Zeitraum</div>
-            <div class="case-meta-value">[Zeitraum ergänzen]</div>
+            <div class="case-meta-value">August – September 2026</div>
           </div>
         </div>
       </div>
@@ -71,32 +68,31 @@
           <p class="tag">Das Problem</p>
           <h2>Eine Chatliste voller Vergangenheit</h2>
 
-          <p><em>[Entwurf — in deine Worte bringen]</em></p>
           <p>
-            Eine Person in meinem Umfeld organisiert seit Jahren alles über WhatsApp-Gruppen: den
-            Skiurlaub, den 30. Geburtstag ihrer Schwester, das gemeinsame Geschenk fürs Team, die
-            Festival-Crew. Jeder Anlass bekommt eine Gruppe, oft mit genau denselben Leuten. Das
-            funktioniert — bis der Anlass vorbei ist.
+            Ich wurde in eine WhatsApp-Gruppe namens „Inline Skates" eingeladen. Für genau einen
+            Ausflug, am nächsten Tag. Nach dem Ausflug wird sie nie wieder gebraucht — aber sie
+            bleibt. In der Chatliste von allen, die dabei waren.
           </p>
           <p>
-            Dann passiert nämlich nichts. Die Gruppe bleibt. Ein Jahr später fährt dieselbe Runde
-            wieder Ski, aber niemand holt die alte Gruppe hervor — es wird eine neue erstellt. Die
-            alte liegt weiter in der Liste, zwischen der Familie und dem aktuellen Projekt-Chat,
-            nicht zu unterscheiden von den Gruppen, in denen wirklich noch etwas passiert.
+            Das ist kein Sonderfall, das ist mein Alltag: der Skiurlaub, der 30. Geburtstag meiner
+            Schwester, das gemeinsame Geschenk fürs Team, die Festival-Crew. Jeder Anlass bekommt
+            eine Gruppe, oft mit genau denselben Leuten. Ein Jahr später fährt dieselbe Runde wieder
+            Ski — und niemand holt die alte Gruppe hervor. Es wird eine neue erstellt. Die alte liegt
+            weiter zwischen der Familie und dem aktuellen Projekt-Chat, nicht zu unterscheiden von
+            den Gruppen, in denen wirklich noch etwas passiert.
           </p>
           <p>
-            Ich wollte wissen, ob das ein Einzelfall ist, und habe mir mit ihrer Erlaubnis die echte
-            Gruppenliste angesehen.
+            Ich wollte wissen, ob das an mir liegt, und habe meine eigene Gruppenliste ausgewertet.
           </p>
 
           <div class="stat-band">
             <div>
               <div class="stat-num">1 / 61</div>
-              <div class="stat-label">ausgewertete gemeinsame Gruppen war noch in laufender Nutzung</div>
+              <div class="stat-label">ausgewertete gemeinsame Gruppen mit meinem engsten Kontakt war noch in laufender Nutzung</div>
             </div>
             <div>
-              <div class="stat-num">98 %</div>
-              <div class="stat-label">der Gruppen an ein einzelnes, vergangenes Ereignis gebunden</div>
+              <div class="stat-num">56 %</div>
+              <div class="stat-label">aller Gruppen über fünf weitere Kontakte hinweg seit über einem Jahr ohne eine einzige Nachricht</div>
             </div>
             <div>
               <div class="stat-num">0</div>
@@ -106,19 +102,8 @@
 
           <p>
             Für drei wiederkehrende Ereignisse gab es sogar mehrere Gruppen übereinander — jedes Jahr
-            eine neue, die alte nie wieder angefasst. Diese Gruppen bleiben liegen, und zwar nicht
-            wegen Speicherplatz und nicht, weil es peinlich wäre auszutreten, sondern weil:
+            eine neue, die alte nie wieder angefasst.
           </p>
-          <ul>
-            <li><strong>WhatsApp kein Ende kennt</strong>, das sich nicht wie ein Bruch anfühlt — die einzige Handlung ist „Gruppe verlassen".</li>
-            <li><strong>Verlassen zu endgültig wirkt</strong> — „vielleicht kommt ja doch noch etwas" (Verlustangst).</li>
-            <li><strong>tote Gruppen in der Masse untergehen</strong>. Jede Lösung, die verlangt, sich aktiv an eine vergessene Gruppe zu erinnern, scheitert am selben Mechanismus.</li>
-          </ul>
-          <p>
-            Das Ergebnis ist ein <strong>Vertrauensproblem</strong>: Die Liste, die zeigen soll, mit
-            wem man gerade in Kontakt steht, zeigt vor allem Vergangenheit.
-          </p>
-
           <figure class="case-figure reveal">
             <svg viewBox="0 0 720 388" xmlns="http://www.w3.org/2000/svg" role="img"
                  aria-label="Balkendiagramm: 61 ausgewertete Gruppen nach Anlass. Nur eine ist aktuell aktiv genutzt; die übrigen 60 hängen an einem abgeschlossenen Anlass.">
@@ -156,19 +141,106 @@
           </figure>
         </section>
 
+          <p>
+            Der naheliegende Einwand dagegen: Vielleicht ist ausgerechnet <em>diese eine Beziehung</em>
+            ungewöhnlich. Also habe ich dieselbe Ansicht für fünf weitere Kontakte aus ganz
+            verschiedenen Lebensbereichen aufgenommen — Mutter, Bruder, Schwägerin, zwei getrennte
+            Freundeskreise — und nur eines ausgewertet: das Datum der letzten Nachricht.
+          </p>
+
+          <figure class="case-figure reveal">
+            <svg viewBox="0 0 720 300" xmlns="http://www.w3.org/2000/svg" role="img"
+                 aria-label="Gestapeltes Balkendiagramm über fünf Kontakte. Je Kontakt der Anteil der gemeinsamen Gruppen mit letzter Nachricht innerhalb von drei Monaten, innerhalb eines Jahres, und seit über einem Jahr. Der Anteil über einem Jahr liegt überall zwischen 50 und 63 Prozent.">
+              <defs>
+                <linearGradient id="tot" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0" stop-color="#8a8a8a"/><stop offset="1" stop-color="#3a3a3a"/>
+                </linearGradient>
+              </defs>
+              <style>
+                .k-h{ fill:#9c99a6; font-size:12.5px; }
+                .k-l{ fill:#6a6874; font-size:12.5px; }
+                .k-v{ fill:#1c1a22; font-size:12.5px; font-weight:700; }
+                .s-a{ fill:#EDEBE4; stroke:rgba(28,26,34,.14); }
+                .s-b{ fill:#BFBCB4; }
+                .s-c{ fill:url(#tot); }
+                .leg{ fill:#6a6874; font-size:11.5px; }
+              </style>
+              <text class="k-h" x="4" y="16">Gemeinsame Gruppen je Kontakt, nach Datum der letzten Nachricht</text>
+
+              <g transform="translate(0,38)">
+                <g><text class="k-l" x="150" y="15.5" text-anchor="end">Freundeskreis A</text>
+                  <rect class="s-a" x="160" y="3" width="125.3" height="17" rx="3"/>
+                  <rect class="s-b" x="285.3" y="3" width="94" height="17"/>
+                  <rect class="s-c" x="379.3" y="3" width="250.7" height="17" rx="3"/>
+                  <text class="k-v" x="640" y="15.5">16 / 30</text></g>
+                <g transform="translate(0,32)"><text class="k-l" x="150" y="15.5" text-anchor="end">Freundeskreis B</text>
+                  <rect class="s-a" x="160" y="3" width="94" height="17" rx="3"/>
+                  <rect class="s-b" x="254" y="3" width="125.3" height="17"/>
+                  <rect class="s-c" x="379.3" y="3" width="219.3" height="17" rx="3"/>
+                  <text class="k-v" x="640" y="15.5">14 / 28</text></g>
+                <g transform="translate(0,64)"><text class="k-l" x="150" y="15.5" text-anchor="end">Schwägerin</text>
+                  <rect class="s-a" x="160" y="3" width="94" height="17" rx="3"/>
+                  <rect class="s-b" x="254" y="3" width="47" height="17"/>
+                  <rect class="s-c" x="301" y="3" width="235" height="17" rx="3"/>
+                  <text class="k-v" x="640" y="15.5">15 / 24</text></g>
+                <g transform="translate(0,96)"><text class="k-l" x="150" y="15.5" text-anchor="end">Bruder</text>
+                  <rect class="s-a" x="160" y="3" width="94" height="17" rx="3"/>
+                  <rect class="s-b" x="254" y="3" width="47" height="17"/>
+                  <rect class="s-c" x="301" y="3" width="188" height="17" rx="3"/>
+                  <text class="k-v" x="640" y="15.5">12 / 21</text></g>
+                <g transform="translate(0,128)"><text class="k-l" x="150" y="15.5" text-anchor="end">Mutter</text>
+                  <rect class="s-a" x="160" y="3" width="94" height="17" rx="3"/>
+                  <rect class="s-b" x="254" y="3" width="31.3" height="17"/>
+                  <rect class="s-c" x="285.3" y="3" width="172.3" height="17" rx="3"/>
+                  <text class="k-v" x="640" y="15.5">11 / 19</text></g>
+              </g>
+
+              <g transform="translate(160,212)">
+                <rect class="s-a" x="0" y="0" width="14" height="12" rx="2"/><text class="leg" x="20" y="10">letzte Nachricht &lt; 3 Monate</text>
+                <rect class="s-b" x="185" y="0" width="14" height="12" rx="2"/><text class="leg" x="205" y="10">3–12 Monate</text>
+                <rect class="s-c" x="300" y="0" width="14" height="12" rx="2"/><text class="leg" x="320" y="10">seit über einem Jahr still</text>
+              </g>
+              <text class="k-h" x="160" y="258">122 gemeinsame Gruppen · 68 davon seit über einem Jahr ohne Nachricht · 44 seit über zwei Jahren</text>
+              <text class="k-h" x="160" y="278">die jeweils älteste stille Gruppe pro Kontakt: 3 bis 4 Jahre</text>
+            </svg>
+            <figcaption>
+              Der Anteil schwankt kaum: zwischen 50 % und 63 %, bei der Mutter fast genauso wie im
+              Festival-Freundeskreis. Das spricht dafür, dass es am Mechanismus hängt — nicht an einer
+              bestimmten Beziehung oder einem Milieu.
+            </figcaption>
+          </figure>
+
+          <p>
+            Aufschlussreich ist die Verteilung: Die 71 Gruppen mit meinem engsten Kontakt sind der
+            Extremfall, 19 bis 30 der Normalfall — <strong>aber der Anteil toter Gruppen ist überall
+            gleich.</strong> Die Zahl skaliert mit der Nähe der Beziehung, der Ballast-Anteil nicht.
+            Wer sich näher steht, hat nicht anteilig weniger Karteileichen im Chat, sondern absolut mehr.
+          </p>
+          <p>
+            Diese Gruppen bleiben liegen, und zwar nicht wegen Speicherplatz und nicht, weil es
+            peinlich wäre auszutreten, sondern weil:
+          </p>
+          <ul>
+            <li><strong>WhatsApp kein Ende kennt</strong>, das sich nicht wie ein Bruch anfühlt — die einzige Handlung ist „Gruppe verlassen".</li>
+            <li><strong>Verlassen zu endgültig wirkt</strong> — „vielleicht kommt ja doch noch etwas".</li>
+            <li><strong>tote Gruppen in der Masse untergehen.</strong> Jede Lösung, die verlangt, sich aktiv an eine vergessene Gruppe zu erinnern, scheitert am selben Mechanismus.</li>
+          </ul>
+          <p>
+            Das Ergebnis ist ein <strong>Vertrauensproblem</strong>: Die Liste, die zeigen soll, mit
+            wem man gerade in Kontakt steht, zeigt vor allem Vergangenheit.
+          </p>
+          <p>
+            Ein Detail aus den Listen fasst es besser zusammen als jede Statistik. Eine Gruppe heißt
+            <strong>„Oma Nelli Gruppe-ENDE"</strong>. Jemand hat das Ende in den Namen geschrieben,
+            weil das Produkt keine andere Möglichkeit anbietet, es festzuhalten. Die Gruppe existiert
+            seit Januar 2025 unverändert weiter.
+          </p>
+        </section>
+
         <!-- 3 — Der Weg zur Lösung -->
         <section class="case-section reveal">
           <p class="tag">Vorgehen</p>
-          <h2>Vom Audit zum Prinzip</h2>
-          <p>
-            Aus dem Gruppen-Audit, dem Gespräch mit der Nutzerin und etwas Sekundärrecherche wurde
-            schnell klar: Das ist nicht ein Problem, sondern zwei.
-          </p>
-          <p>
-            Das eine sind alle Gruppen, die es noch gar nicht gibt — hier ließe sich das Ende von
-            Anfang an mitdenken. Das andere ist der Rückstau, der schon da ist: Hunderte Chats, an
-            die sich niemand mehr einzeln erinnert.
-          </p>
+          <h2>Einmal komplett verworfen</h2>
           <p>
             Ein Fund aus der Recherche hat die Richtung bestätigt: WhatsApp hat 2023 selbst ein
             Feature namens „Expiring Groups" getestet. Es kam nie über den Test hinaus — vermutlich,
@@ -177,381 +249,131 @@
             das zu wenig.
           </p>
           <p>
-            Beide Teilprobleme führten auf <strong>dasselbe Prinzip</strong>: Das Ende darf sich nie
-            endgültig anfühlen. Sobald „beenden" auch nur in die Nähe von „löschen" rückt, greift
-            wieder die Verlustangst — und niemand fasst das Feature an. Alles Weitere hängt an
-            diesem einen Satz.
+            Meine erste Fassung ging von der Verlustangst aus und zog daraus den naheliegenden
+            Schluss: Wenn Leute Angst haben, etwas zu verlieren, darf nichts verloren gehen. Abgelaufene
+            Gruppen sollten ins Archiv wandern, jederzeit zurückholbar. Dazu eine Einstellung, die den
+            Altbestand automatisch aufräumt, und eine persönliche Teilnahmedauer pro Person.
+          </p>
+          <p>
+            Das Konzept war korrekt hergeleitet — und trotzdem falsch. Beim Blick auf die
+            „Inline Skates"-Gruppe fiel auf: Der Anlass hat ein <em>echtes, hartes</em> Ende. „Weg,
+            aber kommt bei jeder Nachricht zurück" bildet das nicht ab, das ist ein vager
+            Zwischenzustand. Und aus einem Feature waren längst drei geworden.
+          </p>
+
+          <div class="case-callout">
+            <p class="case-callout-line">
+              Die Verlustangst hängt nicht am <em>Ende</em> einer Gruppe, sondern am nachträglichen,
+              einsamen Austritt aus einer Gruppe, deren Status mehrdeutig ist.
+            </p>
+            <p>
+              „Soll ich die jetzt verlassen? Was, wenn doch noch was kommt? Was denken die anderen?" —
+              diese Fragen entstehen nur, weil die Gruppe nie ein vereinbartes Ende hatte. Eine Gruppe,
+              die mit einem sichtbaren Enddatum <strong>geboren</strong> wurde, hat davon nichts.
+            </p>
+          </div>
+
+          <p>
+            Damit fiel das Archiv, und mit ihm zwei Drittel des Konzepts. Übrig blieb ein einziges
+            Feature: <strong>Das Ende gehört an den Anfang.</strong>
           </p>
         </section>
 
         <!-- 4 — User Flow -->
         <section class="case-section reveal">
           <p class="tag">User Flow</p>
-          <h2>Zwei Wege durch die App</h2>
+          <h2>Ein Weg, neun Schritte</h2>
           <p>
-            Das Konzept berührt genau zwei Stellen: Für neue Gruppen kommt ein Schritt im
-            Erstellungs-Flow dazu, für den bestehenden Rückstau eine einmalige Einstellung.
+            Das Konzept berührt genau eine Stelle: einen zusätzlichen Schritt im Erstellungs-Flow.
+            Alles danach passiert von selbst.
           </p>
 
           <figure class="case-figure reveal">
-            <svg viewBox="0 0 720 202" xmlns="http://www.w3.org/2000/svg" role="img"
-                 aria-label="Zwei Flows. Flow A, Neue Gruppe: Chats, Neuer Chat, Kontakte, Name und Foto, Gruppentyp (der neue Schritt), Fertig. Flow B, Rückstau aufräumen: Onboarding-Karte, Einstellung, Im Archiv, Zurückgeholt.">
+            <svg viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg" role="img"
+                 aria-label="Ein Flow in zwei Reihen. Erstellung im Bottom-Sheet: Chats, Neuer Chat, Kontakte, Name und Foto, Gruppentyp — der neue Schritt. Danach Laufzeit und Ende: Gruppe, In der Liste, Erinnerung einen Tag vorher, Gelöscht.">
               <defs>
-                <linearGradient id="dgm-acc3" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0" stop-color="#8a8a8a"/><stop offset="1" stop-color="#3a3a3a"/>
+                <linearGradient id="fl-acc" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#4a4a4a"/><stop offset="1" stop-color="#1c1a22"/>
                 </linearGradient>
+                <marker id="fl-ar" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+                  <path d="M0,1 L6,4 L0,7" fill="none" stroke="#b6b3ab" stroke-width="1.4"/>
+                </marker>
               </defs>
               <style>
-                .fl-k{ fill:#9c99a6; font-size:11px; letter-spacing:.06em; }
-                .fl-p{ fill:#fff; stroke:rgba(28,26,34,.16); }
-                .fl-t{ fill:#6a6874; font-size:11.5px; }
-                .fl-new .fl-p{ stroke:url(#dgm-acc3); stroke-width:2; }
-                .fl-new .fl-t{ fill:#1c1a22; font-weight:700; }
-                .fl-arr{ stroke:#c7c4cf; stroke-width:1.5; fill:none; }
-                .fl-tag{ fill:#8a8a8a; font-size:9px; font-weight:700; letter-spacing:.08em; }
+                .fb{ fill:#F4F2EC; stroke:rgba(28,26,34,.16); }
+                .ft{ fill:#3a3844; font-size:11.5px; text-anchor:middle; }
+                .fn .fb{ fill:url(#fl-acc); stroke:none; }
+                .fn .ft{ fill:#fff; font-weight:700; }
+                .fh{ fill:#9c99a6; font-size:11.5px; letter-spacing:.06em; }
+                .fc{ stroke:#b6b3ab; stroke-width:1.4; fill:none; }
+                .fsheet{ fill:none; stroke:rgba(28,26,34,.18); stroke-dasharray:4 4; }
               </style>
 
-              <!-- Flow A -->
-              <text class="fl-k" x="2" y="12">FLOW A · NEUE GRUPPE</text>
-              <g transform="translate(0,42)">
-                <g><rect class="fl-p" x="0"   y="0" width="106" height="38" rx="9"/><text class="fl-t" x="53"  y="23" text-anchor="middle">Chats</text></g>
-                <path class="fl-arr" d="M110,19 h8 m-3,-3 l3,3 l-3,3"/>
-                <g><rect class="fl-p" x="122" y="0" width="106" height="38" rx="9"/><text class="fl-t" x="175" y="23" text-anchor="middle">Neuer Chat</text></g>
-                <path class="fl-arr" d="M232,19 h8 m-3,-3 l3,3 l-3,3"/>
-                <g><rect class="fl-p" x="244" y="0" width="106" height="38" rx="9"/><text class="fl-t" x="297" y="23" text-anchor="middle">Kontakte</text></g>
-                <path class="fl-arr" d="M354,19 h8 m-3,-3 l3,3 l-3,3"/>
-                <g><rect class="fl-p" x="366" y="0" width="106" height="38" rx="9"/><text class="fl-t" x="419" y="23" text-anchor="middle">Name &amp; Foto</text></g>
-                <path class="fl-arr" d="M476,19 h8 m-3,-3 l3,3 l-3,3"/>
-                <g class="fl-new"><rect class="fl-p" x="488" y="0" width="106" height="38" rx="9"/><text class="fl-t" x="541" y="23" text-anchor="middle">Gruppentyp</text><text class="fl-tag" x="541" y="-6" text-anchor="middle">NEUER SCHRITT</text></g>
-                <path class="fl-arr" d="M598,19 h8 m-3,-3 l3,3 l-3,3"/>
-                <g><rect class="fl-p" x="610" y="0" width="106" height="38" rx="9"/><text class="fl-t" x="663" y="23" text-anchor="middle">Fertig</text></g>
+              <text class="fh" x="4" y="14">ERSTELLUNG — ALLES IN EINEM BOTTOM-SHEET</text>
+              <rect class="fsheet" x="0" y="24" width="700" height="56" rx="10"/>
+              <g transform="translate(8,34)">
+                <g><rect class="fb" x="0" y="0" width="120" height="36" rx="8"/><text class="ft" x="60" y="22">Chats</text></g>
+                <line class="fc" x1="122" y1="18" x2="140" y2="18" marker-end="url(#fl-ar)"/>
+                <g><rect class="fb" x="142" y="0" width="120" height="36" rx="8"/><text class="ft" x="202" y="22">Neuer Chat</text></g>
+                <line class="fc" x1="264" y1="18" x2="282" y2="18" marker-end="url(#fl-ar)"/>
+                <g><rect class="fb" x="284" y="0" width="120" height="36" rx="8"/><text class="ft" x="344" y="22">Kontakte</text></g>
+                <line class="fc" x1="406" y1="18" x2="424" y2="18" marker-end="url(#fl-ar)"/>
+                <g><rect class="fb" x="426" y="0" width="120" height="36" rx="8"/><text class="ft" x="486" y="22">Name &amp; Foto</text></g>
+                <line class="fc" x1="548" y1="18" x2="566" y2="18" marker-end="url(#fl-ar)"/>
+                <g class="fn"><rect class="fb" x="568" y="0" width="126" height="36" rx="8"/><text class="ft" x="631" y="22">Gruppentyp</text></g>
               </g>
+              <text class="fh" x="576" y="96" font-size="10.5">↑ der neue Schritt</text>
 
-              <!-- Flow B -->
-              <text class="fl-k" x="2" y="130">FLOW B · RÜCKSTAU AUFRÄUMEN</text>
-              <g transform="translate(0,148)">
-                <g><rect class="fl-p" x="0"   y="0" width="164" height="38" rx="9"/><text class="fl-t" x="82"  y="23" text-anchor="middle">Onboarding-Karte</text></g>
-                <path class="fl-arr" d="M170,19 h10 m-3,-3 l3,3 l-3,3"/>
-                <g><rect class="fl-p" x="186" y="0" width="164" height="38" rx="9"/><text class="fl-t" x="268" y="23" text-anchor="middle">Einstellung</text></g>
-                <path class="fl-arr" d="M356,19 h10 m-3,-3 l3,3 l-3,3"/>
-                <g><rect class="fl-p" x="372" y="0" width="164" height="38" rx="9"/><text class="fl-t" x="454" y="23" text-anchor="middle">Im Archiv</text></g>
-                <path class="fl-arr" d="M542,19 h10 m-3,-3 l3,3 l-3,3"/>
-                <g><rect class="fl-p" x="558" y="0" width="158" height="38" rx="9"/><text class="fl-t" x="637" y="23" text-anchor="middle">Zurückgeholt</text></g>
+              <text class="fh" x="4" y="140">LAUFZEIT &amp; ENDE — PASSIERT VON SELBST</text>
+              <g transform="translate(8,152)">
+                <g><rect class="fb" x="0" y="0" width="150" height="36" rx="8"/><text class="ft" x="75" y="22">Gruppe</text></g>
+                <line class="fc" x1="152" y1="18" x2="170" y2="18" marker-end="url(#fl-ar)"/>
+                <g><rect class="fb" x="172" y="0" width="150" height="36" rx="8"/><text class="ft" x="247" y="22">In der Liste</text></g>
+                <line class="fc" x1="324" y1="18" x2="342" y2="18" marker-end="url(#fl-ar)"/>
+                <g><rect class="fb" x="344" y="0" width="170" height="36" rx="8"/><text class="ft" x="429" y="22">Erinnerung, 1 Tag vorher</text></g>
+                <line class="fc" x1="516" y1="18" x2="534" y2="18" marker-end="url(#fl-ar)"/>
+                <g class="fn"><rect class="fb" x="536" y="0" width="158" height="36" rx="8"/><text class="ft" x="615" y="22">Gelöscht</text></g>
               </g>
+              <text class="fh" x="8" y="216" font-size="10.5">Ein Admin kann bis zum Stichtag verlängern oder die Gruppe dauerhaft machen — sonst läuft es durch.</text>
             </svg>
             <figcaption>
-              Der neue Pflichtschritt „Gruppentyp" sitzt bewusst am Ende der vertrauten Erstellungs-Reihenfolge —
-              „eine Sache noch", statt den Ablauf von vorn zu unterbrechen.
+              Der neue Pflichtschritt „Gruppentyp" sitzt bewusst am Ende der vertrauten
+              Erstellungs-Reihenfolge — „eine Sache noch", statt den Ablauf von vorn zu unterbrechen.
+              Und erst, wenn die Gruppe einen Namen hat, ist die Frage nach der Laufzeit konkret
+              statt abstrakt.
             </figcaption>
           </figure>
         </section>
 
-        <!-- 5 — Wireframes -->
-        <section class="case-section reveal">
-          <p class="tag">Wireframes</p>
-          <h2>Die Schlüssel-Screens</h2>
-          <p>
-            Skizzen in Graustufen — bewusst ohne Farbe und Feinschliff, damit die Aufmerksamkeit
-            auf Ablauf und Logik bleibt. Alle Namen sind erfunden.
-          </p>
-
-          <figure class="case-figure reveal">
-            <svg viewBox="0 0 720 486" xmlns="http://www.w3.org/2000/svg" role="img"
-                 aria-label="Drei Wireframe-Screens des Erstellungs-Flows: Gruppenname eingeben, dann der neue Pflichtschritt Gruppentyp mit den Optionen Dauerhaft und Temporär ohne Vorauswahl, dann Enddatum wählen mit Vorschlägen und Kalender.">
-              <style>
-                .wf-s{ fill:#fff; stroke:#c7c4cf; }
-                .wf-new{ stroke:#1c1a22; stroke-width:2; }
-                .wf-bar{ fill:#ececE5; }
-                .wf-hair{ stroke:#e2e0da; stroke-width:1; }
-                .wf-l{ fill:#6a6874; font-size:10.5px; }
-                .wf-b{ fill:#1c1a22; font-size:11px; font-weight:700; }
-                .wf-k{ fill:#9c99a6; font-size:8.5px; letter-spacing:.09em; }
-                .wf-btn{ fill:#1c1a22; }
-                .wf-btn-t{ fill:#fff; font-size:10px; font-weight:700; }
-                .wf-btn-off{ fill:#f0f0f0; stroke:#d3d1cb; }
-                .wf-btn-off-t{ fill:#9c99a6; font-size:10px; font-weight:700; }
-                .wf-card{ fill:#fff; stroke:#c7c4cf; }
-                .wf-chip{ fill:#fff; stroke:#c7c4cf; }
-                .wf-chip-on{ fill:#1c1a22; }
-                .wf-chip-t{ fill:#6a6874; font-size:9px; }
-                .wf-chip-on-t{ fill:#fff; font-size:9px; font-weight:700; }
-                .wf-radio{ fill:none; stroke:#9c99a6; stroke-width:1.5; }
-                .wf-tag{ fill:#8a8a8a; font-size:8.5px; font-weight:700; letter-spacing:.09em; }
-              </style>
-
-              <!-- Screen A: Name & Foto -->
-              <g transform="translate(0,34)">
-                <rect class="wf-s" x="0" y="0" width="200" height="420" rx="18"/>
-                <text class="wf-b" x="16" y="26">‹  Neue Gruppe</text>
-                <line class="wf-hair" x1="0" y1="40" x2="200" y2="40"/>
-                <circle class="wf-chip" cx="34" cy="78" r="16"/>
-                <rect class="wf-chip" x="60" y="64" width="124" height="28" rx="6"/>
-                <text class="wf-l" x="70" y="82">Skihütte 2026</text>
-                <text class="wf-k" x="16" y="126">MITGLIEDER</text>
-                <circle class="wf-bar" cx="24" cy="148" r="11"/>
-                <circle class="wf-bar" cx="52" cy="148" r="11"/>
-                <circle class="wf-bar" cx="80" cy="148" r="11"/>
-                <circle class="wf-bar" cx="108" cy="148" r="11"/>
-                <rect class="wf-bar" x="16" y="178" width="150" height="9" rx="4"/>
-                <rect class="wf-bar" x="16" y="195" width="110" height="9" rx="4"/>
-                <rect class="wf-bar" x="16" y="212" width="132" height="9" rx="4"/>
-                <rect class="wf-btn" x="16" y="372" width="168" height="30" rx="8"/>
-                <text class="wf-btn-t" x="100" y="391" text-anchor="middle">Weiter</text>
-              </g>
-
-              <!-- Screen B: Gruppentyp (neu, hervorgehoben) -->
-              <g transform="translate(260,34)">
-                <text class="wf-tag" x="100" y="-12" text-anchor="middle">NEUER PFLICHTSCHRITT</text>
-                <rect class="wf-s wf-new" x="0" y="0" width="200" height="420" rx="18"/>
-                <text class="wf-b" x="16" y="26">‹  Gruppentyp</text>
-                <line class="wf-hair" x1="0" y1="40" x2="200" y2="40"/>
-                <text class="wf-l" x="16" y="62">Wie lange soll die Gruppe</text>
-                <text class="wf-l" x="16" y="76">bestehen?</text>
-                <rect class="wf-card" x="14" y="92" width="172" height="58" rx="10"/>
-                <circle class="wf-radio" cx="30" cy="121" r="6"/>
-                <text class="wf-b" x="46" y="116">Dauerhaft</text>
-                <text class="wf-l" x="46" y="132">Bleibt, bis ihr sie verlasst</text>
-                <rect class="wf-card" x="14" y="160" width="172" height="72" rx="10"/>
-                <circle class="wf-radio" cx="30" cy="190" r="6"/>
-                <text class="wf-b" x="46" y="185">Temporär</text>
-                <text class="wf-l" x="46" y="201">Endet zu einem Datum,</text>
-                <text class="wf-l" x="46" y="215">wandert dann ins Archiv</text>
-                <rect class="wf-btn-off" x="16" y="372" width="168" height="30" rx="8"/>
-                <text class="wf-btn-off-t" x="100" y="391" text-anchor="middle">Weiter</text>
-              </g>
-
-              <!-- Screen C: Enddatum -->
-              <g transform="translate(520,34)">
-                <rect class="wf-s" x="0" y="0" width="200" height="420" rx="18"/>
-                <text class="wf-b" x="16" y="26">‹  Enddatum</text>
-                <line class="wf-hair" x1="0" y1="40" x2="200" y2="40"/>
-                <rect class="wf-chip" x="14" y="54" width="52" height="22" rx="11"/>
-                <text class="wf-chip-t" x="40" y="69" text-anchor="middle">1 Woche</text>
-                <rect class="wf-chip-on" x="72" y="54" width="52" height="22" rx="11"/>
-                <text class="wf-chip-on-t" x="98" y="69" text-anchor="middle">1 Monat</text>
-                <rect class="wf-chip" x="130" y="54" width="52" height="22" rx="11"/>
-                <text class="wf-chip-t" x="156" y="69" text-anchor="middle">Datum</text>
-                <rect class="wf-chip" x="14" y="88" width="172" height="32" rx="8"/>
-                <text class="wf-b" x="24" y="108">28. Februar 2026</text>
-                <rect class="wf-chip" x="14" y="132" width="172" height="96" rx="8"/>
-                <line class="wf-hair" x1="14" y1="164" x2="186" y2="164"/>
-                <line class="wf-hair" x1="14" y1="196" x2="186" y2="196"/>
-                <line class="wf-hair" x1="71" y1="132" x2="71" y2="228"/>
-                <line class="wf-hair" x1="128" y1="132" x2="128" y2="228"/>
-                <rect class="wf-chip-on" x="76" y="136" width="47" height="24" rx="4"/>
-                <text class="wf-l" x="16" y="250">Alle werden 1 Tag vorher erinnert.</text>
-                <rect class="wf-btn" x="16" y="372" width="168" height="30" rx="8"/>
-                <text class="wf-btn-t" x="100" y="391" text-anchor="middle">Gruppe erstellen</text>
-              </g>
-            </svg>
-            <figcaption>
-              Der Schritt „Gruppentyp" hat keine Vorauswahl — die Wahl muss bewusst fallen, sonst geht es
-              nicht weiter. Bei „Temporär" folgt direkt die Datumsauswahl mit Vorschlägen.
-            </figcaption>
-          </figure>
-
-          <figure class="case-figure reveal">
-            <svg viewBox="0 0 720 486" xmlns="http://www.w3.org/2000/svg" role="img"
-                 aria-label="Zwei Wireframe-Screens: eine laufende temporäre Gruppe mit sichtbarem Hinweis auf das Enddatum, und dieselbe Gruppe später im Archiv, eingefroren, mit Schaltfläche zum Reaktivieren.">
-              <style>
-                .wg-s{ fill:#fff; stroke:#c7c4cf; }
-                .wg-bar{ fill:#ececE5; }
-                .wg-out{ fill:#e4e2dc; }
-                .wg-band{ fill:#f6f5f1; }
-                .wg-hair{ stroke:#e2e0da; stroke-width:1; }
-                .wg-l{ fill:#6a6874; font-size:10px; }
-                .wg-b{ fill:#1c1a22; font-size:11px; font-weight:700; }
-                .wg-card{ fill:#fff; stroke:#c7c4cf; }
-                .wg-btn{ fill:#1c1a22; }
-                .wg-btn-t{ fill:#fff; font-size:9px; font-weight:700; }
-              </style>
-
-              <!-- Screen D: laufende temporäre Gruppe -->
-              <g transform="translate(120,34)">
-                <rect class="wg-s" x="0" y="0" width="200" height="420" rx="18"/>
-                <text class="wg-b" x="16" y="26">‹  Skihütte 2026</text>
-                <line class="wg-hair" x1="0" y1="40" x2="200" y2="40"/>
-                <rect class="wg-band" x="0" y="40" width="200" height="24"/>
-                <text class="wg-l" x="14" y="56" style="font-size:9px">Temporäre Gruppe · endet 28. Feb</text>
-                <rect class="wg-bar" x="16" y="84" width="120" height="26" rx="10"/>
-                <rect class="wg-bar" x="16" y="118" width="92" height="22" rx="10"/>
-                <rect class="wg-out" x="84" y="150" width="100" height="26" rx="10"/>
-                <rect class="wg-bar" x="16" y="186" width="104" height="22" rx="10"/>
-                <line class="wg-hair" x1="0" y1="380" x2="200" y2="380"/>
-                <rect class="wg-card" x="14" y="388" width="150" height="24" rx="12"/>
-                <circle cx="180" cy="400" r="12" fill="#1c1a22"/>
-              </g>
-
-              <!-- Screen E: eingefroren im Archiv -->
-              <g transform="translate(400,34)">
-                <rect class="wg-s" x="0" y="0" width="200" height="420" rx="18"/>
-                <text class="wg-b" x="16" y="26">‹  Archiv</text>
-                <line class="wg-hair" x1="0" y1="40" x2="200" y2="40"/>
-                <circle class="wg-bar" cx="26" cy="66" r="12"/>
-                <rect class="wg-bar" x="46" y="58" width="110" height="9" rx="4"/>
-                <rect class="wg-bar" x="46" y="72" width="70" height="8" rx="4"/>
-                <rect class="wg-band" x="6" y="92" width="188" height="48" rx="8"/>
-                <circle class="wg-bar" cx="26" cy="116" r="12"/>
-                <text class="wg-b" x="46" y="110" style="font-size:10px">Skihütte 2026</text>
-                <text class="wg-l" x="46" y="126" style="font-size:8.5px">Eingefroren · am 28. Feb beendet</text>
-                <circle class="wg-bar" cx="26" cy="166" r="12"/>
-                <rect class="wg-bar" x="46" y="158" width="110" height="9" rx="4"/>
-                <rect class="wg-bar" x="46" y="172" width="80" height="8" rx="4"/>
-                <rect class="wg-card" x="14" y="326" width="172" height="76" rx="10"/>
-                <text class="wg-l" x="24" y="350">Diese Gruppe ist eingefroren.</text>
-                <text class="wg-l" x="24" y="364" style="font-size:9px">Nichts geht verloren.</text>
-                <rect class="wg-btn" x="24" y="372" width="104" height="22" rx="11"/>
-                <text class="wg-btn-t" x="76" y="387" text-anchor="middle">Reaktivieren</text>
-              </g>
-            </svg>
-            <figcaption>
-              Solange die Gruppe läuft, trägt sie ihr Enddatum sichtbar mit sich. Am Datum wandert sie ins
-              normale Archiv und wird schreibgeschützt — „Reaktivieren" holt sie mit neuem Enddatum zurück.
-            </figcaption>
-          </figure>
-
-          <figure class="case-figure reveal">
-            <svg viewBox="0 0 720 486" xmlns="http://www.w3.org/2000/svg" role="img"
-                 aria-label="Zwei Wireframe-Screens: eine einmalige Onboarding-Karte in der Chatliste, die anbietet, inaktive Gruppen automatisch zu archivieren, und der zugehörige Einstellungs-Screen mit Schalter und Zeitraum.">
-              <style>
-                .ws-s{ fill:#fff; stroke:#c7c4cf; }
-                .ws-dim-c{ fill:#f0efeb; }
-                .ws-hair{ stroke:#e2e0da; stroke-width:1; }
-                .ws-l{ fill:#6a6874; font-size:10px; }
-                .ws-b{ fill:#1c1a22; font-size:11px; font-weight:700; }
-                .ws-card{ fill:#fff; stroke:#c7c4cf; }
-                .ws-chip{ fill:#fff; stroke:#c7c4cf; }
-                .ws-chip-t{ fill:#6a6874; font-size:9px; }
-                .ws-btn{ fill:#1c1a22; }
-                .ws-btn-t{ fill:#fff; font-size:9px; font-weight:700; }
-              </style>
-
-              <!-- Screen F: Onboarding-Karte -->
-              <g transform="translate(120,34)">
-                <rect class="ws-s" x="0" y="0" width="200" height="420" rx="18"/>
-                <text class="ws-b" x="16" y="26">Chats</text>
-                <line class="ws-hair" x1="0" y1="40" x2="200" y2="40"/>
-                <g fill="none">
-                  <circle class="ws-dim-c" cx="26" cy="66" r="12"/><rect class="ws-dim-c" x="46" y="58" width="120" height="8" rx="4"/><rect class="ws-dim-c" x="46" y="72" width="80" height="7" rx="4"/>
-                  <circle class="ws-dim-c" cx="26" cy="106" r="12"/><rect class="ws-dim-c" x="46" y="98" width="120" height="8" rx="4"/><rect class="ws-dim-c" x="46" y="112" width="70" height="7" rx="4"/>
-                  <circle class="ws-dim-c" cx="26" cy="146" r="12"/><rect class="ws-dim-c" x="46" y="138" width="120" height="8" rx="4"/><rect class="ws-dim-c" x="46" y="152" width="90" height="7" rx="4"/>
-                  <circle class="ws-dim-c" cx="26" cy="186" r="12"/><rect class="ws-dim-c" x="46" y="178" width="120" height="8" rx="4"/><rect class="ws-dim-c" x="46" y="192" width="60" height="7" rx="4"/>
-                </g>
-                <rect class="ws-card" x="12" y="234" width="176" height="150" rx="12"/>
-                <text class="ws-b" x="24" y="260">Alte Gruppen aufräumen?</text>
-                <text class="ws-l" x="24" y="280" style="font-size:9.5px">Inaktive Gruppen wandern nach</text>
-                <text class="ws-l" x="24" y="294" style="font-size:9.5px">3 Monaten automatisch ins Archiv.</text>
-                <text class="ws-l" x="24" y="308" style="font-size:9.5px">Sie kommen zurück, sobald</text>
-                <text class="ws-l" x="24" y="322" style="font-size:9.5px">jemand schreibt.</text>
-                <rect class="ws-btn" x="24" y="340" width="92" height="26" rx="8"/>
-                <text class="ws-btn-t" x="70" y="357" text-anchor="middle">Aktivieren</text>
-                <rect class="ws-chip" x="122" y="340" width="54" height="26" rx="8"/>
-                <text class="ws-chip-t" x="149" y="357" text-anchor="middle">Später</text>
-              </g>
-
-              <!-- Screen G: Einstellung -->
-              <g transform="translate(400,34)">
-                <rect class="ws-s" x="0" y="0" width="200" height="420" rx="18"/>
-                <text class="ws-b" x="16" y="26">‹  Archivierung</text>
-                <line class="ws-hair" x1="0" y1="40" x2="200" y2="40"/>
-                <text class="ws-b" x="16" y="64" style="font-size:10px">Inaktive Gruppen</text>
-                <text class="ws-b" x="16" y="79" style="font-size:10px">automatisch archivieren</text>
-                <rect x="146" y="60" width="40" height="22" rx="11" fill="#1c1a22"/>
-                <circle cx="177" cy="71" r="8" fill="#fff"/>
-                <line class="ws-hair" x1="16" y1="100" x2="184" y2="100"/>
-                <text class="ws-l" x="16" y="124">Zeitraum</text>
-                <text class="ws-b" x="184" y="124" text-anchor="end" style="font-size:10px">3 Monate  ▾</text>
-                <line class="ws-hair" x1="16" y1="144" x2="184" y2="144"/>
-                <text class="ws-l" x="16" y="168" style="font-size:9.5px">Archivierte Gruppen kommen</text>
-                <text class="ws-l" x="16" y="182" style="font-size:9.5px">automatisch zurück, sobald</text>
-                <text class="ws-l" x="16" y="196" style="font-size:9.5px">jemand schreibt.</text>
-              </g>
-            </svg>
-            <figcaption>
-              Der Rückstau erfordert keine Einzelaktion: eine einmalige Karte in der Chatliste (links) und
-              ein Schalter in den Einstellungen (rechts). Die 3-Monats-Schwelle ist anpassbar, nichts wird gelöscht.
-            </figcaption>
-          </figure>
-        </section>
-
-        <!-- 6 — Die Lösung -->
+        <!-- 5 — Die Lösung -->
         <section class="case-section reveal">
           <p class="tag">Die Lösung</p>
-          <h2>Zwei Spuren, ein Prinzip</h2>
-          <p>
-            <strong>1 — Neue Gruppen kriegen ein ehrliches Ende.</strong> Der Erstellungs-Flow bekommt einen
-            eigenständigen, nicht überspringbaren Schritt „Gruppentyp": dauerhaft oder temporär, ohne
-            stillen Default. Bei „temporär" wird ein Enddatum gesetzt. Die Gruppe ist als solche sichtbar
-            gekennzeichnet, erinnert einen Tag vorher alle Mitglieder und wandert nach dem Datum
-            automatisch ins bestehende WhatsApp-Archiv — eingefroren, aber vollständig erhalten und
-            jederzeit reaktivierbar.
-          </p>
-          <p>
-            <strong>2 — Der bestehende Rückstau räumt sich von selbst auf.</strong> Eine einmalige globale
-            Einstellung: „inaktive Gruppen automatisch archivieren" (Standard: 3 Monate). Kein Handeln pro
-            Gruppe, kein Erinnern an einzelne tote Gruppen. Wird eine archivierte Gruppe wieder gebraucht,
-            holt sie eine einzige Nachricht automatisch zurück.
-          </p>
+          <h2>Ein Feature, vier Zustände</h2>
 
-          <figure class="case-figure reveal">
-            <svg viewBox="0 0 720 430" xmlns="http://www.w3.org/2000/svg" role="img"
-                 aria-label="Zwei-Spuren-Modell. Links: temporäre Gruppe, ausgelöst durch ein gesetztes Enddatum, wird eingefroren, kehrt durch Admin-Aktion zurück. Rechts: inaktive Gruppe, ausgelöst durch drei Monate ohne Nachricht, wird nur archiviert, kehrt automatisch bei der nächsten Nachricht zurück. Beide landen im bestehenden WhatsApp-Archiv, nichts wird gelöscht.">
-              <defs>
-                <linearGradient id="dgm-acc2" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0" stop-color="#8a8a8a"/><stop offset="1" stop-color="#3a3a3a"/>
-                </linearGradient>
-              </defs>
-              <style>
-                .tt-panel{ fill:#fff; stroke:rgba(28,26,34,.14); }
-                .tt-title{ font-size:15px; font-weight:700; fill:#1c1a22; }
-                .tt-k{ fill:#9c99a6; font-size:10.5px; letter-spacing:.06em; }
-                .tt-v{ fill:#6a6874; font-size:13px; }
-                .tt-badge{ fill:#f6f5f1; stroke:rgba(28,26,34,.16); }
-                .tt-badge-t{ fill:#1c1a22; font-size:12px; font-weight:700; letter-spacing:.04em; }
-                .tt-conn{ stroke:rgba(28,26,34,.22); stroke-width:1.5; fill:none; }
-                .tt-share{ fill:#fff; stroke:url(#dgm-acc2); stroke-width:1.6; }
-                .tt-share-a{ fill:#1c1a22; font-size:13.5px; font-weight:700; }
-                .tt-share-b{ fill:#6a6874; font-size:12px; }
-              </style>
-
-              <!-- Panel A -->
-              <rect class="tt-panel" x="1" y="1" width="338" height="298" rx="16"/>
-              <text class="tt-title" x="22" y="40">Temporäre Gruppe</text>
-              <text class="tt-k" x="22" y="78">AUSLÖSER</text>
-              <text class="tt-v" x="22" y="98">Bewusst gesetztes Enddatum</text>
-              <text class="tt-k" x="22" y="138">AM ENDDATUM</text>
-              <rect class="tt-badge" x="22" y="150" width="150" height="30" rx="8"/>
-              <text class="tt-badge-t" x="97" y="170" text-anchor="middle">EINGEFROREN</text>
-              <text class="tt-v" x="182" y="170">schreibgeschützt</text>
-              <text class="tt-k" x="22" y="222">ZURÜCK IN DIE LISTE</text>
-              <text class="tt-v" x="22" y="242">Admin holt sie zurück —</text>
-              <text class="tt-v" x="22" y="260">mit neuem Enddatum</text>
-
-              <!-- Panel B -->
-              <rect class="tt-panel" x="381" y="1" width="338" height="298" rx="16"/>
-              <text class="tt-title" x="402" y="40">Inaktive Gruppe</text>
-              <text class="tt-k" x="402" y="78">AUSLÖSER</text>
-              <text class="tt-v" x="402" y="98">3 Monate keine Nachricht</text>
-              <text class="tt-k" x="402" y="138">DANN</text>
-              <rect class="tt-badge" x="402" y="150" width="140" height="30" rx="8"/>
-              <text class="tt-badge-t" x="472" y="170" text-anchor="middle">ARCHIVIERT</text>
-              <text class="tt-v" x="552" y="170">beschreibbar</text>
-              <text class="tt-k" x="402" y="222">ZURÜCK IN DIE LISTE</text>
-              <text class="tt-v" x="402" y="242">Automatisch, sobald</text>
-              <text class="tt-v" x="402" y="260">jemand schreibt</text>
-
-              <!-- connectors + shared endpoint -->
-              <path class="tt-conn" d="M170,299 V 330"/>
-              <path class="tt-conn" d="M550,299 V 330"/>
-              <rect class="tt-share" x="1" y="330" width="718" height="82" rx="16"/>
-              <text class="tt-share-a" x="360" y="366" text-anchor="middle">Beide landen im bestehenden WhatsApp-Archiv</text>
-              <text class="tt-share-b" x="360" y="390" text-anchor="middle">nichts wird gelöscht · alles ist reversibel</text>
-            </svg>
-            <figcaption>
-              Zwei Spuren, ein gemeinsamer Endpunkt: Die bewusst beendete Gruppe wird eingefroren, die bloß
-              eingeschlafene bleibt beschreibbar — beide liegen danach im normalen Archiv.
-            </figcaption>
-          </figure>
+          <ol>
+            <li>
+              <strong>Bei der Erstellung wählt jede Gruppe bewusst: dauerhaft oder temporär.</strong>
+              Zwei gleichwertige Karten, keine vorausgewählt. Bei „temporär" klappt direkt in der
+              Karte das Enddatum auf — Kalender und Uhrzeit-Rad, voreingestellt auf das Ende des
+              gewählten Tages.
+            </li>
+            <li>
+              <strong>Die ganze Laufzeit über trägt die Gruppe ihr Ende sichtbar mit sich.</strong>
+              Derselbe Badge in der Chatliste wie im Gruppen-Header: „Endet 14. Okt", ab einer Woche
+              vorher „Endet morgen". Admins können das Datum jederzeit über die Gruppeninfo ändern,
+              nicht erst am Stichtag.
+            </li>
+            <li>
+              <strong>Der Stichtag wird im Vorlauf unübersehbar angekündigt.</strong> Einen Tag
+              vorher: eine Push, die die Stummschaltung ignoriert, eine Zeile in der Chatübersicht,
+              ein Hinweis im Chat. Alle sehen dasselbe — wann Schluss ist und dass jetzt der Moment
+              ist, zu sichern, was man behalten will.
+            </li>
+            <li>
+              <strong>Am Stichtag wird die Gruppe für alle gelöscht.</strong> Kein Archiv, keine
+              Nachfrist, keine Reaktivierung.
+            </li>
+          </ol>
 
           <h3>Wo die Abwägungen lagen</h3>
           <div class="decision-list">
@@ -560,76 +382,101 @@
               <p class="why">Ein Default würde exakt das Ausgangsproblem wieder aufbauen — jede Gruppe permanent, ohne dass es je jemand entschieden hat. Und aktivieren würde ihn ausgerechnet die Person, die viele Gruppen anlegt, also die, die die bewusste Wahl am nötigsten hat.</p>
             </div>
             <div class="decision">
-              <h3>Archiv statt Löschung</h3>
-              <p class="why">Die Verlustangst verschwindet nur, wenn wirklich nichts verloren gehen <em>kann</em> — nicht, wenn es bloß durch eine Frist abgemildert wird. Eine frühere zweistufige Lösch-Logik wurde deshalb komplett verworfen.</p>
+              <h3>Löschen statt Archivieren</h3>
+              <p class="why">Die erste Fassung ließ Gruppen ins Archiv wandern. Verworfen: „weg, aber kommt bei jeder Nachricht zurück" ist ein vager Zwischenzustand, der den klaren Anlass nicht abbildet. Und die Verlustangst rechtfertigt kein Archiv, weil sie am nachträglichen Austritt hängt, nicht am vereinbarten Ende.</p>
             </div>
             <div class="decision">
-              <h3>Zwei Spuren, die sich unterschiedlich verhalten</h3>
-              <p class="why">Eine bewusst beendete Reise-Gruppe soll eingefroren sein. Eine Familiengruppe, die drei Monate still war, soll <em>nicht</em> eingefroren werden — nur aus dem Weg, und zurück, sobald wieder etwas los ist. „Zu Ende" ist nicht dasselbe wie „schläft nur".</p>
+              <h3>Keine Nachfrist nach dem Stichtag</h3>
+              <p class="why">Eine Zwischenüberlegung war eine 7-Tage-Frist zum „Behalten". Verworfen: Sie verschiebt die Endgültigkeit nur um eine Woche und macht das Modell wieder komplizierter. Der Schutz gehört komplett in den Vorlauf.</p>
             </div>
             <div class="decision">
-              <h3>Das bestehende WhatsApp-Archiv, kein neuer Bereich</h3>
-              <p class="why">„Nicht erfinden, integrieren." Ein neuer, benannter Bereich wäre eine zusätzliche Sache zum Lernen — und ein Label wie „Temporäre Gruppen" ist als Listen-Eintrag mehrdeutig. Das Archiv kennt jede:r schon und bedeutet genau das Richtige.</p>
+              <h3>Der ganze Aufwand steckt in der Ankündigung</h3>
+              <p class="why">Weil die Löschung endgültig ist, ist der Weg dahin bewusst redundant: Push, Übersichts-Zeile, Hinweis im Chat, und die Gruppe rückt nach oben. Es soll praktisch unmöglich sein, den Stichtag zu übersehen, ohne die App tagelang gar nicht zu öffnen.</p>
             </div>
             <div class="decision">
-              <h3>Name vor Laufzeit im Erstellungs-Flow</h3>
-              <p class="why">Sobald die Gruppe „Urlaub 2026" heißt, ist die Laufzeit-Frage konkret statt abstrakt — die Antwort liegt nahe. Fragt man vorher, wird häufiger reflexhaft „Dauerhaft" gewählt.</p>
+              <h3>Keine automatische Medien-Sicherung</h3>
+              <p class="why">Naheliegend wäre, alle Fotos zum Stichtag in die Galerie zu speichern. Verworfen — WhatsApp hat dafür längst eine Einstellung. Wer sie an hat, hat die Fotos ohnehin; wer sie aus hat, will das so. Eine Sonderregel würde eine bestehende Nutzer-Entscheidung übergehen und ungefragt Inhalte aus fremden Gruppen auf jedes Gerät schieben.</p>
+            </div>
+            <div class="decision">
+              <h3>Das Enddatum sitzt in der Auswahlkarte</h3>
+              <p class="why">Als eigener Kasten unter den Karten stand es bezugslos da. In der Karte ist sichtbar, dass dieses Datum zu dieser Wahl gehört. Derselbe Aufbau auch beim Verlängern — wer einmal eine Gruppe angelegt hat, kennt den Schritt schon.</p>
+            </div>
+            <div class="decision">
+              <h3>Gebündelt, wenn mehrere Gruppen am selben Tag enden</h3>
+              <p class="why">Nach einem Festival-Wochenende laufen schnell drei Gruppen gleichzeitig aus. Drei Pushes und drei gestapelte Banner wären genau der Lärm, der so ein Feature unbeliebt macht. Stattdessen: eine Push, eine Zeile, dahinter eine Liste mit „Verlängern" je Gruppe.</p>
             </div>
           </div>
 
           <div class="case-callout">
             <p class="case-callout-line">
-              „Eine Gruppe kann von Anfang an sagen: ich habe ein Ende — und wenn nicht,
-              räumt WhatsApp sie irgendwann leise weg, ohne dass etwas verloren geht."
+              „Eine Gruppe kann bei der Erstellung sagen: ich habe ein Ende — und wenn dieser Tag
+              kommt, löscht sie sich von selbst, für alle."
             </p>
             <p>
-              Das Prinzip dahinter: Das Ende darf sich nie endgültig anfühlen — sonst nutzt es niemand.
+              Wenn beim Erstellen alle gesehen haben, dass diese Gruppe im September endet, ist die
+              Löschung im September keine Überraschung und kein Bruch. Sie ist das, was vereinbart war.
             </p>
           </div>
         </section>
 
-        <!-- 7 — Prototyp -->
+        <!-- 6 — Prototyp -->
         <section class="case-section reveal">
           <p class="tag">Prototyp</p>
           <h2>Durchklickbar, in Graustufen</h2>
           <p>
-            Beide Wege sind als durchklickbarer Prototyp gebaut — vom „Gruppentyp"-Schritt über den
-            Ablauf-Hinweis bis ins Archiv, und der Aufräum-Flow über die globale Einstellung. Bewusst
-            ohne Farbe: es geht um Interaktionslogik und Konzept, nicht um visuelles Design.
+            Der komplette Weg ist als durchklickbarer Prototyp gebaut — vom „Gruppentyp"-Schritt über
+            die Kennzeichnung und die Erinnerung bis zur Löschung. Bewusst ohne Farbe: Es geht um
+            Interaktionslogik und Konzept, nicht um visuelles Design. Übernommen sind WhatsApps
+            Muster, nicht seine Marke.
           </p>
 
+          <figure class="case-figure reveal">
+            <iframe src="prototypes/whatsapp-temporaere-gruppen.html?test"
+                    title="Klick-Prototyp: Temporäre Gruppen"
+                    loading="lazy"
+                    style="width:100%;max-width:380px;height:720px;border:1px solid rgba(28,26,34,.16);border-radius:14px;display:block;margin:0 auto;background:#fff"></iframe>
+            <figcaption>
+              Live und bedienbar. Tippe auf das <strong>+</strong> oben rechts, um eine Gruppe
+              anzulegen — der ganze Erstellungs-Flow läuft in einem Bottom-Sheet über der Chatliste.
+            </figcaption>
+          </figure>
+
           <div class="case-cta">
-            <p>Am besten selbst durchklicken — beide Flows sind spielbar.</p>
+            <p>Größer und in Ruhe: der Prototyp im eigenen Tab, mit Flow-Leiste und Designnotizen.</p>
             <a href="prototypes/whatsapp-temporaere-gruppen.html" target="_blank" rel="noopener" class="btn btn-primary">Prototyp öffnen <span class="btn-arrow">↗</span></a>
           </div>
         </section>
 
-        <!-- 8 — Validierung -->
+        <!-- 7 — Validierung -->
         <section class="case-section reveal">
           <p class="tag">Nächster Schritt</p>
           <h2>Was ich validieren würde</h2>
+          <p>
+            Das Konzept steht auf <strong>einer</strong> Annahme: In einer temporären Gruppe steht
+            nichts, was den Stichtag überdauern muss — und ein sichtbares Enddatum formt sogar mit,
+            was Leute hineinschreiben. Stimmt sie, ist die Löschung Hygiene. Stimmt sie nicht, ist
+            das Feature gefährlich. Deshalb steht sie an erster Stelle.
+          </p>
           <ul>
-            <li>Ob der Pflichtschritt als Reibung empfunden wird (Abbruchrate im Gruppentyp-Schritt).</li>
-            <li>Ob die Auto-Archivierungs-Schwelle von 3 Monaten für die meisten passt (Rate „kommt durch Nachricht zurück").</li>
-            <li>Ob „Archiv" plus Kennzeichnung verständlich genug sind (Support-Anfragen „wo ist meine Gruppe hin").</li>
-            <li>Über 6–12 Monate: nimmt die durchschnittliche Länge der aktiven Gruppenliste tatsächlich ab?</li>
+            <li><strong>Die tragende Annahme direkt:</strong> eine konkrete tote Gruppe aufmachen lassen und fragen — „Was steht hier drin, das du in einem Jahr noch brauchst?"</li>
+            <li><strong>Die Löschangst zweistufig:</strong> erst die Reaktion auf „die Gruppe wäre weg", dann dieselbe Frage noch einmal, aber mit dem Hinweis, dass das Enddatum von Anfang an sichtbar war. Der Abstand zwischen beiden Antworten ist der eigentliche Test dieser These.</li>
+            <li><strong>Das Wording:</strong> Verstehen Leute „Endet 14. Okt" als Löschung — oder rechnen sie mit einem Archiv? Das ist die Stelle, an der mein Text scheitern könnte.</li>
+            <li><strong>Der Pflichtschritt:</strong> wird er als Reibung empfunden oder einfach beantwortet?</li>
           </ul>
         </section>
 
-        <!-- 9 — Scope -->
+        <!-- 8 — Scope -->
         <section class="case-section reveal">
           <p class="tag">Ehrlich benannt</p>
           <h2>Wo das Konzept aufhört</h2>
           <ul>
-            <li>Kein aktives „Gruppe für nächstes Jahr wiederverwenden" für wiederkehrende Anlässe — nur passiv über das Archiv-Verhalten abgedeckt.</li>
-            <li>Das Erstellungs-Onboarding erreicht nur Personen, die selbst Gruppen anlegen.</li>
-            <li>Kein Hi-Fi-Visual-Design — bewusste Entscheidung zugunsten von Problem und Konzept.</li>
+            <li><strong>Alles geht verloren, was niemand sichert.</strong> Nach der Löschung sind Verlauf und Medien weg. Die Erinnerung löst das Sichern aus, nimmt es aber niemandem ab. Für die adressierte Gruppenart ist das der bewusst gewählte Preis.</li>
+            <li><strong>Wer im Vorlauf offline ist, sieht die Erinnerung nie.</strong> Der ganze Schutz hängt daran, dass die Ankündigung ankommt. Zwei Wochen ohne Empfang, und die Gruppe ist bei der Rückkehr weg. Das ist die härteste offene Schwäche — ich benenne sie lieber, als sie mit einer Halblösung zuzukleistern, die das Enddatum wieder unscharf machen würde.</li>
+            <li><strong>Der bestehende Rückstau</strong> bleibt außen vor. Das Feature setzt bei neu erstellten Gruppen an; die alten muss man weiter von Hand aufräumen. Bewusst so, um den Fokus zu halten.</li>
+            <li><strong>Wiederkehrende Anlässe</strong> werden nicht aktiv unterstützt — für den nächsten Karneval entsteht eine neue Gruppe. Das ist allerdings genau das Verhalten, das die Daten ohnehin zeigen.</li>
+            <li><strong>Kein Hi-Fi-Visual-Design</strong> — bewusste Entscheidung zugunsten von Problem und Konzept.</li>
           </ul>
         </section>
-
-      </div>
-    </div>
-
   </main>
 
   <footer class="site-footer">
