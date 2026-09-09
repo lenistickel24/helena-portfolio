@@ -4,43 +4,867 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fitness First — Case Study — Helena Stickelbroeck</title>
-  <meta name="description" content="Case Study zu Fitness First — Product Design von Helena Stickelbroeck. In Arbeit." />
+  <meta name="description" content="Redesign der Informationsarchitektur der Fitness-First-App: Die Fortschrittsdaten sind da, liegen aber vier Navigationsebenen tief." />
+
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="../assets/favicon-32.png" sizes="32x32" type="image/png" />
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Helena Stickelbroeck" />
+  <meta property="og:title" content="Fitness First — App-Redesign" />
+  <meta property="og:description" content="Redesign der Informationsarchitektur: Die Fortschrittsdaten sind da, liegen aber vier Navigationsebenen tief." />
+  <meta property="og:image" content="https://helena-stickelbroeck.de/assets/og-image.png" />
+  <meta property="og:url" content="https://helena-stickelbroeck.de/case-studies/fitness-first.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    /* Seitenspezifisch: scrollbare IA-Karten + schlichte Tabelle.
+       Bewusst hier, damit andere Case Studies unberührt bleiben. */
+    .ia-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .ia-scroll svg { min-width: 720px; }
+    .ia-hint { font-family: var(--font-body); font-size: 0.78rem; color: var(--ink-faint);
+               margin: 0.5rem 0 0; display: none; }
+    @media (max-width: 820px) { .ia-hint { display: block; } }
+
+    .ia-legend { display: flex; flex-wrap: wrap; gap: 0.6rem 1.5rem; font-family: var(--font-body);
+                 font-size: 0.82rem; color: var(--ink-soft); margin: 0 0 1rem; padding: 0; list-style: none; }
+    .ia-legend li { display: inline-flex; align-items: center; gap: 0.5rem; margin: 0; }
+    .ia-key { width: 22px; height: 14px; border-radius: 3px; flex: none; }
+    .ia-key.prog { background: #fff; border: 1.8px solid var(--accent); }
+    .ia-key.cont { background: #ececec; }
+    .ia-key.adm  { background: #fff; border: 1px solid rgba(0,0,0,.28); }
+    .ia-key.dup  { background: #fff; border: 1.5px dashed #8a8a8a; }
+
+    .ia-table-wrap { overflow-x: auto; margin: 1.6rem 0; }
+    table.ia-table { border-collapse: collapse; width: 100%; min-width: 560px;
+                     font-family: var(--font-body); font-size: 0.95rem; }
+    .ia-table th, .ia-table td { text-align: left; padding: 0.7rem 0.9rem 0.7rem 0;
+                                 border-bottom: 1px solid var(--line-soft); vertical-align: top; }
+    .ia-table thead th { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+                         color: var(--ink-faint); font-weight: 600; border-bottom: 1px solid var(--line); }
+    .ia-table td.t-task { font-weight: 600; color: var(--ink); }
+    .ia-table td.t-num  { font-variant-numeric: tabular-nums; color: var(--ink-soft); white-space: nowrap; }
+    .ia-table td.t-win  { font-weight: 700; color: var(--accent-ink); white-space: nowrap; }
+    .ia-table td.t-flat { color: var(--ink-faint); white-space: nowrap; }
+    .ia-table tbody tr:last-child td { border-bottom: none; }
+  </style>
 </head>
-<body>
+<body class="accent-ff case-overlay motif-circle">
 
-  <header class="site-header">
-    <div class="wrap">
-      <a href="../index.html" class="logo">
-        <span class="logo-mark">H</span>
-        <span class="logo-name">Helena Stickelbroeck</span>
-      </a>
-      <nav>
-        <ul class="nav-links">
-          <li><a href="../index.html#work">Case Studies</a></li>
-          <li><a href="../about.html">Über mich</a></li>
-          <li><a href="../index.html#contact" class="btn btn-ghost">Kontakt</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+  <!-- Arbeitsstand 06.09.2026. Quelle der Wahrheit: _Master/14 Projekte/Fitness-First-App/ (00-08),
+       insbesondere 05_Informationsarchitektur_NEU.md (Fassung mit Profil-Tab).
+       Offen vor dem Livegang: Testergebnisse, danach ggf. Struktur-Korrekturen, dann UI-Design.
+       Der klickbare Low-Fi-Prototyp liegt noch als Canvas vor und muss nach prototypes/ umziehen. -->
 
+  <a class="case-close" href="../index.html#work" aria-label="Case Study schließen">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+  </a>
+
+  <div class="case-sheet">
   <main>
     <section class="case-hero">
-      <a href="../index.html#work" class="back-link">← Zurück zur Übersicht</a>
       <div class="wrap">
-        <p class="case-status"><span class="status-dot"></span> Case Study in Arbeit</p>
-        <h1 class="page-heading">Fitness First</h1>
-        <p class="hero-sub" style="margin-left:0;">
-          [Platzhalter] Hier entsteht die ausführliche Case Study zu Fitness First — mit Kontext, Prozess,
-          Screens und Ergebnis. Sag Bescheid, sobald Inhalte und Bilder dazu stehen, dann bauen
-          wir diese Seite gemeinsam fertig.
+        <p class="tag">Fitness First</p>
+        <h1 class="page-heading">App-Redesign – Informationsarchitektur</h1>
+        <p class="case-lede">
+          Die App misst meine Muskelbalance im Studio und vergräbt das Ergebnis vier Ebenen tief.
+          Ich habe die Struktur umgebaut — ohne ein einziges neues Feature.
         </p>
+
+        <div class="case-meta">
+          <div>
+            <div class="case-meta-label">Rolle</div>
+            <div class="case-meta-value">Product / UX Design (Eigeninitiative)</div>
+          </div>
+          <div>
+            <div class="case-meta-label">Jahr</div>
+            <div class="case-meta-value">2026</div>
+          </div>
+          <div>
+            <div class="case-meta-label">Grundlage</div>
+            <div class="case-meta-value">26 Screenshots, eigene Mitgliedschaft, App-Store-Reviews</div>
+          </div>
+          <div>
+            <div class="case-meta-label">Stand</div>
+            <div class="case-meta-value">Struktur steht, Nutzertest läuft</div>
+          </div>
+        </div>
       </div>
     </section>
+
+    <div class="case-body">
+      <div class="wrap">
+
+        <!-- ============================ PROBLEM ============================ -->
+        <section class="case-section reveal">
+          <p class="tag">Das Problem</p>
+          <h2>Nicht zu wenig Funktion. Zu wenig Ordnung.</h2>
+          <p>
+            Ich bin Fitness-First-Mitglied und nutze die App neben dem Training. Meine Kritik stand
+            vor der Analyse: Ich sehe meinen Fortschritt nicht. Zur Prüfung habe ich 26 Screenshots
+            dokumentiert, über alle vier Tabs bis in die tiefste Unterseite.
+          </p>
+          <p>
+            Der Befund überraschte mich: <strong>Die Daten sind alle da.</strong> Die App kennt mein
+            BioAge, zerlegt es in vier Komponenten, erkennt Muskeldysbalancen und speichert einzelne
+            Messwerte von den EGYM-Geräten. Auf der obersten Ebene steht davon eine Zahl: „25 Jahre“.
+          </p>
+
+          <div class="case-callout">
+            <p class="case-callout-line">
+              Die Daten für ein vollständiges Fortschrittsbild liegen längst in der App. Nur sieht
+              sie niemand.
+            </p>
+            <p>
+              Kein Feature-Problem, sondern eine Struktur, die Fortschritt über vier Tabs verstreut,
+              mehrfach dupliziert und bis zu vier Ebenen tief vergräbt — während Content den
+              sichtbaren Platz einnimmt.
+            </p>
+          </div>
+
+          <p>
+            App-Store-Reviews nennen dieselbe Lücke. Den Buchungsflow loben sie. Das deckt sich mit
+            meiner Erfahrung, deshalb der Fokus: <strong>Fortschritt, nicht Buchung.</strong>
+          </p>
+        </section>
+
+        <!-- ============================ IST-FLOW ============================ -->
+        <section class="case-section reveal">
+          <p class="tag">User Flow — Ist-Zustand</p>
+          <h2>Elf Schritte für eine Frage</h2>
+          <p>
+            „Wie läuft mein Training?“ Diese Frage beantwortet die App an keinem einzigen Ort. Das
+            ist der Weg, den ich tatsächlich gehe — auf derselben Tiefenachse wie die Karten unten.
+          </p>
+
+          <figure class="case-figure reveal">
+            <div class="ia-scroll">
+            <svg viewBox="0 0 900 542" xmlns="http://www.w3.org/2000/svg" role="img"
+                 aria-label="Der Weg durch die App in elf Schritten, aufgetragen über die Navigationstiefe. Der Weg steigt bis Ebene 4 hinab, kehrt vollständig zurück und steigt in einen zweiten Zweig ab. Drei Schritte sind Sackgassen, der letzte zeigt einen Eintrag mit null Kalorien.">
+              <style>
+                .ax   { stroke: rgba(0,0,0,.09); stroke-width: 1; }
+                .axk  { fill: #8a8a8a; font-size: 9.5px; letter-spacing: .1em; font-weight: 600; }
+                .axs  { fill: #b0b0b0; font-size: 9.5px; }
+                .num  { fill: #b0b0b0; font-size: 10px; font-weight: 700; }
+                .path { stroke: var(--accent); stroke-width: 2; fill: none; }
+                .back { stroke: var(--accent); stroke-width: 2; fill: none; stroke-dasharray: 5 4; }
+                .dot  { fill: #fff; stroke: var(--accent); stroke-width: 2; }
+                .dotf { fill: var(--accent); stroke: var(--accent); stroke-width: 2; }
+                .lbl  { fill: #333; font-size: 11px; font-weight: 600; }
+                .sub  { fill: #8a8a8a; font-size: 9.5px; }
+                .warn { fill: var(--accent-ink); font-size: 9.5px; font-weight: 700; }
+                .xk   { stroke: #b0b0b0; stroke-width: 1.6; }
+                .cap  { fill: var(--accent-ink); font-size: 10px; font-weight: 700; letter-spacing: .06em; }
+              </style>
+
+              <line class="ax" x1="200" y1="44" x2="200" y2="536"/>
+              <line class="ax" x1="400" y1="44" x2="400" y2="536"/>
+              <line class="ax" x1="570" y1="44" x2="570" y2="536"/>
+              <line class="ax" x1="730" y1="44" x2="730" y2="536"/>
+              <text class="axk" x="200" y="16">EBENE 1</text><text class="axs" x="200" y="30">0 Taps</text>
+              <text class="axk" x="400" y="16">EBENE 2</text><text class="axs" x="400" y="30">1 Tap</text>
+              <text class="axk" x="570" y="16">EBENE 3</text><text class="axs" x="570" y="30">2 Taps</text>
+              <text class="axk" x="730" y="16">EBENE 4</text><text class="axs" x="730" y="30">3 Taps</text>
+              <text class="axk" x="0" y="16">SCHRITT</text>
+
+              <!-- Weg -->
+              <path class="path" d="M200,70 V110 V150 V190 L400,230 L570,270 L730,310"/>
+              <path class="back" d="M730,310 C600,340 340,330 200,350"/>
+              <path class="path" d="M200,350 V390 L400,430 V470"/>
+
+              <!-- 1 -->
+              <text class="num" x="0" y="74">01</text>
+              <circle class="dot" cx="200" cy="70" r="6"/>
+              <text class="lbl" x="216" y="67">Training-Tab öffnen</text>
+              <text class="sub" x="216" y="80">Startansicht der App</text>
+
+              <!-- 2 -->
+              <text class="num" x="0" y="114">02</text>
+              <circle class="dot" cx="200" cy="110" r="6"/>
+              <text class="lbl" x="216" y="107">An drei Bannern vorbeiscrollen</text>
+              <text class="sub" x="216" y="120">Check-ins, Personal-Training-Upsell, Video-Karussell</text>
+
+              <!-- 3 Sackgasse -->
+              <text class="num" x="0" y="154">03</text>
+              <circle class="dot" cx="200" cy="150" r="6"/>
+              <line class="xk" x1="192" y1="142" x2="208" y2="158"/><line class="xk" x1="192" y1="158" x2="208" y2="142"/>
+              <text class="lbl" x="216" y="147">„Dein Trainingsplan“ — nur ein Prompt</text>
+              <text class="warn" x="216" y="160">Sackgasse. Kein Plan, nur ein unfertiges Onboarding.</text>
+
+              <!-- 4 -->
+              <text class="num" x="0" y="194">04</text>
+              <circle class="dot" cx="200" cy="190" r="6"/>
+              <text class="lbl" x="216" y="187">„Dein BioAge: 25 Jahre“</text>
+              <text class="sub" x="216" y="200">Eine Zahl. Kein Vergleich, keine Einordnung.</text>
+
+              <!-- 5 -->
+              <text class="num" x="0" y="234">05</text>
+              <circle class="dot" cx="400" cy="230" r="6"/>
+              <text class="lbl" x="416" y="227">Vier Komponenten</text>
+              <text class="sub" x="416" y="240">Flexibilität 34 gegen Kraft 22 — der eigentliche Befund</text>
+
+              <!-- 6 -->
+              <text class="num" x="0" y="274">06</text>
+              <circle class="dot" cx="570" cy="270" r="6"/>
+              <text class="lbl" x="586" y="267">Kraft → Muskelbalance</text>
+              <text class="sub" x="586" y="280">1 Dysbalance erkannt</text>
+
+              <!-- 7 -->
+              <text class="num" x="0" y="314">07</text>
+              <circle class="dotf" cx="730" cy="310" r="6"/>
+              <text class="lbl" x="746" y="307">EGYM-Messwerte</text>
+              <text class="sub" x="746" y="320">Brustpresse 50 kg,</text>
+              <text class="sub" x="746" y="332">Latzug 54 kg …</text>
+
+              <!-- 8 Rueckweg -->
+              <text class="num" x="0" y="354">08</text>
+              <circle class="dot" cx="200" cy="350" r="6"/>
+              <text class="lbl" x="216" y="347">Dreimal zurück</text>
+              <text class="sub" x="216" y="360">Der ganze Abstieg muss rückwärts wieder herauf</text>
+
+              <!-- 9 Sackgasse -->
+              <text class="num" x="0" y="394">09</text>
+              <circle class="dot" cx="200" cy="390" r="6"/>
+              <line class="xk" x1="192" y1="382" x2="208" y2="398"/><line class="xk" x1="192" y1="398" x2="208" y2="382"/>
+              <text class="lbl" x="216" y="387">Wo ist mein Verlauf?</text>
+              <text class="warn" x="216" y="400">Sackgasse. Nicht in der Tab-Bar, nicht im Tab.</text>
+
+              <!-- 10 -->
+              <text class="num" x="0" y="434">10</text>
+              <circle class="dot" cx="400" cy="430" r="6"/>
+              <text class="lbl" x="416" y="427">Über den Textlink „Alle ansehen“</text>
+              <text class="sub" x="416" y="440">Zweiter Zweig, komplett getrennt vom ersten</text>
+
+              <!-- 11 -->
+              <text class="num" x="0" y="474">11</text>
+              <circle class="dotf" cx="400" cy="470" r="6"/>
+              <line class="xk" x1="392" y1="462" x2="408" y2="478"/><line class="xk" x1="392" y1="478" x2="408" y2="462"/>
+              <text class="lbl" x="416" y="467">Reiter „Verlauf“: ein Eintrag</text>
+              <text class="warn" x="416" y="480">Daneben steht „0 Kcal · 0 Aktivitätspunkte“.</text>
+
+              <text class="cap" x="0" y="516">ELF SCHRITTE. DREI SACKGASSEN. ZWEI GETRENNTE ZWEIGE.</text>
+              <text class="sub" x="0" y="532">Die Frage „Wie läuft mein Training?“ bleibt am Ende unbeantwortet.</text>
+            </svg>
+            </div>
+            <p class="ia-hint">Grafik seitlich scrollbar →</p>
+            <figcaption>
+              <strong>Der Weg über die Navigationstiefe.</strong> Waagerecht die Ebene, senkrecht die
+              Schrittfolge. Der gestrichelte Rücksprung bei Schritt 8 ist reine Wegstrecke ohne
+              Ertrag: Alles, was ich abgestiegen bin, muss ich rückwärts wieder hinauf, um in einen
+              zweiten Zweig zu wechseln.
+            </figcaption>
+          </figure>
+
+          <p>
+            Der Weg erklärt die Zahlen besser als die Analyse. Die wertvollste Information — dass
+            meine Flexibilität deutlich hinterherhinkt — liegt in Schritt 5. Bis dahin habe ich an
+            drei Bannern vorbeigescrollt und eine Sackgasse durchlaufen.
+          </p>
+          <p>
+            Und am Ende steht kein Ergebnis, sondern ein Widerspruch: ein protokolliertes Workout,
+            daneben „0 Kcal“. <strong>Selbst wer den Verlauf findet, kann ihm nicht trauen.</strong>
+          </p>
+        </section>
+
+        <!-- ============================ IST ============================ -->
+        <section class="case-section reveal">
+          <p class="tag">Ist-Zustand</p>
+          <h2>Vier Tabs, drei vermischte Inhaltsarten</h2>
+          <p>
+            Die Inhalte zerfallen in drei Kategorien: was ich über mich erfahre, was ich konsumiere,
+            was ich verwalte. Im Ist-Zustand liegen alle drei in denselben Tabs.
+          </p>
+          <p>
+            Ich habe sie deshalb auf eine <strong>Tiefenachse</strong> gelegt statt in einen Baum.
+            Jede Spalte ist eine Navigationsebene. Das zeigt, was eine Sitemap verschweigt: wie weit
+            weg etwas liegt.
+          </p>
+
+          <ul class="ia-legend">
+            <li><span class="ia-key prog"></span> Fitness-Leistung &amp; Fortschritt</li>
+            <li><span class="ia-key cont"></span> Engagement &amp; Content</li>
+            <li><span class="ia-key adm"></span> Konto &amp; Administration</li>
+            <li><span class="ia-key dup"></span> existiert doppelt</li>
+          </ul>
+
+          <figure class="case-figure reveal">
+            <div class="ia-scroll">
+            <svg viewBox="0 0 900 648" xmlns="http://www.w3.org/2000/svg" role="img"
+                 aria-label="Navigationskarte des Ist-Zustands auf fünf Ebenen. Der Training-Tab trägt auf Ebene 1 acht Bausteine, überwiegend Content. Eine rote Kette führt von BioAge über die Muskelbalance bis auf Ebene 4 zu den EGYM-Messwerten.">
+              <style>
+                .ax   { stroke: rgba(0,0,0,.09); stroke-width: 1; }
+                .axk  { fill: #8a8a8a; font-size: 9.5px; letter-spacing: .1em; font-weight: 600; }
+                .axs  { fill: #b0b0b0; font-size: 9.5px; }
+                .band { fill: #8a8a8a; font-size: 9px; letter-spacing: .1em; font-weight: 700; }
+                .rule { stroke: rgba(0,0,0,.09); stroke-width: 1; }
+                .tab  { fill: #111; }
+                .tabt { fill: #fff; font-size: 11.5px; font-weight: 700; }
+                .nav  { fill: #fff; stroke: rgba(0,0,0,.28); stroke-width: 1; }
+                .navt { fill: #555; font-size: 10.5px; font-weight: 600; }
+                .prog { fill: #fff; stroke: var(--accent); stroke-width: 1.7; }
+                .progt{ fill: var(--accent-ink); font-size: 10.5px; font-weight: 600; }
+                .cont { fill: #ececec; stroke: none; }
+                .contt{ fill: #6a6a6a; font-size: 10.5px; }
+                .adm  { fill: #fff; stroke: rgba(0,0,0,.28); stroke-width: 1; }
+                .admt { fill: #8a8a8a; font-size: 10.5px; }
+                .dup  { stroke-dasharray: 4 3; }
+                .deep { fill: var(--accent); stroke: var(--accent); stroke-width: 1.7; }
+                .deept{ fill: #fff; font-size: 10.5px; font-weight: 700; }
+                .ln   { stroke: #b0b0b0; stroke-width: 1.2; fill: none; }
+                .lnk  { stroke: var(--accent); stroke-width: 2; fill: none; }
+                .note { fill: #8a8a8a; font-size: 9.5px; }
+                .noted{ fill: var(--accent-ink); font-size: 9.5px; font-weight: 700; }
+              </style>
+
+              <line class="ax" x1="118" y1="30" x2="118" y2="642"/>
+              <line class="ax" x1="308" y1="30" x2="308" y2="642"/>
+              <line class="ax" x1="498" y1="30" x2="498" y2="642"/>
+              <line class="ax" x1="678" y1="30" x2="678" y2="642"/>
+              <text class="axk" x="0"   y="11">EBENE 0</text><text class="axs" x="0"   y="23">Navigation</text>
+              <text class="axk" x="130" y="11">EBENE 1</text><text class="axs" x="130" y="23">0 Taps</text>
+              <text class="axk" x="320" y="11">EBENE 2</text><text class="axs" x="320" y="23">1 Tap</text>
+              <text class="axk" x="510" y="11">EBENE 3</text><text class="axs" x="510" y="23">2 Taps</text>
+              <text class="axk" x="690" y="11">EBENE 4</text><text class="axs" x="690" y="23">3 Taps</text>
+
+              <text class="band" x="0" y="46">PERSISTENTER HEADER</text>
+              <rect class="adm" x="0" y="54" width="105" height="26" rx="5"/>
+              <text class="admt" x="11" y="71">Profil-Icon</text>
+              <path class="ln" d="M105,67 H314 m-4,-3 l4,3 l-4,3"/>
+              <rect class="adm" x="320" y="54" width="165" height="26" rx="5"/>
+              <text class="admt" x="331" y="71">Konto: Vertrag, Zahlung</text>
+
+              <rect class="nav" x="0" y="92" width="105" height="26" rx="5"/>
+              <text class="navt" x="11" y="109">„+“-Menü</text>
+              <path class="ln" d="M105,105 H124 m-4,-3 l4,3 l-4,3"/>
+              <rect class="prog dup" x="130" y="86" width="165" height="22" rx="4"/>
+              <text class="progt" x="140" y="101">Kurs buchen — Duplikat</text>
+              <rect class="prog" x="130" y="112" width="165" height="22" rx="4"/>
+              <text class="progt" x="140" y="127">Workout erfassen</text>
+              <rect class="prog dup" x="130" y="138" width="165" height="22" rx="4"/>
+              <text class="progt" x="140" y="153">Service &amp; Hilfe — Duplikat</text>
+              <text class="note" x="320" y="127">2 von 3 Einträgen führen nur zu sichtbaren Tabs.</text>
+
+              <line class="rule" x1="0" y1="176" x2="900" y2="176"/>
+
+              <text class="band" x="0" y="194">TAB 1</text>
+              <rect class="tab" x="0" y="300" width="105" height="28" rx="5"/>
+              <text class="tabt" x="11" y="319">Training</text>
+              <path class="ln" d="M105,314 H124 m-4,-3 l4,3 l-4,3"/>
+              <line class="ln" x1="126" y1="197" x2="126" y2="429"/>
+
+              <rect class="cont" x="130" y="186" width="165" height="22" rx="4"/>
+              <text class="contt" x="140" y="201">Meine Check-Ins</text>
+              <rect class="cont" x="130" y="212" width="165" height="22" rx="4"/>
+              <text class="contt" x="140" y="227">Personal Training (Upsell)</text>
+              <rect class="cont" x="130" y="238" width="165" height="22" rx="4"/>
+              <text class="contt" x="140" y="253">Home Workouts (Video)</text>
+              <rect class="prog dup" x="130" y="264" width="165" height="22" rx="4"/>
+              <text class="progt" x="140" y="279">Trainingsplan — nur Prompt</text>
+              <rect class="cont" x="130" y="290" width="165" height="22" rx="4"/>
+              <text class="contt" x="140" y="305">Workouts</text>
+              <rect class="prog" x="130" y="316" width="165" height="22" rx="4"/>
+              <text class="progt" x="140" y="331">Dein BioAge — eine Zahl</text>
+              <rect class="prog dup" x="130" y="342" width="165" height="22" rx="4"/>
+              <text class="progt" x="140" y="357">Trainingsziele — Prompt</text>
+              <rect class="prog dup" x="130" y="368" width="165" height="22" rx="4"/>
+              <text class="progt" x="140" y="383">Aktivitätslevel — 0 Punkte</text>
+
+              <path class="ln" d="M295,301 C305,301 305,210 314,210 m-4,-3 l4,3 l-4,3"/>
+              <rect class="prog dup" x="320" y="186" width="165" height="22" rx="4"/>
+              <text class="progt" x="330" y="201">Reiter „Workouts“ — Dopp.</text>
+              <rect class="prog" x="320" y="212" width="165" height="22" rx="4"/>
+              <text class="progt" x="330" y="227">Reiter „Verlauf“</text>
+              <text class="note" x="320" y="249">Nur über den Textlink „Alle ansehen“ erreichbar,</text>
+              <text class="note" x="320" y="261">nicht über die Tab-Bar. Zeigt „0 Kcal“.</text>
+
+              <path class="lnk" d="M295,327 H314 m-4,-3 l4,3 l-4,3"/>
+              <rect class="prog" x="320" y="316" width="165" height="24" rx="4"/>
+              <text class="progt" x="330" y="332">BioAge: 4 Komponenten</text>
+              <path class="lnk" d="M485,328 H504 m-4,-3 l4,3 l-4,3"/>
+              <rect class="prog" x="510" y="316" width="155" height="24" rx="4"/>
+              <text class="progt" x="520" y="332">Muskelbalance</text>
+              <path class="lnk" d="M665,328 H684 m-4,-3 l4,3 l-4,3"/>
+              <rect class="deep" x="690" y="316" width="155" height="24" rx="4"/>
+              <text class="deept" x="700" y="332">EGYM-Messwerte</text>
+              <text class="noted" x="690" y="356">Der reichhaltigste Datensatz</text>
+              <text class="noted" x="690" y="368">liegt am weitesten weg.</text>
+
+              <line class="rule" x1="0" y1="444" x2="900" y2="444"/>
+
+              <text class="band" x="0" y="462">TAB 2</text>
+              <rect class="tab" x="0" y="506" width="105" height="28" rx="5"/>
+              <text class="tabt" x="11" y="525">Community</text>
+              <path class="ln" d="M105,520 H124 m-4,-3 l4,3 l-4,3"/>
+              <line class="ln" x1="126" y1="465" x2="126" y2="567"/>
+              <rect class="cont dup" x="130" y="454" width="165" height="22" rx="4" stroke="#8a8a8a" stroke-width="1.4"/>
+              <text class="contt" x="140" y="469">August Ranking</text>
+              <rect class="cont" x="130" y="480" width="165" height="22" rx="4"/>
+              <text class="contt" x="140" y="495">Freunde einladen</text>
+              <rect class="cont" x="130" y="506" width="165" height="22" rx="4"/>
+              <text class="contt" x="140" y="521">Community-Feed</text>
+              <rect class="cont" x="130" y="532" width="165" height="22" rx="4"/>
+              <text class="contt" x="140" y="547">Challenges — leer</text>
+              <rect class="cont dup" x="130" y="558" width="165" height="22" rx="4" stroke="#8a8a8a" stroke-width="1.4"/>
+              <text class="contt" x="140" y="573">Club-Ranking — identisch</text>
+              <text class="note" x="320" y="521">Zwei identische Ranking-Karten auf einer Seite.</text>
+
+              <line class="rule" x1="0" y1="596" x2="900" y2="596"/>
+
+              <text class="band" x="0" y="614">TAB 3 + 4</text>
+              <rect class="tab" x="0" y="620" width="50" height="24" rx="5"/>
+              <text class="tabt" x="8" y="637" style="font-size:10px">Service</text>
+              <rect class="tab" x="55" y="620" width="50" height="24" rx="5"/>
+              <text class="tabt" x="65" y="637" style="font-size:10px">Kurse</text>
+              <path class="ln" d="M105,632 H124 m-4,-3 l4,3 l-4,3"/>
+              <rect class="nav" x="130" y="620" width="355" height="24" rx="4"/>
+              <text class="navt" x="140" y="636" style="font-weight:400">Flach, alles auf Ebene 1 — funktioniert bereits gut</text>
+            </svg>
+            </div>
+            <p class="ia-hint">Karte seitlich scrollbar →</p>
+            <figcaption>
+              <strong>Ist-Zustand.</strong> Die rote Kette ist die einzige, die bis Ebene 4 reicht.
+              Sie endet bei den EGYM-Messwerten, dem reichhaltigsten Datensatz der App. Auf Ebene 1
+              des Training-Tabs stehen acht Bausteine, drei davon grau: Content, der den Platz
+              einnimmt. Gestrichelt: alles, was doppelt vorkommt.
+            </figcaption>
+          </figure>
+
+          <div class="stat-band">
+            <div>
+              <div class="stat-num">4</div>
+              <div class="stat-label">Ebenen bis zu den Messwerten. Auf Ebene 1 steht davon eine Zahl.</div>
+            </div>
+            <div>
+              <div class="stat-num">6</div>
+              <div class="stat-label">Redundanzen. Drei davon führen zu „Trainingsplan erstellen“ — keine zu einem Plan.</div>
+            </div>
+            <div>
+              <div class="stat-num">0</div>
+              <div class="stat-label">Kcal, die der Verlauf neben einer protokollierten Übung anzeigt.</div>
+            </div>
+          </div>
+
+          <h3>Der Befund, der die Richtung geändert hat</h3>
+          <p>
+            Die vier BioAge-Komponenten liegen weit auseinander: Kraft 22 Jahre, Stoffwechsel 21,
+            Kardio 21 — Flexibilität 34. Diese Differenz sagt mir, woran ich arbeiten sollte.
+            Sichtbar war sie nirgends.
+          </p>
+          <p>
+            Dass meine Kraftmessung von September 2025 stammt, ist kein Datenpflege-Problem. Die
+            Werte entstehen an den Geräten im Studio und spiegeln meine Besuchsfrequenz. Das Problem
+            ist strukturell: Auch topaktuelle Werte wären hier unsichtbar.
+          </p>
+        </section>
+
+        <!-- ============================ NEU ============================ -->
+        <section class="case-section reveal">
+          <p class="tag">Neue Struktur</p>
+          <h2>Angebot links, meins rechts</h2>
+          <p>
+            Mein erster Entwurf: ein eigener Fortschritt-Tab, das Profil-Icon heißt „Konto“.
+            <strong>Den habe ich verworfen.</strong>
+          </p>
+          <p>
+            Meine Ausgangskritik lautete: Man vermutet im Profil die eigene Fitness-Identität und
+            findet den Vertrag. Der erste Entwurf hat diese Erwartung wegdefiniert. Der zweite
+            erfüllt sie.
+          </p>
+
+          <div class="case-callout">
+            <p class="case-callout-line">
+              Die anderen Tabs zeigen das Angebot. Das Profil zeigt, was davon meins ist.
+            </p>
+            <p>
+              Workouts zeigt, was es gibt. Kurse zeigt, was buchbar ist. Das Profil zeigt meinen Plan,
+              meinen Fortschritt, meine gebuchten Kurse — und ganz unten meinen Vertrag.
+            </p>
+          </div>
+
+          <figure class="case-figure reveal">
+            <div class="ia-scroll">
+            <svg viewBox="0 0 900 512" xmlns="http://www.w3.org/2000/svg" role="img"
+                 aria-label="Navigationskarte der neuen Struktur auf derselben Tiefenachse. Die Tab-Bar trägt fünf Elemente, das Plus öffnet direkt das Workout-Formular. Alle persönlichen Inhalte liegen auf Ebene 1 im Profil, die rote Kette endet auf Ebene 3, Ebene 4 bleibt leer.">
+              <style>
+                .ax   { stroke: rgba(0,0,0,.09); stroke-width: 1; }
+                .axk  { fill: #8a8a8a; font-size: 9.5px; letter-spacing: .1em; font-weight: 600; }
+                .axs  { fill: #b0b0b0; font-size: 9.5px; }
+                .band { fill: #8a8a8a; font-size: 9px; letter-spacing: .1em; font-weight: 700; }
+                .rule { stroke: rgba(0,0,0,.09); stroke-width: 1; }
+                .empty{ fill: #f6f6f6; }
+                .tab  { fill: #111; }
+                .tabt { fill: #fff; font-size: 11.5px; font-weight: 700; }
+                .act  { fill: var(--accent); }
+                .actt { fill: #fff; font-size: 15px; font-weight: 700; }
+                .nav  { fill: #fff; stroke: rgba(0,0,0,.28); stroke-width: 1; }
+                .navt { fill: #555; font-size: 10.5px; font-weight: 600; }
+                .prog { fill: #fff; stroke: var(--accent); stroke-width: 1.7; }
+                .progt{ fill: var(--accent-ink); font-size: 10.5px; font-weight: 600; }
+                .cont { fill: #ececec; stroke: none; }
+                .contt{ fill: #6a6a6a; font-size: 10.5px; }
+                .adm  { fill: #fff; stroke: rgba(0,0,0,.28); stroke-width: 1; }
+                .admt { fill: #8a8a8a; font-size: 10.5px; }
+                .deep { fill: var(--accent); stroke: var(--accent); stroke-width: 1.7; }
+                .deept{ fill: #fff; font-size: 10.5px; font-weight: 700; }
+                .ln   { stroke: #b0b0b0; stroke-width: 1.2; fill: none; }
+                .lnk  { stroke: var(--accent); stroke-width: 2; fill: none; }
+                .note { fill: #8a8a8a; font-size: 9.5px; }
+                .noted{ fill: var(--accent-ink); font-size: 9.5px; font-weight: 700; }
+                .newk { fill: var(--accent); font-size: 9px; font-weight: 700; letter-spacing: .1em; }
+              </style>
+
+              <rect class="empty" x="679" y="30" width="221" height="476"/>
+              <line class="ax" x1="118" y1="30" x2="118" y2="506"/>
+              <line class="ax" x1="308" y1="30" x2="308" y2="506"/>
+              <line class="ax" x1="498" y1="30" x2="498" y2="506"/>
+              <line class="ax" x1="678" y1="30" x2="678" y2="506"/>
+              <text class="axk" x="0"   y="11">EBENE 0</text><text class="axs" x="0"   y="23">Tab-Bar</text>
+              <text class="axk" x="130" y="11">EBENE 1</text><text class="axs" x="130" y="23">0 Taps</text>
+              <text class="axk" x="320" y="11">EBENE 2</text><text class="axs" x="320" y="23">1 Tap</text>
+              <text class="axk" x="510" y="11">EBENE 3</text><text class="axs" x="510" y="23">2 Taps</text>
+              <text class="axk" x="690" y="11">EBENE 4</text><text class="axs" x="690" y="23">bleibt leer</text>
+
+              <text class="band" x="0" y="46">FÜNF ELEMENTE, KEIN HEADER MEHR</text>
+
+              <!-- ===== + ===== -->
+              <rect class="act" x="0" y="56" width="105" height="28" rx="5"/>
+              <text class="actt" x="45" y="77">+</text>
+              <path class="lnk" d="M105,70 H124 m-4,-3 l4,3 l-4,3"/>
+              <rect class="prog" x="130" y="58" width="165" height="24" rx="4"/>
+              <text class="progt" x="140" y="74">Workout erfassen</text>
+              <text class="noted" x="320" y="70">Eine Funktion, kein Menü. Ein Tap öffnet direkt das Formular.</text>
+              <text class="note"  x="320" y="84">Vorher: ein Menü mit drei Einträgen, zwei davon Duplikate.</text>
+
+              <line class="rule" x1="0" y1="118" x2="900" y2="118"/>
+
+              <!-- ===== PROFIL ===== -->
+              <rect class="tab" x="0" y="196" width="105" height="28" rx="5"/>
+              <text class="tabt" x="11" y="215">Profil</text>
+              <text class="newk" x="0" y="240">STARTANSICHT</text>
+              <path class="lnk" d="M105,210 H124 m-4,-3 l4,3 l-4,3"/>
+              <line class="lnk" x1="126" y1="142" x2="126" y2="249"/>
+              <line class="ln"  x1="126" y1="249" x2="126" y2="288"/>
+
+              <rect class="prog" x="130" y="130" width="165" height="24" rx="4"/>
+              <text class="progt" x="140" y="146">BioAge + 4 Komponenten</text>
+              <rect class="prog" x="130" y="158" width="165" height="24" rx="4"/>
+              <text class="progt" x="140" y="174">Mein Trainingsplan</text>
+              <rect class="prog" x="130" y="186" width="165" height="22" rx="4"/>
+              <text class="progt" x="140" y="201">Verlauf (Woche)</text>
+              <rect class="prog" x="130" y="212" width="165" height="22" rx="4"/>
+              <text class="progt" x="140" y="227">Aktivitätslevel</text>
+              <rect class="prog" x="130" y="238" width="165" height="22" rx="4"/>
+              <text class="progt" x="140" y="253">Im Studio einchecken</text>
+              <rect class="adm" x="130" y="276" width="165" height="24" rx="4"/>
+              <text class="admt" x="140" y="292">Konto &amp; Mitgliedschaft</text>
+              <text class="note" x="130" y="318">Verwaltung steht nicht mehr über dem</text>
+              <text class="note" x="130" y="330">Fortschritt, sondern darunter.</text>
+
+              <path class="lnk" d="M295,142 H314 m-4,-3 l4,3 l-4,3"/>
+              <rect class="prog" x="320" y="130" width="165" height="24" rx="4"/>
+              <text class="progt" x="330" y="146">Komponenten-Detail</text>
+              <path class="lnk" d="M295,150 C305,150 305,172 314,172 m-4,-3 l4,3 l-4,3"/>
+              <rect class="prog" x="320" y="160" width="165" height="24" rx="4"/>
+              <text class="progt" x="330" y="176">Muskelbalance</text>
+              <path class="ln" d="M295,288 H314 m-4,-3 l4,3 l-4,3"/>
+              <rect class="adm" x="320" y="276" width="165" height="24" rx="4"/>
+              <text class="admt" x="330" y="292">Vertrag &amp; Zahlungsdaten</text>
+
+              <path class="lnk" d="M485,142 H504 m-4,-3 l4,3 l-4,3"/>
+              <rect class="deep" x="510" y="130" width="155" height="24" rx="4"/>
+              <text class="deept" x="520" y="146">EGYM-Messwerte</text>
+              <text class="noted" x="510" y="170">Eine Ebene näher. Das Messdatum</text>
+              <text class="noted" x="510" y="182">steht schon auf Ebene 1.</text>
+
+              <line class="rule" x1="0" y1="346" x2="900" y2="346"/>
+
+              <!-- ===== WORKOUTS ===== -->
+              <rect class="tab" x="0" y="382" width="105" height="28" rx="5"/>
+              <text class="tabt" x="11" y="401">Workouts</text>
+              <text class="newk" x="0" y="426">STATT „TRAINING“</text>
+              <path class="ln" d="M105,396 H124 m-4,-3 l4,3 l-4,3"/>
+              <line class="ln" x1="126" y1="369" x2="126" y2="423"/>
+              <rect class="cont" x="130" y="358" width="165" height="22" rx="4"/>
+              <text class="contt" x="140" y="373">Von Studio und Trainer</text>
+              <rect class="cont" x="130" y="384" width="165" height="22" rx="4"/>
+              <text class="contt" x="140" y="399">Home Workouts, PT</text>
+              <rect class="cont" x="130" y="410" width="165" height="22" rx="4"/>
+              <text class="contt" x="140" y="425">Community-Sektion</text>
+              <text class="note" x="320" y="373">Reiner Katalog. Nichts davon ist „meins“ —</text>
+              <text class="note" x="320" y="385">deshalb kollidiert der Name nicht mehr mit „Profil“.</text>
+              <text class="note" x="320" y="403">Der Community-Tab wird eine Karte.</text>
+
+              <line class="rule" x1="0" y1="448" x2="900" y2="448"/>
+
+              <!-- ===== KURSE + SERVICE ===== -->
+              <rect class="tab" x="0" y="458" width="50" height="24" rx="5"/>
+              <text class="tabt" x="10" y="475" style="font-size:10px">Kurse</text>
+              <rect class="tab" x="55" y="458" width="50" height="24" rx="5"/>
+              <text class="tabt" x="63" y="475" style="font-size:10px">Service</text>
+              <path class="ln" d="M105,470 H124 m-4,-3 l4,3 l-4,3"/>
+              <rect class="nav" x="130" y="458" width="355" height="24" rx="4"/>
+              <text class="navt" x="140" y="474" style="font-weight:400">Kurse: suchen und buchen. Service: unverändert.</text>
+              <text class="noted" x="130" y="500">Der „Gebucht“-Reiter entfällt. Gebuchte Kurse stehen jetzt im Trainingsplan.</text>
+            </svg>
+            </div>
+            <p class="ia-hint">Karte seitlich scrollbar →</p>
+            <figcaption>
+              <strong>Neue Struktur, dieselbe Achse.</strong> Fünf Elemente in der Tab-Bar, kein
+              Header mehr. Das „+“ führt ohne Umweg ins Workout-Formular. Die rote Kette beginnt eine
+              Spalte früher und endet eine Spalte früher. Ebene 4 bleibt leer — nichts wurde
+              gestrichen, alles hat weiter vorne Platz gefunden.
+            </figcaption>
+          </figure>
+
+          <h3>Warum der Tab „Workouts“ heißt und nicht „Training“</h3>
+          <p>
+            Erst hieß er „Training“. Damit war die Grenze zum Profil unscharf: „Training“ meint
+            beides — das Angebot und meine eigene Aktivität. Zwei Tabs konkurrierten um dieselbe
+            Bedeutung.
+          </p>
+          <p>
+            „Workouts“ ist eindeutig ein Katalogbegriff. Die App nutzt das Wort ohnehin schon.
+            Der Check-in ist mit umgezogen — ins Profil. Er ist keine Ware im Katalog, sondern meine
+            eigene Anwesenheit.
+          </p>
+
+          <h3>Kein persistenter Header mehr</h3>
+          <p>
+            Der alte Header trug ein Profil-Icon und ein „+“. Das Profil ist jetzt ein Tab, das Konto
+            liegt darin — das Icon ist überflüssig. Das „+“ rückt als fünftes Element in die Tab-Bar.
+          </p>
+
+          <h3>Der Trade-off</h3>
+          <p>
+            „Fortschritt“ verspricht als Tab-Name mehr als „Profil“, und Profil-Tabs öffnet man
+            selten. Ich fange das ab: Der Fortschritt steht ganz oben im Profil, und das Profil wird
+            die Startansicht. <strong>Ob das reicht, klärt der Nutzertest.</strong>
+          </p>
+        </section>
+
+        <!-- ============================ KOPPLUNG ============================ -->
+        <section class="case-section reveal">
+          <p class="tag">Produktlogik</p>
+          <h2>Der Trainingsplan füllt sich von selbst</h2>
+          <p>
+            Mein Trainingsplan war leer. Nicht, weil ich nicht trainiere, sondern weil er ein
+            dreistufiges Onboarding voraussetzt, das ich nie beendet habe.
+          </p>
+          <p>
+            Gleichzeitig buche ich regelmäßig Kurse. Diese Buchungen kennen den Trainingsbereich
+            nicht — obwohl ein besuchter Kurs die Einheit ist, die tatsächlich stattgefunden hat.
+            <strong>Neu: Ein gebuchter Kurs erscheint im Trainingsplan und wandert nach dem Check-in
+            automatisch in den Verlauf.</strong>
+          </p>
+
+          <figure class="case-figure reveal">
+            <div class="ia-scroll">
+            <svg viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg" role="img"
+                 aria-label="Vergleich zweier Zustände. Heute stehen Kurs buchen, Trainingsplan, Check-in und Verlauf als vier unverbundene Inseln nebeneinander. Neu sind sie zu einer Kette verbunden.">
+              <style>
+                .ck   { fill: #8a8a8a; font-size: 9.5px; letter-spacing: .1em; font-weight: 700; }
+                .isl  { fill: #fff; stroke: rgba(0,0,0,.22); stroke-width: 1; }
+                .islt { fill: #8a8a8a; font-size: 11px; }
+                .cx   { stroke: #c9c9c9; stroke-width: 1.4; }
+                .gap  { fill: #b0b0b0; font-size: 9.5px; font-style: italic; }
+                .box  { fill: #fff; stroke: var(--accent); stroke-width: 1.8; }
+                .boxt { fill: var(--accent-ink); font-size: 11px; font-weight: 600; }
+                .arr  { stroke: var(--accent); stroke-width: 1.8; fill: none; }
+                .arrl { fill: var(--accent-ink); font-size: 9.5px; font-weight: 600; }
+                .sub  { fill: #8a8a8a; font-size: 9.5px; }
+                .fin  { fill: var(--accent); stroke: var(--accent); stroke-width: 1.8; }
+                .fint { fill: #fff; font-size: 11px; font-weight: 700; }
+              </style>
+
+              <text class="ck" x="0" y="12">HEUTE — VIER GETRENNTE ORTE</text>
+              <rect class="isl" x="0"   y="26" width="190" height="42" rx="7"/>
+              <text class="islt" x="14" y="52">Kurs buchen</text>
+              <rect class="isl" x="235" y="26" width="190" height="42" rx="7"/>
+              <text class="islt" x="249" y="52">Trainingsplan</text>
+              <rect class="isl" x="470" y="26" width="170" height="42" rx="7"/>
+              <text class="islt" x="484" y="52">Check-in im Studio</text>
+              <rect class="isl" x="685" y="26" width="190" height="42" rx="7"/>
+              <text class="islt" x="699" y="52">Verlauf</text>
+              <line class="cx" x1="203" y1="41" x2="222" y2="53"/><line class="cx" x1="203" y1="53" x2="222" y2="41"/>
+              <line class="cx" x1="438" y1="41" x2="457" y2="53"/><line class="cx" x1="438" y1="53" x2="457" y2="41"/>
+              <line class="cx" x1="653" y1="41" x2="672" y2="53"/><line class="cx" x1="653" y1="53" x2="672" y2="41"/>
+              <text class="gap" x="0" y="88">Keine Station weiß von den anderen. Der Plan bleibt leer, der Verlauf zeigt „0 Kcal“.</text>
+
+              <line x1="0" y1="112" x2="900" y2="112" stroke="rgba(0,0,0,.09)" stroke-width="1"/>
+
+              <text class="ck" x="0" y="140">NEU — EINE KETTE</text>
+              <rect class="box" x="0"   y="156" width="190" height="46" rx="7"/>
+              <text class="boxt" x="14" y="176">Kurs buchen</text>
+              <text class="sub"  x="14" y="192">Kurse-Tab, Flow unverändert</text>
+              <path class="arr" d="M190,179 H228 m-5,-4 l5,4 l-5,4"/>
+
+              <rect class="box" x="235" y="156" width="190" height="46" rx="7"/>
+              <text class="boxt" x="249" y="176">Steht im Trainingsplan</text>
+              <text class="sub"  x="249" y="192">Profil, Ebene 1</text>
+              <path class="arr" d="M425,179 H463 m-5,-4 l5,4 l-5,4"/>
+
+              <rect class="box" x="470" y="156" width="170" height="46" rx="7"/>
+              <text class="boxt" x="484" y="176">Check-in im Studio</text>
+              <text class="sub"  x="484" y="192">bestehende Funktion</text>
+              <path class="arr" d="M640,179 H678 m-5,-4 l5,4 l-5,4"/>
+
+              <rect class="fin" x="685" y="156" width="190" height="46" rx="7"/>
+              <text class="fint" x="699" y="176">Automatisch im Verlauf</text>
+              <text class="fint" x="699" y="192" style="font-weight:400;font-size:9.5px">zählt auf Aktivitätspunkte</text>
+
+              <text class="arrl" x="0"   y="228">Der Plan ist nie leer.</text>
+              <text class="sub"  x="0"   y="242">Er füllt sich durch normales</text>
+              <text class="sub"  x="0"   y="254">Verhalten, ohne Onboarding.</text>
+
+              <text class="arrl" x="235" y="228">Eine Redundanz weniger.</text>
+              <text class="sub"  x="235" y="242">Der „Gebucht“-Reiter im</text>
+              <text class="sub"  x="235" y="254">Kurse-Tab wird überflüssig.</text>
+
+              <text class="arrl" x="470" y="228">Kurs und Training sind</text>
+              <text class="sub"  x="470" y="242">nicht mehr zwei Welten.</text>
+
+              <text class="arrl" x="685" y="228">Echte Einträge statt</text>
+              <text class="sub"  x="685" y="242">selbst eingetippter. Der</text>
+              <text class="sub"  x="685" y="254">Verlauf wird belastbar.</text>
+            </svg>
+            </div>
+            <p class="ia-hint">Grafik seitlich scrollbar →</p>
+            <figcaption>
+              <strong>Keine neue Funktion, sondern eine Verbindung.</strong> Buchung, Plan, Check-in
+              und Verlauf gibt es alle vier bereits. Sie wissen nur nichts voneinander.
+            </figcaption>
+          </figure>
+
+          <h3>Vier Zustände</h3>
+          <ul>
+            <li><strong>Gebucht</strong> — steht im Plan.</li>
+            <li><strong>Besucht</strong> — wandert in den Verlauf, zählt Punkte.</li>
+            <li><strong>Verpasst</strong> — verfällt still, ohne die Punktzahl zu belasten.</li>
+            <li><strong>Storniert</strong> — verschwindet aus dem Plan.</li>
+          </ul>
+          <p>
+            „Verfällt still“ ist eine Haltungsentscheidung. Ein „Du hast deinen Kurs verpasst“ wäre
+            trivial umzusetzen und würde genau die Leute bestrafen, die die App ohnehin selten
+            öffnen. Fortschritt soll motivieren, nicht sanktionieren.
+          </p>
+          <p>
+            <strong>Offene Annahme:</strong> Die automatische Verbuchung setzt voraus, dass sich der
+            Check-in dem gebuchten Kurs zuordnen lässt. Ob das technisch geht, kann ich von außen
+            nicht beurteilen.
+          </p>
+        </section>
+
+        <!-- ============================ ENTSCHEIDUNGEN ============================ -->
+        <section class="case-section reveal">
+          <p class="tag">Entscheidungen</p>
+          <h2>Vier Eingriffe</h2>
+
+          <h3>Die BioAge-Komponenten kommen auf Ebene 1 — mit Messdatum</h3>
+          <p>
+            „25 Jahre“ allein sagt niemandem, was zu tun ist. Die Differenz zwischen den vier
+            Komponenten schon. Das Messdatum steht daneben: Ohne Datum weiß niemand, ob der Wert von
+            gestern oder von letztem Jahr ist. Mit Datum wird ein alter Wert zur Einladung,
+            wieder messen zu gehen.
+          </p>
+
+          <h3>Drei Trainingsplan-Einstiege werden einer</h3>
+          <p>
+            Drei Türen führten zum selben unfertigen Setup. Wer drei gleichwertige Wege sieht,
+            probiert alle durch. Jetzt: ein Baustein, zwei Zustände.
+          </p>
+
+          <h3>Das „+“ trägt genau eine Funktion</h3>
+          <p>
+            „Kurs buchen“ und „Service und Hilfe“ führten zu Tabs, die ohnehin sichtbar sind. Das
+            erklärt meinen eigenen Eindruck, die Kursbuchung sei versteckt, obwohl sie einen eigenen
+            Tab hat: <strong>Zwei sichtbare Wege zum selben Ziel lassen beide unsicher wirken.</strong>
+          </p>
+          <p>
+            Geblieben ist eine einzige Funktion: Workout erfassen. Damit braucht es auch kein Menü
+            mehr — ein Tap öffnet direkt das Formular. <strong>Ein Menü mit einem Eintrag ist ein
+            Zwischenschritt ohne Zweck.</strong>
+          </p>
+
+          <h3>Der Community-Tab wird eine Karte</h3>
+          <p>
+            Das schafft Platz für den Profil-Tab, ohne auf fünf Tabs zu gehen. Begründet ist der
+            Schnitt bisher nur mit meiner eigenen Perspektive. Setzt Fitness First strategisch auf
+            Social-Features, ist er neu zu bewerten. Eine Annahme, kein Befund.
+          </p>
+        </section>
+
+        <!-- ============================ WIRKUNG ============================ -->
+        <section class="case-section reveal">
+          <p class="tag">Wirkung</p>
+          <h2>Wege im Vorher-Nachher</h2>
+          <p>
+            Navigationstiefe ist nicht das einzige Qualitätsmaß, aber das einzige, das sich ohne
+            Nutzertest belegen lässt.
+          </p>
+          <div class="ia-table-wrap">
+            <table class="ia-table">
+              <thead>
+                <tr><th>Aufgabe</th><th>Vorher</th><th>Nachher</th><th></th><th>Was sich ändert</th></tr>
+              </thead>
+              <tbody>
+                <tr><td class="t-task">BioAge-Komponenten sehen</td><td class="t-num">1 Tap</td><td class="t-num">0 Taps</td><td class="t-win">−1</td><td>Der Ausreißer ist sichtbar, ohne zu suchen</td></tr>
+                <tr><td class="t-task">Muskelbalance ansehen</td><td class="t-num">2 Taps</td><td class="t-num">1 Tap</td><td class="t-win">−1</td><td>Wird von einer Entdeckung zu einer Funktion</td></tr>
+                <tr><td class="t-task">EGYM-Messwerte ansehen</td><td class="t-num">3 Taps</td><td class="t-num">2 Taps</td><td class="t-win">−1</td><td>Aktualität steht schon zwei Ebenen früher</td></tr>
+                <tr><td class="t-task">Workout-Verlauf ansehen</td><td class="t-num">1 Tap, nur per Textlink</td><td class="t-num">0 Taps</td><td class="t-win">−1</td><td>Kein Umweg über „Alle ansehen“</td></tr>
+                <tr><td class="t-task">Workout protokollieren</td><td class="t-num">Menü mit 3 Einträgen</td><td class="t-num">„+“ öffnet das Formular</td><td class="t-win">−1</td><td>Kein Menü, keine Wahl zwischen scheinbar gleichen Wegen</td></tr>
+                <tr><td class="t-task">Trainingsplan finden</td><td class="t-num">3 Einstiegspunkte</td><td class="t-num">1 Baustein</td><td class="t-win">−2</td><td>Füllt sich durch gebuchte Kurse</td></tr>
+                <tr><td class="t-task">Gebuchten Kurs wiederfinden</td><td class="t-num">Reiter im Kurse-Tab</td><td class="t-num">im Trainingsplan</td><td class="t-win">−1</td><td>Buchung und Training am selben Ort</td></tr>
+                <tr><td class="t-task">Kurs buchen</td><td class="t-num">2 Wege</td><td class="t-num">1 Weg</td><td class="t-win">−1</td><td>Der Flow selbst bleibt unangetastet</td></tr>
+                <tr><td class="t-task">Im Studio einchecken</td><td class="t-num">Banner im Training-Tab</td><td class="t-num">Karte im Profil</td><td class="t-flat">±0</td><td>Gleich tief, aber bei den eigenen Daten statt im Katalog</td></tr>
+                <tr><td class="t-task">Vertragsdaten ändern</td><td class="t-num">1 Tap</td><td class="t-num">1 Tap</td><td class="t-flat">±0</td><td>Gleich tief, aber am erwarteten Ort</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ============================ OFFEN ============================ -->
+        <section class="case-section reveal">
+          <p class="tag">Was noch offen ist</p>
+          <h2>Ungetestet ist ungetestet</h2>
+          <p>
+            Alles oben ist gegen ein Raster geprüft, das ich selbst geschrieben habe. Das geht
+            zwangsläufig auf. Der echte Test läuft gerade: moderiert, am klickbaren Low-Fi-Prototyp,
+            mit Fitness-First-Mitgliedern und mit Menschen ohne Vorwissen — getrennt ausgewertet.
+          </p>
+          <p>Drei Fragen entscheiden, ob die Struktur bleibt:</p>
+          <ul>
+            <li>Ist die Grenze zwischen <strong>„Workouts“ und „Profil“</strong> ohne Erklärung klar?</li>
+            <li>Findet man den Fortschritt in einem Tab namens <strong>„Profil“</strong>?</li>
+            <li>Wird der <strong>Check-in</strong> im Profil vermutet — oder im Workouts-Tab?</li>
+            <li><strong>Vermisst jemand die Community</strong>, wenn sie nur noch eine Karte ist?</li>
+          </ul>
+          <p>
+            Getestet wird in Graustufen, vor dem Branding. Ein Test am fertigen Design misst Struktur
+            und Optik gleichzeitig — und ein Strukturfehler ist danach teurer zu beheben.
+          </p>
+
+          <div class="case-placeholder">
+            <span class="ph-tag">Folgt</span>
+            <p>Testergebnisse, Struktur-Korrekturen, UI-Design mit Fitness-First-Branding, klickbarer Prototyp.</p>
+          </div>
+        </section>
+
+        <section class="case-section reveal">
+          <p class="tag">Hinweis</p>
+          <p>
+            Unabhängiges Konzeptprojekt aus eigener Initiative, entstanden als zahlendes Mitglied.
+            Kein Auftrag von und keine Verbindung zu Fitness First Germany. Alle Daten stammen aus
+            meinem eigenen Account.
+          </p>
+        </section>
+
+      </div>
+    </div>
   </main>
 
   <footer class="site-footer">
@@ -48,6 +872,7 @@
       <span>© 2026 Made with ♥ by Helena</span>
     </div>
   </footer>
+  </div>
 
   <script src="../assets/main.js"></script>
 </body>

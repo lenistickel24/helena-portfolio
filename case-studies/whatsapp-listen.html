@@ -5,12 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WhatsApp Listen — Case Study — Helena Stickelbroeck</title>
   <meta name="description" content="Feature-Konzept für WhatsApp: eine gemeinsame Liste, die im Chat gepinnt bleibt — alle können eintragen, jede:r kann übernehmen, änderbar von allen." />
+
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="../assets/favicon-32.png" sizes="32x32" type="image/png" />
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Helena Stickelbroeck" />
+  <meta property="og:title" content="Listen im Chat – Feature-Konzept" />
+  <meta property="og:description" content="Eine gemeinsame Liste, die im Chat gepinnt bleibt — alle pflegen sie, alle sehen, wer was übernimmt." />
+  <meta property="og:image" content="https://helena-stickelbroeck.de/assets/og-image.png" />
+  <meta property="og:url" content="https://helena-stickelbroeck.de/case-studies/whatsapp-listen.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../css/style.css" />
 </head>
-<body>
+<body class="accent-wa case-overlay motif-circle">
 
   <!-- Arbeitsstand: Erster Entwurf, aufgebaut aus den Projektdokumenten in
        _Master/14 Projekte/whatsApp lists/ (00–07). Quelle der Wahrheit für Konzept und
@@ -20,27 +33,15 @@
        echten Prototyp-Screens — der echte, durchklickbare Prototyp liegt unter
        prototypes/whatsapp-listen.html. -->
 
-  <header class="site-header">
-    <div class="wrap">
-      <a href="../index.html" class="logo">
-        <span class="logo-mark">H</span>
-        <span class="logo-name">Helena Stickelbroeck</span>
-      </a>
-      <nav>
-        <ul class="nav-links">
-          <li><a href="../index.html#work">Case Studies</a></li>
-          <li><a href="../about.html">Über mich</a></li>
-          <li><a href="../index.html#contact" class="btn btn-ghost">Kontakt</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+  <a class="case-close" href="../index.html#work" aria-label="Case Study schließen">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+  </a>
 
+  <div class="case-sheet">
   <main>
 
     <!-- ============ HERO ============ -->
     <section class="case-hero">
-      <a href="../index.html#work" class="back-link">← Zurück zur Übersicht</a>
       <div class="wrap">
         <p class="tag">WhatsApp</p>
         <h1 class="page-heading">Listen im Chat – Feature-Konzept</h1>
@@ -78,31 +79,29 @@
 
           <p>
             Ein Sommerfest, zwölf Leute, eine WhatsApp-Gruppe. Nach zwei Tagen war die Frage
-            „wer bringt eigentlich was mit" dreimal beantwortet und keinmal geklärt: Die Liste
-            stand irgendwo weiter oben im Verlauf, war zweimal von Hand neu getippt worden, und
-            am Ende brachten zwei Leute Eis mit, während die Teller fehlten.
+            „wer bringt was mit" dreimal beantwortet und keinmal geklärt: Die Liste stand
+            irgendwo weiter oben im Verlauf, war zweimal neu getippt, und am Ende brachten zwei
+            Leute Eis mit, während die Teller fehlten.
           </p>
           <p>
-            Das ist kein Einzelfall und auch kein besonders schwieriges Problem. Es ist nur
-            eines, das WhatsApp bisher nicht anfasst.
+            Kein Einzelfall, kein schwieriges Problem – nur eines, das WhatsApp bisher nicht
+            anfasst.
           </p>
 
           <div class="case-placeholder">
             <span class="ph-tag">Noch offen</span>
             <p>
-              Belegzahlen fehlen noch — Median Organisations-Nachrichten pro Anlass, Median
-              Listen-Versionen, Anteil der Fälle mit genau einer pflegenden Person. Kommt aus
-              dem Chat-Audit (ein Nachmittag, noch nicht erhoben). Ohne diese Zahl darf der Text
-              nicht veröffentlicht werden.
+              Belege fehlen noch: Nachrichten pro Anlass, Listen-Versionen, Anteil der Fälle
+              mit einer pflegenden Person. Kommt aus dem Chat-Audit – noch nicht erhoben.
             </p>
           </div>
 
-          <p>Vier Muster wiederholen sich dabei, ganz gleich in welcher Gruppe:</p>
+          <p>Vier Muster wiederholen sich, egal in welcher Gruppe:</p>
           <ul>
-            <li><strong>Es sinkt.</strong> Die Liste steht 40 Nachrichten weiter oben. Sie zu suchen kostet mehr als zu fragen — also wird gefragt, was neue Nachrichten erzeugt, die sie weiter nach oben schieben.</li>
-            <li><strong>Es forkt.</strong> Fremde Nachrichten lassen sich nicht bearbeiten, also wird die Liste neu getippt. Danach gibt es vier Listen und keine Regel, welche gilt — außer dem Zeitstempel.</li>
-            <li><strong>Zuständigkeit ist Fließtext.</strong> „Brötchen mach ich" ist ein Satz, kein Feld. Er muss gelesen, verstanden und von Hand in die nächste Version übertragen werden.</li>
-            <li><strong>Die Arbeit landet bei einer Person.</strong> Ein Nutzen, den alle haben, wird von derjenigen gepflegt, die es am wenigsten aushält, wenn es liegen bleibt — unbezahlte Dateneingabe in einer Chat-App.</li>
+            <li><strong>Es sinkt.</strong> Die Liste steht 40 Nachrichten weiter oben. Suchen kostet mehr als fragen – und die Frage schiebt die Liste weiter nach oben.</li>
+            <li><strong>Es forkt.</strong> Fremde Nachrichten lassen sich nicht bearbeiten, also wird neu getippt. Am Ende: vier Listen, keine gilt – außer der neuesten.</li>
+            <li><strong>Zuständigkeit ist Fließtext.</strong> „Brötchen mach ich" ist ein Satz, kein Feld. Jemand muss ihn lesen und in die nächste Version übertragen.</li>
+            <li><strong>Die Arbeit landet bei einer Person.</strong> Alle profitieren, eine pflegt – die, die es am wenigsten aushält, wenn etwas liegen bleibt. Unbezahlte Dateneingabe in einer Chat-App.</li>
           </ul>
         </section>
 
@@ -111,20 +110,18 @@
           <p class="tag">Vorgehen</p>
           <h2>Vom Muster zum Prinzip</h2>
           <p>
-            Bevor ich anfange, etwas zu bauen, wollte ich wissen, woran die bestehenden
-            Umgehungen scheitern. Eine neu getippte Nachricht forkt in Versionen. Eine
-            angepinnte Nachricht kann nur die absendende Person ändern, und nur kurz. Eine
-            Umfrage ist zum Auswählen gebaut, nicht zum Führen einer Menge. Ein Termin hat die
-            richtige Bauform, aber den falschen Inhalt: eine Sache mit Zusagen, nicht viele mit
-            Zuständigen. Und eine externe Listen-App scheitert am Netzwerkeffekt, sobald sechs
-            Leute sie für einen Nachmittag installieren müssten.
+            Zuerst wollte ich wissen, woran die bestehenden Umgehungen scheitern. Eine neu
+            getippte Nachricht forkt in Versionen. Eine angepinnte Nachricht ändert nur die
+            absendende Person, und nur kurz. Eine Umfrage ist zum Auswählen gebaut, nicht zum
+            Führen einer Menge. Ein Termin hat die richtige Bauform, aber den falschen Inhalt:
+            eine Sache mit Zusagen, nicht viele mit Zuständigen. Eine externe Listen-App
+            scheitert am Netzwerkeffekt – sechs Leute installieren sie nicht für einen Nachmittag.
           </p>
           <p>
-            Der Präzedenzfall, der zählt: WhatsApp hat den schwierigen Teil bereits gelöst.
-            Termine und Umfragen sind strukturierte Objekte, die im Chat leben, als Karte
-            dargestellt werden und einen eigenen Zustand halten — ohne dass jemand dafür eine
-            Nachricht schreibt. Dieses Konzept verlangt keine neue Gattung, sondern die dritte
-            Instanz einer bestehenden.
+            WhatsApp hat den schwierigen Teil längst gelöst: Termine und Umfragen sind
+            strukturierte Objekte, die im Chat als Karte leben, einen eigenen Zustand halten und
+            ohne Nachricht bedient werden. Dieses Konzept braucht keine neue Gattung, nur die
+            dritte Instanz einer bestehenden.
           </p>
 
           <div class="case-callout">
@@ -138,11 +135,10 @@
           </div>
 
           <p>
-            Die tragende Annahme darunter: Leute nutzen eine Struktur nur, wenn sie schneller
-            ist als ein getippter Satz. Der Maßstab ist keine To-do-App, sondern die acht
-            Sekunden für „ich bring Brot mit". Wird Übernehmen teurer als das, tippen die Leute
-            weiter — und die Liste veraltet wie vorher. Das ist die Annahme, an der das ganze
-            Konzept hängt, und sie ist noch nicht validiert.
+            Die tragende Annahme: Leute nutzen eine Struktur nur, wenn sie schneller ist als
+            ein getippter Satz. Der Maßstab ist keine To-do-App, sondern die acht Sekunden für
+            „ich bring Brot mit". Kostet Übernehmen mehr, tippen die Leute weiter – und die
+            Liste veraltet wie vorher. Diese Annahme ist noch nicht validiert.
           </p>
         </section>
 
@@ -151,9 +147,9 @@
           <p class="tag">User Flow</p>
           <h2>Elf Schritte, ein Fluss</h2>
           <p>
-            Der Flow beginnt bewusst vor dem Feature: Die Gruppe hat noch keine Liste, die
-            Absprache steht als Nachrichten im Verlauf. Die Liste entsteht im Flow — genau wie
-            eine Abstimmung oder ein Termin, über das Anhang-Menü.
+            Der Flow beginnt vor dem Feature: Die Gruppe hat noch keine Liste, die Absprache
+            steht als Nachrichten im Verlauf. Die Liste entsteht im Flow – über das Anhang-Menü,
+            wie eine Abstimmung oder ein Termin.
           </p>
 
           <figure class="case-figure reveal">
@@ -163,10 +159,10 @@
                 .lf-k{ fill:#9c99a6; font-size:11px; letter-spacing:.06em; }
                 .lf-p{ fill:#fff; stroke:rgba(28,26,34,.16); }
                 .lf-t{ fill:#6a6874; font-size:11px; }
-                .lf-new .lf-p{ stroke:#1c1a22; stroke-width:2; }
-                .lf-new .lf-t{ fill:#1c1a22; font-weight:700; }
+                .lf-new .lf-p{ stroke:var(--accent); stroke-width:2; }
+                .lf-new .lf-t{ fill:var(--accent-ink); font-weight:700; }
                 .lf-arr{ stroke:#c7c4cf; stroke-width:1.5; fill:none; }
-                .lf-tag{ fill:#8a8a8a; font-size:8.5px; font-weight:700; letter-spacing:.08em; }
+                .lf-tag{ fill:var(--accent-ink); font-size:8.5px; font-weight:700; letter-spacing:.08em; }
               </style>
 
               <text class="lf-k" x="2" y="12">SCHRITT 1–5 · VOM CHAT ZUR LISTE</text>
@@ -208,17 +204,14 @@
         <section class="case-section reveal">
           <p class="tag">Wireframes</p>
           <h2>Die Schlüssel-Screens</h2>
-          <p>
-            Skizzen in Graustufen — bewusst ohne Farbe und Feinschliff, im selben System wie das
-            Schwesterprojekt. Alle Namen sind erfunden.
-          </p>
+          <p>Graustufen-Skizzen, im selben System wie das Schwesterprojekt. Alle Namen sind erfunden.</p>
 
           <figure class="case-figure reveal">
             <svg viewBox="0 0 720 486" xmlns="http://www.w3.org/2000/svg" role="img"
                  aria-label="Drei Wireframe-Screens: das Anhang-Menü mit dem neuen Eintrag Liste, das Anlege-Formular nach Vorlage von Abstimmung erstellen, und die neue Listen-Leiste unter der Kopfzeile des Chats.">
               <style>
                 .la-s{ fill:#fff; stroke:#c7c4cf; }
-                .la-new{ stroke:#1c1a22; stroke-width:2; }
+                .la-new{ stroke:var(--accent); stroke-width:2; }
                 .la-bar{ fill:#ececE5; }
                 .la-out{ fill:#e4e2dc; }
                 .la-band{ fill:#f6f5f1; }
@@ -230,7 +223,7 @@
                 .la-btn-off-t{ fill:#9c99a6; font-size:9px; font-weight:700; }
                 .la-chip{ fill:#fff; stroke:#c7c4cf; }
                 .la-tag{ fill:#8a8a8a; font-size:8px; font-weight:700; letter-spacing:.08em; }
-                .la-toggle{ fill:#1c1a22; }
+                .la-toggle{ fill:var(--accent); }
               </style>
 
               <!-- Screen A: Anhang-Menü -->
@@ -287,7 +280,7 @@
                 <rect class="la-out" x="84" y="154" width="100" height="24" rx="10"/>
                 <line class="la-hair" x1="0" y1="380" x2="200" y2="380"/>
                 <rect class="la-chip" x="16" y="388" width="150" height="24" rx="12"/>
-                <circle cx="182" cy="400" r="12" fill="#1c1a22"/>
+                <circle cx="182" cy="400" r="12" fill="var(--accent)"/>
               </g>
             </svg>
             <figcaption>
@@ -307,7 +300,7 @@
                 .ll-b{ fill:#1c1a22; font-size:10.5px; font-weight:700; }
                 .ll-dash{ fill:none; stroke:#9c99a6; stroke-width:1.5; stroke-dasharray:2.5,2.5; }
                 .ll-slot-other{ fill:#c7c4cf; }
-                .ll-slot-me{ fill:#1c1a22; }
+                .ll-slot-me{ fill:var(--accent); }
                 .ll-card{ fill:#fff; stroke:#c7c4cf; }
                 .ll-k{ fill:#9c99a6; font-size:8px; letter-spacing:.08em; }
               </style>
@@ -329,7 +322,7 @@
                 <text class="ll-b" x="44" y="110" style="font-size:9.5px">Grillkohle</text>
                 <circle class="ll-slot-other" cx="178" cy="106" r="11"/><text x="178" y="109" text-anchor="middle" style="font-size:8px;fill:#fff;font-weight:700">N</text>
 
-                <circle cx="26" cy="146" r="9" fill="#1c1a22"/><text x="26" y="149" text-anchor="middle" style="font-size:9px;fill:#fff">✓</text>
+                <circle cx="26" cy="146" r="9" fill="var(--accent)"/><text x="26" y="149" text-anchor="middle" style="font-size:9px;fill:#fff">✓</text>
                 <text class="ll-b" x="44" y="150" style="font-size:9.5px">Brötchen, 30 Stück</text>
                 <circle class="ll-slot-me" cx="178" cy="146" r="11"/><text x="178" y="149" text-anchor="middle" style="font-size:8px;fill:#fff">✓</text>
 
@@ -340,7 +333,7 @@
                 <line class="ll-hair" x1="0" y1="380" x2="200" y2="380"/>
                 <circle class="ll-card" cx="26" cy="400" r="12"/><text x="26" y="404" text-anchor="middle" style="font-size:12px;fill:#6a6874">+</text>
                 <rect class="ll-card" x="46" y="388" width="112" height="24" rx="12"/>
-                <circle cx="182" cy="400" r="12" fill="#1c1a22"/>
+                <circle cx="182" cy="400" r="12" fill="var(--accent)"/>
               </g>
 
               <!-- Screen E: Zuweisen-Popover -->
@@ -355,7 +348,7 @@
 
                 <rect class="ll-card" x="30" y="88" width="150" height="164" rx="14"/>
                 <text class="ll-k" x="44" y="110">ZUWEISEN</text>
-                <circle cx="46" cy="132" r="7" fill="#1c1a22"/><text class="ll-b" x="60" y="136" style="font-size:9.5px">Ich</text>
+                <circle cx="46" cy="132" r="7" fill="var(--accent-bright)"/><text class="ll-b" x="60" y="136" style="font-size:9.5px">Ich</text>
                 <circle cx="46" cy="158" r="7" fill="#c7c4cf"/><text class="ll-l" x="60" y="162">Nora</text>
                 <circle cx="46" cy="184" r="7" fill="#c7c4cf"/><text class="ll-l" x="60" y="188">Tobias</text>
                 <line class="ll-hair" x1="44" y1="202" x2="166" y2="202"/>
@@ -380,7 +373,7 @@
                 .lv-b{ fill:#1c1a22; font-size:11px; font-weight:700; }
                 .lv-card{ fill:#fff; stroke:#c7c4cf; }
                 .lv-k{ fill:#9c99a6; font-size:8px; letter-spacing:.08em; }
-                .lv-badge{ fill:#1c1a22; }
+                .lv-badge{ fill:var(--accent); }
                 .lv-badge-t{ fill:#fff; font-size:8.5px; font-weight:700; }
                 .lv-band{ fill:#f6f5f1; }
               </style>
@@ -394,7 +387,7 @@
                 <line class="lv-hair" x1="0" y1="40" x2="200" y2="40"/>
 
                 <rect class="lv-card" x="14" y="50" width="170" height="130" rx="12"/>
-                <circle cx="30" cy="76" r="6" fill="#1c1a22"/><text class="lv-b" x="44" y="80" style="font-size:10px">Reihenfolge</text>
+                <circle cx="30" cy="76" r="6" fill="var(--accent-bright)"/><text class="lv-b" x="44" y="80" style="font-size:10px">Reihenfolge</text>
                 <circle cx="30" cy="106" r="6" fill="none" stroke="#c7c4cf"/><text class="lv-l" x="44" y="110">Themen</text>
                 <circle cx="30" cy="136" r="6" fill="none" stroke="#c7c4cf"/><text class="lv-l" x="44" y="140">Personen</text>
                 <line class="lv-hair" x1="26" y1="154" x2="174" y2="154"/>
@@ -476,8 +469,8 @@
 
           <h3>Vier Entscheidungen, die ich zurückgenommen habe</h3>
           <p>
-            Alle vier fielen beim Durchklicken des Prototyps auf, nicht beim Nachdenken darüber
-            — der eigentliche Grund, warum der Prototyp früh entstanden ist.
+            Alle vier fielen beim Durchklicken auf, nicht beim Nachdenken – der Grund, warum
+            der Prototyp früh entstand.
           </p>
           <div class="decision-list">
             <div class="decision">
@@ -514,14 +507,13 @@
           <p class="tag">Prototyp</p>
           <h2>Durchklickbar, in Graustufen</h2>
           <p>
-            Elf Schritte vom leeren Chat bis zur beendeten Liste, durchklickbar und im selben
-            Graustufen-System wie das Schwesterprojekt gebaut. Alle Interaktionen sind echt,
-            nicht vorgespielt: Jede Übernahme, Zuweisung, jeder Eintrag und jedes Abhaken ändert
-            denselben Datenbestand und schreibt die passende Systemzeile in den Chat dahinter.
+            Elf Schritte vom leeren Chat bis zur beendeten Liste. Alle Interaktionen sind echt:
+            Jede Übernahme, Zuweisung, jeder Eintrag und jedes Abhaken ändert denselben
+            Datenbestand und schreibt die Systemzeile in den Chat dahinter.
           </p>
 
           <div class="case-cta">
-            <p>Am besten selbst durchklicken — der ganze Flow ist spielbar.</p>
+            <p>Der ganze Flow ist spielbar.</p>
             <a href="prototypes/whatsapp-listen.html" target="_blank" rel="noopener" class="btn btn-primary">Prototyp öffnen <span class="btn-arrow">↗</span></a>
           </div>
         </section>
@@ -531,10 +523,10 @@
           <p class="tag">Nächster Schritt</p>
           <h2>Was ich als Nächstes prüfen würde</h2>
           <ul>
-            <li><strong>Chat-Audit:</strong> vier bis sechs abgeschlossene Koordinations-Threads auszählen — Nachrichten, Listen-Versionen, pflegende Personen, Doppelungen. Ein Nachmittag, liefert die Basiszahl, gegen die das Feature später gemessen wird.</li>
-            <li><strong>5–6 Discovery-Interviews:</strong> Bestätigt sich das Muster außerhalb der eigenen Chats? Ist der Aufwand ein empfundenes Problem, oder erlebt jemand das Hin und Her als geselligen Teil der Planung? Wer hat gepflegt, und wie hat sich das angefühlt?</li>
-            <li><strong>5 Usability-Tests am Prototyp:</strong> Wird die Listen-Leiste überhaupt gesehen? Fühlt sich Umverteilen erlaubt an? Wird das Sortier-Symbol im Kopf gefunden?</li>
-            <li><strong>Die Frage danach, ungefragt:</strong> „Hätte es dich genervt, in dieser Gruppe zu sein?" — Benachrichtigungstoleranz lässt sich nicht durchs Zusehen beim Tippen messen.</li>
+            <li><strong>Chat-Audit:</strong> vier bis sechs abgeschlossene Koordinations-Threads auszählen – Nachrichten, Listen-Versionen, pflegende Personen. Liefert die Basiszahl für alles Weitere.</li>
+            <li><strong>5–6 Discovery-Interviews:</strong> Bestätigt sich das Muster außerhalb der eigenen Chats? Ist der Aufwand ein echtes Problem oder geselliger Teil der Planung? Wer hat gepflegt, und wie fühlte sich das an?</li>
+            <li><strong>5 Usability-Tests am Prototyp:</strong> Wird die Listen-Leiste gesehen? Fühlt sich Umverteilen erlaubt an? Wird das Sortier-Symbol gefunden?</li>
+            <li><strong>Die Schlussfrage:</strong> „Hätte es dich genervt, in dieser Gruppe zu sein?" – Benachrichtigungstoleranz zeigt sich nicht beim Zusehen.</li>
           </ul>
         </section>
 
@@ -543,18 +535,17 @@
           <p class="tag">Ehrlich benannt</p>
           <h2>Wo das Konzept aufhört</h2>
           <ul>
-            <li>Kein Umsortieren von Hand — Ordnung entsteht über die Ansichten, nicht über Handarbeit.</li>
-            <li>Kein Schiedsrichter: WhatsApp ist Ende-zu-Ende-verschlüsselt, zwei Geräte müssen offline zum selben Ergebnis kommen. Die Oberfläche muss ehrlich sagen können „das hat gerade jemand anders genommen" — das wird passieren, nicht nur ein Randfall sein.</li>
-            <li>Höchstens eine zuständige Person pro Eintrag — keine Mengen pro Person, keine Unter-Einträge.</li>
-            <li>„Nur Admins dürfen ändern" existiert nur als Schutz für sehr große Gruppen, nicht als Standard.</li>
-            <li>Kein Hi-Fi-Visual-Design — bewusste Entscheidung zugunsten von Problem und Konzept, wie beim Schwesterprojekt.</li>
+            <li>Kein Umsortieren von Hand – Ordnung entsteht über die Ansichten.</li>
+            <li>Kein Schiedsrichter: WhatsApp ist Ende-zu-Ende-verschlüsselt, zwei Geräte müssen offline zum selben Ergebnis kommen. Die Oberfläche muss „das hat gerade jemand anders genommen" sagen können – das wird passieren.</li>
+            <li>Höchstens eine zuständige Person pro Eintrag – keine Mengen, keine Unter-Einträge.</li>
+            <li>„Nur Admins dürfen ändern" nur als Schutz für sehr große Gruppen, nicht als Standard.</li>
+            <li>Kein Hi-Fi-Design – bewusst zugunsten von Problem und Konzept.</li>
           </ul>
           <p>
             Das Schwesterprojekt <a href="whatsapp-temporaere-gruppen.html">WhatsApp: Temporäre
-            Gruppen</a> behandelt denselben Chat-Typ an einem anderen Punkt seines Lebens — was
-            passiert, nachdem der Anlass vorbei ist. Diese Case Study fragt, wie er brauchbar
-            wird, während geplant wird. Bewusst getrennt gehalten: zusammen wären es zwei halb
-            erzählte Konzepte statt zwei scharfen.
+            Gruppen</a> behandelt denselben Chat-Typ später: was passiert, wenn der Anlass
+            vorbei ist. Diese Case Study fragt, wie er währenddessen brauchbar wird. Bewusst
+            getrennt – zusammen wären es zwei halbe Konzepte statt zwei scharfer.
           </p>
         </section>
 
@@ -568,6 +559,7 @@
       <span>© 2026 Made with ♥ by Helena</span>
     </div>
   </footer>
+  </div>
 
   <script src="../assets/main.js"></script>
 </body>

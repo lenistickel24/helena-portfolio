@@ -1046,7 +1046,18 @@
   var MON = ["Jan","Feb","März","Apr","Mai","Juni","Juli","Aug","Sept","Okt","Nov","Dez"];
   /* im Kalenderkopf ausgeschrieben, wie bei WhatsApp */
   var MON_LANG = ["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
-  var TODAY = new Date("2026-08-30T00:00:00");
+  /* "Heute" kommt aus der echten Uhr — der Prototyp wird in Interviews an
+     wechselnden Tagen benutzt, ein fest eingetragenes Datum driftet weg.
+     (P1, 06.09.2026: der Kalender oeffnete sechs Wochen in der Zukunft.) */
+  var TODAY = (function(){ var d = new Date(); d.setHours(0,0,0,0); return d; })();
+  function isoOf(d){
+    return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+  }
+  var TODAY_ISO  = isoOf(TODAY);
+  var MONTH_MIN  = TODAY_ISO.slice(0,7);       // weiter zurueck laesst der Kalender nicht
+  /* Voreinstellung: in einer Woche — der haeufigste Fall (Ausflug, Feier am Wochenende).
+     Der Kalender oeffnet damit im richtigen Monat, ohne Zurueckblaettern. */
+  var DEFAULT_END = (function(){ var d = new Date(TODAY); d.setDate(d.getDate()+7); return isoOf(d); })();
   function fmt(iso){ var d=new Date(iso+"T00:00:00"); return d.getDate()+". "+MON[d.getMonth()]+" "+d.getFullYear(); }
   function fmtShort(iso){ var d=new Date(iso+"T00:00:00"); return d.getDate()+". "+MON[d.getMonth()]; }
   function daysLeft(iso){ var d=new Date(iso+"T00:00:00"); return Math.round((d-TODAY)/864e5); }
@@ -1059,9 +1070,9 @@
     selected:{},          // id -> true
     groupName:"",
     groupType:null,       // "perm" | "temp" — no default (concept: conscious choice)
-    endDate:"2026-10-14",
+    endDate:DEFAULT_END,
     endTime:"23:59",
-    calMonth:"2026-10",   // month shown in the date picker
+    calMonth:DEFAULT_END.slice(0,7),   // month shown in the date picker
     deleted:false,         // temp group has reached its end date and been deleted for everyone
     multi:false,           // variant: several temp groups end on the same day
     ginfoFrom:"group",     // woher die Gruppeninfo geoeffnet wurde (Chat oder Erinnerung)
@@ -1592,7 +1603,7 @@
     var y = +ym.slice(0,4), m = +ym.slice(5,7)-1;
     var startDow = (new Date(y,m,1).getDay()+6)%7;   // Montag zuerst
     var dim = new Date(y,m+1,0).getDate();
-    var todayIso = "2026-08-30";
+    var todayIso = TODAY_ISO;
     var cells = "";
     for(var i=0;i<startDow;i++) cells += '<span class="cal-cell empty"></span>';
     for(var d=1;d<=dim;d++){
@@ -1600,7 +1611,7 @@
       if(iso < todayIso){ cells += '<span class="cal-cell past">'+d+'</span>'; continue; }
       cells += '<button class="cal-cell'+(iso===state.endDate?' sel':'')+' tap-target" data-act="pick-date" data-date="'+iso+'">'+d+'</button>';
     }
-    var canPrev = ym > "2026-08";
+    var canPrev = ym > MONTH_MIN;
     var dows = ["Mo","Di","Mi","Do","Fr","Sa","So"].map(function(x){return '<span>'+x+'</span>';}).join("");
     return '<div class="dtf-panel">'+
       '<div class="cal-head">'+
@@ -1856,12 +1867,12 @@
         state.picker = (state.picker === mode) ? null : mode;   // nochmal tippen klappt zu
         if(state.picker === "date"){
           state.calMonth = state.endDate.slice(0,7);
-          if(state.calMonth < "2026-08") state.calMonth = "2026-08";
+          if(state.calMonth < MONTH_MIN) state.calMonth = MONTH_MIN;
         }
         render();
         break;
       case "cal-prev":
-        if(state.calMonth > "2026-08"){ state.calMonth = shiftMonth(state.calMonth,-1); render(); }
+        if(state.calMonth > MONTH_MIN){ state.calMonth = shiftMonth(state.calMonth,-1); render(); }
         break;
       case "cal-next": state.calMonth = shiftMonth(state.calMonth,1); render(); break;
       case "close-sheet":
@@ -1960,7 +1971,7 @@
   });
   document.getElementById("btn-reset").addEventListener("click", function(){
     state.selected = {}; state.groupName = ""; state.groupType = null;
-    state.endDate = "2026-10-14"; state.endTime = "23:59"; state.calMonth = "2026-10";
+    state.endDate = DEFAULT_END; state.endTime = "23:59"; state.calMonth = DEFAULT_END.slice(0,7);
     state.deleted = false; state.multi = false; state.ginfoFrom = "group";
     state.extendMode = null; state.ginfoSeen = false;
     state.remDismissed = false; state.delDismissed = false; state.chatHintDismissed = false;

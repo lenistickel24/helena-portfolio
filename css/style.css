@@ -527,6 +527,46 @@ section { padding: clamp(4rem, 9vw, 6.5rem) 0; position: relative; }
 .site-footer { padding: 1.5rem 0 2rem; color: var(--ink-faint); font-family: var(--font-body); font-size: 0.85rem; background: var(--paper); }
 .site-footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.8rem; }
 
+/* -------------------- Case study als Overlay --------------------
+   Heller Bogen (--case-max breit) auf schwarzem Grund, links/rechts sichtbar.
+   Kein Site-Header; nur ein fixiertes Schließen-X oben rechts. */
+
+body.case-overlay { background: #0d0d0d; padding-inline: clamp(0px, 2.5vw, 2rem); }
+.case-sheet {
+  --sheet-gap: clamp(1rem, 3.5vw, 3rem);
+  max-width: var(--sheet-max, 1120px);
+  margin: var(--sheet-gap) auto;
+  min-height: calc(100vh - 2 * var(--sheet-gap));
+  background: var(--paper);
+  border-radius: clamp(2rem, 4vw, 3rem);
+  overflow: hidden; /* schneidet die weißen Kind-Sektionen auf den Radius */
+}
+.case-close {
+  position: fixed;
+  top: clamp(0.85rem, 2vw, 1.5rem);
+  right: clamp(0.85rem, 2vw, 1.5rem);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--paper);
+  color: var(--ink);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.28);
+  text-decoration: none;
+  transition: transform var(--duration) var(--ease-out);
+}
+.case-close svg { width: 17px; height: 17px; }
+.case-close:hover { transform: rotate(90deg); }
+@media (prefers-reduced-motion: reduce) {
+  .case-close:hover { transform: none; }
+}
+/* Hero rutscht ohne Header nach unten, damit die Headline das X nicht berührt */
+.case-overlay .case-hero { padding-top: clamp(4rem, 9vw, 6rem); }
+
 /* -------------------- Case study stub pages -------------------- */
 
 .case-hero { padding: clamp(1.5rem, 4vw, 2.5rem) 0 clamp(2.5rem, 6vw, 4rem); background: var(--paper); }
@@ -630,13 +670,13 @@ section { padding: clamp(4rem, 9vw, 6.5rem) 0; position: relative; }
   .case-meta { grid-template-columns: 1fr; }
 }
 
-/* content body — die grauen Blöcke laufen voll breit, der Textinhalt darin
-   sitzt zentriert in einer 700px-Spalte (--measure); Bilder/Bänder brechen
-   aus und füllen den ganzen Block. */
+/* content body — die grauen Blöcke sind auf --case-max begrenzt und zentriert;
+   der Textinhalt darin sitzt in einer 700px-Spalte (--measure), Bilder/Bänder
+   brechen aus und füllen den ganzen Block. */
 .case-body { padding: clamp(2.5rem, 6vw, 4rem) 0; background: var(--paper); }
-.case-body .wrap { max-width: 100%; }
+.case-body .wrap { max-width: var(--case-max); }
 
-:root { --measure: 700px; }
+:root { --measure: 700px; --case-max: 1000px; }
 
 .case-section {
   background: var(--paper-alt);
@@ -864,3 +904,155 @@ section { padding: clamp(4rem, 9vw, 6.5rem) 0; position: relative; }
 .decision .why::before,
 .case-status .status-dot { color: var(--ink-faint); }
 
+
+/* =========================================================
+   Akzentfarbe pro Case Study (06.09.2026)
+   Greift ausschließlich, wenn <body> eine accent-*-Klasse trägt.
+   Startseite und "Über mich" bleiben damit unberührt schwarz-weiß.
+   Steht bewusst NACH dem TEMPORÄR-Block, um dessen Entfärbung
+   gezielt für Case Studies wieder aufzuheben.
+   Farbwerte: Fitness-First-Rot aus den eigenen App-Screenshots
+   ausgelesen (#D6012B), WhatsApp-Grün in der dunkleren
+   Teal-Variante, weil das helle #25D366 auf Weiß zu wenig
+   Textkontrast hat.
+   ========================================================= */
+
+body[class*="accent-"] {
+  --accent: #111111;
+  --accent-ink: #111111;
+  --accent-soft: rgba(0, 0, 0, 0.05);
+}
+body[class*="accent-"] { --accent-bright: var(--accent); }
+body.accent-ff {
+  --accent: #D6012B;        /* aus den eigenen App-Screenshots ausgelesen */
+  --accent-ink: #B00023;    /* Textvariante, ausreichender Kontrast auf Weiss */
+  --accent-bright: #D6012B;
+  --accent-soft: #FCEAEE;
+}
+body.accent-wa {
+  --accent: #128C7E;        /* WhatsApp-Teal, traegt weissen Text und Raender */
+  --accent-ink: #0A6B60;    /* Textvariante */
+  --accent-bright: #25D366; /* das helle Markengruen, nur fuer Flaechen ohne Text */
+  --accent-soft: #E6F5F1;
+}
+
+body[class*="accent-"] .case-hero .tag,
+body[class*="accent-"] .case-section > .tag { color: var(--accent-ink); }
+
+body[class*="accent-"] .stat-num {
+  color: var(--accent);
+  -webkit-text-fill-color: var(--accent);
+}
+
+body[class*="accent-"] .case-callout {
+  border-left: 3px solid var(--accent);
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+body[class*="accent-"] .status-dot { background: var(--accent); }
+
+body[class*="accent-"] .case-placeholder .ph-tag {
+  color: var(--accent-ink);
+  -webkit-text-fill-color: var(--accent-ink);
+}
+
+body[class*="accent-"] .back-link:hover,
+body[class*="accent-"] .case-section a:hover { color: var(--accent-ink); }
+
+/* Inline-SVGs in Case Studies erben --accent und --accent-ink,
+   siehe die scoped <style>-Blöcke in den Diagrammen. */
+
+
+/* =========================================================
+   Eigener Mauszeiger — Kreis, der wie eine Lupe wirkt
+   ---------------------------------------------------------
+   Ein weißer Kreis folgt der Maus mit leichter Verzögerung.
+   mix-blend-mode: exclusion invertiert den Untergrund darunter,
+   dadurch der „Linsen"-Effekt (dunkel auf Weiß, hell auf Schwarz).
+   Wird per JS (assets/main.js) nur auf Geräten mit feinem Zeiger
+   und ohne "reduced motion" aktiviert; dann trägt <html> die
+   Klasse .has-cursor und der native Zeiger wird ausgeblendet.
+   ========================================================= */
+
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  border-radius: 50%;
+  background: #ffffff;
+  mix-blend-mode: exclusion;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate3d(-100px, -100px, 0) translate(-50%, -50%);
+  transition: width 0.18s var(--ease-out), height 0.18s var(--ease-out),
+    opacity 0.2s ease;
+  will-change: transform;
+}
+.cursor.is-visible { opacity: 1; }
+/* etwas größer über Links/Buttons (dezenter als der erste Entwurf) */
+.cursor.is-hover { width: 40px; height: 40px; }
+/* winziges Zusammenziehen beim Klick als haptisches Feedback */
+.cursor.is-down { width: 15px; height: 15px; }
+
+/* nativen Zeiger ausblenden, sobald der eigene Cursor läuft */
+.has-cursor,
+.has-cursor a,
+.has-cursor button,
+.has-cursor label,
+.has-cursor summary,
+.has-cursor input,
+.has-cursor textarea,
+.has-cursor select,
+.has-cursor [role="button"],
+.has-cursor .project-card {
+  cursor: none;
+}
+
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .cursor { display: none; }
+}
+
+
+/* =========================================================
+   Kreis-Motiv (opt-in über <body class="motif-circle">)
+   ---------------------------------------------------------
+   Der Kreis als wiederkehrendes Zeichen: Ring-Bullets in
+   Listen, ein großer blasser Ring als „Linse" am Zitat-Callout.
+   Nutzt --accent der jeweiligen Case Study. Eine Strichstärke.
+   ========================================================= */
+
+/* 1) Ring-Bullets statt Standard-Punkte.
+   Nur bei klassenlosen <ul> — Sonderlisten wie .ia-legend
+   (Farbschlüssel) und <ol> behalten ihre Darstellung. */
+body.motif-circle .case-section ul:not([class]) { list-style: none; padding-left: 0; }
+body.motif-circle .case-section ul:not([class]) > li { position: relative; padding-left: 1.6rem; }
+body.motif-circle .case-section ul:not([class]) > li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.66em;
+  width: 8px;
+  height: 8px;
+  border: 1.5px solid var(--accent, currentColor);
+  border-radius: 50%;
+}
+
+/* 2) Großer, blasser Ring als Deko am Zitat-Callout */
+body.motif-circle .case-callout { position: relative; overflow: hidden; }
+body.motif-circle .case-callout::after {
+  content: "";
+  position: absolute;
+  right: clamp(-70px, -6vw, -40px);
+  top: clamp(-70px, -6vw, -40px);
+  width: clamp(120px, 22vw, 180px);
+  height: clamp(120px, 22vw, 180px);
+  border: 1.5px solid var(--accent, currentColor);
+  border-radius: 50%;
+  opacity: 0.2;
+  pointer-events: none;
+}
