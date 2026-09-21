@@ -1,0 +1,884 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Kurze Studie zu WhatsApp-Gruppen — ca. 10 Minuten, kein Login.">
+  <meta property="og:title" content="Gruppen, die nie enden">
+  <meta property="og:description" content="Kurze Studie zu WhatsApp-Gruppen — ca. 10 Minuten, kein Login.">
+  <meta property="og:type" content="website">
+  <title>Gruppen die nie enden</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+  <style>
+    /* entspricht dem Grundgerüst, das die Artifact-Umgebung sonst mitliefert */
+    :root{
+      color-scheme: light dark;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+    body{ margin:0; }
+    img{ max-width:100%; }
+    [hidden]{ display:none !important; }
+  </style>
+</head>
+<body>
+<style>
+  :root{
+    --bg:#F5F4F0;
+    --surface:#FFFFFF;
+    --ink:#1E1D1A;
+    --muted:#6E6C64;
+    --line:#E2E0D9;
+    --line-strong:#CFCCC2;
+    --accent:#3B5A4B;
+    --accent-ink:#FFFFFF;
+    --accent-soft:#E7EEE9;
+    --warn-soft:#F6EEE2;
+    --warn-line:#DCC8A8;
+    --radius:12px;
+    --serif:"Newsreader", Georgia, "Times New Roman", serif;
+    --sans:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#15161A;
+      --surface:#1D1F24;
+      --ink:#ECEAE4;
+      --muted:#9B998F;
+      --line:#2C2F35;
+      --line-strong:#3D414A;
+      --accent:#86AD98;
+      --accent-ink:#11201A;
+      --accent-soft:#222E28;
+      --warn-soft:#2A2519;
+      --warn-line:#4D422C;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#15161A;
+    --surface:#1D1F24;
+    --ink:#ECEAE4;
+    --muted:#9B998F;
+    --line:#2C2F35;
+    --line-strong:#3D414A;
+    --accent:#86AD98;
+    --accent-ink:#11201A;
+    --accent-soft:#222E28;
+    --warn-soft:#2A2519;
+    --warn-line:#4D422C;
+  }
+
+  *{ box-sizing:border-box; }
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:16px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .bar{
+    position:sticky;
+    top:env(safe-area-inset-top, 0px);
+    z-index:10;
+    background:var(--bg);
+    border-bottom:1px solid var(--line);
+  }
+  .bar-in{
+    max-width:600px;
+    margin:0 auto;
+    padding:10px 20px 11px;
+    display:flex;
+    align-items:center;
+    gap:14px;
+  }
+  .bar-label{
+    font-size:11.5px;
+    letter-spacing:.09em;
+    text-transform:uppercase;
+    color:var(--muted);
+    white-space:nowrap;
+    font-variant-numeric:tabular-nums;
+  }
+  .track{
+    flex:1;
+    height:3px;
+    background:var(--line-strong);
+    border-radius:2px;
+    overflow:hidden;
+  }
+  .fill{
+    height:100%;
+    width:0%;
+    background:var(--accent);
+    border-radius:2px;
+    transition:width .35s ease;
+  }
+  @media (prefers-reduced-motion: reduce){ .fill{ transition:none; } }
+
+  .wrap{
+    max-width:600px;
+    margin:0 auto;
+    padding-inline:20px;
+    padding-block:30px 64px;
+  }
+
+  .eyebrow{
+    font-size:11.5px;
+    letter-spacing:.11em;
+    text-transform:uppercase;
+    color:var(--accent);
+    font-weight:600;
+    margin:0 0 10px;
+  }
+  h1{
+    font-family:var(--serif);
+    font-weight:400;
+    font-size:33px;
+    line-height:1.18;
+    letter-spacing:-.012em;
+    margin:0 0 14px;
+    text-wrap:balance;
+  }
+  h2{
+    font-family:var(--serif);
+    font-weight:400;
+    font-size:25px;
+    line-height:1.25;
+    margin:0 0 8px;
+    text-wrap:balance;
+  }
+  .lede{
+    color:var(--muted);
+    font-size:15.5px;
+    margin:0 0 22px;
+    max-width:52ch;
+  }
+  .lede strong{ color:var(--ink); font-weight:500; }
+
+  .meta{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin:0 0 26px;
+  }
+  .chip{
+    font-size:12.5px;
+    color:var(--muted);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:5px 12px;
+  }
+
+  .q{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:18px 18px 20px;
+    margin-bottom:14px;
+  }
+  .q-label{
+    font-family:var(--serif);
+    font-size:19px;
+    line-height:1.35;
+    margin:0 0 4px;
+    text-wrap:pretty;
+  }
+  .q-help{
+    font-size:13.5px;
+    color:var(--muted);
+    margin:0 0 13px;
+  }
+  .q-label + .ctrl, .q-label + .opts{ margin-top:13px; }
+
+  input[type="text"], input[type="number"], textarea{
+    width:100%;
+    font:inherit;
+    font-size:16px;
+    color:var(--ink);
+    background:var(--bg);
+    border:1px solid var(--line-strong);
+    border-radius:9px;
+    padding:11px 12px;
+    resize:vertical;
+  }
+  input[type="number"]{
+    font-variant-numeric:tabular-nums;
+    max-width:150px;
+  }
+  textarea{ min-height:88px; line-height:1.5; }
+  input:focus-visible, textarea:focus-visible, button:focus-visible, a:focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:2px;
+  }
+  ::placeholder{ color:var(--muted); opacity:.7; }
+
+  .opts{ display:flex; flex-direction:column; gap:8px; }
+  .opt{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    border:1px solid var(--line-strong);
+    border-radius:9px;
+    padding:11px 13px;
+    cursor:pointer;
+    background:var(--bg);
+  }
+  .opt:hover{ border-color:var(--accent); }
+  .opt input{ margin:3px 0 0; accent-color:var(--accent); flex:none; }
+  .opt span{ font-size:15px; line-height:1.4; }
+  .opt.sel{ border-color:var(--accent); background:var(--accent-soft); }
+
+  .task{
+    background:var(--accent-soft);
+    border:1px solid var(--accent);
+    border-radius:var(--radius);
+    padding:16px 18px;
+    margin-bottom:14px;
+  }
+  .task-k{
+    font-size:11.5px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    font-weight:600;
+    color:var(--accent);
+    margin:0 0 7px;
+  }
+  .task p{ margin:0 0 8px; font-size:15.5px; }
+  .task p:last-child{ margin-bottom:0; }
+  .task ol{ margin:8px 0 0; padding-left:20px; font-size:15.5px; }
+  .task li{ margin-bottom:5px; }
+
+  .note{
+    background:var(--warn-soft);
+    border:1px solid var(--warn-line);
+    border-radius:var(--radius);
+    padding:14px 16px;
+    font-size:14px;
+    margin-bottom:14px;
+  }
+  .note p{ margin:0; }
+
+  .btn{
+    font:inherit;
+    font-weight:600;
+    font-size:15.5px;
+    border-radius:10px;
+    padding:13px 22px;
+    border:1px solid transparent;
+    cursor:pointer;
+    background:var(--accent);
+    color:var(--accent-ink);
+  }
+  .btn:hover{ filter:brightness(1.08); }
+  .btn.ghost{
+    background:transparent;
+    color:var(--muted);
+    border-color:var(--line-strong);
+  }
+  .btn.ghost:hover{ color:var(--ink); border-color:var(--ink); filter:none; }
+  .btn-row{
+    display:flex;
+    gap:10px;
+    align-items:center;
+    margin-top:22px;
+    flex-wrap:wrap;
+  }
+  .btn-row .spacer{ flex:1; }
+
+  .proto-link{
+    display:inline-block;
+    font-weight:600;
+    font-size:15.5px;
+    text-decoration:none;
+    background:var(--ink);
+    color:var(--bg);
+    border-radius:10px;
+    padding:13px 20px;
+    margin-top:4px;
+  }
+  .proto-link:hover{ filter:brightness(1.2); }
+
+  .done-box{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:18px;
+  }
+  #out{
+    width:100%;
+    min-height:260px;
+    font-family:ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size:13px;
+    line-height:1.5;
+  }
+  .copied{
+    color:var(--accent);
+    font-size:14px;
+    font-weight:600;
+    margin-left:4px;
+  }
+
+  .foot{
+    margin-top:34px;
+    padding-top:18px;
+    border-top:1px solid var(--line);
+    font-size:13px;
+    color:var(--muted);
+  }
+  .foot p{ margin:0 0 6px; }
+
+  @media (max-width:420px){
+    h1{ font-size:28px; }
+    h2{ font-size:22px; }
+    .wrap{ padding-block:24px 52px; }
+    .btn{ width:100%; }
+    .btn-row .spacer{ display:none; }
+  }
+</style>
+
+<div class="bar" id="bar" hidden>
+  <div class="bar-in">
+    <span class="bar-label" id="stepLabel">Schritt 1 / 9</span>
+    <span class="track"><span class="fill" id="fill"></span></span>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- 0 — Intro -->
+  <section class="step" data-step="0">
+    <p class="eyebrow">WhatsApp · Konzeptstudie</p>
+    <h1>Gruppen, die nie enden</h1>
+    <p class="lede">
+      Ich entwickle ein Feature-Konzept für WhatsApp und brauche dafür ein paar echte Einschätzungen —
+      deine. <strong>Es gibt kein Richtig oder Falsch</strong>, und je ehrlicher, desto nützlicher.
+      Kritik hilft mir mehr als Zustimmung.
+    </p>
+    <div class="meta">
+      <span class="chip">ca. 10 Minuten</span>
+      <span class="chip">Handy reicht</span>
+      <span class="chip">kein Login</span>
+    </div>
+
+    <div class="task">
+      <p class="task-k">Was du brauchst</p>
+      <p>WhatsApp auf dem Handy — für ein paar Fragen schaust du kurz in deine eigene Gruppenliste.</p>
+      <p>Am Ende bekommst du einen fertigen Text, den du mir einfach zurückschickst.</p>
+    </div>
+
+    <div class="note">
+      <p><strong>Zu deinen Daten:</strong> Hier wird nichts gespeichert und nichts verschickt.
+      Alles bleibt auf deinem Gerät, bis du den Text am Schluss selbst kopierst und mir sendest.
+      Gruppennamen brauche ich nicht — beschreib die Gruppen einfach allgemein („eine Geburtstagsgruppe").</p>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn" data-go="1">Los geht's</button>
+    </div>
+  </section>
+
+  <!-- 1 — Schätzung -->
+  <section class="step" data-step="1" hidden>
+    <h2>Erst schätzen</h2>
+    <p class="lede">Bitte noch nicht nachschauen — die Schätzung ist für mich genauso interessant wie die echte Zahl.</p>
+
+    <div class="q">
+      <p class="q-label">In wie vielen WhatsApp-Gruppen bist du ungefähr?</p>
+      <p class="q-help">Grob aus dem Bauch. Eine Zahl reicht.</p>
+      <div class="ctrl"><input type="number" id="f_schaetzung" inputmode="numeric" min="0" placeholder="z. B. 25"></div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn" data-go="2">Weiter</button>
+    </div>
+  </section>
+
+  <!-- 2 — Nachzählen -->
+  <section class="step" data-step="2" hidden>
+    <h2>Jetzt nachzählen</h2>
+
+    <div class="task">
+      <p class="task-k">So findest du die Liste</p>
+      <ol>
+        <li>WhatsApp öffnen, Reiter <strong>Chats</strong></li>
+        <li>Oben den Filter <strong>„Gruppen"</strong> antippen</li>
+        <li>Langsam bis ganz nach unten scrollen — bis <strong>„Gruppen verwalten"</strong> erscheint</li>
+      </ol>
+    </div>
+
+    <div class="q">
+      <p class="q-label">Wie viele Gruppen sind es tatsächlich?</p>
+      <div class="ctrl"><input type="number" id="f_tatsaechlich" inputmode="numeric" min="0" placeholder="Anzahl"></div>
+    </div>
+
+    <div class="q">
+      <p class="q-label">In wie vielen davon gab es in den letzten drei Monaten eine Nachricht?</p>
+      <p class="q-help">Das Datum steht rechts neben jeder Gruppe.</p>
+      <div class="ctrl"><input type="number" id="f_aktiv" inputmode="numeric" min="0" placeholder="Anzahl"></div>
+    </div>
+
+    <div class="q">
+      <p class="q-label">Von wann ist die älteste Gruppe ganz unten in der Liste?</p>
+      <div class="ctrl"><input type="text" id="f_aelteste" placeholder="z. B. März 2017"></div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn ghost" data-go="1">Zurück</button>
+      <span class="spacer"></span>
+      <button class="btn" data-go="3">Weiter</button>
+    </div>
+  </section>
+
+  <!-- 3 — Eine erledigte Gruppe -->
+  <section class="step" data-step="3" hidden>
+    <h2>Eine erledigte Gruppe</h2>
+
+    <div class="task">
+      <p class="task-k">Kurz aufmachen</p>
+      <p>Such dir eine Gruppe, die für dich <strong>klar erledigt</strong> ist — da passiert nichts mehr.
+      Mach sie auf und scroll einmal durch.</p>
+    </div>
+
+    <div class="q">
+      <p class="q-label">Wofür war die Gruppe da?</p>
+      <p class="q-help">Ohne Namen — „eine Geburtstagsfeier", „ein Urlaub" reicht völlig.</p>
+      <div class="ctrl"><textarea id="f_gruppe_zweck" placeholder="…"></textarea></div>
+    </div>
+
+    <div class="q">
+      <p class="q-label">Ist da etwas drin, das du in einem Jahr noch brauchst?</p>
+      <div class="opts" data-name="f_braucht">
+        <label class="opt"><input type="radio" name="f_braucht" value="Nein"><span>Nein</span></label>
+        <label class="opt"><input type="radio" name="f_braucht" value="Ja"><span>Ja</span></label>
+      </div>
+      <div class="ctrl" style="margin-top:10px"><input type="text" id="f_braucht_was" placeholder="Falls ja: was genau?"></div>
+    </div>
+
+    <div class="q">
+      <p class="q-label">Stell dir vor, diese Gruppe wäre morgen weg — komplett, mit allen Nachrichten und Bildern. Was wäre das für dich?</p>
+      <div class="ctrl"><textarea id="f_weg" placeholder="…"></textarea></div>
+    </div>
+
+    <div class="q">
+      <p class="q-label">Hast du eingestellt, dass Fotos aus Chats automatisch in deiner Galerie landen?</p>
+      <div class="opts" data-name="f_fotos_auto">
+        <label class="opt"><input type="radio" name="f_fotos_auto" value="Ja, automatisch"><span>Ja, die landen automatisch drin</span></label>
+        <label class="opt"><input type="radio" name="f_fotos_auto" value="Nein, manuell"><span>Nein, ich lade sie einzeln runter</span></label>
+        <label class="opt"><input type="radio" name="f_fotos_auto" value="weiß ich nicht"><span>Weiß ich gar nicht</span></label>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn ghost" data-go="2">Zurück</button>
+      <span class="spacer"></span>
+      <button class="btn" data-go="4">Weiter</button>
+    </div>
+  </section>
+
+  <!-- 4 — Szenario A (gesperrt) -->
+  <section class="step" data-step="4" hidden>
+    <h2>Eine Vorstellung</h2>
+
+    <div class="q">
+      <p class="q-label">Stell dir vor, WhatsApp würde alte Gruppen nach einer Weile von selbst löschen. Was ist deine erste Reaktion?</p>
+      <p class="q-help">Einfach was dir zuerst durch den Kopf geht.</p>
+      <div class="ctrl"><textarea id="f_szenario_a" placeholder="…"></textarea></div>
+    </div>
+
+    <div class="note">
+      <p>Gleich kommt eine zweite Variante davon. Antworte bitte erst hier —
+      <strong>danach kommst du zu dieser Frage nicht mehr zurück.</strong>
+      Das ist Absicht: Sonst weiß ich nicht mehr, was du <em>vorher</em> gedacht hast.</p>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn ghost" data-go="3">Zurück</button>
+      <span class="spacer"></span>
+      <button class="btn" data-go="5" id="lockBtn">Antwort abgeben</button>
+    </div>
+  </section>
+
+  <!-- 5 — Szenario B -->
+  <section class="step" data-step="5" hidden>
+    <h2>Und jetzt anders</h2>
+    <p class="lede">
+      Stell dir vor, jemand legt eine Gruppe an und dabei steht von Anfang an:
+      <strong>„Diese Gruppe endet am Sonntag."</strong> Alle in der Gruppe sehen das,
+      die ganze Zeit — und alle werden einen Tag vorher noch mal erinnert.
+    </p>
+
+    <div class="q">
+      <p class="q-label">Wie fühlt sich das an?</p>
+      <div class="ctrl"><textarea id="f_szenario_b" placeholder="…"></textarea></div>
+    </div>
+
+    <div class="q">
+      <p class="q-label">Was ist für dich der Unterschied zwischen den beiden Varianten?</p>
+      <div class="ctrl"><textarea id="f_unterschied" placeholder="…"></textarea></div>
+    </div>
+
+    <div class="q">
+      <p class="q-label">Für welche Art von Gruppe würdest du so ein Enddatum <em>nie</em> wollen?</p>
+      <div class="ctrl"><textarea id="f_niemals" placeholder="…"></textarea></div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn" data-go="6">Weiter zum Prototyp</button>
+    </div>
+  </section>
+
+  <!-- 6 — Prototyp: anlegen -->
+  <section class="step" data-step="6" hidden>
+    <h2>Jetzt ausprobieren</h2>
+    <p class="lede">
+      Das hier ist ein Klick-Prototyp. Er ist absichtlich grau und nicht schön —
+      es geht nur um die Abläufe, nicht ums Aussehen. Manches ist auch nicht klickbar.
+    </p>
+
+    <div class="task">
+      <p class="task-k">Aufgabe 1</p>
+      <p><strong>Leg eine Gruppe für einen Ausflug nächstes Wochenende an.</strong></p>
+      <p style="color:var(--muted);font-size:14px">Öffne den Prototyp am besten in einem zweiten Tab, dann kannst du hin- und herwechseln.</p>
+      <a class="proto-link" id="protoLink" href="https://preview.helena-stickelbroeck.de/case-studies/prototypes/whatsapp-temporaere-gruppen.html?test" target="_blank" rel="noopener">Prototyp öffnen →</a>
+    </div>
+
+    <div class="q">
+      <p class="q-label">Beim Anlegen steht „Endet am …". Was heißt das für dich — was passiert an dem Tag?</p>
+      <p class="q-help">In deinen eigenen Worten.</p>
+      <div class="ctrl"><textarea id="f_wording" placeholder="…"></textarea></div>
+    </div>
+
+    <div class="q">
+      <p class="q-label">Ist dir beim Anlegen irgendwas komisch vorgekommen, oder hast du irgendwo gestockt?</p>
+      <p class="q-help">Auch Kleinigkeiten. Wenn nicht: einfach „nein".</p>
+      <div class="ctrl"><textarea id="f_anlegen_stolper" placeholder="…"></textarea></div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn ghost" data-go="5">Zurück</button>
+      <span class="spacer"></span>
+      <button class="btn" data-go="7">Weiter</button>
+    </div>
+  </section>
+
+  <!-- 7 — Prototyp: verlängern -->
+  <section class="step" data-step="7" hidden>
+    <h2>Der Ausflug wird verschoben</h2>
+
+    <div class="task">
+      <p class="task-k">Aufgabe 2</p>
+      <p><strong>Sorg dafür, dass die Gruppe länger bleibt.</strong></p>
+      <p style="color:var(--muted);font-size:14px">Such einfach los — genau darum geht es.</p>
+    </div>
+
+    <div class="q">
+      <p class="q-label">Hast du den Weg gefunden?</p>
+      <div class="opts" data-name="f_verlaengern">
+        <label class="opt"><input type="radio" name="f_verlaengern" value="sofort"><span>Ja, sofort</span></label>
+        <label class="opt"><input type="radio" name="f_verlaengern" value="nach Suchen"><span>Ja, nach kurzem Suchen</span></label>
+        <label class="opt"><input type="radio" name="f_verlaengern" value="nicht gefunden"><span>Nein, nicht gefunden</span></label>
+      </div>
+      <div class="ctrl" style="margin-top:10px"><input type="text" id="f_verlaengern_wo" placeholder="Wo hast du zuerst gesucht?"></div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn ghost" data-go="6">Zurück</button>
+      <span class="spacer"></span>
+      <button class="btn" data-go="8">Weiter</button>
+    </div>
+  </section>
+
+  <!-- 8 — Prototyp: Ende -->
+  <section class="step" data-step="8" hidden>
+    <h2>Der letzte Tag</h2>
+
+    <div class="task">
+      <p class="task-k">Aufgabe 3</p>
+      <p>Im Prototyp gibt es unten eine Leiste. Klick dich dort weiter zu:</p>
+      <ol>
+        <li><strong>„Ein Tag vor dem Stichtag"</strong> — so sieht die Erinnerung aus</li>
+        <li><strong>„Niemand verlängert die Gruppe"</strong> — so sieht es danach aus</li>
+      </ol>
+    </div>
+
+    <div class="q">
+      <p class="q-label">Du bekommst diese Erinnerung. Was würdest du tun?</p>
+      <div class="ctrl"><textarea id="f_erinnerung" placeholder="…"></textarea></div>
+    </div>
+
+    <div class="q">
+      <p class="q-label">Was passiert deiner Meinung nach mit den Fotos aus der Gruppe?</p>
+      <div class="ctrl"><textarea id="f_fotos_frage" placeholder="…"></textarea></div>
+    </div>
+
+    <div class="q">
+      <p class="q-label">Nachdem die Gruppe gelöscht ist, steht in der Chatliste noch eine Zeile: „Die Gruppe … wurde automatisch gelöscht." Brauchst du die?</p>
+      <div class="opts" data-name="f_quittung">
+        <label class="opt"><input type="radio" name="f_quittung" value="ja, gut zu wissen"><span>Ja, gut zu wissen</span></label>
+        <label class="opt"><input type="radio" name="f_quittung" value="überflüssig"><span>Nein, überflüssig — ich wusste es ja vorher</span></label>
+        <label class="opt"><input type="radio" name="f_quittung" value="würde eher stören"><span>Nein, das würde mich eher stören</span></label>
+      </div>
+    </div>
+
+    <div class="q">
+      <p class="q-label">Stell dir vor, du bist in der Gruppe nur Mitglied, nicht Admin — und sie endet morgen. Was wäre dir lieber?</p>
+      <p class="q-help">Verlängern darf nur, wer die Gruppe angelegt hat.</p>
+      <div class="opts" data-name="f_admin">
+        <label class="opt"><input type="radio" name="f_admin" value="anfragen können"><span>Ich möchte beim Admin anfragen können, dass verlängert wird</span></label>
+        <label class="opt"><input type="radio" name="f_admin" value="keine Diskussion"><span>Mir wäre lieber, es ist für alle klar — dann gibt es keine Diskussion</span></label>
+        <label class="opt"><input type="radio" name="f_admin" value="unentschieden"><span>Weiß ich nicht</span></label>
+      </div>
+      <div class="ctrl" style="margin-top:10px"><input type="text" id="f_admin_warum" placeholder="Warum?"></div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn ghost" data-go="7">Zurück</button>
+      <span class="spacer"></span>
+      <button class="btn" data-go="9">Weiter</button>
+    </div>
+  </section>
+
+  <!-- 9 — Abschluss -->
+  <section class="step" data-step="9" hidden>
+    <h2>Fast geschafft</h2>
+
+    <div class="q">
+      <p class="q-label">Was war die Stelle, an der du am meisten überlegen musstest?</p>
+      <div class="ctrl"><textarea id="f_ueberlegt" placeholder="…"></textarea></div>
+    </div>
+
+    <div class="q">
+      <p class="q-label">Wenn du eine Sache ändern dürftest — welche wäre das?</p>
+      <div class="ctrl"><textarea id="f_aendern" placeholder="…"></textarea></div>
+    </div>
+
+    <div class="q">
+      <p class="q-label">Gibt es etwas, das ich dich hätte fragen sollen und nicht gefragt habe?</p>
+      <p class="q-help">Optional.</p>
+      <div class="ctrl"><textarea id="f_vergessen" placeholder="…"></textarea></div>
+    </div>
+
+    <div class="q">
+      <p class="q-label">Dein Vorname</p>
+      <p class="q-help">Damit ich die Antworten zuordnen kann.</p>
+      <div class="ctrl"><input type="text" id="f_name" placeholder="Vorname"></div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn ghost" data-go="8">Zurück</button>
+      <span class="spacer"></span>
+      <button class="btn" data-go="10">Antworten zusammenstellen</button>
+    </div>
+  </section>
+
+  <!-- 10 — Ergebnis -->
+  <section class="step" data-step="10" hidden>
+    <h2>Danke — das war's</h2>
+    <p class="lede">
+      Unten stehen deine Antworten als fertiger Text.
+      <strong>Kopier ihn und schick ihn mir per WhatsApp.</strong> Das war der ganze Aufwand.
+    </p>
+
+    <div class="done-box">
+      <div class="btn-row" style="margin-top:0;margin-bottom:14px">
+        <button class="btn" id="copyBtn">Text kopieren</button>
+        <span class="copied" id="copiedMsg" hidden>Kopiert ✓</span>
+      </div>
+      <textarea id="out" readonly aria-label="Deine Antworten"></textarea>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn ghost" data-go="9">Noch mal zurück</button>
+    </div>
+
+    <div class="foot">
+      <p>Falls das Kopieren nicht klappt: Text antippen, alles markieren, kopieren.</p>
+      <p>Vielen Dank fürs Mitmachen — das hilft mir wirklich weiter.</p>
+    </div>
+  </section>
+
+</div>
+
+<script>
+(function(){
+  var TOTAL = 9;              // Schritte mit Fragen (1–9), 0 = Intro, 10 = Ergebnis
+  var LOCK_FROM = 4;          // ab hier kein Zurück mehr auf Szenario A
+  var locked = false;
+  var current = 0;
+  var KEY = "tg-umfrage-v1";
+
+  var steps = {};
+  Array.prototype.forEach.call(document.querySelectorAll(".step"), function(el){
+    steps[el.getAttribute("data-step")] = el;
+  });
+
+  var bar = document.getElementById("bar");
+  var fill = document.getElementById("fill");
+  var stepLabel = document.getElementById("stepLabel");
+
+  /* ---------- Felder ---------- */
+  var FIELDS = [
+    ["f_schaetzung",       "Geschätzte Gruppenzahl"],
+    ["f_tatsaechlich",     "Tatsächlich gezählt"],
+    ["f_aktiv",            "Davon aktiv (letzte 3 Monate)"],
+    ["f_aelteste",         "Älteste Gruppe von"],
+    ["f_gruppe_zweck",     "Die erledigte Gruppe war für"],
+    ["f_braucht",          "Etwas drin, das in 1 Jahr noch gebraucht wird?", "radio"],
+    ["f_braucht_was",      "Und zwar"],
+    ["f_weg",              "Wenn die Gruppe morgen weg wäre"],
+    ["f_fotos_auto",       "Fotos landen automatisch in der Galerie?", "radio"],
+    ["f_szenario_a",       "SZENARIO A — WhatsApp löscht alte Gruppen von selbst"],
+    ["f_szenario_b",       "SZENARIO B — Enddatum von Anfang an vereinbart"],
+    ["f_unterschied",      "Der Unterschied zwischen beiden"],
+    ["f_niemals",          "Enddatum niemals für"],
+    ["f_wording",          "PROTOTYP — „Endet am …“ heißt für mich"],
+    ["f_anlegen_stolper",  "Beim Anlegen gestockt bei"],
+    ["f_verlaengern",      "Weg zum Verlängern gefunden?", "radio"],
+    ["f_verlaengern_wo",   "Zuerst gesucht bei"],
+    ["f_erinnerung",       "Bei der Erinnerung würde ich"],
+    ["f_fotos_frage",      "Mit den Fotos passiert vermutlich"],
+    ["f_quittung",         "Hinweis nach der Löschung", "radio"],
+    ["f_admin",            "Als Mitglied ohne Admin-Rechte lieber", "radio"],
+    ["f_admin_warum",      "Warum"],
+    ["f_ueberlegt",        "Am meisten überlegt bei"],
+    ["f_aendern",          "Würde eine Sache ändern"],
+    ["f_vergessen",        "Hätte mich fragen sollen"],
+    ["f_name",             "Name"]
+  ];
+
+  function getVal(id, kind){
+    if(kind === "radio"){
+      var r = document.querySelector('input[name="' + id + '"]:checked');
+      return r ? r.value : "";
+    }
+    var el = document.getElementById(id);
+    return el ? el.value.trim() : "";
+  }
+  function setVal(id, kind, val){
+    if(!val) return;
+    if(kind === "radio"){
+      var r = document.querySelector('input[name="' + id + '"][value="' + val.replace(/"/g,'\\"') + '"]');
+      if(r){ r.checked = true; markSel(r); }
+      return;
+    }
+    var el = document.getElementById(id);
+    if(el) el.value = val;
+  }
+
+  /* ---------- Radio-Optik ---------- */
+  function markSel(input){
+    var group = input.closest(".opts");
+    if(!group) return;
+    Array.prototype.forEach.call(group.querySelectorAll(".opt"), function(o){ o.classList.remove("sel"); });
+    var lab = input.closest(".opt");
+    if(lab) lab.classList.add("sel");
+  }
+  document.addEventListener("change", function(e){
+    if(e.target && e.target.type === "radio"){ markSel(e.target); save(); }
+  });
+  document.addEventListener("input", function(e){
+    if(e.target && (e.target.tagName === "TEXTAREA" || e.target.tagName === "INPUT")) save();
+  });
+
+  /* ---------- Zwischenspeichern (nur auf diesem Gerät) ---------- */
+  function save(){
+    try{
+      var data = {};
+      FIELDS.forEach(function(f){ data[f[0]] = getVal(f[0], f[2]); });
+      data.__step = current;
+      data.__locked = locked;
+      localStorage.setItem(KEY, JSON.stringify(data));
+    }catch(err){ /* privates Fenster o. ä. — Umfrage läuft trotzdem */ }
+  }
+  function restore(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(!raw) return;
+      var data = JSON.parse(raw);
+      FIELDS.forEach(function(f){ setVal(f[0], f[2], data[f[0]]); });
+      if(data.__locked) locked = true;
+      if(typeof data.__step === "number" && data.__step > 0 && data.__step < 10){
+        go(data.__step, true);
+      }
+    }catch(err){ /* egal */ }
+  }
+
+  /* ---------- Navigation ---------- */
+  function go(n, silent){
+    n = Math.max(0, Math.min(10, n));
+    if(locked && n < LOCK_FROM + 1 && current > LOCK_FROM) return;
+    if(n > LOCK_FROM && current === LOCK_FROM) locked = true;
+
+    Object.keys(steps).forEach(function(k){ steps[k].hidden = (Number(k) !== n); });
+    current = n;
+
+    var showBar = n > 0 && n < 10;
+    bar.hidden = !showBar;
+    if(showBar){
+      fill.style.width = Math.round((n / TOTAL) * 100) + "%";
+      stepLabel.textContent = "Schritt " + n + " / " + TOTAL;
+    }
+    if(n === 10) build();
+
+    if(!silent) window.scrollTo({ top: 0, behavior: "auto" });
+    save();
+  }
+
+  document.addEventListener("click", function(e){
+    var b = e.target.closest("[data-go]");
+    if(!b) return;
+    go(Number(b.getAttribute("data-go")));
+  });
+
+  /* ---------- Ergebnis-Text ---------- */
+  function build(){
+    var name = getVal("f_name") || "—";
+    var lines = [];
+    lines.push("UMFRAGE „Temporäre Gruppen“ — " + name);
+    lines.push("Ausgefüllt am " + new Date().toLocaleDateString("de-DE"));
+    lines.push("");
+
+    FIELDS.forEach(function(f){
+      if(f[0] === "f_name") return;
+      var v = getVal(f[0], f[2]);
+      if(!v) return;
+      lines.push(f[1] + ":");
+      lines.push(v);
+      lines.push("");
+    });
+
+    document.getElementById("out").value = lines.join("\n").replace(/\n{3,}/g, "\n\n").trim();
+  }
+
+  document.getElementById("copyBtn").addEventListener("click", function(){
+    var ta = document.getElementById("out");
+    var msg = document.getElementById("copiedMsg");
+    function ok(){
+      msg.hidden = false;
+      setTimeout(function(){ msg.hidden = true; }, 2600);
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(ta.value).then(ok, fallback);
+    } else {
+      fallback();
+    }
+    function fallback(){
+      ta.removeAttribute("readonly");
+      ta.select();
+      ta.setSelectionRange(0, 999999);
+      try{ document.execCommand("copy"); ok(); }catch(err){ /* dann manuell */ }
+      ta.setAttribute("readonly", "readonly");
+    }
+  });
+
+  restore();
+})();
+</script>
+</body>
+</html>

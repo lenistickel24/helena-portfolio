@@ -1649,8 +1649,11 @@
         '<button class="dtf-chip tap-target'+(state.picker==="date"?' on':'')+'" data-act="toggle-picker" data-mode="date">'+fmt(state.endDate)+'</button>'+
         '<button class="dtf-chip tap-target'+(state.picker==="time"?' on':'')+'" data-act="toggle-picker" data-mode="time">'+state.endTime+'</button>'+
       '</div>'+
-      (state.picker==="date" ? calPanel() : state.picker==="time" ? timePanel() : "")+
+      /* Hinweis steht ueber dem Picker: aufgeklappt rutschte er sonst so weit
+         nach unten, dass er genau dann unsichtbar war, wenn die Entscheidung
+         faellt (P2, 09.09.2026 — erst ganz am Ende entdeckt). */
       (hint ? '<p class="lz-hint">'+hint+'</p>' : '')+
+      (state.picker==="date" ? calPanel() : state.picker==="time" ? timePanel() : "")+
     '</div>';
   }
 
