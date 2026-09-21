@@ -2,6 +2,11 @@
 // Small, dependency-free progressive enhancements:
 // 1) scroll-reveal for elements with .reveal
 // 2) a custom circle cursor (constant-size lens) on fine-pointer devices
+// 3) case-study close links use back-navigation when they can, so closing
+//    a case study returns to the exact scroll position instead of a fresh
+//    page load jumping to #work (which visibly re-triggers smooth-scroll)
+// 4) prev/next buttons for the insight-slider (native scroll-snap does the
+//    swipe/drag/trackpad case already; the buttons are for mouse users)
 
 (function () {
   "use strict";
@@ -9,6 +14,44 @@
   var prefersReducedMotion = window.matchMedia(
     "(prefers-reduced-motion: reduce)"
   ).matches;
+
+  // ---- Case-study close: prefer history.back() over the href ----
+  // Note: this deliberately does NOT check document.referrer — on file://
+  // (how this site gets checked locally, without a dev server) browsers
+  // leave the referrer empty even for a real same-site click, which made
+  // an earlier version of this check never fire. history.length alone is
+  // reliable under both file:// and http(s).
+  (function () {
+    var closeLinks = document.querySelectorAll(".case-close");
+    if (!closeLinks.length) return;
+    if (window.history.length <= 1) return;
+
+    closeLinks.forEach(function (link) {
+      link.addEventListener("click", function (e) {
+        e.preventDefault();
+        window.history.back();
+      });
+    });
+  })();
+
+  // ---- Insight-slider prev/next buttons ----
+  (function () {
+    document.querySelectorAll(".insight-slider").forEach(function (slider) {
+      var track = slider.querySelector(".insight-track");
+      var card = slider.querySelector(".insight-card");
+      if (!track || !card) return;
+
+      slider.querySelectorAll(".insight-nav-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          var step = card.getBoundingClientRect().width + 16; // + gap
+          track.scrollBy({
+            left: step * Number(btn.dataset.dir),
+            behavior: prefersReducedMotion ? "auto" : "smooth",
+          });
+        });
+      });
+    });
+  })();
 
   // ---- Scroll reveal ----
   (function () {

@@ -27,8 +27,10 @@
   --font-display: "Bricolage Grotesque", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   --font-body: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
 
-  /* Volle Breite, fixer 40px-Abstand zum Rand (auf kleinen Screens reduziert) */
-  --max-width: 100%;
+  /* Inhalt läuft bis zu dieser Breite, danach bleibt er zentriert mit Luft
+     links/rechts, statt auf sehr breiten Screens unbegrenzt zu strecken.
+     Fixer 40px-Abstand zum Rand (auf kleinen Screens reduziert). */
+  --max-width: 1400px;
   --gutter: 40px;
 
   --radius-sm: 14px;
@@ -92,30 +94,37 @@ a { color: inherit; }
 
 /* -------------------- Header / nav -------------------- */
 
+/* .site-header selbst trägt keine Fläche mehr — nur den Abstand zum Rand
+   (Gutter) und nach oben, damit die Nav als schwebende Kapsel wirkt. Fläche,
+   Blur, Rahmen und Rundung sitzen auf .wrap, das wie der übrige Inhalt auf
+   --max-width begrenzt und zentriert ist. */
 .site-header {
   position: sticky;
   top: 0;
   z-index: 20;
-  background: rgba(255, 255, 255, 0.66);
-  backdrop-filter: blur(12px) saturate(130%);
-  -webkit-backdrop-filter: blur(12px) saturate(130%);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-  box-shadow: 0 1px 12px rgba(0, 0, 0, 0.035);
+  padding: 40px var(--gutter) 0;
 }
-@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .site-header { background: rgba(255, 255, 255, 0.93); }
+@media (max-width: 768px) {
+  .site-header { padding: 24px var(--gutter) 0; }
 }
 .site-header .wrap {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  /* 40px Abstand zum oberen Rand (seitlich kommt der Abstand aus --gutter) */
-  padding-top: 40px;
-  padding-bottom: 18px;
+  padding: 16px 28px;
+  background: rgba(255, 255, 255, 0.66);
+  backdrop-filter: blur(12px) saturate(130%);
+  -webkit-backdrop-filter: blur(12px) saturate(130%);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.06);
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .site-header .wrap { background: rgba(255, 255, 255, 0.93); }
 }
 @media (max-width: 768px) {
-  .site-header .wrap { padding-top: 24px; padding-bottom: 14px; }
+  .site-header .wrap { padding: 12px 20px; border-radius: var(--radius-card); }
 }
 .logo {
   display: flex;
@@ -256,7 +265,7 @@ a { color: inherit; }
   width: 46px;
   height: 46px;
   margin-top: clamp(2.5rem, 6vw, 4rem);
-  border: 1.5px solid var(--line);
+  border: 1.5px solid var(--line-soft);
   border-radius: var(--radius-pill);
   color: var(--ink-soft);
   text-decoration: none;
@@ -296,13 +305,6 @@ section { padding: clamp(4rem, 9vw, 6.5rem) 0; position: relative; }
   margin: 0.6rem 0 0;
   max-width: 16ch;
 }
-.section-head-meta {
-  font-family: var(--font-body);
-  font-size: 0.92rem;
-  color: var(--ink-faint);
-  text-align: right;
-  max-width: 30ch;
-}
 .tag {
   display: inline-flex;
   align-items: center;
@@ -323,7 +325,8 @@ section { padding: clamp(4rem, 9vw, 6.5rem) 0; position: relative; }
 
 /* -------------------- Work / project cards -------------------- */
 
-#work { background: var(--paper); }
+/* helle graue Fläche als Canvas, damit die weißen Karten sichtbar darauf liegen */
+#work { background: var(--paper-alt); }
 .work-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -333,11 +336,11 @@ section { padding: clamp(4rem, 9vw, 6.5rem) 0; position: relative; }
   display: block;
   text-decoration: none;
   color: var(--ink);
-  border-radius: var(--radius-card);
+  border-radius: var(--radius-lg);
   overflow: hidden;
   background: #ffffff;
-  border: 1px solid var(--line);
-  box-shadow: 0 1px 2px rgba(28,26,34,0.04);
+  border: 1px solid var(--line-soft);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
   transform: rotate(var(--tilt, -1.2deg));
   transition: transform var(--duration) var(--ease-out), box-shadow var(--duration) var(--ease-out);
 }
@@ -424,7 +427,7 @@ section { padding: clamp(4rem, 9vw, 6.5rem) 0; position: relative; }
 .tag-pill {
   display: inline-block;
   padding: 0.5rem 1.05rem;
-  border: 1.5px solid var(--line);
+  border: 1.5px solid var(--line-soft);
   border-radius: var(--radius-pill);
   font-family: var(--font-body);
   font-weight: 600;
@@ -433,45 +436,200 @@ section { padding: clamp(4rem, 9vw, 6.5rem) 0; position: relative; }
   background: #ffffff;
 }
 
-/* -------------------- About body / experience (about.html) -------------------- */
+/* -------------------- About hero: großes Panel (about.html) -------------------- */
 
-#about { background: var(--paper); }
-.about-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(2rem, 6vw, 5rem); }
-.about-body p { color: var(--ink-soft); font-size: 1.03rem; }
-.about-body strong { color: var(--ink); font-weight: 700; }
-.about-facts {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.2rem;
-  margin-top: 2rem;
-  padding-top: 2rem;
-  border-top: 1px solid var(--line);
+#about-hero { background: var(--paper); }
+.about-hero-panel {
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(1.75rem, 5vw, 3.5rem);
 }
-.about-fact-label {
+.about-hero-photo-lg {
+  flex: none;
+  width: clamp(240px, 32vw, 440px);
+  aspect-ratio: 3 / 4;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--paper);
+  border: 1px solid var(--line-soft);
+}
+.about-hero-photo-lg img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 22%;
+}
+@media (max-width: 700px) {
+  .about-hero-panel { flex-direction: column; align-items: flex-start; }
+  .about-hero-photo-lg { width: 100%; max-width: 280px; }
+}
+
+/* About-Me-Text neben dem Foto (about.html) */
+.about-narrative { max-width: var(--measure); }
+.about-narrative p { color: var(--ink-soft); font-size: 1.03rem; }
+.about-narrative strong { color: var(--ink); font-weight: 700; }
+.signature {
+  display: block;
+  margin: 2rem 0 0;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 2rem;
+  color: var(--ink);
+}
+
+/* -------------------- Things I Do: Skill-Gruppen (about.html) -------------------- */
+
+#things-i-do { background: var(--paper-alt); }
+.skills-groups {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1rem, 2.5vw, 1.75rem);
+}
+.skills-group {
+  background: #ffffff;
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+  padding: clamp(1.5rem, 3vw, 2rem);
+}
+.skills-group-label {
   font-family: var(--font-body);
-  font-size: 0.7rem;
-  letter-spacing: 0.06em;
+  font-weight: 600;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--ink-faint);
-  margin-bottom: 0.3rem;
+  margin: 0 0 0.9rem;
+  text-align: center;
 }
-.about-fact-value { font-family: var(--font-body); font-weight: 700; font-size: 0.98rem; }
+.skills-group .tag-pills { justify-content: center; }
+@media (max-width: 900px) {
+  .skills-groups { grid-template-columns: 1fr; }
+}
+
+/* -------------------- Wo ich nicht arbeite: Hobbys (about.html) --------------------
+   Collage statt Reihe: Kacheln in unterschiedlichen Größen, dezent verdreht. */
+
+#hobbies { background: var(--paper); }
+.hobby-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: clamp(90px, 13vw, 150px);
+  grid-auto-flow: dense;
+  gap: clamp(0.9rem, 2.5vw, 1.5rem);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.hobby-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+.hobby-item:nth-child(2) { grid-row: span 2; }
+.hobby-item:nth-child(4) { grid-row: span 2; }
+.hobby-item:nth-child(3) .hobby-photo { transform: rotate(-1.4deg); }
+.hobby-item:nth-child(5) .hobby-photo { transform: rotate(1.1deg); }
+.hobby-item:nth-child(6) .hobby-photo { transform: rotate(-0.8deg); }
+.hobby-item:nth-child(7) .hobby-photo { transform: rotate(1.3deg); }
+
+.hobby-photo {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-lg);
+  background: var(--paper-alt);
+  border: 1.5px dashed var(--line-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: transform var(--duration) var(--ease-out);
+}
+.hobby-photo--filled {
+  background: var(--ink);
+  border: none;
+}
+.hobby-photo--filled img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 25%;
+}
+.hobby-caption {
+  position: absolute;
+  left: 0.7rem;
+  bottom: 0.7rem;
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.78rem;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.88);
+  padding: 0.3rem 0.7rem;
+  border-radius: var(--radius-pill);
+}
+@media (max-width: 600px) {
+  .hobby-grid { grid-template-columns: repeat(2, 1fr); }
+  .hobby-item:nth-child(1) { grid-column: span 2; }
+}
+
+/* -------------------- Kreis-Platzhalter, mehrfach genutzt -------------------- */
+
+.ph-icon {
+  display: block;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1.5px solid var(--ink-faint);
+}
 
 #experience { background: var(--paper); }
-.experience-list { border-top: 1px solid var(--line); }
-.experience-item {
-  display: grid;
-  grid-template-columns: 7rem 1fr 1.3fr;
-  gap: clamp(1rem, 3vw, 2.5rem);
-  padding: 2rem 0;
-  border-bottom: 1px solid var(--line);
-  transition: background var(--duration) ease;
+.experience-list {
+  position: relative;
+  overflow: hidden;
 }
-.experience-item:hover { background: var(--paper-alt); }
-.experience-dates { font-family: var(--font-body); font-size: 0.82rem; color: var(--ink-faint); padding-top: 0.3rem; }
+.experience-item {
+  --exp-gap: clamp(1rem, 3vw, 2.5rem);
+  --exp-pad: 2rem;
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: var(--exp-gap);
+  padding: var(--exp-pad) 0;
+  border-radius: var(--radius-card);
+}
+.experience-item > div:first-child { position: relative; text-align: right; }
+.experience-item > div:first-child::after {
+  content: "";
+  position: absolute;
+  /* reicht bis in die Innenabstände des Items hinein, damit die Linie
+     nahtlos in die des vorherigen/nächsten Items übergeht */
+  top: calc(var(--exp-pad) * -1);
+  bottom: calc(var(--exp-pad) * -1);
+  left: calc(100% + var(--exp-gap) / 2);
+  transform: translateX(-50%);
+  width: 2px;
+  background: var(--line-soft);
+}
+.experience-item > div:first-child::before {
+  content: "";
+  position: absolute;
+  top: 2.3rem;
+  left: calc(100% + var(--exp-gap) / 2);
+  transform: translateX(-50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 2px solid var(--ink-faint);
+  transition: background var(--duration) var(--ease-out), border-color var(--duration) var(--ease-out);
+}
+.experience-item.in-view > div:first-child::before { background: var(--ink); border-color: var(--ink); }
+.experience-dates { font-family: var(--font-body); font-size: 0.82rem; color: var(--ink-faint); margin-bottom: 0.3rem; }
 .experience-role { font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; }
-.experience-company { font-family: var(--font-body); color: var(--ink-soft); font-size: 0.9rem; margin-top: 0.3rem; }
-.experience-desc { color: var(--ink-soft); font-size: 0.97rem; margin: 0; }
+.experience-company { font-family: var(--font-body); color: var(--ink-soft); font-size: 0.9rem; margin: 0 0 0.5rem; }
+.experience-desc { color: var(--ink-soft); font-size: 0.97rem; margin: 0; max-width: 48ch; }
 
 /* -------------------- Contact -------------------- */
 
@@ -531,21 +689,37 @@ section { padding: clamp(4rem, 9vw, 6.5rem) 0; position: relative; }
    Heller Bogen (--case-max breit) auf schwarzem Grund, links/rechts sichtbar.
    Kein Site-Header; nur ein fixiertes Schließen-X oben rechts. */
 
-body.case-overlay { background: #0d0d0d; padding-inline: clamp(0px, 2.5vw, 2rem); }
+body.case-overlay { background: var(--paper-alt); padding-inline: clamp(0px, 2.5vw, 2rem); }
 .case-sheet {
   --sheet-gap: clamp(1rem, 3.5vw, 3rem);
-  max-width: var(--sheet-max, 1120px);
+  --sheet-radius: clamp(2rem, 4vw, 3rem);
+  max-width: var(--sheet-max, var(--max-width));
   margin: var(--sheet-gap) auto;
+}
+/* eigener Block statt am .case-sheet selbst, damit overflow:hidden hier
+   nicht den sticky Schließen-Button im Sheet daneben blockiert */
+.case-sheet-content {
   min-height: calc(100vh - 2 * var(--sheet-gap));
   background: var(--paper);
-  border-radius: clamp(2rem, 4vw, 3rem);
+  border-radius: var(--sheet-radius);
   overflow: hidden; /* schneidet die weißen Kind-Sektionen auf den Radius */
 }
-.case-close {
-  position: fixed;
-  top: clamp(0.85rem, 2vw, 1.5rem);
-  right: clamp(0.85rem, 2vw, 1.5rem);
+/* liegt im Sheet, rechtsbündig per Flex — dadurch sitzt das X immer an der
+   rechten Kante der weißen Fläche, nicht an der Viewport-Kante. Die Leiste
+   selbst nimmt keine Höhe ein (height:0), das X hängt per overflow:visible
+   in die weiße Fläche hinein, statt im grauen Rand davor zu schweben. */
+.case-close-bar {
+  position: sticky;
+  top: 0;
   z-index: 100;
+  display: flex;
+  justify-content: flex-end;
+  height: 0;
+  padding: 0 clamp(0.85rem, 2vw, 1.5rem) 0 0;
+  overflow: visible;
+}
+.case-close-bar .case-close { margin-top: clamp(0.85rem, 2vw, 1.5rem); }
+.case-close {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -564,21 +738,33 @@ body.case-overlay { background: #0d0d0d; padding-inline: clamp(0px, 2.5vw, 2rem)
 @media (prefers-reduced-motion: reduce) {
   .case-close:hover { transform: none; }
 }
-/* Hero rutscht ohne Header nach unten, damit die Headline das X nicht berührt */
-.case-overlay .case-hero { padding-top: clamp(4rem, 9vw, 6rem); }
 
 /* -------------------- Case study stub pages -------------------- */
 
-.case-hero { padding: clamp(1.5rem, 4vw, 2.5rem) 0 clamp(2.5rem, 6vw, 4rem); background: var(--paper); }
+.case-hero { padding: clamp(2.5rem, 7vw, 5rem) 0 clamp(2.5rem, 6vw, 4rem); background: var(--paper); }
 /* Zurück-Link steht oben links, auf Höhe des Seitenrandes (nicht in der zentrierten Spalte) */
 .case-hero > .back-link {
   display: inline-flex;
   margin: 0 0 clamp(2rem, 6vw, 3.25rem);
   margin-inline-start: var(--gutter);
 }
-/* Hero-Inhalt (Tag, Headline, Lede, Meta) sitzt zentriert in der 700px-Spalte
-   — +2*gutter, damit die reine Textbreite exakt --measure ist wie im Body-Grid */
-.case-hero .wrap { max-width: calc(var(--measure) + 2 * var(--gutter)); }
+/* Hero: Text links (Tag, Headline, Lede) in der 700px-Spalte, Meta-Box
+   rechts daneben statt darunter gestapelt. */
+.case-hero .wrap {
+  max-width: var(--max-width);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: clamp(1.5rem, 4vw, 3rem);
+}
+.case-hero-text { flex: 1 1 420px; min-width: 0; max-width: var(--measure); }
+.case-hero-text .tag {
+  border: 1px solid var(--accent, var(--line));
+  color: var(--accent-ink, var(--ink-soft));
+  padding: 0.35em 0.9em;
+  border-radius: var(--radius-pill);
+}
 .case-hero .case-status { margin-top: 0; }
 .status-dot {
   width: 7px;
@@ -636,16 +822,17 @@ body.case-overlay { background: #0d0d0d; padding-inline: clamp(0px, 2.5vw, 2rem)
   margin: 0 0 2rem;
 }
 
-/* meta: hellgraue Info-Box unter dem Hero-Text, Felder gestapelt, ohne Linien */
+/* meta: weiße Karte mit Schatten, rechts neben dem Hero-Text, Felder gestapelt */
 .case-meta {
   display: grid;
-  gap: 1.1rem 2rem;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  max-width: var(--measure);
-  margin-top: clamp(1.75rem, 4vw, 2.5rem);
+  gap: 1.1rem;
+  grid-template-columns: 1fr;
+  flex: 0 1 300px;
+  max-width: 300px;
   padding: clamp(1.4rem, 3.5vw, 1.9rem);
-  background: var(--paper-alt);
+  background: #ffffff;
   border-radius: var(--radius-lg);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
 }
 .case-meta-label {
   font-family: var(--font-body);
@@ -663,35 +850,35 @@ body.case-overlay { background: #0d0d0d; padding-inline: clamp(0px, 2.5vw, 2rem)
   line-height: 1.4;
   color: var(--ink);
 }
-@media (max-width: 600px) {
-  .case-meta { grid-template-columns: 1fr 1fr; }
+@media (max-width: 700px) {
+  .case-meta { flex-basis: 100%; max-width: none; grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 400px) {
   .case-meta { grid-template-columns: 1fr; }
 }
 
-/* content body — die grauen Blöcke sind auf --case-max begrenzt und zentriert;
-   der Textinhalt darin sitzt in einer 700px-Spalte (--measure), Bilder/Bänder
-   brechen aus und füllen den ganzen Block. */
+/* content body — die grauen Blöcke laufen bis auf den Standard-Gutter (40px)
+   an den Rand des weißen Sheets; der Textinhalt darin sitzt in einer
+   700px-Spalte (--measure), Bilder/Bänder brechen aus und füllen den ganzen Block. */
 .case-body { padding: clamp(2.5rem, 6vw, 4rem) 0; background: var(--paper); }
-.case-body .wrap { max-width: var(--case-max); }
 
-:root { --measure: 700px; --case-max: 1000px; }
+:root { --measure: 700px; }
 
 .case-section {
+  --case-pad-x: clamp(1.35rem, 3.5vw, 3rem);
   background: var(--paper-alt);
   border-radius: var(--radius-panel);
-  padding: clamp(1.6rem, 5vw, 4rem) clamp(1.35rem, 3.5vw, 3rem);
+  padding: clamp(1.6rem, 5vw, 4rem) var(--case-pad-x);
   display: grid;
   grid-template-columns:
     [full-start] minmax(0, 1fr)
     [content-start] minmax(0, var(--measure)) [content-end]
     minmax(0, 1fr) [full-end];
 }
+.case-section--image { aspect-ratio: 16 / 9; padding: 0; }
 .case-section > * { grid-column: content-start / content-end; }
 .case-section > .case-figure,
-.case-section > .stat-band,
-.case-section > .case-cta { grid-column: full-start / full-end; }
+.case-section > .stat-band { grid-column: full-start / full-end; }
 .case-section + .case-section { margin-top: clamp(0.9rem, 2vw, 1.5rem); }
 .case-section > *:last-child { margin-bottom: 0; }
 
@@ -715,8 +902,23 @@ body.case-overlay { background: #0d0d0d; padding-inline: clamp(0px, 2.5vw, 2rem)
 }
 .case-section p { color: var(--ink-soft); font-size: 1.125rem; line-height: 1.6; margin: 0 0 1.15rem; }
 .case-section p:last-child { margin-bottom: 0; }
-/* Uppercase-Kicker: spezifischer als ".case-section p", damit die 14px greifen */
-.case-section > .tag { font-size: 14px; color: var(--ink-soft); margin-bottom: 0.9rem; }
+/* Übrig gebliebener p.tag ohne Headline-Rolle (z.B. "Hinweis") bleibt ein kleiner Kicker */
+.case-section > p.tag { font-size: 14px; color: var(--ink-soft); margin-bottom: 0.9rem; }
+/* Der Tag ist hier die einzige Headline: fett, normale Groß-/Kleinschreibung, kein Kicker mehr.
+   Nur h2.tag (bewusst zur Headline gemacht) — ein übrig gebliebener p.tag (z.B. "Hinweis")
+   bleibt ein normaler kleiner Kicker. Nachfahren-Selektor (nicht nur direktes Kind), damit das
+   auch greift, wenn der Tag tiefer verschachtelt ist (z.B. in .case-prototype-text). */
+.case-section h2.tag {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.6rem, 3.2vw, 2.15rem);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  color: var(--ink);
+  margin: 0.3rem 0 1.1rem;
+}
 .case-section strong { color: var(--ink); font-weight: 700; }
 .case-section ul { color: var(--ink-soft); font-size: 1.125rem; line-height: 1.6; padding-left: 1.2rem; margin: 0 0 1.15rem; }
 .case-section li { margin: 0 0 0.55rem; }
@@ -761,6 +963,28 @@ body.case-overlay { background: #0d0d0d; padding-inline: clamp(0px, 2.5vw, 2rem)
   -webkit-text-fill-color: transparent;
 }
 .stat-label { font-family: var(--font-body); font-size: 0.85rem; color: var(--ink-soft); margin-top: 0.5rem; line-height: 1.4; }
+
+/* Variante für Zahlen, die stärker hervorstechen sollen: eigene weiße Karten
+   mit Schatten statt der schlichten Linien-Variante, Zahl in Akzentfarbe. */
+.stat-band--highlight {
+  border: none;
+  padding: 0;
+}
+.stat-band--highlight > div {
+  background: #ffffff;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+  padding: clamp(1.4rem, 3vw, 1.8rem) 1.2rem;
+  text-align: center;
+}
+.stat-band--highlight .stat-num {
+  font-size: clamp(2.4rem, 6vw, 3.4rem);
+  background: none;
+  background-clip: border-box;
+  -webkit-background-clip: border-box;
+  color: var(--accent, var(--ink));
+  -webkit-text-fill-color: var(--accent, var(--ink));
+}
 
 /* figure + caption */
 .case-figure { margin: 1.8rem 0; }
@@ -832,30 +1056,156 @@ body.case-overlay { background: #0d0d0d; padding-inline: clamp(0px, 2.5vw, 2rem)
   margin-right: 0.6em;
 }
 
-/* prototype CTA block */
+/* prototype CTA: plain link under the text, no box */
 .case-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.8rem;
+  margin: 1.4rem 0 0;
+}
+.case-cta p { margin: 0; font-size: 0.98rem; max-width: 34ch; }
+
+/* Prototyp: Text links, eingebetteter Prototyp rechts */
+.case-prototype {
+  grid-column: full-start / full-end;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: clamp(1.5rem, 4vw, 3rem);
+}
+.case-prototype-text { flex: 1 1 360px; max-width: var(--measure); }
+.case-prototype .case-figure { flex: 0 1 auto; margin: 0; }
+
+/* Scope-of-Work Gantt (Platzhalter — echte Daten kommen noch) */
+.gantt { grid-column: full-start / full-end; margin: 1.6rem 0; }
+.gantt-scroll { overflow-x: auto; }
+.gantt-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--gantt-cols, 22), minmax(30px, 1fr));
+  grid-auto-rows: minmax(44px, auto);
+  row-gap: 10px;
+  min-width: 640px;
+  padding-bottom: 0.6rem;
+}
+.gantt-month {
+  grid-row: 1;
+  padding-bottom: 0.6rem;
+  margin-bottom: 0.4rem;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.gantt-bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.75rem;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: var(--radius-pill);
+  padding: 0.5rem 0.9rem 0.5rem 1rem;
+  justify-self: start;
+  width: max-content;
+  max-width: 100%;
+}
+.gantt-bar-name { font-family: var(--font-body); font-weight: 600; font-size: 0.85rem; color: var(--ink); white-space: nowrap; }
+.gantt-bar-duration {
+  flex: none;
+  background: var(--accent, var(--ink));
+  color: #fff;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.72rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+}
+
+/* User-Interviews Insight-Slider — bricht bis an den Rand der grauen Box aus,
+   der Track bekommt links/rechts wieder das normale Section-Padding, damit
+   die erste/letzte Karte optisch mit dem restlichen Text fluchtet, aber der
+   Scroll-Bereich selbst bis zur echten Kante reicht. */
+.insight-slider {
+  grid-column: full-start / full-end;
+  position: relative;
+  margin: 1.6rem calc(var(--case-pad-x) * -1) 0;
+}
+.insight-track {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-left: var(--case-pad-x);
+  padding: 0.2rem var(--case-pad-x) 0.6rem;
+  scrollbar-width: none;
+}
+.insight-track::-webkit-scrollbar { display: none; }
+.insight-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--accent-soft, var(--paper-alt));
+  color: var(--accent, var(--ink));
+  margin-bottom: 0.9rem;
+}
+.insight-icon svg { width: 18px; height: 18px; }
+.insight-card {
+  flex: 0 0 auto;
+  width: min(320px, 78vw);
+  scroll-snap-align: start;
   background: #ffffff;
   border: 1px solid rgba(0, 0, 0, 0.06);
   border-radius: var(--radius-lg);
-  padding: clamp(1.6rem, 4vw, 2.2rem);
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.2rem;
+  padding: 1.4rem;
+  font-family: var(--font-display);
+  font-size: 1.02rem;
+  line-height: 1.45;
+  color: var(--ink);
+}
+.insight-nav { display: flex; gap: 0.6rem; margin-top: 0.8rem; padding-left: var(--case-pad-x); }
+.insight-nav-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: #ffffff;
+  color: var(--ink);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background var(--duration) var(--ease-out);
+}
+.insight-nav-btn:hover { background: var(--paper-alt); }
+
+/* Screens-Showcase am Seitenende */
+.screens-grid {
+  grid-column: full-start / full-end;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
   margin: 1.4rem 0;
 }
-.case-cta p { margin: 0; font-size: 0.98rem; max-width: 34ch; }
+.screens-grid .case-placeholder { margin: 0; }
 
 /* -------------------- Responsive -------------------- */
 
 @media (max-width: 960px) {
-  .about-teaser-grid, .about-grid { grid-template-columns: 1fr; }
+  .about-teaser-grid { grid-template-columns: 1fr; }
   .work-grid { grid-template-columns: repeat(2, 1fr); }
   .experience-item { grid-template-columns: 1fr; gap: 0.5rem; }
+  .experience-item > div:first-child { text-align: left; }
+  .experience-item > div:first-child::after,
+  .experience-item > div:first-child::before { display: none; }
   .experience-dates { padding-top: 0; }
   .section-head { align-items: flex-start; }
-  .section-head-meta { text-align: left; }
 }
 @media (max-width: 768px) {
   :root { --gutter: 24px; }
@@ -866,7 +1216,6 @@ body.case-overlay { background: #0d0d0d; padding-inline: clamp(0px, 2.5vw, 2rem)
   .contact-foot { flex-direction: column; align-items: flex-start; }
   .project-card, .project-card:nth-child(2), .project-card:nth-child(3) { --tilt: 0deg; }
   .stat-band { grid-template-columns: 1fr; gap: 1.4rem; }
-  .case-cta { flex-direction: column; align-items: flex-start; }
 }
 
 /* =========================================================
@@ -936,8 +1285,7 @@ body.accent-wa {
   --accent-soft: #E6F5F1;
 }
 
-body[class*="accent-"] .case-hero .tag,
-body[class*="accent-"] .case-section > .tag { color: var(--accent-ink); }
+body[class*="accent-"] .case-hero .tag { color: var(--accent-ink); }
 
 body[class*="accent-"] .stat-num {
   color: var(--accent);
