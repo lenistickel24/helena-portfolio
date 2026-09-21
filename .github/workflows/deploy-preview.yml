@@ -12,9 +12,19 @@
 name: Deploy preview to Netcup
 
 on:
+  # Jeder Merge nach main loest den Deploy aus — auch ein Merge
+  # ueber die GitHub-Oberflaeche, ganz ohne lokales Git.
   push:
     branches: [main]
+  # "Run workflow"-Knopf im Actions-Tab, um erneut hochzuladen,
+  # ohne dass sich etwas geaendert hat.
   workflow_dispatch:
+
+# Laeuft nie zweimal gleichzeitig: Bei schnell aufeinanderfolgenden Merges
+# wird der aeltere Lauf abgebrochen, damit am Ende der neueste Stand oben liegt.
+concurrency:
+  group: deploy-preview
+  cancel-in-progress: true
 
 jobs:
   ftp-deploy:
