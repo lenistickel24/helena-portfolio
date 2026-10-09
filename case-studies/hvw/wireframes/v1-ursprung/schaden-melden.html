@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta name="robots" content="noindex">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wireframe: Schaden melden (Dialog) – Hausverwaltung Groterhorst</title>
+<style>
+  :root {
+    --l1: #FFFFFF; --l2: #F2F2F2; --l3: #E4E4E4; --l4: #C7C7C7; --l5: #8A8A8A; --l6: #333333; --l7: #474747;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #ECECEC; color: var(--l6); font-family: system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.5; }
+  .kopfbereich { background: #fff; border-bottom: 1px solid var(--l4); padding: 24px; }
+  .kopfbereich h1 { margin: 0 0 8px; font-size: 1.3rem; }
+  .kopfbereich p { margin: 0; color: var(--l5); font-size: .92rem; max-width: 60em; }
+  .legende { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 16px; font-size: .8rem; color: var(--l5); }
+  .legende span { display: inline-flex; align-items: center; gap: 8px; }
+  .legende i { width: 16px; height: 16px; border-radius: 4px; display: inline-block; }
+
+  .buehnen { display: flex; gap: 64px; padding: 48px 24px 112px; align-items: flex-start; flex-wrap: wrap; }
+  .geraet-label { font-size: .82rem; font-weight: 700; color: var(--l5); margin-bottom: 8px; text-transform: uppercase; letter-spacing: .04em; }
+
+  .rahmen-mobil { width: 375px; }
+  .rahmen-desktop { width: 920px; max-width: 92vw; }
+  .seite { background: #fff; border: 1px solid var(--l4); position: relative; }
+
+  /* Dialog: Schaden melden als Overlay statt langem Inline-Formular */
+  .hintergrund-blur { filter: blur(6px); }
+  .dialog-hg { position: absolute; inset: 0; background: rgba(20,20,20,.4); display: none; z-index: 50; padding: 40px 0; }
+  .dialog-hg.offen { display: flex; }
+  .dialog-hg.unten { align-items: flex-end; padding: 0; }
+  .dialog-hg.mitte { align-items: center; justify-content: center; }
+  .dialog { background: #fff; width: 100%; border-radius: 24px 24px 0 0; }
+  .dialog.zentriert { width: 560px; max-width: 90%; border-radius: 24px; }
+  .dialog-kopf { display: flex; justify-content: space-between; align-items: center; padding: 24px 32px; border-bottom: 1px solid var(--l3); background: #fff; }
+  .dialog-schliessen { width: 34px; height: 34px; border-radius: 999px; border: 1.5px solid var(--l3); display: flex; align-items: center; justify-content: center; background: #fff; color: var(--l6); font-size: 1rem; cursor: pointer; flex: none; }
+  .dialog-inhalt { padding: 32px; }
+
+  .block { padding: 32px; position: relative; }
+  .kopf-nav { display: flex; flex-wrap: nowrap; justify-content: space-between; align-items: center; gap: 24px; padding: 24px 32px; border-bottom: 1px solid var(--l4); }
+  .logo-platz { font-weight: 700; font-size: .84rem; color: var(--l6); white-space: nowrap; flex: none; }
+  .nav-punkte { display: flex; flex-wrap: nowrap; gap: 32px; }
+  .nav-punkte .nav-wort { font-size: .82rem; font-weight: 600; color: var(--l6); white-space: nowrap; }
+  .nav-punkte .nav-wort.aktiv { text-decoration: underline; text-underline-offset: 4px; }
+  .menu-icon { width: 34px; height: 34px; border: none; border-radius: 24px; background: var(--l6); display: flex; align-items: center; justify-content: center; }
+  .menu-icon i { width: 14px; height: 2px; background: #fff; box-shadow: 0 4px 0 #fff, 0 -4px 0 #fff; }
+  .icon-knopf { width: 34px; height: 34px; border: 1.5px solid var(--l3); color: var(--l5); border-radius: 24px; display: flex; align-items: center; justify-content: center; font-size: .95rem; }
+  .kopf-nav > div:last-child { flex: none; white-space: nowrap; }
+
+  .bild-platz { background: var(--l2); border-radius: 24px; display: flex; align-items: center; justify-content: center; color: var(--l5); font-size: .78rem; text-align: center; padding: 8px; }
+  .bild-platz svg { width: 30px; height: 30px; fill: var(--l5); margin-bottom: 8px; display: block; margin-left: auto; margin-right: auto; }
+
+  .textzeile { height: 10px; background: var(--l3); border-radius: 2px; margin-bottom: 16px; }
+  h2.wf, h3.wf, h4.wf { margin: 0 0 16px; font-family: system-ui, sans-serif; }
+  h2.wf { font-size: 1.4rem; } h3.wf { font-size: .98rem; } h4.wf { font-size: .95rem; }
+  p.wf { margin: 0 0 24px; color: var(--l5); font-size: .86rem; }
+
+  .knopf { display: inline-block; border: 1.5px solid var(--l6); color: var(--l6); padding: 16px 24px; font-size: .84rem; font-weight: 600; border-radius: 999px; background: #fff; white-space: nowrap; flex: none; text-align: center; }
+  .knopf.gefuellt { background: var(--l6); color: #fff; border-color: var(--l6); }
+  .knopf.breit { display: block; width: 100%; }
+
+  .zwei-spalten { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  .karte-block { border: 1.5px solid var(--l4); border-radius: 24px; padding: 32px; display: flex; flex-direction: column; gap: 16px; }
+  .karte-block.warum { border: none; background: #fff; }
+  .liste-punkt { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dotted var(--l4); padding: 16px 0; font-size: .8rem; }
+  .li-icon { width: 20px; height: 20px; fill: var(--l5); margin-right: 16px; flex: none; }
+  .li-arrow { width: 18px; height: 18px; fill: var(--l5); display: block; }
+
+  .drei-spalten { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .zwei-raster { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .vier-raster { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+
+  /* Notfall */
+  .notfall { background: var(--l7); color: #fff; border-radius: 24px; padding: 32px; display: flex; flex-direction: column; gap: 24px; }
+  .notfall h2 { color: #fff; }
+  .notfall p, .notfall li { color: #D6D6D6; }
+  .notfall ul { margin: 0; padding-left: 20px; font-size: .86rem; }
+  .notfall li { margin-bottom: 8px; }
+  .notfall-nummer { background: #fff; color: var(--l6); border-radius: 999px; padding: 16px 24px; text-align: center; font-weight: 700; font-size: 1.1rem; display: block; }
+  .notfall-klein { font-size: .78rem; color: #B8B8B8; text-align: center; margin-top: 8px; }
+  .notfall-112 { background: rgba(255,255,255,.12); border-radius: 16px; padding: 16px; font-size: .82rem; }
+
+  /* Schnellzugriff-Kachel */
+  .kachel { border: 1.5px solid var(--l4); border-radius: 24px; padding: 24px; display: flex; flex-direction: column; gap: 8px; }
+  .kachel svg { width: 26px; height: 26px; fill: var(--l6); }
+  .kachel strong { font-size: .92rem; }
+  .kachel span { font-size: .78rem; color: var(--l5); }
+
+  /* Formular */
+  .schritt-label { font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--l5); margin-bottom: 16px; }
+  .auswahl-raster { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 32px; }
+  .auswahl-tile { border: 1.5px solid var(--l4); border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 8px; }
+  .auswahl-tile.aktiv { border-color: var(--l6); background: var(--l2); }
+  .auswahl-tile svg { width: 22px; height: 22px; fill: var(--l5); }
+  .auswahl-tile.aktiv svg { fill: var(--l6); }
+  .auswahl-tile span { font-size: .82rem; font-weight: 600; }
+  .feld { margin-bottom: 24px; }
+  .feld label { display: block; font-size: .78rem; font-weight: 700; margin-bottom: 8px; }
+  .feld-eingabe { border: 1.5px solid var(--l4); border-radius: 16px; height: 48px; background: var(--l1); }
+  .feld-eingabe.textarea { height: 96px; }
+  .upload-flaeche { border: 1.5px dashed var(--l4); border-radius: 16px; padding: 24px; text-align: center; color: var(--l5); font-size: .8rem; }
+  .checkbox-zeile { display: flex; gap: 12px; align-items: flex-start; font-size: .8rem; color: var(--l5); margin-bottom: 24px; }
+  .checkbox-box { width: 20px; height: 20px; border: 1.5px solid var(--l4); border-radius: 6px; flex: none; }
+
+  /* FAQ */
+  .faq-item { border: 1.5px solid var(--l4); border-radius: 20px; padding: 20px 24px; margin-bottom: 16px; }
+  .faq-frage { display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: .92rem; }
+  .faq-icon { width: 24px; height: 24px; border-radius: 999px; background: var(--l2); display: flex; align-items: center; justify-content: center; font-size: 1rem; flex: none; color: var(--l6); }
+  .faq-antwort { margin-top: 16px; }
+
+  /* Downloads */
+  .download-zeile { display: flex; align-items: center; gap: 16px; border: 1.5px solid var(--l4); border-radius: 16px; padding: 16px 20px; margin-bottom: 12px; }
+  .download-zeile svg { width: 24px; height: 24px; fill: var(--l5); flex: none; }
+  .download-zeile strong { display: block; font-size: .88rem; }
+  .download-zeile span { font-size: .76rem; color: var(--l5); }
+  .download-laden { margin-left: auto; width: 20px; height: 20px; fill: var(--l5); flex: none; }
+
+  @media (max-width: 900px) {
+    .buehnen { flex-direction: column; align-items: center; }
+  }
+</style>
+</head>
+<body>
+<div class="kopfbereich">
+  <h1>Wireframe — "Schaden melden" als Dialog (Low-Fidelity)</h1>
+  <p>Zeigt gezielt den geöffneten Zustand des "Schaden melden"-Dialogs, hier über der Für-Mieter-Seite. Der Button öffnet diesen Dialog identisch von jeder Seite aus (auch von der Startseite) — es gibt keine eigene Unterseite dafür, nur dieses Overlay. Gleiche Bausteine/Regeln wie die anderen Wireframes.</p>
+  <div class="legende">
+    <span><i style="background:var(--l2);border-radius:5px"></i>Bild-Platzhalter</span>
+    <span><i style="background:var(--l3)"></i>Text-Platzhalter</span>
+  </div>
+</div>
+
+<div class="buehnen">
+  <!-- MOBIL -->
+  <div class="rahmen-mobil">
+    <div class="geraet-label">Mobil, 375px (primär)</div>
+    <div class="seite">
+      <div class="dialog-hg unten offen">
+        <div class="dialog">
+          <div class="dialog-kopf"><h3 class="wf" style="margin:0">Schaden melden</h3><span class="dialog-schliessen">✕</span></div>
+          <div class="dialog-inhalt">
+            <p class="wf">Je genauer die Angaben, desto schneller kann geholfen werden.</p>
+            <div class="schritt-label">1 — Was ist passiert?</div>
+            <div class="auswahl-raster">
+              <div class="auswahl-tile aktiv"><svg viewBox="0 0 24 24"><path d="M12 21.5c-3.9 0-7-3.1-7-7 0-3.5 5.7-11 7-12.5 1.3 1.5 7 9 7 12.5 0 3.9-3.1 7-7 7z"/></svg><span>Wasser</span></div>
+              <div class="auswahl-tile"><svg viewBox="0 0 24 24"><path d="M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8C20 8.61 17.41 3.8 13.5.67zM11.71 19c-1.78 0-3.22-1.4-3.22-3.14 0-1.62 1.05-2.76 2.81-3.12 1.77-.36 3.6-1.21 4.62-2.58.39 1.29.59 2.65.59 4.04 0 2.65-2.15 4.8-4.8 4.8z"/></svg><span>Heizung</span></div>
+              <div class="auswahl-tile"><svg viewBox="0 0 24 24"><path d="M11 21v-6.5H7L14 3v6.5h4L11 21z"/></svg><span>Strom</span></div>
+              <div class="auswahl-tile"><svg viewBox="0 0 24 24"><path d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg><span>Sonstiges</span></div>
+            </div>
+            <div class="schritt-label">2 — Wo genau?</div>
+            <div class="feld"><label>Straße, Hausnummer</label><div class="feld-eingabe"></div></div>
+            <div class="feld"><label>Wohnung / Etage</label><div class="feld-eingabe"></div></div>
+            <div class="schritt-label">3 — Beschreibung</div>
+            <div class="feld"><label>Was ist kaputt?</label><div class="feld-eingabe textarea"></div></div>
+            <div class="feld"><label>Fotos (freiwillig)</label><div class="upload-flaeche"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" style="margin:0 auto 8px;display:block"><path d="M9 2l-1.83 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg>Foto hinzufügen</div></div>
+            <div class="schritt-label">4 — Kontakt</div>
+            <div class="feld"><label>Name</label><div class="feld-eingabe"></div></div>
+            <div class="feld"><label>Telefon</label><div class="feld-eingabe"></div></div>
+            <div class="checkbox-zeile"><div class="checkbox-box"></div><span>Ich habe die Datenschutzhinweise gelesen.</span></div>
+            <a class="knopf gefuellt breit">Schaden melden</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="hintergrund-blur">
+      <div class="kopf-nav">
+        <div class="logo-platz">Hausverwaltung Groterhorst</div>
+        <div style="display:flex;gap:16px;align-items:center">
+          <span class="icon-knopf" title="Schaden melden / Notfall">⚠</span>
+          <div class="menu-icon"><i></i></div>
+        </div>
+      </div>
+
+      <div class="block">
+        <h2 class="wf">Schnell die richtige Hilfe.</h2>
+        <p class="wf" style="margin:0">Ob Wasserschaden, Frage zur Abrechnung oder Formular — hier finden Sie es. Und wenn nicht, rufen Sie einfach an.</p>
+      </div>
+
+      <div class="block" style="background:var(--l2)">
+        <div class="notfall">
+          <div>
+            <h2 class="wf" style="font-size:1.2rem">⚠ Notfall? Rufen Sie sofort an.</h2>
+            <p class="wf" style="margin:0 0 16px">Auch außerhalb der Bürozeiten, z. B. bei:</p>
+            <ul>
+              <li>Wasserrohrbruch oder Wasser, das in die Wohnung läuft</li>
+              <li>Heizungsausfall im Winter</li>
+              <li>Tür oder Fenster lässt sich nicht mehr schließen</li>
+            </ul>
+          </div>
+          <a class="notfall-nummer">0170 123 45 67</a>
+          <p class="notfall-klein">Während der Bürozeiten: 02831 123 456</p>
+          <div class="notfall-112">Bei Feuer, Gasgeruch oder Gefahr für Menschen: zuerst <strong>112</strong> wählen.</div>
+        </div>
+
+        <div class="vier-raster" style="grid-template-columns:1fr 1fr;margin-top:24px">
+          <a class="kachel"><svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.9959.9959 0 0 0 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg><strong>Schaden melden</strong><span>Online, mit Fotos</span></a>
+          <a class="kachel"><svg viewBox="0 0 24 24"><path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"/></svg><strong>Häufige Fragen</strong><span>z. B. Nebenkosten</span></a>
+          <a class="kachel"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg><strong>Formulare</strong><span>Zum Herunterladen</span></a>
+          <a class="kachel"><svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zM12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg><strong>Sprechzeiten</strong><span>und Kontakt</span></a>
+        </div>
+      </div>
+
+      <div class="block" style="background:var(--l2)">
+        <h3 class="wf">Häufige Fragen</h3>
+        <div class="faq-item">
+          <div class="faq-frage"><span>Wann bekomme ich meine Nebenkostenabrechnung?</span><span class="faq-icon">–</span></div>
+          <div class="faq-antwort"><div class="textzeile"></div><div class="textzeile" style="width:80%"></div></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-frage"><span>Wer bezahlt kleine Reparaturen?</span><span class="faq-icon">+</span></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-frage"><span>Wie kündige ich meine Wohnung?</span><span class="faq-icon">+</span></div>
+        </div>
+      </div>
+
+      <div class="block">
+        <h3 class="wf">Downloads</h3>
+        <div class="download-zeile"><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg><div><strong>Hausordnung</strong><span>PDF, 1 Seite</span></div><svg class="download-laden" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></div>
+        <div class="download-zeile"><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg><div><strong>SEPA-Lastschriftmandat</strong><span>PDF, für die Mietzahlung</span></div><svg class="download-laden" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></div>
+        <div class="download-zeile"><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg><div><strong>Checkliste Auszug</strong><span>PDF, 2 Seiten</span></div><svg class="download-laden" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></div>
+      </div>
+
+      <div class="block" style="background:var(--l2)">
+        <h3 class="wf">Sprechzeiten</h3>
+        <div class="liste-punkt"><span>Montag – Freitag</span><span>9–12 Uhr</span></div>
+        <div class="liste-punkt"><span>Donnerstag</span><span>14–17 Uhr</span></div>
+        <div class="liste-punkt" style="border-bottom:0"><span>Notfall</span><span>0170 123 45 67</span></div>
+      </div>
+
+      <div class="block" style="background:var(--l7)">
+        <div class="textzeile" style="width:50%;background:var(--l5)"></div>
+        <div class="liste-punkt" style="border:0;font-size:.72rem;color:var(--l3)"><span>Impressum</span><span>Datenschutz</span></div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DESKTOP -->
+  <div class="rahmen-desktop">
+    <div class="geraet-label">Desktop, 1280px (sekundär)</div>
+    <div class="seite">
+      <div class="dialog-hg mitte offen">
+        <div class="dialog zentriert">
+          <div class="dialog-kopf"><h3 class="wf" style="margin:0">Schaden melden</h3><span class="dialog-schliessen">✕</span></div>
+          <div class="dialog-inhalt">
+            <p class="wf">Je genauer die Angaben, desto schneller kann geholfen werden.</p>
+            <div class="schritt-label">1 — Was ist passiert?</div>
+            <div class="auswahl-raster" style="grid-template-columns:repeat(4,1fr)">
+              <div class="auswahl-tile aktiv"><svg viewBox="0 0 24 24"><path d="M12 21.5c-3.9 0-7-3.1-7-7 0-3.5 5.7-11 7-12.5 1.3 1.5 7 9 7 12.5 0 3.9-3.1 7-7 7z"/></svg><span>Wasser</span></div>
+              <div class="auswahl-tile"><svg viewBox="0 0 24 24"><path d="M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8C20 8.61 17.41 3.8 13.5.67zM11.71 19c-1.78 0-3.22-1.4-3.22-3.14 0-1.62 1.05-2.76 2.81-3.12 1.77-.36 3.6-1.21 4.62-2.58.39 1.29.59 2.65.59 4.04 0 2.65-2.15 4.8-4.8 4.8z"/></svg><span>Heizung</span></div>
+              <div class="auswahl-tile"><svg viewBox="0 0 24 24"><path d="M11 21v-6.5H7L14 3v6.5h4L11 21z"/></svg><span>Strom</span></div>
+              <div class="auswahl-tile"><svg viewBox="0 0 24 24"><path d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg><span>Sonstiges</span></div>
+            </div>
+            <div class="schritt-label">2 — Wo genau?</div>
+            <div class="zwei-spalten" style="margin-bottom:24px">
+              <div class="feld" style="margin-bottom:0"><label>Straße, Hausnummer</label><div class="feld-eingabe"></div></div>
+              <div class="feld" style="margin-bottom:0"><label>Wohnung / Etage</label><div class="feld-eingabe"></div></div>
+            </div>
+            <div class="schritt-label">3 — Beschreibung</div>
+            <div class="feld"><label>Was ist kaputt?</label><div class="feld-eingabe textarea"></div></div>
+            <div class="feld"><label>Fotos (freiwillig)</label><div class="upload-flaeche"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" style="margin:0 auto 8px;display:block"><path d="M9 2l-1.83 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg>Foto hinzufügen oder hierher ziehen</div></div>
+            <div class="schritt-label">4 — Kontakt</div>
+            <div class="zwei-spalten" style="margin-bottom:24px">
+              <div class="feld" style="margin-bottom:0"><label>Name</label><div class="feld-eingabe"></div></div>
+              <div class="feld" style="margin-bottom:0"><label>Telefon</label><div class="feld-eingabe"></div></div>
+            </div>
+            <div class="checkbox-zeile"><div class="checkbox-box"></div><span>Ich habe die Datenschutzhinweise gelesen.</span></div>
+            <a class="knopf gefuellt">Schaden melden</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="hintergrund-blur">
+      <div class="kopf-nav">
+        <div class="logo-platz">Hausverwaltung Groterhorst</div>
+        <div class="nav-punkte"><span class="nav-wort">Für Eigentümer</span><span class="nav-wort aktiv">Für Mieter</span><span class="nav-wort">Über uns</span><span class="nav-wort">Kontakt</span></div>
+        <div style="display:flex;gap:8px">
+          <span class="knopf">⚠ Schaden melden</span>
+        </div>
+      </div>
+
+      <div class="block">
+        <h2 class="wf">Schnell die richtige Hilfe.</h2>
+        <p class="wf" style="margin:0;max-width:32em">Ob Wasserschaden, Frage zur Abrechnung oder Formular — hier finden Sie es. Und wenn nicht, rufen Sie einfach an.</p>
+      </div>
+
+      <div class="block" style="background:var(--l2)">
+        <div class="notfall" style="flex-direction:row;align-items:center">
+          <div style="flex:1.3">
+            <h2 class="wf" style="font-size:1.3rem">⚠ Notfall? Rufen Sie sofort an.</h2>
+            <p class="wf" style="margin:0 0 16px">Auch außerhalb der Bürozeiten, z. B. bei Wasserrohrbruch, Heizungsausfall im Winter oder wenn sich Tür/Fenster nicht mehr schließen lässt.</p>
+            <div class="notfall-112" style="max-width:26em">Bei Feuer, Gasgeruch oder Gefahr für Menschen: zuerst <strong>112</strong> wählen.</div>
+          </div>
+          <div style="flex:1">
+            <a class="notfall-nummer">0170 123 45 67</a>
+            <p class="notfall-klein">Bürozeiten: 02831 123 456</p>
+          </div>
+        </div>
+        <div class="vier-raster" style="margin-top:24px">
+          <a class="kachel"><svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.9959.9959 0 0 0 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg><strong>Schaden melden</strong><span>Online, mit Fotos</span></a>
+          <a class="kachel"><svg viewBox="0 0 24 24"><path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"/></svg><strong>Häufige Fragen</strong><span>z. B. Nebenkosten</span></a>
+          <a class="kachel"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg><strong>Formulare</strong><span>Zum Herunterladen</span></a>
+          <a class="kachel"><svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zM12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg><strong>Sprechzeiten</strong><span>und Kontakt</span></a>
+        </div>
+      </div>
+
+      <div class="block" style="background:var(--l2)">
+        <div class="zwei-spalten">
+          <div>
+            <h3 class="wf">Häufige Fragen</h3>
+            <p class="wf" style="margin:0">Ihre Frage ist nicht dabei? Einfach anrufen.</p>
+          </div>
+          <div>
+            <div class="faq-item">
+              <div class="faq-frage"><span>Wann bekomme ich meine Nebenkostenabrechnung?</span><span class="faq-icon">–</span></div>
+              <div class="faq-antwort"><div class="textzeile"></div><div class="textzeile" style="width:80%"></div></div>
+            </div>
+            <div class="faq-item" style="margin-bottom:0">
+              <div class="faq-frage"><span>Wer bezahlt kleine Reparaturen?</span><span class="faq-icon">+</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="block">
+        <h3 class="wf">Downloads</h3>
+        <div class="zwei-raster">
+          <div class="download-zeile"><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg><div><strong>Hausordnung</strong><span>PDF, 1 Seite</span></div><svg class="download-laden" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></div>
+          <div class="download-zeile"><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg><div><strong>SEPA-Lastschriftmandat</strong><span>PDF</span></div><svg class="download-laden" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></div>
+          <div class="download-zeile"><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg><div><strong>Checkliste Auszug</strong><span>PDF, 2 Seiten</span></div><svg class="download-laden" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></div>
+          <div class="download-zeile"><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg><div><strong>Mieterselbstauskunft</strong><span>PDF</span></div><svg class="download-laden" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></div>
+        </div>
+      </div>
+
+      <div class="block" style="background:var(--l2)">
+        <h3 class="wf">Sprechzeiten</h3>
+        <div class="zwei-spalten">
+          <div class="liste-punkt"><span>Montag – Freitag</span><span>9–12 Uhr</span></div>
+          <div class="liste-punkt"><span>Donnerstag</span><span>14–17 Uhr</span></div>
+        </div>
+      </div>
+
+      <div class="block" style="background:var(--l7);display:flex;justify-content:space-between">
+        <div class="textzeile" style="width:30%;margin:0;background:var(--l5)"></div>
+        <div style="font-size:.72rem;color:var(--l3)">Impressum · Datenschutz</div>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+<style>.nur-mobil .kopfbereich,.nur-mobil .rahmen-desktop,.nur-mobil .geraet-label,.nur-desktop .kopfbereich,.nur-desktop .rahmen-mobil,.nur-desktop .geraet-label{display:none}.nur-mobil .buehnen,.nur-desktop .buehnen{padding:0;gap:0;display:block}.nur-mobil body,.nur-desktop body{background:#fff}.nur-mobil .rahmen-mobil,.nur-desktop .rahmen-desktop{width:100%;max-width:none}.nur-mobil .seite,.nur-desktop .seite{border:0}</style>
+<script>{const n=new URLSearchParams(location.search).get("nur");if(n)document.documentElement.classList.add("nur-"+n)}</script>
+</body>
+</html>

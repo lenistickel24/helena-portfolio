@@ -164,4 +164,32 @@
     }
     requestAnimationFrame(tick);
   })();
+
+  // ---- Live-Frames: eingebettete Seiten auf Rahmenbreite skalieren ----
+  // Bewusst als letzter Block: ein Fehler hier darf Reveal und Cursor nicht blockieren.
+  (function () {
+    var frames = document.querySelectorAll(".live-frame[data-w]");
+    if (!frames.length) return;
+
+    function fit(frame) {
+      var iframe = frame.querySelector("iframe");
+      var w = Number(frame.dataset.w);
+      if (!iframe || !w || !frame.clientWidth) return;
+      var scale = frame.clientWidth / w;
+      var h = frame.dataset.h ? Number(frame.dataset.h) : frame.clientHeight / scale;
+      iframe.style.width = w + "px";
+      iframe.style.height = h + "px";
+      iframe.style.transform = "scale(" + scale + ")";
+    }
+
+    frames.forEach(fit);
+    if ("ResizeObserver" in window) {
+      var ro = new ResizeObserver(function (entries) {
+        entries.forEach(function (e) { fit(e.target); });
+      });
+      frames.forEach(function (f) { ro.observe(f); });
+    } else {
+      window.addEventListener("resize", function () { frames.forEach(fit); });
+    }
+  })();
 })();

@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta name="robots" content="noindex">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Kontakt zur Hausverwaltung Groterhorst: Köln-Mindener-Bahn 8, 47608 Geldern, Tel. 02831-9363155.">
+<!-- Vorschau beim Teilen. Vor dem Livegang die Adresse bei og:image an die echte Domain anpassen. -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Hausverwaltung Groterhorst">
+<meta property="og:locale" content="de_DE">
+<meta property="og:title" content="Kontakt | Hausverwaltung Groterhorst, Geldern">
+<meta property="og:description" content="Kontakt zur Hausverwaltung Groterhorst: Köln-Mindener-Bahn 8, 47608 Geldern, Tel. 02831-9363155.">
+<meta property="og:image" content="https://hvw-groterhorst.de/img/og-bild.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Logo der Hausverwaltung Groterhorst">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.ico" sizes="32x32">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#FFFFFF">
+<title>Kontakt | Hausverwaltung Groterhorst, Geldern</title>
+<link rel="preload" href="fonts/familjen-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="basis.css">
+<style>
+  /* Hero */
+  .hero { padding: 48px 0 0; }
+
+  /* Formular */
+  .formular-bereich { padding-top: 48px; }
+  .formular { max-width: 760px; }
+  .hinweis-schaden { display: flex; gap: 12px; align-items: flex-start; background: var(--gray); border-radius: 24px; padding: 16px 20px; font-size: .9rem; margin-bottom: 40px; max-width: 760px; }
+  .hinweis-schaden svg { width: 20px; height: 20px; fill: var(--red); flex: none; margin-top: 2px; }
+  .hinweis-schaden a { color: var(--red); font-weight: 700; text-decoration: none; }
+  fieldset.gruppe { border: 0; margin: 0 0 24px; padding: 0; min-width: 0; }
+  .gruppe legend { font-weight: 600; font-size: .9rem; margin-bottom: 12px; padding: 0; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { position: relative; display: inline-flex; padding: 10px 18px; border: 1.5px solid var(--linie); border-radius: 999px; font-weight: 600; font-size: .9rem; cursor: pointer; }
+  .chip input { position: absolute; opacity: 0; pointer-events: none; }
+  .chip:hover { border-color: var(--text); }
+  .chip:has(input:checked) { border-color: var(--red); color: var(--red); box-shadow: inset 0 0 0 1px var(--red); }
+  .chip:has(input:focus-visible) { outline: 2px solid var(--black); outline-offset: 2px; }
+  .felder { display: grid; gap: 24px; grid-template-columns: 1fr; margin-bottom: 24px; }
+  .feld label { display: block; font-weight: 600; font-size: .9rem; margin-bottom: 8px; }
+  .feld label small { font-weight: 400; color: var(--text-2); font-size: .84rem; }
+  .feld input, .feld textarea { width: 100%; padding: 13px 14px; border: 1.5px solid var(--linie); border-radius: var(--radius-input); font: inherit; font-size: .95rem; background: #fff; color: var(--text); }
+  .feld textarea { min-height: 160px; resize: vertical; }
+  .feld input:focus, .feld textarea:focus { outline: none; border-color: var(--black); box-shadow: 0 0 0 3px rgba(0,0,0,.08); }
+  .check { display: flex; gap: 12px; align-items: flex-start; font-size: .9rem; margin: 0 0 32px; cursor: pointer; }
+  .check input { width: 20px; height: 20px; margin: 2px 0 0; accent-color: var(--red); flex: none; }
+  .check a { color: var(--red); font-weight: 600; }
+  .persoenlich { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; background: var(--gray); border-radius: var(--radius-karte); padding: 32px; margin-top: 56px; }
+  .persoenlich h3 { margin: 0; font-size: 1.35rem; }
+  .persoenlich p { color: var(--text-2); font-size: 1rem; margin: 0 0 8px; }
+  .persoenlich-zeiten { width: 100%; margin-top: 8px; padding-top: 20px; border-top: 1px solid var(--linie); font-size: .9rem; color: var(--text-2); }
+  .persoenlich-zeiten div { display: flex; gap: 16px; margin-bottom: 6px; }
+  .persoenlich-zeiten span:first-child { width: 84px; flex: none; font-weight: 600; color: var(--text); }
+  .persoenlich-adresse { width: 100%; padding-top: 20px; border-top: 1px solid var(--linie); }
+  .persoenlich-adresse p { font-size: .94rem; margin: 0 0 16px; }
+  .persoenlich-adresse strong { color: var(--text); }
+  .persoenlich .karte-platz { height: 220px; background: var(--gray); }
+  .danke { max-width: 760px; padding: 48px 0; }
+  .danke svg { width: 56px; height: 56px; fill: var(--red); margin-bottom: 20px; }
+  .danke p { color: var(--text-2); }
+  @media (min-width: 700px) {
+    .felder.zwei { grid-template-columns: 1fr 1fr; }
+  }
+  @media (min-width: 900px) {
+    .hero { padding: 96px 0 0; }
+    .formular-bereich { padding-top: 56px; }
+    .formular-grid { display: grid; grid-template-columns: minmax(0, 760px) 340px; justify-content: space-between; gap: 64px; align-items: start; }
+    .persoenlich { padding: 40px; margin-top: 0; }
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#inhalt">Zum Inhalt springen</a>
+
+<header>
+  <div class="kopf-innen">
+    <a class="logo" href="startseite.html"><img src="img/logo_hvw.svg" width="1219" height="201" alt="Hausverwaltung Groterhorst"></a>
+    <nav class="hauptnav">
+      <a href="eigentuemer.html">Für Eigentümer</a>
+      <a href="mieter.html">Für Mieter</a>
+      <a href="immobilienangebote.html">Immobilienangebote</a>
+      <a href="ueber-uns.html">Über uns</a>
+    </nav>
+    <div class="kopf-rechts">
+      <a class="btn btn-primary kopf-kontakt" href="kontakt.html" aria-current="page">Kontakt</a>
+      <label class="burger" for="menu-toggle"><span class="burger-icon" aria-hidden="true"></span><span class="t-menue">Menü</span><span class="t-zu">Schließen</span></label>
+    </div>
+  </div>
+  <input type="checkbox" id="menu-toggle" aria-label="Menü öffnen oder schließen">
+  <nav class="mobilnav">
+    <a href="eigentuemer.html">Für Eigentümer</a>
+    <a href="mieter.html">Für Mieter</a>
+    <a href="immobilienangebote.html">Immobilienangebote</a>
+    <a href="ueber-uns.html">Über uns</a>
+    <a class="aktiv" href="kontakt.html" aria-current="page">Kontakt</a>
+  </nav>
+</header>
+<nav class="aktionsleiste" aria-label="Schnellzugriff">
+  <a class="anrufen" href="tel:+4928319363155"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m19.23 15.26-2.54-.29a1.99 1.99 0 0 0-1.64.57l-1.84 1.84a15.045 15.045 0 0 1-6.59-6.59l1.85-1.85c.43-.43.64-1.03.57-1.64l-.29-2.52a2.001 2.001 0 0 0-1.99-1.77H5.03c-1.13 0-2.07.94-2 2.07.53 8.54 7.36 15.36 15.89 15.89 1.13.07 2.07-.87 2.07-2v-1.73c.01-1.01-.75-1.86-1.76-1.98z"/></svg>Anrufen</a>
+  <a class="schaden" href="#schaden-melden"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.47 21h15.06c1.54 0 2.5-1.67 1.73-3L13.73 4.99c-.77-1.33-2.69-1.33-3.46 0L2.74 18c-.77 1.33.19 3 1.73 3zM12 14c-.55 0-1-.45-1-1v-2c0-.55.45-1 1-1s1 .45 1 1v2c0 .55-.45 1-1 1zm1 4h-2v-2h2v2z"/></svg>Schaden melden</a>
+</nav>
+<main id="inhalt">
+
+<section class="hero">
+  <div class="wrap">
+    <span class="kicker">Kontakt</span>
+    <h1>Schreiben Sie uns.</h1>
+    <p class="lead">Ob Frage zur Verwaltung oder Wunsch nach einem Erstgespräch – wir sind gerne für Sie da.</p>
+  </div>
+</section>
+
+<section class="formular-bereich">
+  <div class="wrap formular-grid">
+    <div>
+    <div class="hinweis-schaden"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.47 21h15.06c1.54 0 2.5-1.67 1.73-3L13.73 4.99c-.77-1.33-2.69-1.33-3.46 0L2.74 18c-.77 1.33.19 3 1.73 3zM12 14c-.55 0-1-.45-1-1v-2c0-.55.45-1 1-1s1 .45 1 1v2c0 .55-.45 1-1 1zm1 4h-2v-2h2v2z"/></svg><span>Sie möchten einen Schaden melden? Dafür gibt es ein eigenes Formular: <a href="#schaden-melden">Schaden melden →</a></span></div>
+
+    <form class="formular" id="kontaktformular" novalidate>
+      <fieldset class="gruppe">
+        <legend>Worum geht es?</legend>
+        <div class="chips">
+          <label class="chip"><input type="radio" name="anliegen" value="erstgespraech" checked>Erstgespräch für Eigentümer:innen</label>
+          <label class="chip"><input type="radio" name="anliegen" value="mieter">Frage als Mieter:in</label>
+          <label class="chip"><input type="radio" name="anliegen" value="wohnungssuche">Wohnungssuche</label>
+          <label class="chip"><input type="radio" name="anliegen" value="sonstiges">Sonstiges</label>
+        </div>
+      </fieldset>
+      <div class="felder zwei">
+        <div class="feld"><label for="k-name">Name</label><input id="k-name" name="name" autocomplete="name" required data-fehler="Bitte geben Sie Ihren Namen an."></div>
+        <div class="feld"><label for="k-mail">E-Mail</label><input id="k-mail" name="email" type="email" autocomplete="email" required data-fehler="Bitte geben Sie Ihre E-Mail-Adresse an." data-fehler-format="Die E-Mail-Adresse scheint nicht zu stimmen, es fehlt zum Beispiel das @."></div>
+        <div class="feld"><label for="k-tel">Telefon <small>(freiwillig)</small></label><input id="k-tel" name="telefon" type="tel" autocomplete="tel"></div>
+        <div class="feld"><label for="k-zeit">Wann erreichen wir Sie am besten? <small>(freiwillig)</small></label><input id="k-zeit" name="erreichbarkeit" placeholder="z. B. werktags ab 17 Uhr"></div>
+      </div>
+      <div class="felder">
+        <div class="feld"><label for="k-text">Nachricht</label><textarea id="k-text" name="nachricht" required data-fehler="Bitte schreiben Sie uns kurz, worum es geht."></textarea></div>
+      </div>
+      <label class="check"><input type="checkbox" name="datenschutz" required data-fehler="Bitte bestätigen Sie, dass Sie die Datenschutzhinweise gelesen haben."><span>Ich habe die <a href="datenschutz.html" target="_blank">Datenschutzhinweise</a> gelesen.</span></label>
+      <button class="btn btn-primary" type="submit">Nachricht senden</button>
+    </form>
+
+    <div class="danke" hidden>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM9.29 16.29 5.7 12.7a.996.996 0 1 1 1.41-1.41L10 14.17l6.88-6.88a.996.996 0 1 1 1.41 1.41l-7.59 7.59a.996.996 0 0 1-1.41 0z"/></svg>
+      <h2>Vielen Dank für Ihre Nachricht.</h2>
+      <p>Wir melden uns so bald wie möglich bei Ihnen.</p>
+    </div>
+    </div>
+
+    <aside class="persoenlich">
+      <h3>Lieber persönlich?</h3>
+      <p>Rufen Sie uns an – wir nehmen uns Zeit für Ihr Anliegen.</p>
+      <a class="btn btn-primary" href="tel:+4928319363155"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m19.23 15.26-2.54-.29a1.99 1.99 0 0 0-1.64.57l-1.84 1.84a15.045 15.045 0 0 1-6.59-6.59l1.85-1.85c.43-.43.64-1.03.57-1.64l-.29-2.52a2.001 2.001 0 0 0-1.99-1.77H5.03c-1.13 0-2.07.94-2 2.07.53 8.54 7.36 15.36 15.89 15.89 1.13.07 2.07-.87 2.07-2v-1.73c.01-1.01-.75-1.86-1.76-1.98z"/></svg>02831-9363155</a>
+      <p class="oeffnungsstatus" data-oeffnungsstatus hidden style="margin:8px 0 0"></p>
+      <div class="persoenlich-zeiten">
+        <div><span>Mo–Do</span><span>8:30–16:30 Uhr</span></div>
+        <div><span>Fr</span><span>8:30–12:30 Uhr</span></div>
+        <div><span>Sa–So</span><span>geschlossen</span></div>
+        <div><span>Feiertage</span><span>geschlossen</span></div>
+      </div>
+      <div class="persoenlich-adresse">
+        <p><strong>Hausverwaltung &amp; Immobilienvermarktung<br>Birgit Groterhorst</strong><br>Köln-Mindener-Bahn 8<br>47608 Geldern</p>
+        <div class="karte-platz" data-karte="https://www.google.com/maps?q=K%C3%B6ln-Mindener-Bahn+8,+47608+Geldern&output=embed" data-titel="Standort Hausverwaltung Groterhorst">
+          <div class="karte-hinweis">
+            <span class="karte-pin" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2c-4.2 0-8 3.22-8 8.2 0 3.32 2.67 7.25 8 11.8 5.33-4.55 8-8.48 8-11.8C20 5.22 16.2 2 12 2zm0 10c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg></span>
+            <p>Die Karte kommt von Google Maps. Beim Laden werden Daten an Google übertragen.</p>
+            <button class="btn btn-ghost" type="button" data-karte-laden>Karte laden</button>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+</main>
+<footer>
+  <div class="wrap footer-innen">
+    <img class="footer-logo" src="img/logo_hvw.svg" width="1219" height="201" loading="lazy" alt="Hausverwaltung Groterhorst">
+    <div class="footer-links">
+      <a href="impressum.html">Impressum</a>
+      <a href="datenschutz.html">Datenschutz</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Anliegen aus der Adresse vorauswählen, z. B. kontakt.html?anliegen=erstgespraech
+  const kontakt = document.getElementById('kontaktformular');
+  const anliegen = new URLSearchParams(location.search).get('anliegen');
+  const auswahl = anliegen && kontakt.querySelector(`input[name="anliegen"][value="${CSS.escape(anliegen)}"]`);
+  if (auswahl) auswahl.checked = true;
+
+  // Prototyp: kein Versand, nur Prüfung der Pflichtfelder und Bestätigung
+  kontakt.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!window.pruefeFormular(kontakt)) return;
+    kontakt.hidden = true;
+    document.querySelector('.hinweis-schaden').hidden = true;
+    document.querySelector('.danke').hidden = false;
+  });
+</script>
+<script src="leisten.js" defer></script>
+<script src="status.js" defer></script>
+<script src="karte.js" defer></script>
+<script src="formular.js" defer></script>
+<script src="schaden-dialog.js" defer></script>
+</body>
+</html>

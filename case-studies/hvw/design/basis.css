@@ -1,0 +1,173 @@
+/* Gemeinsame Grundlage aller Seiten: Tokens, Typografie, Header, Buttons, Kontaktbereich, Footer.
+   Seitenspezifisches CSS steht weiterhin im <style> der jeweiligen Seite. */
+
+/* Schrift: Familjen Grotesk (SIL Open Font License), lokal eingebunden – keine Verbindung zu Google.
+   Eine variable Schriftdatei je Zeichensatz deckt alle Gewichte von 400 bis 700 ab. */
+@font-face {
+  font-family: 'Familjen Grotesk'; font-style: normal; font-weight: 400 700; font-display: swap;
+  src: url(fonts/familjen-grotesk-latin-ext.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Familjen Grotesk'; font-style: normal; font-weight: 400 700; font-display: swap;
+  src: url(fonts/familjen-grotesk-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  --black: #000000; --white: #FFFFFF; --gray: #F3F3F3; --red: #C70007;
+  --text: #000000; --text-2: rgba(0,0,0,.7); --bg: #FFFFFF; --linie: rgba(0,0,0,.14);
+  --radius-btn: 32px; --radius-karte: 32px; --radius-input: 8px;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Familjen Grotesk', sans-serif; line-height: 1.6; }
+img, svg { max-width: 100%; display: block; }
+a { color: inherit; }
+.wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+
+/* Tastaturfokus: ein einheitlicher Ring für alles Anklickbare */
+a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--black); outline-offset: 3px; border-radius: 8px; }
+.btn:focus-visible, .aktionsleiste a:focus-visible { border-radius: var(--radius-btn); }
+.skip { position: absolute; left: 16px; top: -100px; z-index: 100; background: var(--black); color: #fff; padding: 12px 20px; border-radius: var(--radius-btn); font-weight: 700; text-decoration: none; }
+.skip:focus { top: 12px; outline-color: #fff; }
+main { display: block; }
+
+/* Header */
+header { background: #fff; border-bottom: 1px solid var(--linie); position: sticky; top: 0; z-index: 10; transition: transform .25s ease; }
+header.header-weg { transform: translateY(-100%); }
+.kopf-innen { max-width: 1180px; margin: 0 auto; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.logo { display: block; padding: 7px 0; }
+.logo img { height: 26px; width: auto; }
+nav.hauptnav { display: none; }
+nav.hauptnav a { font-weight: 600; font-size: .92rem; text-decoration: none; margin-right: 28px; }
+nav.hauptnav a:last-child { margin-right: 0; }
+nav.hauptnav a.aktiv { text-decoration: underline; text-decoration-color: var(--red); text-decoration-thickness: 2px; text-underline-offset: 6px; }
+.kopf-rechts { display: flex; align-items: center; gap: 8px; }
+/* Kontakt-Button im Header: nur Desktop (mobil steht „Kontakt“ im Menü) */
+header .kopf-kontakt { display: none; padding: 10px 24px; font-size: .88rem; }
+header .kopf-kontakt[aria-current] { background: var(--black); }
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 24px; border-radius: var(--radius-btn); font-weight: 700; font-size: .92rem; text-decoration: none; border: none; cursor: pointer; font-family: inherit; transition: background-color .2s ease, border-color .2s ease, color .2s ease; }
+.btn svg { width: 18px; height: 18px; fill: currentColor; }
+.btn-primary { background: var(--red); color: #fff; }
+.btn-primary:hover { background: var(--black); }
+.btn-ghost { background: transparent; color: var(--text); border: 1.5px solid var(--linie); }
+/* Outline-Buttons füllen sich beim Überfahren rot (gilt für alle außer den Header-Aktionen) */
+.btn-ghost:hover { background: var(--red); border-color: var(--red); color: #fff; }
+.burger { height: 40px; padding: 0 16px 0 14px; border: 1.5px solid var(--linie); border-radius: var(--radius-btn); background: #fff; display: flex; align-items: center; justify-content: center; gap: 10px; flex: none; cursor: pointer; font-weight: 700; font-size: .86rem; }
+.burger-icon, .burger-icon::before, .burger-icon::after { content: ""; display: block; width: 18px; height: 2px; background: var(--text); position: relative; }
+.burger-icon::before { position: absolute; top: -6px; }
+.burger-icon::after { position: absolute; top: 6px; }
+.burger-icon, .burger-icon::before, .burger-icon::after { transition: transform .2s ease, background-color .2s ease, top .2s ease; }
+.burger .t-zu { display: none; }
+header:has(#menu-toggle:checked) .burger .t-menue { display: none; }
+header:has(#menu-toggle:checked) .burger .t-zu { display: inline; }
+header:has(#menu-toggle:checked) .burger-icon { background: transparent; }
+header:has(#menu-toggle:checked) .burger-icon::before { top: 0; transform: rotate(45deg); }
+header:has(#menu-toggle:checked) .burger-icon::after { top: 0; transform: rotate(-45deg); }
+/* Checkbox bleibt für Tastatur und Screenreader erreichbar, ist aber unsichtbar */
+#menu-toggle { position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden; clip-path: inset(50%); }
+header:has(#menu-toggle:focus-visible) .burger { outline: 2px solid var(--black); outline-offset: 3px; }
+.mobilnav { display: none; flex-direction: column; gap: 4px; padding: 8px 24px 20px; border-bottom: 1px solid var(--linie); background: #fff; }
+.mobilnav a { padding: 12px 4px; font-weight: 600; text-decoration: none; border-bottom: 1px dotted var(--linie); }
+.mobilnav a.aktiv { color: var(--red); }
+
+/* Aktionsleiste: mobil immer sichtbar am unteren Rand, mit Text statt reiner Icons */
+body { padding-bottom: calc(72px + env(safe-area-inset-bottom)); }
+.aktionsleiste { transition: transform .25s ease; position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; display: grid; grid-template-columns: 1fr 1.4fr; gap: 8px; padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); background: #fff; border-top: 1px solid var(--linie); }
+body.leiste-aus .aktionsleiste { transform: translateY(100%); }
+@media (prefers-reduced-motion: reduce) { header, .aktionsleiste { transition: none; } }
+.aktionsleiste a { display: flex; align-items: center; justify-content: center; gap: 8px; height: 50px; border-radius: var(--radius-btn); font-weight: 700; font-size: .92rem; text-decoration: none; }
+.aktionsleiste svg { width: 18px; height: 18px; fill: currentColor; flex: none; }
+.aktionsleiste .anrufen { border: 1.5px solid var(--linie); color: var(--text); transition: background-color .2s ease, border-color .2s ease, color .2s ease; }
+.aktionsleiste .anrufen:hover { background: var(--red); border-color: var(--red); color: #fff; }
+.aktionsleiste .schaden { background: var(--red); color: #fff; }
+#menu-toggle:checked ~ .mobilnav { display: flex; }
+
+/* Sections */
+section { padding: 72px 0; }
+.kicker { font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--red); margin-bottom: 8px; display: block; }
+h1 { font-weight: 700; letter-spacing: -0.02em; font-size: clamp(1.9rem, 1.5rem + 2vw, 2.7rem); line-height: 1.15; margin: 0 0 20px; }
+h2 { font-weight: 700; font-size: clamp(1.4rem, 1.2rem + 1vw, 1.8rem); line-height: 1.25; margin: 0 0 16px; }
+h3 { font-weight: 700; font-size: 1.2rem; margin: 0 0 12px; }
+h4, h3.klein { font-weight: 700; font-size: 1.02rem; margin: 0 0 8px; }
+p { margin: 0 0 20px; }
+p.lead { color: var(--text-2); font-size: 1.05rem; max-width: 34em; }
+.abschnitt-kopf { max-width: 40em; margin-bottom: 40px; }
+.abschnitt-kopf p { color: var(--text-2); margin: 0; }
+
+/* Fakten-Zeile mit Haken (Vertrauensmerkmale) */
+.fakten { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 24px; font-size: .9rem; font-weight: 600; }
+.fakten li { display: flex; align-items: center; gap: 8px; }
+.fakten svg { width: 18px; height: 18px; fill: var(--red); flex: none; }
+
+/* Kontakt */
+.kontakt-grid { display: grid; gap: 40px; grid-template-columns: 1fr; }
+.kontakt-grid p { font-size: .92rem; color: var(--text-2); margin: 0 0 16px; }
+.kontakt-grid a { color: var(--text); font-weight: 600; text-decoration: none; }
+.kontakt-grid a:hover { color: var(--red); }
+.oeffnungszeiten div { display: flex; gap: 16px; font-size: .9rem; color: var(--text-2); margin-bottom: 10px; }
+.oeffnungszeiten span:first-child { width: 84px; flex: none; font-weight: 600; color: var(--text); }
+.karte-platz { height: 220px; border-radius: var(--radius-karte); background: var(--gray); border: 1.5px solid var(--linie); overflow: hidden; }
+.karte-platz iframe { width: 100%; height: 100%; border: 0; display: block; }
+.karte-hinweis { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 16px 24px; text-align: center; }
+.karte-hinweis p { margin: 0; font-size: .86rem; line-height: 1.45; color: var(--text-2); max-width: 24em; }
+.karte-pin { width: 40px; height: 40px; border-radius: 50%; background: #fff; display: flex; align-items: center; justify-content: center; }
+.karte-pin svg { width: 22px; height: 22px; fill: var(--red); }
+.karte-hinweis .btn { background: #fff; padding: 10px 22px; }
+.karte-hinweis .btn:hover { background: var(--red); }
+
+/* Akkordeon (FAQ): weiße Karten mit Schatten auf grauem Grund, mit Rand auf weißem Grund */
+.faq { max-width: 800px; margin: 0 auto; }
+.faq .abschnitt-kopf { text-align: center; margin-left: auto; margin-right: auto; }
+.faq details { background: #fff; border-radius: 24px; margin-bottom: 12px; box-shadow: 0 4px 20px rgba(20,15,14,.06); }
+.faq summary { list-style: none; cursor: pointer; padding: 22px 28px; font-weight: 700; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; width: 32px; height: 32px; border-radius: 999px; background: var(--gray); color: var(--red); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; font-weight: 500; flex: none; }
+.faq details[open] summary::after { content: "–"; }
+.faq details p { padding: 0 28px 24px; margin: 0; color: var(--text-2); font-size: 1rem; }
+.faq.auf-weiss details { box-shadow: none; border: 1.5px solid var(--linie); }
+
+/* Formular-Fehler: roter Hinweis unter dem Feld */
+.feld textarea, .sd-feld textarea { display: block; }
+.feld-fehler { margin: 6px 0 0; font-size: .86rem; font-weight: 600; color: var(--red); }
+.check + .feld-fehler, .sd-check + .feld-fehler { margin: -18px 0 24px 32px; }
+input[aria-invalid="true"], textarea[aria-invalid="true"] { border-color: var(--red) !important; box-shadow: 0 0 0 3px rgba(199,0,7,.12) !important; }
+input[type="checkbox"][aria-invalid="true"] { outline: 2px solid var(--red); outline-offset: 2px; }
+
+/* Öffnungsstatus (wird von status.js befüllt) */
+.oeffnungsstatus { display: inline-flex; align-items: center; gap: 8px; font-size: .86rem; font-weight: 700; margin: 0 0 16px; }
+.oeffnungsstatus::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--black); flex: none; }
+.oeffnungsstatus.zu::before { background: transparent; box-shadow: inset 0 0 0 2px var(--text-2); }
+.oeffnungsstatus.zu { color: var(--text-2); }
+
+/* Footer */
+footer { background: var(--black); color: rgba(255,255,255,.7); padding: 28px 0; }
+.footer-innen { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
+footer a { color: rgba(255,255,255,.7); text-decoration: none; font-size: .82rem; }
+footer a:hover { color: #fff; }
+footer a:focus-visible { outline-color: #fff; }
+.footer-links { display: flex; gap: 8px 12px; margin-left: -8px; }
+.footer-links a { display: inline-block; padding: 12px 8px; }
+.footer-logo { height: 22px; filter: brightness(0) invert(1); opacity: .85; }
+
+@media (min-width: 700px) {
+  .kontakt-grid { grid-template-columns: 1fr 1fr 1fr; }
+  .footer-innen { flex-direction: row; align-items: center; justify-content: space-between; }
+}
+
+@media (min-width: 900px) {
+  body { padding-bottom: 0; }
+  .aktionsleiste { display: none; }
+  header .kopf-kontakt { display: inline-flex; }
+  .logo { padding: 0; }
+  .logo img { height: 30px; }
+  nav.hauptnav { display: block; }
+  .burger { display: none; }
+  .mobilnav, #menu-toggle:checked ~ .mobilnav { display: none !important; }
+  section { padding: 112px 0; }
+  footer { padding: 44px 0; }
+}
+
+@media (min-width: 1100px) {
+  .logo img { height: 34px; }
+}

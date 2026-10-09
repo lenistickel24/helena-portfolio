@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta name="robots" content="noindex">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wireframe: Für Mieter – Hausverwaltung Groterhorst</title>
+<style>
+  :root {
+    --l1: #FFFFFF; --l2: #F2F2F2; --l3: #E4E4E4; --l4: #C7C7C7; --l5: #8A8A8A; --l6: #333333; --l7: #474747;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #ECECEC; color: var(--l6); font-family: system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.5; }
+  .kopfbereich { background: #fff; border-bottom: 1px solid var(--l4); padding: 24px; }
+  .kopfbereich h1 { margin: 0 0 8px; font-size: 1.3rem; }
+  .kopfbereich p { margin: 0; color: var(--l5); font-size: .92rem; max-width: 60em; }
+  .legende { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 16px; font-size: .8rem; color: var(--l5); }
+  .legende span { display: inline-flex; align-items: center; gap: 8px; }
+  .legende i { width: 16px; height: 16px; border-radius: 4px; display: inline-block; }
+
+  .buehnen { display: flex; gap: 64px; padding: 48px 24px 112px; align-items: flex-start; flex-wrap: wrap; }
+  .geraet-label { font-size: .82rem; font-weight: 700; color: var(--l5); margin-bottom: 8px; text-transform: uppercase; letter-spacing: .04em; }
+
+  .rahmen-mobil { width: 375px; }
+  .rahmen-desktop { width: 920px; max-width: 92vw; }
+  .seite { background: #fff; border: 1px solid var(--l4); position: relative; }
+
+
+  .block { padding: 32px; position: relative; }
+  .kopf-nav { display: flex; flex-wrap: nowrap; justify-content: space-between; align-items: center; gap: 24px; padding: 24px 32px; border-bottom: 1px solid var(--l4); }
+  .logo-platz { font-weight: 700; font-size: .84rem; color: var(--l6); white-space: nowrap; flex: none; }
+  .nav-punkte { display: flex; flex-wrap: nowrap; gap: 32px; }
+  .nav-punkte .nav-wort { font-size: .82rem; font-weight: 600; color: var(--l6); white-space: nowrap; }
+  .nav-punkte .nav-wort.aktiv { text-decoration: underline; text-underline-offset: 4px; }
+  .menu-icon { width: 34px; height: 34px; border: none; border-radius: 24px; background: var(--l6); display: flex; align-items: center; justify-content: center; }
+  .menu-icon i { width: 14px; height: 2px; background: #fff; box-shadow: 0 4px 0 #fff, 0 -4px 0 #fff; }
+  .icon-knopf { width: 34px; height: 34px; border: 1.5px solid var(--l3); color: var(--l5); border-radius: 24px; display: flex; align-items: center; justify-content: center; font-size: .95rem; }
+  .kopf-nav > div:last-child { flex: none; white-space: nowrap; }
+
+  .bild-platz { background: var(--l2); border-radius: 24px; display: flex; align-items: center; justify-content: center; color: var(--l5); font-size: .78rem; text-align: center; padding: 8px; }
+  .bild-platz svg { width: 30px; height: 30px; fill: var(--l5); margin-bottom: 8px; display: block; margin-left: auto; margin-right: auto; }
+
+  .textzeile { height: 10px; background: var(--l3); border-radius: 2px; margin-bottom: 16px; }
+  h2.wf, h3.wf, h4.wf { margin: 0 0 16px; font-family: system-ui, sans-serif; }
+  h2.wf { font-size: 1.4rem; } h3.wf { font-size: .98rem; } h4.wf { font-size: .95rem; }
+  p.wf { margin: 0 0 24px; color: var(--l5); font-size: .86rem; }
+
+  .knopf { display: inline-block; border: 1.5px solid var(--l6); color: var(--l6); padding: 16px 24px; font-size: .84rem; font-weight: 600; border-radius: 999px; background: #fff; white-space: nowrap; flex: none; text-align: center; }
+  .knopf.gefuellt { background: var(--l6); color: #fff; border-color: var(--l6); }
+  .knopf.breit { display: block; width: 100%; }
+
+  .zwei-spalten { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  .karte-block { border: 1.5px solid var(--l4); border-radius: 24px; padding: 32px; display: flex; flex-direction: column; gap: 16px; }
+  .karte-block.warum { border: none; background: #fff; }
+  .liste-punkt { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dotted var(--l4); padding: 16px 0; font-size: .8rem; }
+  .li-icon { width: 20px; height: 20px; fill: var(--l5); margin-right: 16px; flex: none; }
+  .li-arrow { width: 18px; height: 18px; fill: var(--l5); display: block; }
+
+  .drei-spalten { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .zwei-raster { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  /* Notfall */
+  .notfall { background: var(--l7); color: #fff; border-radius: 24px; padding: 32px; display: flex; flex-direction: column; gap: 24px; }
+  .notfall h2 { color: #fff; }
+  .notfall p, .notfall li { color: #D6D6D6; }
+  .notfall ul { margin: 0; padding-left: 20px; font-size: .86rem; }
+  .notfall li { margin-bottom: 8px; }
+  .notfall-nummer { background: #fff; color: var(--l6); border-radius: 999px; padding: 16px 24px; text-align: center; font-weight: 700; font-size: 1.1rem; display: block; }
+  .notfall-klein { font-size: .78rem; color: #B8B8B8; text-align: center; margin-top: 8px; }
+  .notfall-112 { background: rgba(255,255,255,.12); border-radius: 16px; padding: 16px; font-size: .82rem; }
+
+  /* Formular */
+  .schritt-label { font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--l5); margin-bottom: 16px; }
+  .auswahl-raster { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 32px; }
+  .auswahl-tile { border: 1.5px solid var(--l4); border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 8px; }
+  .auswahl-tile.aktiv { border-color: var(--l6); background: var(--l2); }
+  .auswahl-tile svg { width: 22px; height: 22px; fill: var(--l5); }
+  .auswahl-tile.aktiv svg { fill: var(--l6); }
+  .auswahl-tile span { font-size: .82rem; font-weight: 600; }
+  .feld { margin-bottom: 24px; }
+  .feld label { display: block; font-size: .78rem; font-weight: 700; margin-bottom: 8px; }
+  .feld-eingabe { border: 1.5px solid var(--l4); border-radius: 16px; height: 48px; background: var(--l1); }
+  .feld-eingabe.textarea { height: 96px; }
+  .upload-flaeche { border: 1.5px dashed var(--l4); border-radius: 16px; padding: 24px; text-align: center; color: var(--l5); font-size: .8rem; }
+  .checkbox-zeile { display: flex; gap: 12px; align-items: flex-start; font-size: .8rem; color: var(--l5); margin-bottom: 24px; }
+  .checkbox-box { width: 20px; height: 20px; border: 1.5px solid var(--l4); border-radius: 6px; flex: none; }
+
+  /* FAQ */
+  .faq-item { border: 1.5px solid var(--l4); border-radius: 20px; padding: 20px 24px; margin-bottom: 16px; }
+  .faq-frage { display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: .92rem; }
+  .faq-icon { width: 24px; height: 24px; border-radius: 999px; background: var(--l2); display: flex; align-items: center; justify-content: center; font-size: 1rem; flex: none; color: var(--l6); }
+  .faq-antwort { margin-top: 16px; }
+
+  /* Downloads */
+  .download-zeile { display: flex; align-items: center; gap: 16px; border: 1.5px solid var(--l4); border-radius: 16px; padding: 16px 20px; margin-bottom: 12px; }
+  .download-zeile svg { width: 24px; height: 24px; fill: var(--l5); flex: none; }
+  .download-zeile strong { display: block; font-size: .88rem; }
+  .download-zeile span { font-size: .76rem; color: var(--l5); }
+  .download-laden { margin-left: auto; width: 20px; height: 20px; fill: var(--l5); flex: none; }
+
+  @media (max-width: 900px) {
+    .buehnen { flex-direction: column; align-items: center; }
+  }
+</style>
+</head>
+<body>
+<div class="kopfbereich">
+  <h1>Wireframe — Für Mieter (Low-Fidelity)</h1>
+  <p>Gleiche Bausteine/Regeln wie die Startseite: grau, ohne Rotskala/Schrift aus dem Designsystem, Radius 24px (Buttons komplett rund), 8er-Raster, keine Trennlinien zwischen Abschnitten.</p>
+  <div class="legende">
+    <span><i style="background:var(--l2);border-radius:5px"></i>Bild-Platzhalter</span>
+    <span><i style="background:var(--l3)"></i>Text-Platzhalter</span>
+  </div>
+</div>
+
+<div class="buehnen">
+  <!-- MOBIL -->
+  <div class="rahmen-mobil">
+    <div class="geraet-label">Mobil, 375px (primär)</div>
+    <div class="seite">
+      <div class="kopf-nav">
+        <div class="logo-platz">Hausverwaltung Groterhorst</div>
+        <div style="display:flex;gap:16px;align-items:center">
+          <span class="icon-knopf" title="Schaden melden / Notfall">⚠</span>
+          <div class="menu-icon"><i></i></div>
+        </div>
+      </div>
+
+      <div class="block">
+        <h2 class="wf">Schnell die richtige Hilfe.</h2>
+        <p class="wf" style="margin:0">Ob Wasserschaden, Frage zur Abrechnung oder Formular — hier finden Sie es. Und wenn nicht, rufen Sie einfach an.</p>
+      </div>
+
+      <div class="block">
+        <div class="notfall">
+          <div>
+            <h2 class="wf" style="font-size:1.2rem">⚠ Notfall? Rufen Sie sofort an.</h2>
+            <p class="wf" style="margin:0 0 16px">Auch außerhalb der Bürozeiten, z. B. bei:</p>
+            <ul>
+              <li>Wasserrohrbruch oder Wasser, das in die Wohnung läuft</li>
+              <li>Heizungsausfall im Winter</li>
+              <li>Tür oder Fenster lässt sich nicht mehr schließen</li>
+            </ul>
+          </div>
+          <a class="notfall-nummer">0170 123 45 67</a>
+          <p class="notfall-klein">Während der Bürozeiten: 02831 123 456</p>
+          <div class="notfall-112">Bei Feuer, Gasgeruch oder Gefahr für Menschen: zuerst <strong>112</strong> wählen.</div>
+        </div>
+
+      </div>
+
+      <div class="block" style="background:var(--l2)">
+        <h3 class="wf">Häufige Fragen</h3>
+        <div class="faq-item">
+          <div class="faq-frage"><span>Wann bekomme ich meine Nebenkostenabrechnung?</span><span class="faq-icon">–</span></div>
+          <div class="faq-antwort"><div class="textzeile"></div><div class="textzeile" style="width:80%"></div></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-frage"><span>Wer bezahlt kleine Reparaturen?</span><span class="faq-icon">+</span></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-frage"><span>Kann ich einen Handwerker selbst beauftragen?</span><span class="faq-icon">+</span></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-frage"><span>Wie und mit welcher Frist kündige ich meine Wohnung?</span><span class="faq-icon">+</span></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-frage"><span>Sind Haustiere in der Wohnung erlaubt?</span><span class="faq-icon">+</span></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-frage"><span>Wie bekomme ich meine Kaution zurück?</span><span class="faq-icon">+</span></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-frage"><span>Kann ich meine Wohnung untervermieten?</span><span class="faq-icon">+</span></div>
+        </div>
+      </div>
+
+      <div class="block">
+        <h3 class="wf">Downloads</h3>
+        <div class="download-zeile"><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg><div><strong>Hausordnung</strong><span>PDF, 1 Seite</span></div><svg class="download-laden" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></div>
+        <div class="download-zeile"><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg><div><strong>SEPA-Lastschriftmandat</strong><span>PDF, für die Mietzahlung</span></div><svg class="download-laden" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></div>
+        <div class="download-zeile"><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg><div><strong>Checkliste Auszug</strong><span>PDF, 2 Seiten</span></div><svg class="download-laden" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></div>
+        <div class="download-zeile"><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg><div><strong>Kündigung</strong><span>PDF, Vorlage</span></div><svg class="download-laden" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></div>
+      </div>
+
+      <div class="block" style="background:var(--l2)">
+        <h3 class="wf" style="margin-bottom:4px">Kontakt</h3>
+        <p class="wf" style="margin:0 0 16px;font-size:.8rem">Hausverwaltung &amp; Immobilienvermarktung<br>Birgit Groterhorst</p>
+        <p class="wf" style="margin:0 0 12px;font-size:.8rem">Köln-Mindener-Bahn 8<br>47608 Geldern</p>
+        <p class="wf" style="margin:0 0 12px;font-size:.8rem">Tel.: 02831-9363155<br>Fax: 02831-9363156</p>
+        <p class="wf" style="margin:0;font-size:.8rem">E-Mail: info@hvw-groterhorst.de</p>
+        <h4 class="wf" style="margin:24px 0 8px;font-size:.95rem">Öffnungszeiten</h4>
+        <div style="color:var(--l5);font-size:.8rem">
+          <div style="display:flex;gap:16px;margin-bottom:6px"><span style="width:88px;flex:none">Montag</span><span>9–12 Uhr</span></div>
+          <div style="display:flex;gap:16px;margin-bottom:6px"><span style="width:88px;flex:none">Dienstag</span><span>9–12 Uhr</span></div>
+          <div style="display:flex;gap:16px;margin-bottom:6px"><span style="width:88px;flex:none">Mittwoch</span><span>9–12 Uhr</span></div>
+          <div style="display:flex;gap:16px;margin-bottom:6px"><span style="width:88px;flex:none">Donnerstag</span><span>9–12 Uhr und 14–17 Uhr</span></div>
+          <div style="display:flex;gap:16px;margin-bottom:6px"><span style="width:88px;flex:none">Freitag</span><span>9–12 Uhr</span></div>
+          <div style="display:flex;gap:16px"><span style="width:88px;flex:none">Notfall</span><span>0170 123 45 67</span></div>
+        </div>
+        <div class="bild-platz" style="height:80px;margin-top:16px;background:var(--l3)"><div><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.9 13.98l2.1 2.53 3.1-3.99c.2-.26.6-.26.8.01l3.51 4.68c.25.33.01.8-.4.8H6.02c-.42 0-.65-.48-.39-.81L8.12 14c.19-.26.57-.27.78-.02z"/></svg>Karte (Platzhalter)</div></div>
+      </div>
+
+      <div class="block" style="background:var(--l7)">
+        <div class="textzeile" style="width:50%;background:var(--l5)"></div>
+        <div class="liste-punkt" style="border:0;font-size:.72rem;color:var(--l3)"><span>Impressum</span><span>Datenschutz</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DESKTOP -->
+  <div class="rahmen-desktop">
+    <div class="geraet-label">Desktop, 1280px (sekundär)</div>
+    <div class="seite">
+      <div class="kopf-nav">
+        <div class="logo-platz">Hausverwaltung Groterhorst</div>
+        <div class="nav-punkte"><span class="nav-wort">Für Eigentümer</span><span class="nav-wort aktiv">Für Mieter</span><span class="nav-wort">Über uns</span><span class="nav-wort">Kontakt</span></div>
+        <div style="display:flex;gap:8px">
+          <span class="knopf">⚠ Schaden melden</span>
+        </div>
+      </div>
+
+      <div class="block">
+        <h2 class="wf">Schnell die richtige Hilfe.</h2>
+        <p class="wf" style="margin:0;max-width:32em">Ob Wasserschaden, Frage zur Abrechnung oder Formular — hier finden Sie es. Und wenn nicht, rufen Sie einfach an.</p>
+      </div>
+
+      <div class="block">
+        <div class="notfall" style="flex-direction:row;align-items:center">
+          <div style="flex:1.3">
+            <h2 class="wf" style="font-size:1.3rem">⚠ Notfall? Rufen Sie sofort an.</h2>
+            <p class="wf" style="margin:0 0 16px">Auch außerhalb der Bürozeiten, z. B. bei Wasserrohrbruch, Heizungsausfall im Winter oder wenn sich Tür/Fenster nicht mehr schließen lässt.</p>
+            <div class="notfall-112" style="max-width:26em">Bei Feuer, Gasgeruch oder Gefahr für Menschen: zuerst <strong>112</strong> wählen.</div>
+          </div>
+          <div style="flex:1">
+            <a class="notfall-nummer">0170 123 45 67</a>
+            <p class="notfall-klein">Bürozeiten: 02831 123 456</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="block" style="background:var(--l2)">
+        <div style="max-width:680px;margin:0 auto;text-align:center">
+          <h3 class="wf">Häufige Fragen</h3>
+          <p class="wf" style="margin:0 0 24px">Ihre Frage ist nicht dabei? Einfach anrufen.</p>
+          <div style="text-align:left">
+            <div class="faq-item">
+              <div class="faq-frage"><span>Wann bekomme ich meine Nebenkostenabrechnung?</span><span class="faq-icon">–</span></div>
+              <div class="faq-antwort"><div class="textzeile"></div><div class="textzeile" style="width:80%"></div></div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-frage"><span>Wer bezahlt kleine Reparaturen?</span><span class="faq-icon">+</span></div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-frage"><span>Kann ich einen Handwerker selbst beauftragen?</span><span class="faq-icon">+</span></div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-frage"><span>Wie und mit welcher Frist kündige ich meine Wohnung?</span><span class="faq-icon">+</span></div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-frage"><span>Sind Haustiere in der Wohnung erlaubt?</span><span class="faq-icon">+</span></div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-frage"><span>Wie bekomme ich meine Kaution zurück?</span><span class="faq-icon">+</span></div>
+            </div>
+            <div class="faq-item" style="margin-bottom:0">
+              <div class="faq-frage"><span>Kann ich meine Wohnung untervermieten?</span><span class="faq-icon">+</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="block">
+        <h3 class="wf">Downloads</h3>
+        <div class="zwei-raster">
+          <div class="download-zeile"><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg><div><strong>Hausordnung</strong><span>PDF, 1 Seite</span></div><svg class="download-laden" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></div>
+          <div class="download-zeile"><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg><div><strong>SEPA-Lastschriftmandat</strong><span>PDF</span></div><svg class="download-laden" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></div>
+          <div class="download-zeile"><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg><div><strong>Checkliste Auszug</strong><span>PDF, 2 Seiten</span></div><svg class="download-laden" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></div>
+          <div class="download-zeile"><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg><div><strong>Mieterselbstauskunft</strong><span>PDF</span></div><svg class="download-laden" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></div>
+          <div class="download-zeile"><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg><div><strong>Kündigung</strong><span>PDF, Vorlage</span></div><svg class="download-laden" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></div>
+        </div>
+      </div>
+
+      <div class="block" style="background:var(--l2)">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px">
+          <div>
+            <h3 class="wf" style="margin-bottom:4px">Kontakt</h3>
+            <p class="wf" style="margin:0 0 16px;font-size:.8rem">Hausverwaltung &amp; Immobilienvermarktung<br>Birgit Groterhorst</p>
+            <p class="wf" style="margin:0 0 12px;font-size:.8rem">Köln-Mindener-Bahn 8<br>47608 Geldern</p>
+            <p class="wf" style="margin:0 0 12px;font-size:.8rem">Tel.: 02831-9363155<br>Fax: 02831-9363156</p>
+            <p class="wf" style="margin:0;font-size:.8rem">E-Mail: info@hvw-groterhorst.de</p>
+          </div>
+          <div>
+            <h3 class="wf">Öffnungszeiten</h3>
+            <div style="color:var(--l5);font-size:.8rem">
+              <div style="display:flex;gap:16px;margin-bottom:6px"><span style="width:88px;flex:none">Montag</span><span>9–12 Uhr</span></div>
+              <div style="display:flex;gap:16px;margin-bottom:6px"><span style="width:88px;flex:none">Dienstag</span><span>9–12 Uhr</span></div>
+              <div style="display:flex;gap:16px;margin-bottom:6px"><span style="width:88px;flex:none">Mittwoch</span><span>9–12 Uhr</span></div>
+              <div style="display:flex;gap:16px;margin-bottom:6px"><span style="width:88px;flex:none">Donnerstag</span><span>9–12 Uhr und 14–17 Uhr</span></div>
+              <div style="display:flex;gap:16px;margin-bottom:6px"><span style="width:88px;flex:none">Freitag</span><span>9–12 Uhr</span></div>
+              <div style="display:flex;gap:16px"><span style="width:88px;flex:none">Notfall</span><span>0170 123 45 67</span></div>
+            </div>
+          </div>
+          <div class="bild-platz" style="background:var(--l3)"><div><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.9 13.98l2.1 2.53 3.1-3.99c.2-.26.6-.26.8.01l3.51 4.68c.25.33.01.8-.4.8H6.02c-.42 0-.65-.48-.39-.81L8.12 14c.19-.26.57-.27.78-.02z"/></svg>Karte</div></div>
+        </div>
+      </div>
+
+      <div class="block" style="background:var(--l7);display:flex;justify-content:space-between">
+        <div class="textzeile" style="width:30%;margin:0;background:var(--l5)"></div>
+        <div style="font-size:.72rem;color:var(--l3)">Impressum · Datenschutz</div>
+      </div>
+    </div>
+  </div>
+</div>
+<style>.nur-mobil .kopfbereich,.nur-mobil .rahmen-desktop,.nur-mobil .geraet-label,.nur-desktop .kopfbereich,.nur-desktop .rahmen-mobil,.nur-desktop .geraet-label{display:none}.nur-mobil .buehnen,.nur-desktop .buehnen{padding:0;gap:0;display:block}.nur-mobil body,.nur-desktop body{background:#fff}.nur-mobil .rahmen-mobil,.nur-desktop .rahmen-desktop{width:100%;max-width:none}.nur-mobil .seite,.nur-desktop .seite{border:0}</style>
+<script>{const n=new URLSearchParams(location.search).get("nur");if(n)document.documentElement.classList.add("nur-"+n)}</script>
+</body>
+</html>

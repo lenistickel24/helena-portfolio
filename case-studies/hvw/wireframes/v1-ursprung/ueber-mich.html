@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta name="robots" content="noindex">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wireframe: Über uns – Hausverwaltung Groterhorst</title>
+<style>
+  :root {
+    --l1: #FFFFFF; --l2: #F2F2F2; --l3: #E4E4E4; --l4: #C7C7C7; --l5: #8A8A8A; --l6: #333333; --l7: #474747;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #ECECEC; color: var(--l6); font-family: system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.5; }
+  .kopfbereich { background: #fff; border-bottom: 1px solid var(--l4); padding: 24px; }
+  .kopfbereich h1 { margin: 0 0 8px; font-size: 1.3rem; }
+  .kopfbereich p { margin: 0; color: var(--l5); font-size: .92rem; max-width: 60em; }
+  .legende { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 16px; font-size: .8rem; color: var(--l5); }
+  .legende span { display: inline-flex; align-items: center; gap: 8px; }
+  .legende i { width: 16px; height: 16px; border-radius: 4px; display: inline-block; }
+
+  .buehnen { display: flex; gap: 64px; padding: 48px 24px 112px; align-items: flex-start; flex-wrap: wrap; }
+  .geraet-label { font-size: .82rem; font-weight: 700; color: var(--l5); margin-bottom: 8px; text-transform: uppercase; letter-spacing: .04em; }
+
+  .rahmen-mobil { width: 375px; }
+  .rahmen-desktop { width: 920px; max-width: 92vw; }
+  .seite { background: #fff; border: 1px solid var(--l4); position: relative; }
+
+  .block { padding: 32px; position: relative; }
+  .kopf-nav { display: flex; flex-wrap: nowrap; justify-content: space-between; align-items: center; gap: 24px; padding: 24px 32px; border-bottom: 1px solid var(--l4); }
+  .logo-platz { font-weight: 700; font-size: .84rem; color: var(--l6); white-space: nowrap; flex: none; }
+  .nav-punkte { display: flex; flex-wrap: nowrap; gap: 32px; }
+  .nav-punkte .nav-wort { font-size: .82rem; font-weight: 600; color: var(--l6); white-space: nowrap; }
+  .nav-punkte .nav-wort.aktiv { text-decoration: underline; text-underline-offset: 4px; }
+  .menu-icon { width: 34px; height: 34px; border: none; border-radius: 24px; background: var(--l6); display: flex; align-items: center; justify-content: center; }
+  .menu-icon i { width: 14px; height: 2px; background: #fff; box-shadow: 0 4px 0 #fff, 0 -4px 0 #fff; }
+  .icon-knopf { width: 34px; height: 34px; border: 1.5px solid var(--l3); color: var(--l5); border-radius: 24px; display: flex; align-items: center; justify-content: center; font-size: .95rem; }
+  .kopf-nav > div:last-child { flex: none; white-space: nowrap; }
+
+  .bild-platz { background: var(--l2); border-radius: 24px; display: flex; align-items: center; justify-content: center; color: var(--l5); font-size: .78rem; text-align: center; padding: 8px; }
+  .bild-platz svg { width: 30px; height: 30px; fill: var(--l5); margin-bottom: 8px; display: block; margin-left: auto; margin-right: auto; }
+
+  .textzeile { height: 10px; background: var(--l3); border-radius: 2px; margin-bottom: 16px; }
+  h2.wf, h3.wf, h4.wf { margin: 0 0 16px; font-family: system-ui, sans-serif; }
+  h2.wf { font-size: 1.4rem; } h3.wf { font-size: .98rem; } h4.wf { font-size: .95rem; }
+  p.wf { margin: 0 0 24px; color: var(--l5); font-size: .86rem; }
+
+  .knopf { display: inline-block; border: 1.5px solid var(--l6); color: var(--l6); padding: 16px 24px; font-size: .84rem; font-weight: 600; border-radius: 999px; background: #fff; white-space: nowrap; flex: none; text-align: center; }
+  .knopf.gefuellt { background: var(--l6); color: #fff; border-color: var(--l6); }
+  .knopf.breit { display: block; width: 100%; }
+
+  .liste-punkt { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dotted var(--l4); padding: 16px 0; font-size: .8rem; }
+
+  @media (max-width: 900px) {
+    .buehnen { flex-direction: column; align-items: center; }
+  }
+</style>
+</head>
+<body>
+<div class="kopfbereich">
+  <h1>Wireframe — Über uns (Low-Fidelity)</h1>
+  <p>Gleiche Bausteine/Regeln wie die anderen Wireframes: grau, ohne Rotskala/Schrift aus dem Designsystem, Radius 24px (Buttons komplett rund), 8er-Raster, keine Trennlinien zwischen Abschnitten, Material-3-Icons.</p>
+  <div class="legende">
+    <span><i style="background:var(--l2);border-radius:5px"></i>Bild-Platzhalter</span>
+    <span><i style="background:var(--l3)"></i>Text-Platzhalter</span>
+  </div>
+</div>
+
+<div class="buehnen">
+  <!-- MOBIL -->
+  <div class="rahmen-mobil">
+    <div class="geraet-label">Mobil, 375px (primär)</div>
+    <div class="seite">
+      <div class="kopf-nav">
+        <div class="logo-platz">Hausverwaltung Groterhorst</div>
+        <div style="display:flex;gap:16px;align-items:center">
+          <span class="icon-knopf" title="Schaden melden / Notfall">⚠</span>
+          <div class="menu-icon"><i></i></div>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="bild-platz" style="height:380px;margin-bottom:24px"><div><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.9 13.98l2.1 2.53 3.1-3.99c.2-.26.6-.26.8.01l3.51 4.68c.25.33.01.8-.4.8H6.02c-.42 0-.65-.48-.39-.81L8.12 14c.19-.26.57-.27.78-.02z"/></svg>Foto: Porträt</div></div>
+        <h2 class="wf">Guten Tag, wir sind die Hausverwaltung Groterhorst.</h2>
+        <p class="wf">Die Hausverwaltung Groterhorst ist in Geldern ansässig. Unser Büro liegt am Wohnort von Birgit Groterhorst – das garantiert ständige Erreichbarkeit.</p>
+        <p class="wf">Geführt wird die Hausverwaltung Groterhorst von Birgit Groterhorst. Sie ist gelernte Industriekauffrau und kam schon als Kind – durch den Immobilienbesitz ihres Vaters, später durch eigenen Immobilienerwerb – mit dem Thema Hausverwaltung in Berührung. Ursprünglich eine Nebentätigkeit neben ihrer kaufmännischen Arbeit in Unternehmen der Region, haben wir das Unternehmen nach der Geburt ihrer Tochter in den 90ern kontinuierlich ausgebaut und mehr und mehr zum Hauptberuf gemacht. Durch Seminarteilnahmen bilden wir uns stetig weiter – heute ist Birgit Groterhorst IHK-zertifizierte Verwalterin.</p>
+        <p class="wf">Ehrenamtlich ist Birgit Groterhorst seit 1990 Mitglied im Haus &amp; Grund Verein an der Niers, seit 2004 als 2. Vorsitzende. Vom Rat der Stadt Geldern wurde sie zur Hilfsschöffin gewählt, und sie engagiert sich im hiesigen St. Martins-Komitee.</p>
+        <p class="wf" style="border-left:2px solid var(--l5);padding-left:16px;font-weight:600;color:var(--l6);font-size:.95rem">„Probleme sind Herausforderungen, die mich prüfen und stärken.“<br><span style="font-weight:400;color:var(--l5);font-size:.78rem">Der Leitsatz von Birgit Groterhorst, den wir bei unserer Arbeit stets beherzigen.</span></p>
+        <p class="wf">Wir gehen offen und lösungsorientiert an Probleme heran. Dabei setzen wir nicht nur auf unsere eigene Erfahrung, sondern suchen immer auch den Austausch mit unseren Kunden – bei klaren, transparenten Abläufen und modernen, effizienten Arbeitsweisen.</p>
+        <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-start">
+          <div style="height:48px;width:160px;background:var(--l2);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--l5);font-size:.72rem">Unterschrift (Platzhalter)</div>
+          <span style="font-size:.8rem;color:var(--l5)">Ihre Birgit Groterhorst</span>
+        </div>
+      </div>
+
+      <div class="block" style="background:var(--l2)">
+        <h3 class="wf" style="margin-bottom:4px">Kontakt</h3>
+        <p class="wf" style="margin:0 0 16px;font-size:.8rem">Hausverwaltung &amp; Immobilienvermarktung<br>Birgit Groterhorst</p>
+        <p class="wf" style="margin:0 0 12px;font-size:.8rem">Köln-Mindener-Bahn 8<br>47608 Geldern</p>
+        <p class="wf" style="margin:0 0 12px;font-size:.8rem">Tel.: 02831-9363155<br>Fax: 02831-9363156</p>
+        <p class="wf" style="margin:0;font-size:.8rem">E-Mail: info@hvw-groterhorst.de</p>
+        <h4 class="wf" style="margin:24px 0 8px;font-size:.95rem">Öffnungszeiten</h4>
+        <div style="color:var(--l5);font-size:.8rem">
+          <div style="display:flex;gap:16px;margin-bottom:6px"><span style="width:88px;flex:none">Montag</span><span>9–12 Uhr</span></div>
+          <div style="display:flex;gap:16px;margin-bottom:6px"><span style="width:88px;flex:none">Dienstag</span><span>9–12 Uhr</span></div>
+          <div style="display:flex;gap:16px;margin-bottom:6px"><span style="width:88px;flex:none">Mittwoch</span><span>9–12 Uhr</span></div>
+          <div style="display:flex;gap:16px;margin-bottom:6px"><span style="width:88px;flex:none">Donnerstag</span><span>9–12 Uhr und 14–17 Uhr</span></div>
+          <div style="display:flex;gap:16px"><span style="width:88px;flex:none">Freitag</span><span>9–12 Uhr</span></div>
+        </div>
+        <div class="bild-platz" style="height:80px;margin-top:16px;background:var(--l3)"><div><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.9 13.98l2.1 2.53 3.1-3.99c.2-.26.6-.26.8.01l3.51 4.68c.25.33.01.8-.4.8H6.02c-.42 0-.65-.48-.39-.81L8.12 14c.19-.26.57-.27.78-.02z"/></svg>Karte (Platzhalter)</div></div>
+      </div>
+
+      <div class="block" style="background:var(--l7)">
+        <div class="textzeile" style="width:50%;background:var(--l5)"></div>
+        <div class="liste-punkt" style="border:0;font-size:.72rem;color:var(--l3)"><span>Impressum</span><span>Datenschutz</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DESKTOP -->
+  <div class="rahmen-desktop">
+    <div class="geraet-label">Desktop, 1280px (sekundär)</div>
+    <div class="seite">
+      <div class="kopf-nav">
+        <div class="logo-platz">Hausverwaltung Groterhorst</div>
+        <div class="nav-punkte"><span class="nav-wort">Für Eigentümer</span><span class="nav-wort">Für Mieter</span><span class="nav-wort aktiv">Über uns</span><span class="nav-wort">Kontakt</span></div>
+        <div style="display:flex;gap:8px">
+          <span class="knopf">⚠ Schaden melden</span>
+        </div>
+      </div>
+
+      <div class="block" style="display:flex;gap:48px;align-items:flex-start">
+        <div class="bild-platz" style="width:340px;aspect-ratio:3/4;flex:none"><div><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.9 13.98l2.1 2.53 3.1-3.99c.2-.26.6-.26.8.01l3.51 4.68c.25.33.01.8-.4.8H6.02c-.42 0-.65-.48-.39-.81L8.12 14c.19-.26.57-.27.78-.02z"/></svg>Foto: Porträt</div></div>
+        <div style="flex:1">
+          <h2 class="wf">Guten Tag, wir sind die Hausverwaltung Groterhorst.</h2>
+          <p class="wf">Die Hausverwaltung Groterhorst ist in Geldern ansässig. Unser Büro liegt am Wohnort von Birgit Groterhorst – das garantiert ständige Erreichbarkeit.</p>
+          <p class="wf">Geführt wird die Hausverwaltung Groterhorst von Birgit Groterhorst. Sie ist gelernte Industriekauffrau und kam schon als Kind – durch den Immobilienbesitz ihres Vaters, später durch eigenen Immobilienerwerb – mit dem Thema Hausverwaltung in Berührung. Ursprünglich eine Nebentätigkeit neben ihrer kaufmännischen Arbeit in Unternehmen der Region, haben wir das Unternehmen nach der Geburt ihrer Tochter in den 90ern kontinuierlich ausgebaut und mehr und mehr zum Hauptberuf gemacht. Durch Seminarteilnahmen bilden wir uns stetig weiter – heute ist Birgit Groterhorst IHK-zertifizierte Verwalterin.</p>
+          <p class="wf">Ehrenamtlich ist Birgit Groterhorst seit 1990 Mitglied im Haus &amp; Grund Verein an der Niers, seit 2004 als 2. Vorsitzende. Vom Rat der Stadt Geldern wurde sie zur Hilfsschöffin gewählt, und sie engagiert sich im hiesigen St. Martins-Komitee.</p>
+          <p class="wf" style="border-left:2px solid var(--l5);padding-left:16px;font-weight:600;color:var(--l6);font-size:1rem">„Probleme sind Herausforderungen, die mich prüfen und stärken.“<br><span style="font-weight:400;color:var(--l5);font-size:.8rem">Der Leitsatz von Birgit Groterhorst, den wir bei unserer Arbeit stets beherzigen.</span></p>
+          <p class="wf">Wir gehen offen und lösungsorientiert an Probleme heran. Dabei setzen wir nicht nur auf unsere eigene Erfahrung, sondern suchen immer auch den Austausch mit unseren Kunden – bei klaren, transparenten Abläufen und modernen, effizienten Arbeitsweisen.</p>
+          <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-start">
+            <div style="height:48px;width:160px;background:var(--l2);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--l5);font-size:.72rem">Unterschrift (Platzhalter)</div>
+            <span style="font-size:.8rem;color:var(--l5)">Ihre Birgit Groterhorst</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="block" style="background:var(--l2)">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px">
+          <div>
+            <h3 class="wf" style="margin-bottom:4px">Kontakt</h3>
+            <p class="wf" style="margin:0 0 16px;font-size:.8rem">Hausverwaltung &amp; Immobilienvermarktung<br>Birgit Groterhorst</p>
+            <p class="wf" style="margin:0 0 12px;font-size:.8rem">Köln-Mindener-Bahn 8<br>47608 Geldern</p>
+            <p class="wf" style="margin:0 0 12px;font-size:.8rem">Tel.: 02831-9363155<br>Fax: 02831-9363156</p>
+            <p class="wf" style="margin:0;font-size:.8rem">E-Mail: info@hvw-groterhorst.de</p>
+          </div>
+          <div>
+            <h3 class="wf">Öffnungszeiten</h3>
+            <div style="color:var(--l5);font-size:.8rem">
+              <div style="display:flex;gap:16px;margin-bottom:6px"><span style="width:88px;flex:none">Montag</span><span>9–12 Uhr</span></div>
+              <div style="display:flex;gap:16px;margin-bottom:6px"><span style="width:88px;flex:none">Dienstag</span><span>9–12 Uhr</span></div>
+              <div style="display:flex;gap:16px;margin-bottom:6px"><span style="width:88px;flex:none">Mittwoch</span><span>9–12 Uhr</span></div>
+              <div style="display:flex;gap:16px;margin-bottom:6px"><span style="width:88px;flex:none">Donnerstag</span><span>9–12 Uhr und 14–17 Uhr</span></div>
+              <div style="display:flex;gap:16px"><span style="width:88px;flex:none">Freitag</span><span>9–12 Uhr</span></div>
+            </div>
+          </div>
+          <div class="bild-platz" style="background:var(--l3)"><div><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.9 13.98l2.1 2.53 3.1-3.99c.2-.26.6-.26.8.01l3.51 4.68c.25.33.01.8-.4.8H6.02c-.42 0-.65-.48-.39-.81L8.12 14c.19-.26.57-.27.78-.02z"/></svg>Karte</div></div>
+        </div>
+      </div>
+
+      <div class="block" style="background:var(--l7);display:flex;justify-content:space-between">
+        <div class="textzeile" style="width:30%;margin:0;background:var(--l5)"></div>
+        <div style="font-size:.72rem;color:var(--l3)">Impressum · Datenschutz</div>
+      </div>
+    </div>
+  </div>
+</div>
+<style>.nur-mobil .kopfbereich,.nur-mobil .rahmen-desktop,.nur-mobil .geraet-label,.nur-desktop .kopfbereich,.nur-desktop .rahmen-mobil,.nur-desktop .geraet-label{display:none}.nur-mobil .buehnen,.nur-desktop .buehnen{padding:0;gap:0;display:block}.nur-mobil body,.nur-desktop body{background:#fff}.nur-mobil .rahmen-mobil,.nur-desktop .rahmen-desktop{width:100%;max-width:none}.nur-mobil .seite,.nur-desktop .seite{border:0}</style>
+<script>{const n=new URLSearchParams(location.search).get("nur");if(n)document.documentElement.classList.add("nur-"+n)}</script>
+</body>
+</html>

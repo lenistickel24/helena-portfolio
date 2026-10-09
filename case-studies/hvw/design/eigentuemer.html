@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta name="robots" content="noindex">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Verwaltung, Vermietung und Vermarktung für Vermieter:innen und Eigentümergemeinschaften in Geldern und Umgebung.">
+<!-- Vorschau beim Teilen. Vor dem Livegang die Adresse bei og:image an die echte Domain anpassen. -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Hausverwaltung Groterhorst">
+<meta property="og:locale" content="de_DE">
+<meta property="og:title" content="Für Eigentümer:innen | Hausverwaltung Groterhorst, Geldern">
+<meta property="og:description" content="Verwaltung, Vermietung und Vermarktung für Vermieter:innen und Eigentümergemeinschaften in Geldern und Umgebung.">
+<meta property="og:image" content="https://hvw-groterhorst.de/img/og-bild.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Logo der Hausverwaltung Groterhorst">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.ico" sizes="32x32">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#FFFFFF">
+<title>Für Eigentümer:innen | Hausverwaltung Groterhorst, Geldern</title>
+<link rel="preload" href="fonts/familjen-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" as="image" href="img/hero-platzhalter.jpg" fetchpriority="high">
+<link rel="stylesheet" href="basis.css">
+<style>
+  /* Hero */
+  .hero { padding: 48px 0 72px; }
+  .hero-grid { display: grid; gap: 40px; grid-template-columns: 1fr; align-items: center; }
+  .hero-aktionen { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+  .hero-bild { height: 300px; border-radius: var(--radius-karte); overflow: hidden; background: var(--gray); }
+  .hero-bild img { width: 100%; height: 100%; object-fit: cover; object-position: 75% 25%; transform: scaleX(-1); }
+
+  /* Leistungen */
+  .grau { background: var(--gray); }
+  .leistungs-raster { display: grid; gap: 24px; grid-template-columns: 1fr; }
+  .leistung { background: #fff; border-radius: var(--radius-karte); padding: 40px; box-shadow: 0 4px 20px rgba(20,15,14,.06); }
+  .leistung h3 { margin-bottom: 20px; }
+  .haken-liste { list-style: none; margin: 0; padding: 0; }
+  .haken-liste li { display: flex; gap: 12px; align-items: flex-start; padding: 10px 0; font-size: 1rem; border-top: 1px solid var(--linie); }
+  .haken-liste li:first-child { border-top: 0; padding-top: 0; }
+  .haken-liste svg { width: 20px; height: 20px; fill: var(--red); flex: none; margin-top: 2px; }
+
+  /* Vorteile */
+  .karten-raster { display: grid; gap: 24px; grid-template-columns: 1fr; }
+  .karte-probe { background: #fff; border: 1.5px solid var(--linie); border-radius: var(--radius-karte); padding: 32px; }
+  .karte-probe .icon { width: 44px; height: 44px; border-radius: 50%; background: var(--gray); display: flex; align-items: center; justify-content: center; margin-bottom: 18px; }
+  .karte-probe .icon svg { width: 22px; height: 22px; fill: var(--red); }
+  .karte-probe p { color: var(--text-2); font-size: 1rem; margin: 0; }
+
+  /* Ablauf-Slider */
+  .ablauf-kopf { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 32px; }
+  .ablauf-kopf .abschnitt-kopf { margin-bottom: 0; }
+  .ablauf-pfeile { display: flex; gap: 8px; flex: none; }
+  .ablauf-pfeil { width: 44px; height: 44px; border-radius: 999px; border: 1.5px solid var(--linie); background: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0; }
+  .ablauf-pfeil { transition: background-color .2s ease, border-color .2s ease, color .2s ease; }
+  .ablauf-pfeil:hover { background: var(--red); border-color: var(--red); color: #fff; }
+  .ablauf-pfeil svg { width: 20px; height: 20px; fill: currentColor; }
+  .ablauf-slider { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; padding: 8px 24px 32px; margin: 0 -24px -32px; scroll-padding: 0 24px; scrollbar-width: none; }
+  .ablauf-slider::-webkit-scrollbar { display: none; }
+  .ablauf-karte { flex: 0 0 260px; scroll-snap-align: start; background: #fff; border-radius: var(--radius-karte); padding: 32px; box-shadow: 0 4px 20px rgba(20,15,14,.06); }
+  .ablauf-karte .nummer { width: 40px; height: 40px; border-radius: 999px; background: var(--red); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; margin-bottom: 20px; }
+  .ablauf-karte p { color: var(--text-2); font-size: 1rem; margin: 0; }
+
+  /* Ansprechpartnerin */
+  .faq-eig { margin: 0 auto; }
+  .ohne-oben { padding-top: 0; }
+  .ansprechpartnerin { display: grid; gap: 40px; grid-template-columns: 1fr; align-items: center; }
+  .ansprechpartnerin-bild { aspect-ratio: 4 / 5; max-width: 420px; border-radius: var(--radius-karte); overflow: hidden; background: var(--gray); }
+  .ansprechpartnerin-bild img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; }
+  .ansprechpartnerin .fakten { margin: 0 0 32px; }
+  .abschluss-aktionen { display: flex; flex-wrap: wrap; gap: 12px; }
+  .textlink { display: inline-block; padding: 8px 0; color: var(--red); font-weight: 700; font-size: .9rem; text-decoration: none; }
+  @media (min-width: 700px) {
+    .leistungs-raster { grid-template-columns: repeat(3, 1fr); }
+    .karten-raster { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (min-width: 900px) {
+    .hero { padding: 96px 0 112px; }
+    .hero-grid { grid-template-columns: 1.1fr 1fr; gap: 64px; }
+    .hero-bild { height: 440px; }
+    .ablauf-karte { flex-basis: 280px; }
+    .ansprechpartnerin { grid-template-columns: 5fr 7fr; gap: 80px; }
+  }
+  @media (min-width: 1100px) {
+    .ablauf-pfeile { display: none; }
+    .ablauf-slider { display: grid; grid-template-columns: repeat(5, 1fr); overflow: visible; padding: 8px 0 0; margin: 0; }
+    .ablauf-karte { padding: 28px 24px; }
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#inhalt">Zum Inhalt springen</a>
+
+<header>
+  <div class="kopf-innen">
+    <a class="logo" href="startseite.html"><img src="img/logo_hvw.svg" width="1219" height="201" alt="Hausverwaltung Groterhorst"></a>
+    <nav class="hauptnav">
+      <a class="aktiv" href="eigentuemer.html" aria-current="page">Für Eigentümer</a>
+      <a href="mieter.html">Für Mieter</a>
+      <a href="immobilienangebote.html">Immobilienangebote</a>
+      <a href="ueber-uns.html">Über uns</a>
+    </nav>
+    <div class="kopf-rechts">
+      <a class="btn btn-primary kopf-kontakt" href="kontakt.html">Kontakt</a>
+      <label class="burger" for="menu-toggle"><span class="burger-icon" aria-hidden="true"></span><span class="t-menue">Menü</span><span class="t-zu">Schließen</span></label>
+    </div>
+  </div>
+  <input type="checkbox" id="menu-toggle" aria-label="Menü öffnen oder schließen">
+  <nav class="mobilnav">
+    <a class="aktiv" href="eigentuemer.html" aria-current="page">Für Eigentümer</a>
+    <a href="mieter.html">Für Mieter</a>
+    <a href="immobilienangebote.html">Immobilienangebote</a>
+    <a href="ueber-uns.html">Über uns</a>
+    <a href="kontakt.html">Kontakt</a>
+  </nav>
+</header>
+<nav class="aktionsleiste" aria-label="Schnellzugriff">
+  <a class="anrufen" href="tel:+4928319363155"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m19.23 15.26-2.54-.29a1.99 1.99 0 0 0-1.64.57l-1.84 1.84a15.045 15.045 0 0 1-6.59-6.59l1.85-1.85c.43-.43.64-1.03.57-1.64l-.29-2.52a2.001 2.001 0 0 0-1.99-1.77H5.03c-1.13 0-2.07.94-2 2.07.53 8.54 7.36 15.36 15.89 15.89 1.13.07 2.07-.87 2.07-2v-1.73c.01-1.01-.75-1.86-1.76-1.98z"/></svg>Anrufen</a>
+  <a class="schaden" href="#schaden-melden"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.47 21h15.06c1.54 0 2.5-1.67 1.73-3L13.73 4.99c-.77-1.33-2.69-1.33-3.46 0L2.74 18c-.77 1.33.19 3 1.73 3zM12 14c-.55 0-1-.45-1-1v-2c0-.55.45-1 1-1s1 .45 1 1v2c0 .55-.45 1-1 1zm1 4h-2v-2h2v2z"/></svg>Schaden melden</a>
+</nav>
+<main id="inhalt">
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="kicker">Für Eigentümer:innen</span>
+      <h1>Sie vermieten. Wir kümmern uns um den Rest.</h1>
+      <p class="lead">Verwaltung, Vermietung und Vermarktung für private Vermieter:innen und Eigentümergemeinschaften in Geldern und Umgebung – mit fester Ansprechpartnerin und klaren Abläufen.</p>
+      <div class="hero-aktionen">
+        <a class="btn btn-primary" href="kontakt.html?anliegen=erstgespraech">Erstgespräch vereinbaren</a>
+      </div>
+      <ul class="fakten" style="margin-top:32px">
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM9.29 16.29 5.7 12.7a.996.996 0 1 1 1.41-1.41L10 14.17l6.88-6.88a.996.996 0 1 1 1.41 1.41l-7.59 7.59a.996.996 0 0 1-1.41 0z"/></svg>IHK-zertifizierte Verwalterin</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM9.29 16.29 5.7 12.7a.996.996 0 1 1 1.41-1.41L10 14.17l6.88-6.88a.996.996 0 1 1 1.41 1.41l-7.59 7.59a.996.996 0 0 1-1.41 0z"/></svg>Engagiert bei Haus &amp; Grund an der Niers</li>
+      </ul>
+    </div>
+    <div class="hero-bild"><img src="img/hero-platzhalter.jpg" width="1900" height="1069" fetchpriority="high" decoding="async" alt="Platzhalterfoto – wird durch ein echtes Foto ersetzt"></div>
+  </div>
+</section>
+
+<section class="grau">
+  <div class="wrap">
+    <div class="abschnitt-kopf">
+      <span class="kicker">Leistungen</span>
+      <h2>Alles aus einer Hand.</h2>
+      <p>Je nachdem, was Ihre Immobilie braucht – von der laufenden Verwaltung bis zur Vermarktung.</p>
+    </div>
+    <div class="leistungs-raster">
+      <div class="leistung">
+        <h3>Eigentümergemeinschaften (WEG)</h3>
+        <ul class="haken-liste">
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17 5.53 12.7a.996.996 0 1 0-1.41 1.41l4.18 4.18c.39.39 1.02.39 1.41 0L20.29 7.71a.996.996 0 1 0-1.41-1.41L9 16.17z"/></svg>Vorbereitung von Eigentümerversammlungen</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17 5.53 12.7a.996.996 0 1 0-1.41 1.41l4.18 4.18c.39.39 1.02.39 1.41 0L20.29 7.71a.996.996 0 1 0-1.41-1.41L9 16.17z"/></svg>Jährliche Substanzanalysen als Grundlage für Investitionen</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17 5.53 12.7a.996.996 0 1 0-1.41 1.41l4.18 4.18c.39.39 1.02.39 1.41 0L20.29 7.71a.996.996 0 1 0-1.41-1.41L9 16.17z"/></svg>Betreuung von Bau- und Sanierungsmaßnahmen</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17 5.53 12.7a.996.996 0 1 0-1.41 1.41l4.18 4.18c.39.39 1.02.39 1.41 0L20.29 7.71a.996.996 0 1 0-1.41-1.41L9 16.17z"/></svg>TÜV- und Brandschutzprüfungen</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17 5.53 12.7a.996.996 0 1 0-1.41 1.41l4.18 4.18c.39.39 1.02.39 1.41 0L20.29 7.71a.996.996 0 1 0-1.41-1.41L9 16.17z"/></svg>Hausmeisterdienste</li>
+        </ul>
+      </div>
+      <div class="leistung">
+        <h3>Mietverwaltung &amp; Vermietung</h3>
+        <ul class="haken-liste">
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17 5.53 12.7a.996.996 0 1 0-1.41 1.41l4.18 4.18c.39.39 1.02.39 1.41 0L20.29 7.71a.996.996 0 1 0-1.41-1.41L9 16.17z"/></svg>Nebenkostenabrechnungen</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17 5.53 12.7a.996.996 0 1 0-1.41 1.41l4.18 4.18c.39.39 1.02.39 1.41 0L20.29 7.71a.996.996 0 1 0-1.41-1.41L9 16.17z"/></svg>Zahlungsverkehr und Mahnwesen</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17 5.53 12.7a.996.996 0 1 0-1.41 1.41l4.18 4.18c.39.39 1.02.39 1.41 0L20.29 7.71a.996.996 0 1 0-1.41-1.41L9 16.17z"/></svg>Erfassung der Zählerstände</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17 5.53 12.7a.996.996 0 1 0-1.41 1.41l4.18 4.18c.39.39 1.02.39 1.41 0L20.29 7.71a.996.996 0 1 0-1.41-1.41L9 16.17z"/></svg>Mieterhöhungen</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17 5.53 12.7a.996.996 0 1 0-1.41 1.41l4.18 4.18c.39.39 1.02.39 1.41 0L20.29 7.71a.996.996 0 1 0-1.41-1.41L9 16.17z"/></svg>Koordination von Handwerker:innen</li>
+        </ul>
+      </div>
+      <div class="leistung">
+        <h3>Immobilienvermarktung</h3>
+        <ul class="haken-liste">
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17 5.53 12.7a.996.996 0 1 0-1.41 1.41l4.18 4.18c.39.39 1.02.39 1.41 0L20.29 7.71a.996.996 0 1 0-1.41-1.41L9 16.17z"/></svg>Erstellung aussagekräftiger Exposés</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17 5.53 12.7a.996.996 0 1 0-1.41 1.41l4.18 4.18c.39.39 1.02.39 1.41 0L20.29 7.71a.996.996 0 1 0-1.41-1.41L9 16.17z"/></svg>Organisation von Besichtigungsterminen</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17 5.53 12.7a.996.996 0 1 0-1.41 1.41l4.18 4.18c.39.39 1.02.39 1.41 0L20.29 7.71a.996.996 0 1 0-1.41-1.41L9 16.17z"/></svg>Vermietung oder Verkauf</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="abschnitt-kopf">
+      <span class="kicker">Ihre Vorteile</span>
+      <h2>Weniger Aufwand, mehr Überblick.</h2>
+    </div>
+    <div class="karten-raster">
+      <!-- PLATZHALTER-TEXTE (die ersten drei Kacheln): nicht von Birgit bestätigt, siehe offene-fragen-birgit.md („Eigentümer-Seite“) -->
+      <div class="karte-probe">
+        <span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v1c0 .55.45 1 1 1h14c.55 0 1-.45 1-1v-1c0-2.66-5.33-4-8-4z"/></svg></span>
+        <h3 class="klein">Eine feste Ansprechpartnerin</h3>
+        <p>Sie sprechen immer mit derselben Person, die Ihr Haus und Ihre Mieter:innen kennt.</p>
+      </div>
+      <div class="karte-probe">
+        <span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.59 2.59c-.38-.38-.89-.59-1.42-.59H6c-1.1 0-2 .9-2 2v16c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8.83c0-.53-.21-1.04-.59-1.41l-4.82-4.83zM15 18H9c-.55 0-1-.45-1-1s.45-1 1-1h6c.55 0 1 .45 1 1s-.45 1-1 1zm0-4H9c-.55 0-1-.45-1-1s.45-1 1-1h6c.55 0 1 .45 1 1s-.45 1-1 1zm-2-6V3.5L18.5 9H14c-.55 0-1-.45-1-1z"/></svg></span>
+        <h3 class="klein">Abrechnungen, die man versteht</h3>
+        <p>Wir erklären Ihnen die Abrechnung, bevor Fragen entstehen – und beantworten sie danach gern.</p>
+      </div>
+      <div class="karte-probe">
+        <span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m19.23 15.26-2.54-.29a1.99 1.99 0 0 0-1.64.57l-1.84 1.84a15.045 15.045 0 0 1-6.59-6.59l1.85-1.85c.43-.43.64-1.03.57-1.64l-.29-2.52a2.001 2.001 0 0 0-1.99-1.77H5.03c-1.13 0-2.07.94-2 2.07.53 8.54 7.36 15.36 15.89 15.89 1.13.07 2.07-.87 2.07-2v-1.73c.01-1.01-.75-1.86-1.76-1.98z"/></svg></span>
+        <h3 class="klein">Gut erreichbar</h3>
+        <p>Unser Büro liegt am Wohnort von Birgit Groterhorst – das garantiert ständige Erreichbarkeit.</p>
+      </div>
+      <div class="karte-probe">
+        <span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18.5A6.48 6.48 0 0 1 9.24 15h5.14c.38 0 .73-.21.89-.55.33-.66-.15-1.45-.89-1.45h-5.8c-.05-.33-.08-.66-.08-1s.03-.67.08-1h5.8c.38 0 .73-.21.89-.55A.994.994 0 0 0 14.38 9H9.24A6.491 6.491 0 0 1 15 5.5c1.25 0 2.42.36 3.42.97.5.31 1.15.26 1.57-.16.58-.58.45-1.53-.25-1.96A9.034 9.034 0 0 0 15 3c-3.92 0-7.24 2.51-8.48 6h-2.9c-.38 0-.73.21-.9.55-.33.67.15 1.45.9 1.45h2.44a8.262 8.262 0 0 0 0 2H3.62c-.38 0-.73.21-.89.55-.34.67.14 1.45.89 1.45h2.9c1.24 3.49 4.56 6 8.48 6 1.74 0 3.36-.49 4.74-1.35.69-.43.82-1.39.24-1.97-.42-.42-1.07-.47-1.57-.15-.99.62-2.15.97-3.41.97z"/></svg></span>
+        <h3 class="klein">Kosten im Blick</h3>
+        <p>Rahmenverträge senken die laufenden Kosten Ihrer Immobilie.</p>
+      </div>
+      <div class="karte-probe">
+        <span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4C7 4 2.73 7.11 1 11.5 2.73 15.89 7 19 12 19s9.27-3.11 11-7.5C21.27 7.11 17 4 12 4zm0 12.5c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></span>
+        <h3 class="klein">Regelmäßige Objektkontrollen</h3>
+        <p>Wir sehen Ihr Haus regelmäßig vor Ort – Schäden fallen früh auf.</p>
+      </div>
+      <div class="karte-probe">
+        <span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.09 2.91C10.08.9 7.07.49 4.65 1.67L8.28 5.3c.39.39.39 1.02 0 1.41L6.69 8.3c-.39.4-1.02.4-1.41 0L1.65 4.67C.48 7.1.89 10.09 2.9 12.1a6.507 6.507 0 0 0 6.89 1.48l7.96 7.96a2.613 2.613 0 0 0 3.71 0 2.613 2.613 0 0 0 0-3.71L13.54 9.9c.92-2.34.44-5.1-1.45-6.99z"/></svg></span>
+        <h3 class="klein">Handwerker koordiniert</h3>
+        <p>Wir beauftragen und begleiten Reparaturen – Sie müssen nichts selbst organisieren.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="grau">
+  <div class="wrap">
+    <div class="ablauf-kopf">
+      <div class="abschnitt-kopf">
+        <span class="kicker">Ablauf einer Übernahme</span>
+        <h2>In fünf Schritten zu uns.</h2>
+      </div>
+      <div class="ablauf-pfeile">
+        <button class="ablauf-pfeil" type="button" data-richtung="-1" aria-label="Zurück"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 11H7.83l4.88-4.88c.39-.39.39-1.03 0-1.42a.996.996 0 0 0-1.41 0l-6.59 6.59a.996.996 0 0 0 0 1.41l6.59 6.59a.996.996 0 1 0 1.41-1.41L7.83 13H19c.55 0 1-.45 1-1s-.45-1-1-1z"/></svg></button>
+        <button class="ablauf-pfeil" type="button" data-richtung="1" aria-label="Weiter"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13h11.17l-4.88 4.88c-.39.39-.39 1.03 0 1.42.39.39 1.02.39 1.41 0l6.59-6.59a.996.996 0 0 0 0-1.41l-6.58-6.6a.996.996 0 1 0-1.41 1.41L16.17 11H5c-.55 0-1 .45-1 1s.45 1 1 1z"/></svg></button>
+      </div>
+    </div>
+    <div class="ablauf-slider" id="ablauf">
+      <div class="ablauf-karte"><span class="nummer">1</span><h3 class="klein">Kennenlernen</h3><p>Telefonat oder Treffen – Sie erzählen von Ihrer Immobilie.</p></div>
+      <div class="ablauf-karte"><span class="nummer">2</span><h3 class="klein">Besichtigung</h3><p>Termin vor Ort und Blick auf die wichtigsten Unterlagen.</p></div>
+      <div class="ablauf-karte"><span class="nummer">3</span><h3 class="klein">Angebot</h3><p>Schriftlich und nachvollziehbar, mit allen Kosten.</p></div>
+      <div class="ablauf-karte"><span class="nummer">4</span><h3 class="klein">Übergabe</h3><p>Unterlagen, Konten und Verträge – und die Information an Ihre Mieter:innen.</p></div>
+      <div class="ablauf-karte"><span class="nummer">5</span><h3 class="klein">Laufende Betreuung</h3><p>Ab jetzt haben Sie eine feste Ansprechpartnerin.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <!-- PLATZHALTER-ANTWORTEN: nicht von Birgit bestätigt, siehe offene-fragen-birgit.md („Eigentümer-Seite“) -->
+  <div class="wrap faq auf-weiss faq-eig">
+    <div class="abschnitt-kopf">
+      <span class="kicker">Häufige Fragen</span>
+      <h2>Gut zu wissen.</h2>
+      <p>Ihre Frage ist nicht dabei? Sprechen Sie uns einfach an.</p>
+    </div>
+    <details open>
+      <summary>Was kostet die Verwaltung?</summary>
+      <p>Das hängt von der Größe, dem Zustand und dem Aufwand Ihrer Immobilie ab. Nach einem Gespräch und einer Besichtigung erhalten Sie ein schriftliches Angebot, in dem alle Kosten aufgeführt sind.</p>
+    </details>
+    <details>
+      <summary>Ab welcher Größe übernehmen wir ein Objekt?</summary>
+      <p>Ob kleines Mehrfamilienhaus oder größere Eigentümergemeinschaft: Sprechen Sie uns einfach an, wir prüfen gemeinsam, ob wir zu Ihnen passen.</p>
+    </details>
+    <details>
+      <summary>Wie schnell kann ich wechseln?</summary>
+      <p>In der Regel dauert es wenige Wochen, abhängig von der Kündigungsfrist Ihrer bisherigen Verwaltung. Wir kümmern uns um die Übergabe der Unterlagen und informieren Ihre Mieter:innen.</p>
+    </details>
+    <details>
+      <summary>Betreuen wir auch einzelne Mietshäuser und Wohnungen?</summary>
+      <p>Ja, wir betreuen sowohl Eigentümergemeinschaften als auch einzelne Mietshäuser und Wohnungen in Geldern und Umgebung.</p>
+    </details>
+  </div>
+</section>
+
+<section class="ohne-oben">
+  <div class="wrap ansprechpartnerin">
+    <div class="ansprechpartnerin-bild"><img src="img/ueber-uns-platzhalter.jpg" width="1100" height="1650" alt="Platzhalterfoto – wird durch ein Porträt von Birgit Groterhorst ersetzt" loading="lazy"></div>
+    <div>
+      <span class="kicker">Ihre Ansprechpartnerin</span>
+      <h2>Birgit Groterhorst</h2>
+      <p class="lead">Inhaberin und IHK-zertifizierte Verwalterin. Sie kümmert sich seit über 20 Jahren um Häuser in Geldern und Umgebung – und ist Ihre feste Ansprechpartnerin, vom ersten Gespräch an.</p>
+        <ul class="fakten">
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM9.29 16.29 5.7 12.7a.996.996 0 1 1 1.41-1.41L10 14.17l6.88-6.88a.996.996 0 1 1 1.41 1.41l-7.59 7.59a.996.996 0 0 1-1.41 0z"/></svg>Büro in Geldern, Köln-Mindener-Bahn 8</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM9.29 16.29 5.7 12.7a.996.996 0 1 1 1.41-1.41L10 14.17l6.88-6.88a.996.996 0 1 1 1.41 1.41l-7.59 7.59a.996.996 0 0 1-1.41 0z"/></svg>Engagiert bei Haus &amp; Grund an der Niers</li>
+        </ul>
+      <div class="abschluss-aktionen">
+        <a class="btn btn-primary" href="kontakt.html?anliegen=erstgespraech">Erstgespräch vereinbaren</a>
+      </div>
+      <p style="margin:24px 0 0"><a class="textlink" href="ueber-uns.html">Mehr über uns →</a></p>
+    </div>
+  </div>
+</section>
+
+<section class="grau">
+  <div class="wrap">
+    <div class="kontakt-grid">
+      <div>
+        <h3 style="margin-bottom:4px">Kontakt</h3>
+        <p style="margin-top:16px">Hausverwaltung &amp; Immobilienvermarktung<br>Birgit Groterhorst</p>
+        <p>Köln-Mindener-Bahn 8<br>47608 Geldern</p>
+        <p>Tel.: <a href="tel:+4928319363155">02831-9363155</a><br>Fax: 02831-9363156</p>
+        <p style="margin-bottom:0">E-Mail: <a href="mailto:info@hvw-groterhorst.de">info@hvw-groterhorst.de</a></p>
+      </div>
+      <div>
+        <h3>Öffnungszeiten</h3>
+        <p class="oeffnungsstatus" data-oeffnungsstatus hidden></p>
+        <div class="oeffnungszeiten">
+          <div><span>Mo–Do</span><span>8:30–16:30 Uhr</span></div>
+          <div><span>Fr</span><span>8:30–12:30 Uhr</span></div>
+          <div><span>Sa–So</span><span>geschlossen</span></div>
+          <div><span>Feiertage</span><span>geschlossen</span></div>
+        </div>
+      </div>
+      <div>
+        <h3>Anfahrt</h3>
+        <div class="karte-platz" data-karte="https://www.google.com/maps?q=K%C3%B6ln-Mindener-Bahn+8,+47608+Geldern&output=embed" data-titel="Standort Hausverwaltung Groterhorst">
+          <div class="karte-hinweis">
+            <span class="karte-pin" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2c-4.2 0-8 3.22-8 8.2 0 3.32 2.67 7.25 8 11.8 5.33-4.55 8-8.48 8-11.8C20 5.22 16.2 2 12 2zm0 10c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg></span>
+            <p>Die Karte kommt von Google Maps. Beim Laden werden Daten an Google übertragen.</p>
+            <button class="btn btn-ghost" type="button" data-karte-laden>Karte laden</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+<footer>
+  <div class="wrap footer-innen">
+    <img class="footer-logo" src="img/logo_hvw.svg" width="1219" height="201" loading="lazy" alt="Hausverwaltung Groterhorst">
+    <div class="footer-links">
+      <a href="impressum.html">Impressum</a>
+      <a href="datenschutz.html">Datenschutz</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const slider = document.getElementById('ablauf');
+  document.querySelectorAll('.ablauf-pfeil').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const karte = slider.querySelector('.ablauf-karte');
+      const schritt = karte.offsetWidth + 20;
+      slider.scrollBy({ left: schritt * Number(btn.dataset.richtung), behavior: 'smooth' });
+    });
+  });
+</script>
+
+<script src="leisten.js" defer></script>
+<script src="status.js" defer></script>
+<script src="karte.js" defer></script>
+<script src="formular.js" defer></script>
+<script src="schaden-dialog.js" defer></script>
+</body>
+</html>

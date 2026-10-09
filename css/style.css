@@ -178,6 +178,24 @@ a { color: inherit; }
 .nav-links a:hover { color: var(--ink); }
 .nav-links .btn { padding: 0.55rem 1.1rem; font-size: 0.85rem; white-space: nowrap; flex: none; }
 .nav-links .nav-hide-mobile { display: list-item; }
+/* Schmale Bildschirme: Name neben dem H nur optisch ausblenden (bleibt Linkname für
+   Screenreader), damit die drei Links in einer Zeile Platz haben. */
+@media (max-width: 480px) {
+  .site-header .wrap { padding: 10px 14px 10px 12px; gap: 0.75rem; }
+  .logo-name {
+    position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+    overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); border: 0;
+  }
+  .nav-links { flex-wrap: nowrap; gap: 0.85rem; }
+  .nav-links a { font-size: 0.86rem; }
+  .nav-links .btn { padding: 0.45rem 0.85rem; font-size: 0.82rem; }
+}
+/* Sehr kleine Handys (ab 320 px): Abstände und Schrift etwas enger, damit alle drei Links neben dem H Platz haben */
+@media (max-width: 374px) {
+  .site-header .wrap { padding: 10px; gap: 0.5rem; }
+  .nav-links { gap: 0.6rem; }
+  .nav-links a { font-size: 0.78rem; }
+}
 
 /* -------------------- Buttons -------------------- */
 
@@ -219,7 +237,7 @@ a { color: inherit; }
   font-size: clamp(2.6rem, 8vw, 5.4rem);
   line-height: 1.05;
   letter-spacing: -0.01em;
-  margin: 0 0 0.9rem;
+  margin: 0 0 1.5rem;
   background: linear-gradient(90deg, var(--grad-1), var(--grad-2), var(--grad-3), var(--grad-4));
   background-size: 200% 100%;
   -webkit-background-clip: text;
@@ -242,7 +260,7 @@ a { color: inherit; }
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--ink-soft);
-  margin: 0 0 1.6rem;
+  margin: 0 0 1rem;
 }
 .hero-sub {
   font-size: 1.1rem;
@@ -358,6 +376,14 @@ section { padding: clamp(4rem, 9vw, 6.5rem) 0; position: relative; }
   padding: 1.2rem;
   background: linear-gradient(135deg, var(--grad-1) 0%, var(--grad-3) 55%, var(--grad-4) 100%);
 }
+.project-card-media > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
 .project-card-index {
   font-family: var(--font-display);
   color: #ffffff;
@@ -443,6 +469,8 @@ section { padding: clamp(4rem, 9vw, 6.5rem) 0; position: relative; }
   display: flex;
   align-items: flex-start;
   gap: clamp(1.75rem, 5vw, 3.5rem);
+  max-width: 1000px;
+  margin-inline: auto;
 }
 .about-hero-photo-lg {
   flex: none;
@@ -460,14 +488,28 @@ section { padding: clamp(4rem, 9vw, 6.5rem) 0; position: relative; }
   object-fit: cover;
   object-position: center 22%;
 }
+/* Der About-Text ist länger als das Foto: Auf dem Desktop läuft das Foto unter
+   der schwebenden Nav mit, damit neben dem Text keine leere Fläche entsteht.
+   Nur bei ausreichender Fensterhöhe, sonst würde das Foto abgeschnitten. */
+@media (min-width: 701px) and (min-height: 760px) {
+  .about-hero-photo-lg { position: sticky; top: 140px; }
+}
 @media (max-width: 700px) {
-  .about-hero-panel { flex-direction: column; align-items: flex-start; }
+  .about-hero-panel { flex-direction: column; align-items: flex-start; max-width: none; margin-inline: 0; }
   .about-hero-photo-lg { width: 100%; max-width: 280px; }
 }
 
 /* About-Me-Text neben dem Foto (about.html) */
 .about-narrative { max-width: var(--measure); }
 .about-narrative p { color: var(--ink-soft); font-size: 1.03rem; }
+.about-subhead {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: -0.01em;
+  margin: 1.6rem 0 0.4rem;
+}
+.about-subhead + p { margin-top: 0; }
 .about-narrative strong { color: var(--ink); font-weight: 700; }
 .signature {
   display: block;
@@ -627,8 +669,12 @@ section { padding: clamp(4rem, 9vw, 6.5rem) 0; position: relative; }
 }
 .experience-item.in-view > div:first-child::before { background: var(--ink); border-color: var(--ink); }
 .experience-dates { font-family: var(--font-body); font-size: 0.82rem; color: var(--ink-faint); margin-bottom: 0.3rem; }
-.experience-role { font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; }
-.experience-company { font-family: var(--font-body); color: var(--ink-soft); font-size: 0.9rem; margin: 0 0 0.5rem; }
+/* Unternehmen links neben der Zeitleiste, Rolle(n) rechts; mehrere Rollen = Entwicklung im Unternehmen */
+.experience-org { font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; line-height: 1.25; }
+.experience-place { font-family: var(--font-body); color: var(--ink-soft); font-size: 0.9rem; margin-top: 0.15rem; }
+.experience-position { font-family: var(--font-body); font-weight: 600; font-size: 1rem; color: var(--ink); margin: 0 0 0.35rem; }
+.experience-when { font-weight: 500; font-size: 0.82rem; color: var(--ink-faint); margin-left: 0.35rem; white-space: nowrap; }
+.experience-desc + .experience-position { margin-top: 1.4rem; }
 .experience-desc { color: var(--ink-soft); font-size: 0.97rem; margin: 0; max-width: 48ch; }
 
 /* -------------------- Contact -------------------- */
@@ -666,6 +712,8 @@ section { padding: clamp(4rem, 9vw, 6.5rem) 0; position: relative; }
   transition: opacity var(--duration) ease;
 }
 .contact-email:hover { opacity: 0.75; }
+.contact-heading:has(+ .contact-intro) { margin-bottom: 0.8rem; }
+.contact-intro { color: rgba(246, 245, 241, 0.72); font-size: 1.1rem; margin: 0 0 1.6rem; }
 .contact-foot {
   display: flex;
   justify-content: space-between;
@@ -689,7 +737,23 @@ section { padding: clamp(4rem, 9vw, 6.5rem) 0; position: relative; }
    Heller Bogen (--case-max breit) auf schwarzem Grund, links/rechts sichtbar.
    Kein Site-Header; nur ein fixiertes Schließen-X oben rechts. */
 
-body.case-overlay { background: var(--paper-alt); padding-inline: clamp(0px, 2.5vw, 2rem); }
+/* Case-Study-Seiten wirken wie ein Dialog über der Startseite: ein fixes,
+   geblurrtes/abgedunkeltes Standbild der Startseite hinter dem weißen Sheet.
+   Echtes Live-Overlay ist bewusst nicht möglich (siehe Kommentar unten bei
+   .case-sheet) — die Seiten bleiben eigene, verlinkbare URLs. */
+body.case-overlay {
+  position: relative;
+  background: var(--paper-alt);
+  padding-inline: clamp(0px, 2.5vw, 2rem);
+}
+body.case-overlay::before {
+  content: "";
+  position: fixed;
+  inset: -40px;
+  background: url("../assets/img/case-backdrop.jpg") center / cover no-repeat;
+  filter: blur(18px) brightness(0.55);
+  z-index: -1;
+}
 .case-sheet {
   --sheet-gap: clamp(1rem, 3.5vw, 3rem);
   --sheet-radius: clamp(2rem, 4vw, 3rem);
@@ -832,7 +896,7 @@ body.case-overlay { background: var(--paper-alt); padding-inline: clamp(0px, 2.5
   padding: clamp(1.4rem, 3.5vw, 1.9rem);
   background: #ffffff;
   border-radius: var(--radius-lg);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--line);
 }
 .case-meta-label {
   font-family: var(--font-body);
@@ -875,12 +939,242 @@ body.case-overlay { background: var(--paper-alt); padding-inline: clamp(0px, 2.5
     [content-start] minmax(0, var(--measure)) [content-end]
     minmax(0, 1fr) [full-end];
 }
-.case-section--image { aspect-ratio: 16 / 9; padding: 0; }
+/* Feature-Vorschau: unten grau, nach oben ins Weiß des Sheets auslaufend.
+   overflow:hidden schneidet das Phone-Mockup an der unteren (runden) Kante ab. */
+.case-section--image {
+  aspect-ratio: 16 / 9;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(to top, var(--paper-alt), var(--paper));
+}
+/* 16:9 wird auf schmalen Screens zu flach für ein Hochkant-Phone */
+@media (max-width: 700px) {
+  /* nur fürs Phone-Mockup: das braucht auf schmalen Screens mehr Höhe.
+     Das breite Browser-Mockup bleibt bei 16:9. */
+  .case-section--image:has(.phone-mock) { aspect-ratio: 4 / 5; }
+}
+/* ohne graue Fläche — Inhalt sitzt direkt auf dem weißen Sheet, Padding bleibt,
+   damit der Text weiter mit den grauen Blöcken fluchtet */
+.case-section--plain { background: none; }
 .case-section > * { grid-column: content-start / content-end; }
 .case-section > .case-figure,
-.case-section > .stat-band { grid-column: full-start / full-end; }
+.case-section > .stat-band,
+.case-section > .card-grid,
+.case-section > .case-pair { grid-column: full-start / full-end; }
 .case-section + .case-section { margin-top: clamp(0.9rem, 2vw, 1.5rem); }
 .case-section > *:last-child { margin-bottom: 0; }
+
+/* Phone-Mockup: mittig, ragt unten aus der Box heraus und wird dort abgeschnitten.
+   Höhe/Position in % der Box, damit das Verhältnis über alle Breiten gleich bleibt. */
+.phone-mock {
+  position: absolute;
+  left: 50%;
+  bottom: -22%;
+  transform: translateX(-50%);
+  height: 118%;
+  aspect-ratio: 9 / 19.5;
+  padding: clamp(5px, 0.8vw, 9px);
+  border-radius: clamp(18px, 3vw, 40px);
+  background: var(--ink);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.18);
+}
+.phone-screen {
+  height: 100%;
+  border-radius: clamp(13px, 2.2vw, 32px);
+  background: var(--paper);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.phone-screen img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.phone-screen .ph-tag {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* Browser-Mockup: Pendant zum Phone-Mockup, für Website- statt App-Case-Studies.
+   Gleicher Mechanismus (mittig, ragt unten aus der Box heraus, wird dort
+   abgeschnitten), nur breites Seitenverhältnis + Browser-Chrome statt Handy-Bezel. */
+.browser-mock {
+  grid-column: full-start / full-end;
+  position: absolute;
+  left: 50%;
+  bottom: -14%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 1150px;
+  aspect-ratio: 16 / 10;
+  border-radius: clamp(12px, 2vw, 20px);
+  background: var(--paper);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.browser-chrome {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: clamp(0.5rem, 1.5vw, 0.9rem);
+  padding: clamp(0.55rem, 1.4vw, 0.85rem) clamp(0.7rem, 1.8vw, 1.1rem);
+  background: var(--paper-alt);
+  border-bottom: 1px solid var(--line);
+}
+.browser-chrome-dots { display: flex; gap: 0.32rem; flex: none; }
+.browser-chrome-dots span { width: 9px; height: 9px; border-radius: 50%; background: var(--line); }
+.browser-chrome-url {
+  flex: 1;
+  height: clamp(18px, 2.4vw, 24px);
+  border-radius: var(--radius-pill);
+  background: var(--paper);
+  border: 1px solid var(--line);
+}
+.browser-screen {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--paper);
+  overflow: hidden;
+}
+.browser-screen img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+.browser-screen .ph-tag {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* Live-Frame: eine echte, laufende Seite (iframe) auf Rahmenbreite verkleinert.
+   Größe und Skalierung setzt assets/main.js aus data-w (Seitenbreite in px) und
+   optional data-h; ohne data-h füllt die Seite die Höhe des Rahmens.
+   Klicks gehen nicht in die Seite, damit das Scrollen der Case Study nicht hängt. */
+.live-frame { position: relative; width: 100%; overflow: hidden; background: #fff; }
+.live-frame iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 0;
+  background: #fff;
+  transform-origin: 0 0;
+  pointer-events: none;
+}
+.browser-screen .live-frame { flex: 1; align-self: stretch; height: 100%; }
+
+/* Geräte-Rahmen um Bilder/Live-Frames in Case Studies */
+.device-phone { background: var(--ink); padding: 8px; border-radius: 34px; }
+.device-phone .live-frame,
+.device-phone img { display: block; border-radius: 26px; width: 100%; height: auto; }
+.device-desktop {
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  overflow: hidden;
+  background: #fff;
+}
+.device-desktop img { display: block; width: 100%; height: auto; }
+
+/* Zwei (oder drei) Geräte nebeneinander, mit Bildunterschrift */
+.case-pair {
+  display: grid;
+  gap: clamp(1.4rem, 3vw, 2rem);
+  grid-template-columns: 1fr;
+  align-items: start;
+  margin: 1.6rem 0;
+}
+.case-pair > figure { margin: 0; min-width: 0; }
+.case-pair figcaption { margin: 0.8rem 0.2rem 0; font-size: 0.88rem; line-height: 1.45; color: var(--ink-soft); }
+.case-pair figcaption b { display: block; color: var(--ink); }
+.case-pair figcaption a { color: var(--accent-ink, var(--ink)); font-weight: 700; text-decoration: none; }
+@media (min-width: 700px) {
+  .case-pair--2 { grid-template-columns: 1fr 1fr; }
+  .case-pair--3 { grid-template-columns: repeat(3, 1fr); }
+  .case-pair--phone-narrow { grid-template-columns: 1fr minmax(0, 300px); }
+}
+.case-pair--phones-center { justify-items: center; }
+.case-pair--phones-center > figure { width: 100%; max-width: 320px; }
+
+/* Karten-Raster (Personas, Strukturoptionen, Gestaltungsentscheidungen) */
+.card-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  margin: 1.6rem 0;
+}
+.info-card {
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: var(--radius-lg);
+  padding: clamp(1.3rem, 3vw, 1.7rem);
+}
+.info-card-kicker {
+  display: block;
+  margin-bottom: 0.7rem;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-ink, var(--ink-soft));
+}
+.case-section .info-card h3 { margin: 0 0 0.5rem; font-size: 1.08rem; line-height: 1.3; }
+.case-section .info-card p { margin: 0 0 0.7rem; font-size: 0.97rem; line-height: 1.5; }
+.case-section .info-card p:last-child { margin-bottom: 0; }
+.info-card .quote { color: var(--ink); font-weight: 600; }
+.info-card dl { margin: 0.4rem 0 0; font-size: 0.92rem; line-height: 1.45; }
+.info-card dt { margin-top: 0.7rem; font-weight: 700; color: var(--ink); }
+.info-card dd { margin: 0; color: var(--ink-soft); }
+.info-card--chosen { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.case-section .info-card ul { margin: 0; padding-left: 1.1rem; font-size: 0.94rem; line-height: 1.5; }
+.case-section .info-card li { margin: 0 0 0.6rem; }
+.case-section .info-card li:last-child { margin-bottom: 0; }
+@media (min-width: 700px) {
+  .card-grid--2 { grid-template-columns: repeat(2, 1fr); }
+  /* letzte, einzelne Karte über die volle Breite: Bild links, Text rechts */
+  .info-card--wide {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: clamp(1.6rem, 4vw, 3rem);
+    align-items: center;
+  }
+  .info-card--wide .logo-showcase { grid-column: 1; grid-row: 1 / span 3; margin: 0; }
+  .info-card--wide > :not(.logo-showcase) { grid-column: 2; }
+}
+
+/* Farbfelder / Radien-Vergleich (Gestaltung) */
+.swatches { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.6rem; margin: 1rem 0 0.4rem; }
+.swatch {
+  min-height: 78px;
+  padding: 0.6rem 0.7rem;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  font-size: 0.72rem;
+  line-height: 1.3;
+}
+.swatch b { font-size: 0.82rem; }
+.radius-demo { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 0.9rem; }
+.radius-demo div {
+  width: 76px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid var(--ink);
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+.radius-demo div.is-chosen { background: var(--accent); border-color: var(--accent); color: #fff; }
+.logo-showcase { display: block; max-width: 230px; height: auto; margin: 0.8rem 0 0.2rem; }
 
 .case-figure figcaption { max-width: var(--measure); }
 
@@ -1146,7 +1440,7 @@ body.case-overlay { background: var(--paper-alt); padding-inline: clamp(0px, 2.5
 }
 .insight-track::-webkit-scrollbar { display: none; }
 .insight-icon {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   width: 36px;
@@ -1205,6 +1499,7 @@ body.case-overlay { background: var(--paper-alt); padding-inline: clamp(0px, 2.5
   .experience-item > div:first-child::after,
   .experience-item > div:first-child::before { display: none; }
   .experience-dates { padding-top: 0; }
+  .experience-when { display: block; margin: 0.15rem 0 0; }
   .section-head { align-items: flex-start; }
 }
 @media (max-width: 768px) {
@@ -1283,6 +1578,12 @@ body.accent-wa {
   --accent-ink: #0A6B60;    /* Textvariante */
   --accent-bright: #25D366; /* das helle Markengruen, nur fuer Flaechen ohne Text */
   --accent-soft: #E6F5F1;
+}
+body.accent-hvw {
+  --accent: #C70007;        /* Rot aus dem finalen HVW-Designsystem (konzept-v2), ersetzt das frühere #B3402F */
+  --accent-ink: #C70007;    /* auf Weiß ausreichend kontrastreich, auch als Textfarbe */
+  --accent-bright: #C70007;
+  --accent-soft: #FCE8E9;
 }
 
 body[class*="accent-"] .case-hero .tag { color: var(--accent-ink); }

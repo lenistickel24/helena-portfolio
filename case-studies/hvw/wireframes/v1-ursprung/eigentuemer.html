@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta name="robots" content="noindex">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wireframe: Für Eigentümer – Hausverwaltung Groterhorst</title>
+<style>
+  :root {
+    --l1: #FFFFFF; --l2: #F2F2F2; --l3: #E4E4E4; --l4: #C7C7C7; --l5: #8A8A8A; --l6: #333333; --l7: #474747;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #ECECEC; color: var(--l6); font-family: system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.5; }
+  .kopfbereich { background: #fff; border-bottom: 1px solid var(--l4); padding: 24px; }
+  .kopfbereich h1 { margin: 0 0 8px; font-size: 1.3rem; }
+  .kopfbereich p { margin: 0; color: var(--l5); font-size: .92rem; max-width: 60em; }
+  .legende { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 16px; font-size: .8rem; color: var(--l5); }
+  .legende span { display: inline-flex; align-items: center; gap: 8px; }
+  .legende i { width: 16px; height: 16px; border-radius: 4px; display: inline-block; }
+
+  .buehnen { display: flex; gap: 64px; padding: 48px 24px 112px; align-items: flex-start; flex-wrap: wrap; }
+  .geraet-label { font-size: .82rem; font-weight: 700; color: var(--l5); margin-bottom: 8px; text-transform: uppercase; letter-spacing: .04em; }
+
+  .rahmen-mobil { width: 375px; }
+  .rahmen-desktop { width: 920px; max-width: 92vw; }
+  .seite { background: #fff; border: 1px solid var(--l4); position: relative; }
+
+  .block { padding: 32px; position: relative; }
+  .kopf-nav { display: flex; flex-wrap: nowrap; justify-content: space-between; align-items: center; gap: 24px; padding: 24px 32px; border-bottom: 1px solid var(--l4); }
+  .logo-platz { font-weight: 700; font-size: .84rem; color: var(--l6); white-space: nowrap; flex: none; }
+  .nav-punkte { display: flex; flex-wrap: nowrap; gap: 32px; }
+  .nav-punkte .nav-wort { font-size: .82rem; font-weight: 600; color: var(--l6); white-space: nowrap; }
+  .nav-punkte .nav-wort.aktiv { text-decoration: underline; text-underline-offset: 4px; }
+  .menu-icon { width: 34px; height: 34px; border: none; border-radius: 24px; background: var(--l6); display: flex; align-items: center; justify-content: center; }
+  .menu-icon i { width: 14px; height: 2px; background: #fff; box-shadow: 0 4px 0 #fff, 0 -4px 0 #fff; }
+  .icon-knopf { width: 34px; height: 34px; border: 1.5px solid var(--l3); color: var(--l5); border-radius: 24px; display: flex; align-items: center; justify-content: center; font-size: .95rem; }
+  .kopf-nav > div:last-child { flex: none; white-space: nowrap; }
+
+  .bild-platz { background: var(--l2); border-radius: 24px; display: flex; align-items: center; justify-content: center; color: var(--l5); font-size: .78rem; text-align: center; padding: 8px; }
+  .bild-platz svg { width: 30px; height: 30px; fill: var(--l5); margin-bottom: 8px; display: block; margin-left: auto; margin-right: auto; }
+
+  .textzeile { height: 10px; background: var(--l3); border-radius: 2px; margin-bottom: 16px; }
+  h2.wf, h3.wf, h4.wf { margin: 0 0 16px; font-family: system-ui, sans-serif; }
+  h2.wf { font-size: 1.4rem; } h3.wf { font-size: .98rem; } h4.wf { font-size: .95rem; }
+  p.wf { margin: 0 0 24px; color: var(--l5); font-size: .86rem; }
+
+  .knopf { display: inline-block; border: 1.5px solid var(--l6); color: var(--l6); padding: 16px 24px; font-size: .84rem; font-weight: 600; border-radius: 999px; background: #fff; white-space: nowrap; flex: none; text-align: center; }
+  .knopf.gefuellt { background: var(--l6); color: #fff; border-color: var(--l6); }
+  .knopf.breit { display: block; width: 100%; }
+
+  .zwei-spalten { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  .karte-block { border: 1.5px solid var(--l4); border-radius: 24px; padding: 32px; display: flex; flex-direction: column; gap: 16px; }
+  .karte-block.warum { border: none; background: #fff; }
+  .liste-punkt { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dotted var(--l4); padding: 16px 0; font-size: .8rem; }
+  .li-icon { width: 20px; height: 20px; fill: var(--l5); margin-right: 16px; flex: none; }
+  .li-arrow { width: 18px; height: 18px; fill: var(--l5); display: block; }
+
+  .drei-spalten { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .zwei-raster { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .vier-raster { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+
+  /* Haken-Liste (Leistungen) */
+  .haken-liste { list-style: none; margin: 0; padding: 0; }
+  .haken-liste li { display: flex; gap: 16px; align-items: flex-start; padding: 12px 0; font-size: .86rem; }
+  .haken-liste li svg { width: 20px; height: 20px; fill: var(--l6); flex: none; margin-top: 1px; }
+
+  /* Arbeitsweise-Kachel */
+  .prinzip { border: none; background: #fff; border-radius: 24px; padding: 28px; display: flex; flex-direction: column; gap: 12px; }
+  .prinzip svg { width: 26px; height: 26px; fill: var(--l6); }
+
+  /* Ablauf */
+  .ablauf-slider { display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 4px 4px 16px; margin: 0 -4px; scrollbar-width: none; }
+  .ablauf-slider::-webkit-scrollbar { display: none; }
+  .ablauf-karte { flex: 0 0 auto; width: 200px; scroll-snap-align: start; border: 1.5px solid var(--l4); border-radius: 24px; padding: 24px; background: #fff; display: flex; flex-direction: column; gap: 4px; }
+  .ablauf-karte .nummer { width: 36px; height: 36px; border-radius: 999px; background: var(--l6); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .88rem; margin-bottom: 8px; }
+  .ablauf-dauer { display: inline-block; margin-top: 8px; font-size: .74rem; font-weight: 700; color: var(--l5); background: var(--l2); padding: 4px 12px; border-radius: 999px; align-self: flex-start; }
+  .ablauf-hinweis { font-size: .78rem; color: var(--l5); margin: -4px 0 0; }
+  .ablauf-kopf { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 16px; }
+  .ablauf-pfeile { display: flex; gap: 8px; flex: none; }
+  .ablauf-pfeil { width: 36px; height: 36px; border-radius: 999px; border: 1.5px solid var(--l4); background: #fff; display: flex; align-items: center; justify-content: center; flex: none; }
+  .ablauf-pfeil svg { width: 18px; height: 18px; fill: var(--l6); }
+
+  @media (max-width: 900px) {
+    .buehnen { flex-direction: column; align-items: center; }
+  }
+</style>
+</head>
+<body>
+<div class="kopfbereich">
+  <h1>Wireframe — Für Eigentümer (Low-Fidelity)</h1>
+  <p>Gleiche Bausteine/Regeln wie die anderen Wireframes: grau, ohne Rotskala/Schrift aus dem Designsystem, Radius 24px (Buttons komplett rund), 8er-Raster, keine Trennlinien zwischen Abschnitten, Material-3-Icons.</p>
+  <div class="legende">
+    <span><i style="background:var(--l2);border-radius:5px"></i>Bild-Platzhalter</span>
+    <span><i style="background:var(--l3)"></i>Text-Platzhalter</span>
+  </div>
+</div>
+
+<div class="buehnen">
+  <!-- MOBIL -->
+  <div class="rahmen-mobil">
+    <div class="geraet-label">Mobil, 375px (primär)</div>
+    <div class="seite">
+      <div class="kopf-nav">
+        <div class="logo-platz">Hausverwaltung Groterhorst</div>
+        <div style="display:flex;gap:16px;align-items:center">
+          <span class="icon-knopf" title="Schaden melden / Notfall">⚠</span>
+          <div class="menu-icon"><i></i></div>
+        </div>
+      </div>
+
+      <div class="block">
+        <h2 class="wf">Sie vermieten. Wir kümmern uns um den Rest.</h2>
+        <p class="wf">Für private Vermieter, kleine Mehrfamilienhäuser und Eigentümergemeinschaften in Geldern und Umgebung.</p>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <a class="knopf gefuellt breit">Erstgespräch vereinbaren</a>
+          <a class="knopf breit">☎ 02831 123 456</a>
+        </div>
+      </div>
+
+      <div class="block" style="background:var(--l2)">
+        <h3 class="wf">Leistungen</h3>
+        <p class="wf">Zwei Arten der Verwaltung, je nachdem, was zu Ihrer Immobilie passt.</p>
+        <div class="karte-block" style="background:#fff;margin-bottom:20px">
+          <div><span style="font-size:.74rem;font-weight:700;color:var(--l5);text-transform:uppercase;letter-spacing:.04em">Für Vermieter</span>
+          <h4 class="wf" style="margin:6px 0 0">Mietverwaltung</h4></div>
+          <ul class="haken-liste">
+            <li><svg viewBox="0 0 24 24"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>Mietersuche und Mietvertrag</li>
+            <li><svg viewBox="0 0 24 24"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>Nebenkostenabrechnung</li>
+            <li><svg viewBox="0 0 24 24"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>Handwerker und Reparaturen</li>
+            <li><svg viewBox="0 0 24 24"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>Wohnungsübergaben</li>
+          </ul>
+        </div>
+        <div class="karte-block" style="background:#fff">
+          <div><span style="font-size:.74rem;font-weight:700;color:var(--l5);text-transform:uppercase;letter-spacing:.04em">Für Eigentümergemeinschaften</span>
+          <h4 class="wf" style="margin:6px 0 0">WEG-Verwaltung</h4></div>
+          <ul class="haken-liste">
+            <li><svg viewBox="0 0 24 24"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>Eigentümerversammlungen</li>
+            <li><svg viewBox="0 0 24 24"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>Wirtschaftsplan und Abrechnung</li>
+            <li><svg viewBox="0 0 24 24"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>Erhaltungsrücklage</li>
+            <li><svg viewBox="0 0 24 24"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>Instandhaltungsplanung</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="block">
+        <h3 class="wf">Arbeitsweise</h3>
+        <div class="drei-spalten" style="grid-template-columns:1fr 1fr">
+          <div class="prinzip"><svg viewBox="0 0 24 24"><path d="M19.23 15.26l-2.54-.29c-.61-.07-1.21.14-1.64.57l-1.84 1.84c-2.83-1.44-5.15-3.75-6.59-6.59l1.85-1.85c.43-.43.64-1.03.57-1.64l-.29-2.52c-.12-1.01-.97-1.77-1.99-1.77H5.03c-1.13 0-2.07.94-2 2.07.53 8.54 7.36 15.36 15.89 15.89 1.13.07 2.07-.87 2.07-2v-1.73c.01-1.01-.75-1.86-1.76-1.98z"/></svg><h4 class="wf" style="margin:0;font-size:.9rem">Erreichbar</h4><p class="wf" style="margin:0;font-size:.78rem">Feste Ansprechpartnerin, Rückruf am selben Tag.</p></div>
+          <div class="prinzip"><svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 12.5c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8a3 3 0 100 6 3 3 0 000-6z"/></svg><h4 class="wf" style="margin:0;font-size:.9rem">Transparent</h4><p class="wf" style="margin:0;font-size:.78rem">Belege jederzeit einsehbar, jährlicher Bericht.</p></div>
+          <div class="prinzip"><svg viewBox="0 0 24 24"><path d="M12 21.5c-3.9 0-7-3.1-7-7 0-3.5 5.7-11 7-12.5 1.3 1.5 7 9 7 12.5 0 3.9-3.1 7-7 7z"/></svg><h4 class="wf" style="margin:0;font-size:.9rem">Vor Ort</h4><p class="wf" style="margin:0;font-size:.78rem">Regelmäßige Begehungen in Geldern und Umgebung.</p></div>
+          <div class="prinzip"><svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg><h4 class="wf" style="margin:0;font-size:.9rem">Verbindlich</h4><p class="wf" style="margin:0;font-size:.78rem">Absprachen schriftlich, größere Ausgaben abgestimmt.</p></div>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="ablauf-kopf">
+          <div>
+            <h3 class="wf" style="margin-bottom:4px">Ablauf einer Übernahme</h3>
+            <p class="ablauf-hinweis">Zum Durchblättern seitlich wischen →</p>
+          </div>
+          <div class="ablauf-pfeile">
+            <span class="ablauf-pfeil" title="Zurück"><svg viewBox="0 0 24 24"><path d="M20 11H7.83l4.88-4.88c.39-.39.39-1.03 0-1.42-.39-.39-1.02-.39-1.41 0l-6.59 6.59c-.39.39-.39 1.02 0 1.41l6.58 6.6c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L7.83 13H20c.55 0 1-.45 1-1s-.45-1-1-1z"/></svg></span>
+            <span class="ablauf-pfeil" title="Weiter"><svg viewBox="0 0 24 24"><path d="M5 13h11.17l-4.88 4.88c-.39.39-.39 1.03 0 1.42.39.39 1.02.39 1.41 0l6.59-6.59c.39-.39.39-1.02 0-1.41l-6.58-6.6c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41L16.17 11H5c-.55 0-1 .45-1 1s.45 1 1 1z"/></svg></span>
+          </div>
+        </div>
+        <div class="ablauf-slider">
+          <div class="ablauf-karte"><span class="nummer">1</span><h4 class="wf" style="margin:0 0 4px">Kennenlernen</h4><p class="wf" style="margin:0;font-size:.8rem">Telefonat oder Treffen, Sie erzählen von Ihrem Haus.</p><span class="ablauf-dauer">ca. 30 Minuten</span></div>
+          <div class="ablauf-karte"><span class="nummer">2</span><h4 class="wf" style="margin:0 0 4px">Besichtigung</h4><p class="wf" style="margin:0;font-size:.8rem">Vor-Ort-Termin, wichtigste Unterlagen.</p><span class="ablauf-dauer">nach Absprache</span></div>
+          <div class="ablauf-karte"><span class="nummer">3</span><h4 class="wf" style="margin:0 0 4px">Angebot</h4><p class="wf" style="margin:0;font-size:.8rem">Schriftlich, alle Kosten, ohne Kleingedrucktes.</p><span class="ablauf-dauer">innerhalb 1 Woche</span></div>
+          <div class="ablauf-karte"><span class="nummer">4</span><h4 class="wf" style="margin:0 0 4px">Übergabe</h4><p class="wf" style="margin:0;font-size:.8rem">Unterlagen, Konten, Verträge, Info an Mieter.</p><span class="ablauf-dauer">zum Monatswechsel</span></div>
+          <div class="ablauf-karte"><span class="nummer">5</span><h4 class="wf" style="margin:0 0 4px">Laufende Betreuung</h4><p class="wf" style="margin:0;font-size:.8rem">Ab jetzt eine feste Ansprechpartnerin.</p></div>
+        </div>
+      </div>
+
+      <div class="block">
+        <div style="display:flex;gap:20px;align-items:center;flex-direction:column;text-align:center">
+          <div class="bild-platz" style="width:96px;height:96px;border-radius:999px"><div><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.9 13.98l2.1 2.53 3.1-3.99c.2-.26.6-.26.8.01l3.51 4.68c.25.33.01.8-.4.8H6.02c-.42 0-.65-.48-.39-.81L8.12 14c.19-.26.57-.27.78-.02z"/></svg></div></div>
+          <div>
+            <h3 class="wf">Lernen wir uns kennen.</h3>
+            <p class="wf" style="margin:0">Das Erstgespräch ist kostenlos und unverbindlich.</p>
+          </div>
+          <a class="knopf gefuellt breit">Erstgespräch vereinbaren</a>
+        </div>
+      </div>
+
+      <div class="block" style="background:var(--l2)">
+        <h3 class="wf" style="margin-bottom:4px">Kontakt</h3>
+        <p class="wf" style="margin:0 0 16px;font-size:.8rem">Hausverwaltung &amp; Immobilienvermarktung<br>Birgit Groterhorst</p>
+        <p class="wf" style="margin:0 0 12px;font-size:.8rem">Köln-Mindener-Bahn 8<br>47608 Geldern</p>
+        <p class="wf" style="margin:0 0 12px;font-size:.8rem">Tel.: 02831-9363155<br>Fax: 02831-9363156</p>
+        <p class="wf" style="margin:0;font-size:.8rem">E-Mail: info@hvw-groterhorst.de</p>
+        <h4 class="wf" style="margin:24px 0 8px;font-size:.95rem">Öffnungszeiten</h4>
+        <div style="color:var(--l5);font-size:.8rem">
+          <div style="display:flex;gap:16px;margin-bottom:6px"><span style="width:88px;flex:none">Montag</span><span>9–12 Uhr</span></div>
+          <div style="display:flex;gap:16px;margin-bottom:6px"><span style="width:88px;flex:none">Dienstag</span><span>9–12 Uhr</span></div>
+          <div style="display:flex;gap:16px;margin-bottom:6px"><span style="width:88px;flex:none">Mittwoch</span><span>9–12 Uhr</span></div>
+          <div style="display:flex;gap:16px;margin-bottom:6px"><span style="width:88px;flex:none">Donnerstag</span><span>9–12 Uhr und 14–17 Uhr</span></div>
+          <div style="display:flex;gap:16px"><span style="width:88px;flex:none">Freitag</span><span>9–12 Uhr</span></div>
+        </div>
+        <div class="bild-platz" style="height:80px;margin-top:16px;background:var(--l3)"><div><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.9 13.98l2.1 2.53 3.1-3.99c.2-.26.6-.26.8.01l3.51 4.68c.25.33.01.8-.4.8H6.02c-.42 0-.65-.48-.39-.81L8.12 14c.19-.26.57-.27.78-.02z"/></svg>Karte (Platzhalter)</div></div>
+      </div>
+
+      <div class="block" style="background:var(--l7)">
+        <div class="textzeile" style="width:50%;background:var(--l5)"></div>
+        <div class="liste-punkt" style="border:0;font-size:.72rem;color:var(--l3)"><span>Impressum</span><span>Datenschutz</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DESKTOP -->
+  <div class="rahmen-desktop">
+    <div class="geraet-label">Desktop, 1280px (sekundär)</div>
+    <div class="seite">
+      <div class="kopf-nav">
+        <div class="logo-platz">Hausverwaltung Groterhorst</div>
+        <div class="nav-punkte"><span class="nav-wort aktiv">Für Eigentümer</span><span class="nav-wort">Für Mieter</span><span class="nav-wort">Über uns</span><span class="nav-wort">Kontakt</span></div>
+        <div style="display:flex;gap:8px">
+          <span class="knopf">⚠ Schaden melden</span>
+        </div>
+      </div>
+
+      <div class="block" style="display:flex;gap:40px;align-items:center">
+        <div style="flex:1.3">
+          <h2 class="wf">Sie vermieten. Wir kümmern uns um den Rest.</h2>
+          <p class="wf" style="max-width:32em">Für private Vermieter, kleine Mehrfamilienhäuser und Eigentümergemeinschaften in Geldern und Umgebung. Sie behalten den Überblick, ohne sich um jede Kleinigkeit selbst kümmern zu müssen.</p>
+          <div class="knopf-reihe" style="display:flex;gap:12px">
+            <a class="knopf gefuellt">Erstgespräch vereinbaren</a>
+            <a class="knopf">☎ 02831 123 456</a>
+          </div>
+        </div>
+        <div class="bild-platz" style="width:260px;aspect-ratio:4/3;flex:none"><div><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.9 13.98l2.1 2.53 3.1-3.99c.2-.26.6-.26.8.01l3.51 4.68c.25.33.01.8-.4.8H6.02c-.42 0-.65-.48-.39-.81L8.12 14c.19-.26.57-.27.78-.02z"/></svg>Foto: Gespräch mit Eigentümer</div></div>
+      </div>
+
+      <div class="block" style="background:var(--l2)">
+        <h3 class="wf">Leistungen</h3>
+        <p class="wf">Zwei Arten der Verwaltung, je nachdem, was zu Ihrer Immobilie passt.</p>
+        <div class="zwei-spalten">
+          <div class="karte-block" style="background:#fff">
+            <div><span style="font-size:.74rem;font-weight:700;color:var(--l5);text-transform:uppercase;letter-spacing:.04em">Für Vermieter</span>
+            <h4 class="wf" style="margin:6px 0 0">Mietverwaltung</h4></div>
+            <ul class="haken-liste">
+              <li><svg viewBox="0 0 24 24"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>Mietersuche und Mietvertrag</li>
+              <li><svg viewBox="0 0 24 24"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>Nebenkostenabrechnung</li>
+              <li><svg viewBox="0 0 24 24"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>Handwerker und Reparaturen</li>
+              <li><svg viewBox="0 0 24 24"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>Wohnungsübergaben</li>
+            </ul>
+          </div>
+          <div class="karte-block" style="background:#fff">
+            <div><span style="font-size:.74rem;font-weight:700;color:var(--l5);text-transform:uppercase;letter-spacing:.04em">Für Eigentümergemeinschaften</span>
+            <h4 class="wf" style="margin:6px 0 0">WEG-Verwaltung</h4></div>
+            <ul class="haken-liste">
+              <li><svg viewBox="0 0 24 24"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>Eigentümerversammlungen</li>
+              <li><svg viewBox="0 0 24 24"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>Wirtschaftsplan und Abrechnung</li>
+              <li><svg viewBox="0 0 24 24"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>Erhaltungsrücklage</li>
+              <li><svg viewBox="0 0 24 24"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>Instandhaltungsplanung</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="block">
+        <h3 class="wf">Arbeitsweise</h3>
+        <div class="vier-raster">
+          <div class="prinzip"><svg viewBox="0 0 24 24"><path d="M19.23 15.26l-2.54-.29c-.61-.07-1.21.14-1.64.57l-1.84 1.84c-2.83-1.44-5.15-3.75-6.59-6.59l1.85-1.85c.43-.43.64-1.03.57-1.64l-.29-2.52c-.12-1.01-.97-1.77-1.99-1.77H5.03c-1.13 0-2.07.94-2 2.07.53 8.54 7.36 15.36 15.89 15.89 1.13.07 2.07-.87 2.07-2v-1.73c.01-1.01-.75-1.86-1.76-1.98z"/></svg><h4 class="wf" style="margin:0;font-size:.92rem">Erreichbar</h4><p class="wf" style="margin:0;font-size:.8rem">Feste Ansprechpartnerin, Rückruf am selben Tag.</p></div>
+          <div class="prinzip"><svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 12.5c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8a3 3 0 100 6 3 3 0 000-6z"/></svg><h4 class="wf" style="margin:0;font-size:.92rem">Transparent</h4><p class="wf" style="margin:0;font-size:.8rem">Belege jederzeit einsehbar, jährlicher Bericht.</p></div>
+          <div class="prinzip"><svg viewBox="0 0 24 24"><path d="M12 21.5c-3.9 0-7-3.1-7-7 0-3.5 5.7-11 7-12.5 1.3 1.5 7 9 7 12.5 0 3.9-3.1 7-7 7z"/></svg><h4 class="wf" style="margin:0;font-size:.92rem">Vor Ort</h4><p class="wf" style="margin:0;font-size:.8rem">Regelmäßige Begehungen in Geldern und Umgebung.</p></div>
+          <div class="prinzip"><svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg><h4 class="wf" style="margin:0;font-size:.92rem">Verbindlich</h4><p class="wf" style="margin:0;font-size:.8rem">Absprachen schriftlich, größere Ausgaben abgestimmt.</p></div>
+        </div>
+      </div>
+
+      <div class="block" style="background:var(--l2)">
+        <div class="ablauf-kopf">
+          <div>
+            <h3 class="wf" style="margin-bottom:4px">Ablauf einer Übernahme</h3>
+            <p class="ablauf-hinweis">Zum Durchblättern seitlich wischen →</p>
+          </div>
+          <div class="ablauf-pfeile">
+            <span class="ablauf-pfeil" title="Zurück"><svg viewBox="0 0 24 24"><path d="M20 11H7.83l4.88-4.88c.39-.39.39-1.03 0-1.42-.39-.39-1.02-.39-1.41 0l-6.59 6.59c-.39.39-.39 1.02 0 1.41l6.58 6.6c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L7.83 13H20c.55 0 1-.45 1-1s-.45-1-1-1z"/></svg></span>
+            <span class="ablauf-pfeil" title="Weiter"><svg viewBox="0 0 24 24"><path d="M5 13h11.17l-4.88 4.88c-.39.39-.39 1.03 0 1.42.39.39 1.02.39 1.41 0l6.59-6.59c.39-.39.39-1.02 0-1.41l-6.58-6.6c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41L16.17 11H5c-.55 0-1 .45-1 1s.45 1 1 1z"/></svg></span>
+          </div>
+        </div>
+        <div class="ablauf-slider">
+          <div class="ablauf-karte"><span class="nummer">1</span><h4 class="wf" style="margin:0 0 4px">Kennenlernen</h4><p class="wf" style="margin:0;font-size:.8rem">Telefonat oder Treffen, Sie erzählen von Ihrem Haus.</p><span class="ablauf-dauer">ca. 30 Minuten</span></div>
+          <div class="ablauf-karte"><span class="nummer">2</span><h4 class="wf" style="margin:0 0 4px">Besichtigung</h4><p class="wf" style="margin:0;font-size:.8rem">Vor-Ort-Termin, wichtigste Unterlagen.</p><span class="ablauf-dauer">nach Absprache</span></div>
+          <div class="ablauf-karte"><span class="nummer">3</span><h4 class="wf" style="margin:0 0 4px">Angebot</h4><p class="wf" style="margin:0;font-size:.8rem">Schriftlich, alle Kosten, ohne Kleingedrucktes.</p><span class="ablauf-dauer">innerhalb 1 Woche</span></div>
+          <div class="ablauf-karte"><span class="nummer">4</span><h4 class="wf" style="margin:0 0 4px">Übergabe</h4><p class="wf" style="margin:0;font-size:.8rem">Unterlagen, Konten, Verträge, Info an Mieter.</p><span class="ablauf-dauer">zum Monatswechsel</span></div>
+          <div class="ablauf-karte"><span class="nummer">5</span><h4 class="wf" style="margin:0 0 4px">Laufende Betreuung</h4><p class="wf" style="margin:0;font-size:.8rem">Ab jetzt eine feste Ansprechpartnerin.</p></div>
+        </div>
+      </div>
+
+      <div class="block" style="display:flex;gap:32px;align-items:center;justify-content:space-between">
+        <div style="display:flex;gap:20px;align-items:center">
+          <div class="bild-platz" style="width:80px;height:80px;border-radius:999px;flex:none"><div><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.9 13.98l2.1 2.53 3.1-3.99c.2-.26.6-.26.8.01l3.51 4.68c.25.33.01.8-.4.8H6.02c-.42 0-.65-.48-.39-.81L8.12 14c.19-.26.57-.27.78-.02z"/></svg></div></div>
+          <div>
+            <h3 class="wf" style="margin:0 0 4px">Lernen wir uns kennen.</h3>
+            <p class="wf" style="margin:0">Das Erstgespräch ist kostenlos und unverbindlich.</p>
+          </div>
+        </div>
+        <a class="knopf gefuellt" style="flex:none">Erstgespräch vereinbaren</a>
+      </div>
+
+      <div class="block" style="background:var(--l2)">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px">
+          <div>
+            <h3 class="wf" style="margin-bottom:4px">Kontakt</h3>
+            <p class="wf" style="margin:0 0 16px;font-size:.8rem">Hausverwaltung &amp; Immobilienvermarktung<br>Birgit Groterhorst</p>
+            <p class="wf" style="margin:0 0 12px;font-size:.8rem">Köln-Mindener-Bahn 8<br>47608 Geldern</p>
+            <p class="wf" style="margin:0 0 12px;font-size:.8rem">Tel.: 02831-9363155<br>Fax: 02831-9363156</p>
+            <p class="wf" style="margin:0;font-size:.8rem">E-Mail: info@hvw-groterhorst.de</p>
+          </div>
+          <div>
+            <h3 class="wf">Öffnungszeiten</h3>
+            <div style="color:var(--l5);font-size:.8rem">
+              <div style="display:flex;gap:16px;margin-bottom:6px"><span style="width:88px;flex:none">Montag</span><span>9–12 Uhr</span></div>
+              <div style="display:flex;gap:16px;margin-bottom:6px"><span style="width:88px;flex:none">Dienstag</span><span>9–12 Uhr</span></div>
+              <div style="display:flex;gap:16px;margin-bottom:6px"><span style="width:88px;flex:none">Mittwoch</span><span>9–12 Uhr</span></div>
+              <div style="display:flex;gap:16px;margin-bottom:6px"><span style="width:88px;flex:none">Donnerstag</span><span>9–12 Uhr und 14–17 Uhr</span></div>
+              <div style="display:flex;gap:16px"><span style="width:88px;flex:none">Freitag</span><span>9–12 Uhr</span></div>
+            </div>
+          </div>
+          <div class="bild-platz" style="background:var(--l3)"><div><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.9 13.98l2.1 2.53 3.1-3.99c.2-.26.6-.26.8.01l3.51 4.68c.25.33.01.8-.4.8H6.02c-.42 0-.65-.48-.39-.81L8.12 14c.19-.26.57-.27.78-.02z"/></svg>Karte</div></div>
+        </div>
+      </div>
+
+      <div class="block" style="background:var(--l7);display:flex;justify-content:space-between">
+        <div class="textzeile" style="width:30%;margin:0;background:var(--l5)"></div>
+        <div style="font-size:.72rem;color:var(--l3)">Impressum · Datenschutz</div>
+      </div>
+    </div>
+  </div>
+</div>
+<style>.nur-mobil .kopfbereich,.nur-mobil .rahmen-desktop,.nur-mobil .geraet-label,.nur-desktop .kopfbereich,.nur-desktop .rahmen-mobil,.nur-desktop .geraet-label{display:none}.nur-mobil .buehnen,.nur-desktop .buehnen{padding:0;gap:0;display:block}.nur-mobil body,.nur-desktop body{background:#fff}.nur-mobil .rahmen-mobil,.nur-desktop .rahmen-desktop{width:100%;max-width:none}.nur-mobil .seite,.nur-desktop .seite{border:0}</style>
+<script>{const n=new URLSearchParams(location.search).get("nur");if(n)document.documentElement.classList.add("nur-"+n)}</script>
+</body>
+</html>

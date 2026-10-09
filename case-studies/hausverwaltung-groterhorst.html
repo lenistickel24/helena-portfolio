@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <!-- noindex, solange die Zustimmung der Inhaberin zur Veröffentlichung offen ist
+       (siehe offene-fragen-birgit.md, Punkt "Portfolio"). Entfernen, sobald geklärt. -->
+  <title>Hausverwaltung Groterhorst · Case Study · Helena Stickelbroeck</title>
+  <meta name="description" content="Redesign der Website einer kleinen Hausverwaltung in Geldern: neues Branding, ein Designsystem mit vier Farben und einer Schrift, und eine Struktur, die Mieter-Service von Eigentümer-Akquise trennt." />
+
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="../assets/favicon-32.png" sizes="32x32" type="image/png" />
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Helena Stickelbroeck" />
+  <meta property="og:title" content="Hausverwaltung Groterhorst" />
+  <meta property="og:description" content="Redesign der Website einer kleinen Hausverwaltung: neues Branding, ein ruhiges Designsystem und eine Struktur für zwei sehr verschiedene Zielgruppen. Unabhängiges Portfolio-Projekt." />
+  <meta property="og:image" content="https://helena-stickelbroeck.de/assets/og-image.png" />
+  <meta property="og:url" content="https://helena-stickelbroeck.de/case-studies/hausverwaltung-groterhorst.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body class="accent-hvw case-overlay motif-circle">
+
+  <!-- Arbeitsstand (03.10.2026): aufgebaut aus dem Projektordner
+       _Master/14 Projekte/HVW-Groterhorst/ (konzept-v2/case-study/index.html als
+       Erzählvorlage, offene-fragen-birgit.md für alles Unbestätigte). Der Ordner
+       konzept-v2/design, /wireframes, designsystem.html und icons.html liegt als Kopie
+       unter case-studies/hvw/ (Live-Frames und "Öffnen"-Links). Das Portrait der Inhaberin
+       ist im Vorher-Bild bewusst verdeckt, solange ihr Einverständnis offen ist. -->
+
+  <div class="case-sheet">
+  <div class="case-close-bar">
+    <a class="case-close" href="../index.html#work" aria-label="Case Study schließen">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+    </a>
+  </div>
+  <div class="case-sheet-content">
+  <main>
+
+    <!-- ============ HERO ============ -->
+    <section class="case-hero">
+      <div class="wrap">
+        <div class="case-hero-text">
+          <p class="tag">Redesign</p>
+          <h1 class="page-heading">Hausverwaltung Groterhorst</h1>
+          <p class="case-lede">
+            Ein Redesign aus Eigeninitiative: die Website einer kleinen Hausverwaltung in Geldern.
+            Aus einer Standard-Vorlage wird eine ruhige Seite, die auf dem Handy beginnt.
+            Mieter:innen finden sofort Hilfe. Eigentümer:innen fassen Vertrauen.
+          </p>
+        </div>
+
+        <div class="case-meta">
+          <div>
+            <div class="case-meta-label">Rolle</div>
+            <div class="case-meta-value">Konzept, UX/UI-Design, Umsetzung (Eigeninitiative)</div>
+          </div>
+          <div>
+            <div class="case-meta-label">Jahr</div>
+            <div class="case-meta-value">2026</div>
+          </div>
+          <div>
+            <div class="case-meta-label">Zeitraum</div>
+            <div class="case-meta-value">September – Oktober 2026</div>
+          </div>
+          <div>
+            <div class="case-meta-label">Werkzeuge</div>
+            <div class="case-meta-value">HTML, CSS und JavaScript, ohne Framework. Claude half bei Umsetzung und Prüfung.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CONTENT ============ -->
+    <div class="case-body">
+      <div class="wrap">
+
+        <!-- Vorschau: die echte neue Startseite im Browser-Rahmen -->
+        <section class="case-section case-section--image reveal" aria-label="Vorschau der neuen Website">
+          <div class="browser-mock">
+            <div class="browser-chrome">
+              <div class="browser-chrome-dots"><span></span><span></span><span></span></div>
+              <div class="browser-chrome-url"></div>
+            </div>
+            <div class="browser-screen">
+              <div class="live-frame" data-w="1280" inert>
+                <iframe scrolling="no" src="hvw/design/startseite.html" title="Neue Startseite, Vorschau" loading="lazy" tabindex="-1"></iframe>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 1 — Das Problem -->
+        <section class="case-section reveal">
+          <h2 class="tag">Das Problem</h2>
+          <p>
+            Birgit Groterhorst verwaltet als Einzelunternehmerin Häuser und Eigentümergemeinschaften
+            in Geldern. Ihre Website sieht aus wie eine WordPress-Standardvorlage. Ich habe alle
+            fünf Seiten durchgesehen. Der Inhalt stimmt. Die Form nicht.
+          </p>
+
+          <div class="case-pair case-pair--phone-narrow">
+            <figure>
+              <div class="device-desktop"><img src="../assets/img/hvw-vorher-desktop.jpg" width="800" height="500" alt="Bisherige Website, Desktop: Logo, Navigation, Dachfoto, Begrüßungstext, Cookie-Hinweis am unteren Rand" loading="lazy" /></div>
+              <figcaption><b>Vorher · Desktop</b>Bildschirmfoto der bisherigen Website vom 3. Oktober 2026. Das Portrait der Inhaberin habe ich verdeckt.</figcaption>
+            </figure>
+            <figure>
+              <div class="device-phone"><img src="../assets/img/hvw-vorher-mobil.jpg" width="750" height="1624" alt="Bisherige Website, Handy: großes Logo, Hamburger-Menü, Dachfoto, Text, Cookie-Hinweis verdeckt Inhalt" loading="lazy" /></div>
+              <figcaption><b>Vorher · Handy</b>Der Cookie-Hinweis bleibt stehen und verdeckt den Inhalt.</figcaption>
+            </figure>
+          </div>
+
+          <ul>
+            <li><strong>Navigation:</strong> Ein Hamburger-Menü, sogar am Desktop. Die Unterseiten sind schwer zu finden.</li>
+            <li><strong>Bilder:</strong> Ein einziges Dachfoto auf allen fünf Seiten. Die Inhaberin taucht nur klein am Rand auf.</li>
+            <li><strong>Inhalt:</strong> Die Leistungsliste steht zweimal da, mit 9 und mit 16 Punkten. Mal sagt die Seite „wir“, mal „ich“.</li>
+            <li><strong>Vertrauen:</strong> Keine Zahlen, keine Stimmen, keine sichtbare Qualifikation.</li>
+            <li><strong>Mieter-Service:</strong> Keine Möglichkeit, einen Schaden zu melden. Keine Fragen und Antworten, keine Notfall-Info.</li>
+            <li><strong>Technik und Look:</strong> Kein Farb- und kein Schriftsystem. Ein Fremdkörper-Widget für die Angebote. Und ein Cookie-Banner, der nicht mehr weggeht.</li>
+          </ul>
+        </section>
+
+        <!-- 2 — Zielgruppen -->
+        <section class="case-section reveal">
+          <h2 class="tag">Zielgruppen</h2>
+          <p>
+            Eine Hausverwaltung hat mit Menschen zu tun, die ganz unterschiedlich viel Zeit haben:
+            Mieter:innen mit einem akuten Problem und Eigentümer:innen, die langsam Vertrauen
+            aufbauen. Die Seite muss beide abholen, ohne dass sich jemand falsch fühlt.
+          </p>
+          <p>
+            <strong>Wichtig:</strong> Die drei Personas sind Annahmen aus dem Briefing, keine
+            Ergebnisse aus Interviews. Sie helfen mir, Ton, Reihenfolge und Priorität zu begründen.
+          </p>
+
+          <div class="card-grid">
+            <div class="info-card">
+              <span class="info-card-kicker">Eigentümerin</span>
+              <h3>Sabine, 58</h3>
+              <p>Hat das Dreifamilienhaus ihrer Eltern geerbt, arbeitet Vollzeit und wohnt nicht im Haus.</p>
+              <p class="quote">„Ich will nicht recherchieren müssen, ob das seriös ist. Das muss ich beim Lesen einfach merken.“</p>
+              <dl>
+                <dt>Frust bisher</dt><dd>Große Verwaltung: nie dieselbe Ansprechperson, Abrechnungen ohne Erklärung.</dd>
+                <dt>Muss schnell sehen</dt><dd>Wer steckt dahinter? Was wird übernommen? Wie läuft ein Wechsel?</dd>
+              </dl>
+            </div>
+            <div class="info-card">
+              <span class="info-card-kicker">Mieter</span>
+              <h3>Jonas, 34</h3>
+              <p>Entdeckt abends einen Wasserfleck an der Decke und steht mit dem Handy in der Hand da.</p>
+              <p class="quote">„Mir ist egal, wie schön die Seite aussieht. Ich will in 10 Sekunden eine Nummer oder ein Formular finden.“</p>
+              <dl>
+                <dt>Frust bisher</dt><dd>Kontaktformular ohne Rückmeldung, wann sich jemand meldet.</dd>
+                <dt>Muss schnell sehen</dt><dd>Notfallnummer, Schaden melden, wann kommt jemand?</dd>
+              </dl>
+            </div>
+            <div class="info-card">
+              <span class="info-card-kicker">Wohnungssuchende</span>
+              <h3>Melanie &amp; Tom, Anfang 30</h3>
+              <p>Ziehen nach Geldern und haben schon tote Anzeigen auf anderen Portalen erlebt.</p>
+              <p class="quote">„Wenn ich sehe ‚aktuell keine Angebote, aber melden Sie sich‘, reicht mir das auch. Hauptsache ehrlich.“</p>
+              <dl>
+                <dt>Frust bisher</dt><dd>Veraltete Anzeigen, unklar, ob ein Objekt noch frei ist.</dd>
+                <dt>Muss schnell sehen</dt><dd>Gibt es aktuell etwas? Einfacher Kontaktweg.</dd>
+              </dl>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3 — Struktur -->
+        <section class="case-section reveal">
+          <h2 class="tag">Struktur</h2>
+          <p>
+            Bevor ich eine Seite gezeichnet habe, habe ich drei Gliederungen verglichen. Ich habe
+            nicht eine Variante verfeinert, sondern drei gegeneinander gestellt.
+          </p>
+
+          <div class="card-grid">
+            <div class="info-card info-card--chosen">
+              <span class="info-card-kicker">Option 1 · gewählt</span>
+              <h3>Nach Zielgruppe</h3>
+              <p>Die Startseite verzweigt in „Eigentümer:innen“ und „Mieter:innen“. Das ist sehr klar. Risiko: Wer unentschlossen ist, muss sich früh einordnen.</p>
+            </div>
+            <div class="info-card">
+              <span class="info-card-kicker">Option 2</span>
+              <h3>Nach Anliegen</h3>
+              <p>Die Startseite fragt: „Was wollen Sie tun?“ Das passt zu schneller Hilfe. Aber das Vertrauen der Eigentümer:innen wird schwerer greifbar.</p>
+            </div>
+            <div class="info-card">
+              <span class="info-card-kicker">Option 3</span>
+              <h3>Eine lange Startseite</h3>
+              <p>Wie eine Visitenkarte: persönlich. Bei zwei so verschiedenen Zielgruppen aber unübersichtlich und kaum verlinkbar, zum Beispiel „Schaden melden“ per SMS.</p>
+            </div>
+          </div>
+
+          <h3>Die Sitemap im Endstand</h3>
+          <ul>
+            <li><strong>Startseite:</strong> zwei Wege, Vertrauen, Fragen, Kontakt. Mobil mit fester Leiste „Anrufen / Schaden melden“.</li>
+            <li><strong>Für Eigentümer:innen:</strong> Leistungen, Vorteile, Ablauf, Fragen, Ansprechpartnerin.</li>
+            <li><strong>Für Mieter:innen:</strong> Schaden melden, Notfall, Fragen, Downloads.</li>
+            <li><strong>Immobilienangebote:</strong> Liste von immobilien.de, Suche mitteilen.</li>
+            <li><strong>Über uns</strong> und <strong>Kontakt:</strong> Formular, „Lieber persönlich?“, Anfahrt.</li>
+            <li><strong>Dialog „Schaden melden“:</strong> öffnet sich über jeder Seite, keine eigene Unterseite.</li>
+          </ul>
+          <p>
+            Gegenüber der alten Seite gibt es die doppelte „Hausverwaltung“-Seite nicht mehr.
+            WEG- und Mietverwaltung sind getrennt. „Schaden melden“ ist ein Dialog statt einer
+            eigenen Seite.
+          </p>
+        </section>
+
+        <!-- 4 — Wireframes -->
+        <section class="case-section reveal">
+          <h2 class="tag">Wireframes</h2>
+          <p>
+            Die Wireframes sind bewusst grau und ohne Branding. So geht es um Inhalt und Aufbau,
+            nicht um Farben. Version 1 entstand vor der Gestaltung, Version 2 nach Personas,
+            Design und Test.
+          </p>
+
+          <div class="case-pair case-pair--2 case-pair--phones-center">
+            <figure>
+              <div class="device-phone"><div class="live-frame" data-w="375" data-h="720" style="aspect-ratio:375/720" inert><iframe scrolling="no" src="hvw/wireframes/v1-ursprung/startseite.html?nur=mobil" title="Wireframe Startseite, Version 1" loading="lazy" tabindex="-1"></iframe></div></div>
+              <figcaption><b>v1 · ursprünglich</b>Hero mit Verlauf, Icon-Buttons im Header, „Schaden melden“ als Kachel. <a href="hvw/wireframes/v1-ursprung/startseite.html" target="_blank" rel="noopener">Öffnen ↗</a></figcaption>
+            </figure>
+            <figure>
+              <div class="device-phone"><div class="live-frame" data-w="375" data-h="720" style="aspect-ratio:375/720" inert><iframe scrolling="no" src="hvw/wireframes/startseite.html?nur=mobil" title="Wireframe Startseite, Version 2" loading="lazy" tabindex="-1"></iframe></div></div>
+              <figcaption><b>v2 · aktualisiert</b>Kontakt-Button, ganze Karten klickbar, Fragen, Öffnungsstatus, feste Leiste unten. <a href="hvw/wireframes/startseite.html" target="_blank" rel="noopener">Öffnen ↗</a></figcaption>
+            </figure>
+          </div>
+
+          <h3>Was sich von v1 zu v2 geändert hat</h3>
+          <ul>
+            <li><strong>Navigation:</strong> Immobilienangebote hat eine eigene Seite in der Navigation. Rechts im Header steht ein Kontakt-Button statt Telefon und „Schaden melden“.</li>
+            <li><strong>Mobil:</strong> Unten sitzt eine feste Aktionsleiste (Anrufen, Schaden melden). Der Header verschwindet beim Scrollen.</li>
+            <li><strong>Startseite:</strong> Die Zielgruppen-Karten sind ganz klickbar. Neu: eine Fragen-Sektion für Eigentümer:innen und ein Kontaktbereich mit Öffnungsstatus.</li>
+            <li><strong>Eigentümer-Seite:</strong> Die Vorteile passen jetzt zur Persona, dazu kommt ein FAQ. Der Ablauf ist ab Desktop vollständig sichtbar.</li>
+            <li><strong>Neu:</strong> Immobilienangebote, Impressum, Datenschutz, 404, Hinweise im Schaden-Dialog.</li>
+          </ul>
+          <p><a href="hvw/wireframes/index.html" target="_blank" rel="noopener">Alle Wireframes ansehen, v1 und v2 ↗</a></p>
+        </section>
+
+        <!-- 5 — Gestaltung -->
+        <section class="case-section reveal">
+          <h2 class="tag">Gestaltung</h2>
+          <p>
+            Die Vorgabe: vertrauenswürdig, bodenständig, nahbar. Nicht wie ein Konzern, nicht wie
+            ein Start-up. Deshalb wenige Entscheidungen, aber konsequent.
+          </p>
+
+          <div class="card-grid card-grid--2">
+            <div class="info-card">
+              <span class="info-card-kicker">Farbe</span>
+              <h3>Vier Farben, mehr nicht</h3>
+              <p>Schwarz, Weiß, ein helles Grau und ein kräftiges Rot als einziger Akzent. Rot gibt es nur für Kicker, Haupt-Buttons, Icons und Links.</p>
+              <div class="swatches" role="img" aria-label="Die vier Farben: Schwarz, Weiß, helles Grau und Rot">
+                <div class="swatch" style="background:#000;color:#fff"><b>Schwarz</b>#000000</div>
+                <div class="swatch" style="background:#fff;border:1.5px solid var(--line)"><b>Weiß</b>#FFFFFF</div>
+                <div class="swatch" style="background:#F3F3F3"><b>Grau</b>#F3F3F3</div>
+                <div class="swatch" style="background:#C70007;color:#fff"><b>Rot</b>#C70007</div>
+              </div>
+              <p>Früher Versuch: eine Rotfamilie mit sechs Stufen. Verworfen. Sie wirkte beliebig und weniger klar.</p>
+            </div>
+            <div class="info-card">
+              <span class="info-card-kicker">Form</span>
+              <h3>Stark gerundet: 32 Pixel</h3>
+              <p>Drei Radien im Vergleich: Eckig wirkt amtlich, leicht gerundet solide, stark gerundet freundlich. Ich habe C gewählt. Auch Fotos und Dialoge folgen ihm. Eingabefelder bleiben bei 8 Pixeln, damit man sie klar als Felder erkennt.</p>
+              <div class="radius-demo" role="img" aria-label="Drei Radien: A null Pixel, B zwölf Pixel, C zweiunddreißig Pixel, C ist gewählt">
+                <div style="border-radius:0">A · 0</div>
+                <div style="border-radius:12px">B · 12</div>
+                <div class="is-chosen" style="border-radius:32px">C · 32</div>
+              </div>
+            </div>
+            <div class="info-card">
+              <span class="info-card-kicker">Schrift</span>
+              <h3>Familjen Grotesk</h3>
+              <p>Eine einzige Schrift. Die Hierarchie entsteht nur über Größe und Gewicht. Lokal eingebunden (19 KB), ohne Verbindung zu Google.</p>
+            </div>
+            <div class="info-card">
+              <span class="info-card-kicker">Icons</span>
+              <h3>Material Icons, Variante „Round“</h3>
+              <p>Alle 23 Icons im selben Stil. Die runden Ecken greifen Karten und Buttons auf. Icons stehen nie allein, immer mit Text.</p>
+            </div>
+            <div class="info-card info-card--wide">
+              <span class="info-card-kicker">Logo</span>
+              <h3>Ein reduziertes Haus-Zeichen</h3>
+              <img class="logo-showcase" src="hvw/design/img/logo_hvw.svg" alt="Neues Logo der Hausverwaltung Groterhorst: abgerundetes Quadrat mit ausgespartem Dach-Motiv, daneben die Wortmarke in zwei Zeilen" width="230" height="64" loading="lazy" />
+              <p>Ein abgerundetes Quadrat mit ausgespartem Dach-Motiv und einer Wortmarke in zwei Zeilen. Entstanden in mehreren Runden: von Handskizzen über Entwürfe, die ich präzisiert und ausgewählt habe. Keine Zusatztexte, kein wörtliches Haus. Das Zeichen ist auch das Favicon.</p>
+            </div>
+          </div>
+
+          <h3>Entscheidungen, die sich unterwegs geändert haben</h3>
+          <p>Gute Gestaltung entsteht auch durch Weglassen. Diese Entscheidungen habe ich unterwegs gedreht:</p>
+          <div class="decision-list">
+            <div class="decision">
+              <h3>Ansprache</h3>
+              <p class="why">Erst Ich-Form, dann „wir“: Das Unternehmen spricht, über Birgit Groterhorst wird in der dritten Person gesprochen.</p>
+            </div>
+            <div class="decision">
+              <h3>Zielgruppen-Karten</h3>
+              <p class="why">Erst Foto, Text, drei Buttons und Links. Dann eine ganz klickbare Karte mit Pfeil. Vorher war unklar, wo man zuerst hinschaut.</p>
+            </div>
+            <div class="decision">
+              <h3>Kopfbereich</h3>
+              <p class="why">Erst überlappte das Foto die Karten, dann kam eine „Vertrauensleiste“. Beides habe ich verworfen: Zu viele Bilder übereinander wirken unruhig. Jetzt gibt es ein größeres Foto, die Vertrauensmerkmale stehen im Text.</p>
+            </div>
+            <div class="decision">
+              <h3>Schaden melden</h3>
+              <p class="why">Erst eine Pille im Header, dann eine feste Aktionsleiste am Handy. Auf dem Desktop gibt es sie nur noch auf der Mieter-Seite und im Dialog.</p>
+            </div>
+            <div class="decision">
+              <h3>Header</h3>
+              <p class="why">Erst Telefonnummer und „Schaden melden“, dann ein roter Kontakt-Button für beide Zielgruppen.</p>
+            </div>
+            <div class="decision">
+              <h3>Immobilienangebote</h3>
+              <p class="why">Erst nur eine Box auf der Startseite, dann eine eigene Seite, am Ende in der Navigation.</p>
+            </div>
+          </div>
+          <p>
+            <a href="hvw/designsystem.html" target="_blank" rel="noopener">Designsystem mit allen Bausteinen ↗</a> ·
+            <a href="hvw/icons.html" target="_blank" rel="noopener">Icon-Übersicht ↗</a>
+          </p>
+        </section>
+
+        <!-- 6 — Ergebnis -->
+        <section class="case-section reveal">
+          <h2 class="tag">Ergebnis</h2>
+          <p>
+            Neun Seiten und ein Dialog. Die Ansichten unten sind keine Bilder, sondern die echten,
+            laufenden Seiten, verkleinert. Alle Fotos sind noch Platzhalter.
+          </p>
+
+          <div class="case-pair">
+            <figure>
+              <div class="device-desktop"><div class="live-frame" data-w="1280" data-h="760" style="aspect-ratio:1280/760" inert><iframe scrolling="no" src="hvw/design/startseite.html" title="Startseite, Desktop" loading="lazy" tabindex="-1"></iframe></div></div>
+              <figcaption><b>Startseite · Desktop</b>Ein Foto im Kopfbereich, darunter zwei klare Wege. <a href="hvw/design/startseite.html" target="_blank" rel="noopener">Seite öffnen ↗</a></figcaption>
+            </figure>
+          </div>
+
+          <div class="case-pair case-pair--3 case-pair--phones-center">
+            <figure>
+              <div class="device-phone"><div class="live-frame" data-w="375" data-h="760" style="aspect-ratio:375/760" inert><iframe scrolling="no" src="hvw/design/startseite.html" title="Startseite, Handy" loading="lazy" tabindex="-1"></iframe></div></div>
+              <figcaption><b>Startseite · Handy</b>Feste Leiste unten, Header nur mit Logo und Menü.</figcaption>
+            </figure>
+            <figure>
+              <div class="device-phone"><div class="live-frame" data-w="375" data-h="760" style="aspect-ratio:375/760" inert><iframe scrolling="no" src="hvw/design/mieter.html#notfall" title="Mieter-Seite, Handy" loading="lazy" tabindex="-1"></iframe></div></div>
+              <figcaption><b>Für Mieter:innen</b>Notfallkasten mit Live-Status. <a href="hvw/design/mieter.html" target="_blank" rel="noopener">Seite öffnen ↗</a></figcaption>
+            </figure>
+            <figure>
+              <div class="device-phone"><div class="live-frame" data-w="375" data-h="760" style="aspect-ratio:375/760" inert><iframe scrolling="no" src="hvw/design/mieter.html#schaden-melden" title="Dialog Schaden melden, Handy" loading="lazy" tabindex="-1"></iframe></div></div>
+              <figcaption><b>Dialog „Schaden melden“</b>Vier Schritte, Hinweis je Schadensart.</figcaption>
+            </figure>
+          </div>
+
+          <div class="case-pair case-pair--2">
+            <figure>
+              <div class="device-desktop"><div class="live-frame" data-w="1280" data-h="860" style="aspect-ratio:1280/860" inert><iframe scrolling="no" src="hvw/design/eigentuemer.html" title="Eigentümer-Seite, Desktop" loading="lazy" tabindex="-1"></iframe></div></div>
+              <figcaption><b>Für Eigentümer:innen</b>Leistungen, Vorteile, Ablauf, Fragen. <a href="hvw/design/eigentuemer.html" target="_blank" rel="noopener">Seite öffnen ↗</a></figcaption>
+            </figure>
+            <figure>
+              <div class="device-desktop"><div class="live-frame" data-w="1280" data-h="860" style="aspect-ratio:1280/860" inert><iframe scrolling="no" src="hvw/design/kontakt.html" title="Kontakt-Seite, Desktop" loading="lazy" tabindex="-1"></iframe></div></div>
+              <figcaption><b>Kontakt</b>Anliegen-Auswahl und „Lieber persönlich?“. <a href="hvw/design/kontakt.html" target="_blank" rel="noopener">Seite öffnen ↗</a></figcaption>
+            </figure>
+          </div>
+          <p><a href="hvw/design/ueber-uns.html" target="_blank" rel="noopener">Über uns ↗</a></p>
+        </section>
+
+        <!-- 7 — Test und Optimierung -->
+        <section class="case-section reveal">
+          <h2 class="tag">Test und Optimierung</h2>
+          <p>
+            Nach der Umsetzung bin ich die Seite gedanklich mit Sabine, Jonas und Melanie &amp; Tom
+            durchgegangen. Das war eine Prüfung am Schreibtisch, keine Beobachtung echter
+            Nutzer:innen. Trotzdem hat sie Dinge gefunden, die man in der Gestaltung nicht sieht.
+          </p>
+
+          <div class="card-grid card-grid--2">
+            <div class="info-card">
+              <span class="info-card-kicker">Orientierung</span>
+              <ul>
+                <li><strong>Kontakt-Button statt Telefon:</strong> Eigentümer:innen hatten oben keinen Weg zum Erstgespräch.</li>
+                <li><strong>Ganze Karten klickbar:</strong> weniger Buttons, klarerer Blick auf die Startseite.</li>
+                <li><strong>Immobilienangebote in der Navigation:</strong> Wohnungssuchende fanden die Seite nur über eine Box.</li>
+              </ul>
+            </div>
+            <div class="info-card">
+              <span class="info-card-kicker">Mieter-Hilfe</span>
+              <ul>
+                <li><strong>Aktionsleiste am Handy:</strong> „Anrufen“ und „Schaden melden“ immer mit Text und in Daumenreichweite.</li>
+                <li><strong>Live-Öffnungsstatus mit Feiertagen:</strong> „Gerade geschlossen, im Notfall trotzdem anrufen“, auch an NRW-Feiertagen.</li>
+                <li><strong>Dialog mit Hinweisen:</strong> Bei „Wasser“ der Satz „Tropft es noch? Dann bitte sofort anrufen“, dazu die Rückmeldezeit.</li>
+              </ul>
+            </div>
+            <div class="info-card">
+              <span class="info-card-kicker">Vertrauen und Inhalt</span>
+              <ul>
+                <li><strong>Vorteile auf Sabines Frust zugeschnitten:</strong> feste Ansprechpartnerin, verständliche Abrechnungen, erreichbar.</li>
+                <li><strong>Fragen zu Kosten, Wechsel, Einzugsgebiet:</strong> neue Fragen auf Startseite und Eigentümer-Seite.</li>
+                <li><strong>Ansprechpartnerin als Abschluss:</strong> eine Person statt einer Telefonzeile.</li>
+              </ul>
+            </div>
+            <div class="info-card">
+              <span class="info-card-kicker">Qualität</span>
+              <ul>
+                <li><strong>Tastatur und Screenreader:</strong> Menü per Tastatur bedienbar, einheitlicher Fokus, Sprung zum Inhalt, Fehlermeldungen unter den Feldern.</li>
+                <li><strong>Datenschutz:</strong> Karte lädt erst nach Klick, Schrift lokal, keine Anfrage an Google beim Laden.</li>
+                <li><strong>Leistung und Teilen:</strong> Bildgrößen festgelegt (keine Layoutsprünge), Kopffoto zuerst, Favicon und Vorschaubild.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- 8 — Was ich mitnehme -->
+        <section class="case-section reveal">
+          <h2 class="tag">Was ich mitnehme</h2>
+          <ul>
+            <li><strong>Struktur vor Schönheit.</strong> Graue Wireframes lenken das Gespräch auf Inhalt und Aufbau, nicht auf Farben.</li>
+            <li><strong>Weniger Buttons, mehr Orientierung.</strong> Wenn alles „Klick mich“ ruft, weiß niemand, wo er anfangen soll.</li>
+            <li><strong>Persona-Tests finden Praktisches.</strong> Ein Menü ohne Tastaturbedienung, zu kleine Footer-Links, vergessene Feiertage: Das sieht man im Entwurf nicht.</li>
+            <li><strong>Weglassen gehört dazu.</strong> Mehrere schöne Ideen habe ich verworfen, weil sie die Seite unruhiger machten.</li>
+            <li><strong>Platzhalter sind Schulden.</strong> Jede Aussage, die ich nicht belegen konnte, steht mit Wortlaut in einer Liste für die Inhaberin. Preise und Zahlen habe ich nicht erfunden.</li>
+          </ul>
+        </section>
+
+        <!-- 9 — Nächster Schritt -->
+        <section class="case-section reveal">
+          <h2 class="tag">Nächster Schritt</h2>
+          <ul>
+            <li><strong>Test mit echten Menschen:</strong> etwa fünf Mieter:innen und drei Eigentümer:innen, um die Personas zu prüfen.</li>
+            <li><strong>Echte Fotos und bestätigte Texte</strong> der Inhaberin, statt Platzhaltern.</li>
+          </ul>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <span>© 2026 Made with ♥ by Helena</span>
+    </div>
+  </footer>
+  </div>
+  </div>
+
+  <script src="../assets/main.js"></script>
+</body>
+</html>
