@@ -885,6 +885,15 @@ body.case-overlay::before {
   max-width: 52ch;
   margin: 0 0 2rem;
 }
+/* kleiner Hinweis direkt unter dem Einstiegssatz, z. B. "Unabhängiges Konzept" */
+.case-lede + .case-note {
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--ink-faint);
+  max-width: 52ch;
+  margin: -1rem 0 2rem;
+}
+.case-note strong { color: var(--ink-soft); font-weight: 600; }
 
 /* meta: weiße Karte mit Schatten, rechts neben dem Hero-Text, Felder gestapelt */
 .case-meta {
@@ -948,11 +957,13 @@ body.case-overlay::before {
   overflow: hidden;
   background: linear-gradient(to top, var(--paper-alt), var(--paper));
 }
-/* 16:9 wird auf schmalen Screens zu flach für ein Hochkant-Phone */
-@media (max-width: 700px) {
-  /* nur fürs Phone-Mockup: das braucht auf schmalen Screens mehr Höhe.
-     Das breite Browser-Mockup bleibt bei 16:9. */
-  .case-section--image:has(.phone-mock) { aspect-ratio: 4 / 5; }
+/* Handy-Mockup-Box: Die Höhe ist so gewählt, dass das Handy (118 % der Boxhöhe, Verhältnis 9:19,5)
+   etwa 340 px breit wird, so breit ist das Design gebaut, oder schmaler, wenn der Bildschirm
+   es nicht hergibt. 100vw - 66px ist grob die Boxbreite auf schmalen Bildschirmen.
+   Das breite Browser-Mockup bleibt bei 16:9. */
+.case-section--image:has(.phone-mock) {
+  aspect-ratio: auto;
+  height: calc(1.836 * min(0.95 * (100vw - 66px), 340px));
 }
 /* ohne graue Fläche — Inhalt sitzt direkt auf dem weißen Sheet, Padding bleibt,
    damit der Text weiter mit den grauen Blöcken fluchtet */
@@ -974,6 +985,8 @@ body.case-overlay::before {
   transform: translateX(-50%);
   height: 118%;
   aspect-ratio: 9 / 19.5;
+  min-width: 0;
+  overflow: hidden; /* sonst erzwingt der Inhalt eine Mindestbreite und sprengt das Verhältnis */
   padding: clamp(5px, 0.8vw, 9px);
   border-radius: clamp(18px, 3vw, 40px);
   background: var(--ink);
