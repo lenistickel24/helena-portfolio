@@ -603,6 +603,30 @@
     border-top:1px solid var(--d-line);
     padding:10px 0 12px;margin:0;
   }
+  /* Schnellauswahl fuers Enddatum — aus P2/P3: beide haben lange ueber das
+     Datum gegruebelt und den reinen Texthinweis zu spaet gelesen. Antippbare
+     Vorschlaege nehmen die Entscheidung ab, statt sie nur zu kommentieren. */
+  .qd-row{
+    display:flex;flex-wrap:wrap;gap:6px;
+    padding:0 0 12px;
+  }
+  .qd{
+    border:1px solid var(--d-line);cursor:pointer;
+    background:var(--d-screen);color:var(--d-ink);
+    font-family:var(--font-ui);font-size:12.5px;font-weight:500;
+    padding:6px 11px;border-radius:var(--r-pill);
+    transition:background .15s ease,border-color .15s ease,color .15s ease;
+  }
+  .qd:hover{border-color:var(--d-accent-line)}
+  .qd.on{
+    background:var(--d-accent-wash);
+    border-color:var(--d-accent-line);
+    color:var(--d-accent-ink);font-weight:650;
+  }
+  /* Fotos sind in allen drei Interviews die einzige echte Sorge gewesen —
+     die Zeile traegt deshalb Gewicht statt als Nebensatz mitzulaufen. */
+  .loss{color:var(--d-ink);font-weight:650}
+  .rb-sub{color:var(--d-soft);font-weight:400}
 
   /* calendar (date sheet) */
   .cal-head{display:flex;align-items:center;gap:6px;padding:0 2px 10px}
@@ -1057,7 +1081,13 @@
   var MONTH_MIN  = TODAY_ISO.slice(0,7);       // weiter zurueck laesst der Kalender nicht
   /* Voreinstellung: in einer Woche — der haeufigste Fall (Ausflug, Feier am Wochenende).
      Der Kalender oeffnet damit im richtigen Monat, ohne Zurueckblaettern. */
-  var DEFAULT_END = (function(){ var d = new Date(TODAY); d.setDate(d.getDate()+7); return isoOf(d); })();
+  function plusDays(n){ var d = new Date(TODAY); d.setDate(d.getDate()+n); return isoOf(d); }
+  function comingSunday(){
+    var d = new Date(TODAY), dow = d.getDay();      /* 0 = Sonntag */
+    d.setDate(d.getDate() + (dow === 0 ? 0 : 7 - dow));
+    return isoOf(d);
+  }
+  var DEFAULT_END = plusDays(7);
   function fmt(iso){ var d=new Date(iso+"T00:00:00"); return d.getDate()+". "+MON[d.getMonth()]+" "+d.getFullYear(); }
   function fmtShort(iso){ var d=new Date(iso+"T00:00:00"); return d.getDate()+". "+MON[d.getMonth()]; }
   function daysLeft(iso){ var d=new Date(iso+"T00:00:00"); return Math.round((d-TODAY)/864e5); }
@@ -1146,14 +1176,15 @@
       case "newchat": return ["Einstieg","Unverändertes Menü","Der neue Schritt drängt sich nicht vor — er kommt an der Stelle, wo er hingehört."];
       case "members": return ["Kontakte","Mitglieder auswählen","Bekannter Ablauf, damit die eine echte Änderung im Flow nicht in Neuerungen untergeht. Die Auswahl aktualisiert die Seite in-place, kein Neuladen."];
       case "groupinfo": return ["Identität zuerst","Erst der Name, dann die Zeit","Der Name ist optional. Vergibt man einen, wird die Frage nach der Laufzeit im nächsten Schritt konkret statt abstrakt."];
-      case "grouptype": return ["Der neue Pflichtschritt","Eine bewusste Wahl","Zwei gleichwertige Karten, <b>keine vorausgewählt</b>. „Temporär“ klappt das Enddatum auf und aktiviert „Erstellen“ oben rechts. (Der Prototyp zeigt nur den temporären Pfad — „Dauerhaft“ ist hier eine Sackgasse.)"];
+      case "grouptype": return ["Der neue Pflichtschritt","Eine bewusste Wahl","Zwei gleichwertige Karten, <b>keine vorausgewählt</b>. „Temporär“ klappt das Enddatum auf und aktiviert „Erstellen“ oben rechts. Die <b>Schnellauswahl</b> darüber nimmt die häufigste Entscheidung ab — zwei von drei Testpersonen haben genau hier lange gegrübelt. (Der Prototyp zeigt nur den temporären Pfad — „Dauerhaft“ ist hier eine Sackgasse.)"];
       case "chatsAfter": return ["Sichtbare Kennzeichnung","Die Gruppe trägt ihr Enddatum","Ein Schritt zurück aus der Gruppe: In der Liste steht der Badge mit dem Datum („"+expLabel(state.endDate)+"“), erst ab 7 Tagen vorher wird er relativ. Die Gruppe muss nie wieder aktiv im Kopf behalten werden."];
       case "group": return ["Direkt nach dem Erstellen","Enddatum immer im Blick","Man landet in der neuen Gruppe, nicht in der Liste — so wie in WhatsApp. Im Header steht das Datum. Eine Systemnachricht erklärt einmalig, was am Stichtag passiert. <b>Auf den Gruppennamen tippen</b> führt in die Gruppeninfo — dort lässt sich jederzeit verlängern."];
       case "ginfo": return ["Gruppeneinstellungen","Verlängern geht jederzeit","Das Enddatum ist eine normale Einstellungs-Zeile — direkt neben „Selbstlöschende Nachrichten“, wo WhatsApp so etwas heute schon führt. Man muss nicht bis zur Erinnerung warten: Anlässe verschieben sich, also muss das Datum jederzeit korrigierbar sein. Sichtbar für alle, änderbar nur von Admins."];
       case "chatsReminder": return state.multi
-        ? ["Mehrere am selben Tag","Eine Zeile statt einem Stapel","Enden mehrere Gruppen am selben Tag, werden Push und Übersichts-Zeile zu <b>einem</b> Hinweis gebündelt — sonst stapeln sich nach einem Festival-Wochenende drei Banner übereinander. Antippen öffnet die Liste mit „Verlängern“ je Gruppe."]
+        ? ["Mehrere am selben Tag","Eine Zeile statt einem Stapel","Enden mehrere Gruppen am selben Tag, werden Push und Übersichts-Zeile zu <b>einem</b> Hinweis gebündelt — sonst stapeln sich nach einem Festival-Wochenende drei Banner übereinander. Antippen öffnet die Liste. „Verlängern“ steht nur bei den Gruppen, in denen man Admin ist; bei den anderen gibt es <b>bewusst keinen Knopf</b> — wer verlängern möchte, schreibt es in die Gruppe."]
         : ["Ein Tag vorher — in der Liste","Dort, wo man hinschaut","Die Erinnerung kommt als Push (ignoriert die Stummschaltung) und als Zeile in der Chatübersicht — nicht nur im Chat, den man ja genau deshalb nicht öffnet. Die Gruppe rückt nach oben. Das <b>X</b> blendet nur die Zeile aus, nicht das Enddatum."];
-      case "reminder": return ["Ein Tag vorher — im Chat","Gemeinsame Erinnerung","Alle sehen dasselbe: wann Schluss ist und dass jetzt der Moment zum Sichern ist. Nur Admins sehen „Verlängern“. Der Hinweis lässt sich schließen — das Enddatum steht ja weiter im Header. Reagiert niemand, wird die Gruppe am Stichtag gelöscht (unten verlinkt)."];
+      case "deleted": return ["Nach dem Stichtag","Eine Quittung auf Zeit","Die Gruppe ist weg — Chat, Verlauf, Medien. In der Liste bleibt eine Zeile in Nutzersprache, vor allem für die, die den Vorlauf verpasst haben; sonst verschwindet die Gruppe spurlos. Sie <b>verschwindet nach einem Tag von selbst</b>, damit sie niemandem dauerhaft den Finger auf etwas legt, woran nichts mehr zu ändern ist."];
+      case "reminder": return ["Ein Tag vorher — im Chat","Gemeinsame Erinnerung","Alle sehen dasselbe. Die Zeile nennt jetzt beim Namen, was verschwindet: <b>Fotos, Videos und Verlauf</b> — in allen drei Interviews war das die einzige verbleibende Sorge, und zwei von drei haben hier aktiv einen Hinweis vermisst. Nur Admins sehen „Verlängern“. Der Hinweis lässt sich schließen — das Enddatum steht ja weiter im Header."];
     }
     return ["","",""];
   }
@@ -1365,7 +1396,7 @@
         '<div class="opts" role="radiogroup" aria-label="Gruppentyp">'+
           card("perm", I.infinity, "Dauerhaft", "Bleibt bestehen, bis ihr sie selbst löscht. Kein Enddatum.")+
           card("temp", I.clock, "Temporär", "Endet an einem festgelegten Datum — danach wird die Gruppe für alle gelöscht. Vorher werden alle erinnert.", true,
-               dateTimeField('Endet:', 'Ein Tag nach dem eigentlichen Anlass ist meist eine gute Wahl.', true))+
+               dateTimeField('Endet:', 'Ein Tag nach dem Anlass gibt allen Zeit, Fotos zu sichern.', true))+
         '</div>'+
         permHint+
       '</div></div>';
@@ -1448,7 +1479,8 @@
           '</div>'
         : '<div class="rbanner">'+
             '<button class="rb-main tap-target" data-act="open-reminder-chat">'+
-              '<span class="rb-ic">'+I.clock+'</span><span class="rb-t">„'+gname()+'“ endet morgen.</span>'+
+              '<span class="rb-ic">'+I.clock+'</span>'+
+              '<span class="rb-t">„'+gname()+'“ endet morgen. <span class="rb-sub">Fotos vorher sichern.</span></span>'+
             '</button>'+
             '<button class="rb-b tap-target" data-act="open-extend">Verlängern</button>'+
             '<button class="bn-x tap-target" data-act="dismiss-reminder" aria-label="Hinweis schließen">'+I.close+'</button>'+
@@ -1473,10 +1505,14 @@
     var txt = state.multi
       ? '2 Gruppen waren bis zum '+fmt(state.endDate)+' angelegt und wurden automatisch gelöscht.'
       : 'Die Gruppe „'+gname()+'“ war bis zum '+fmt(state.endDate)+' angelegt und wurde automatisch gelöscht.';
+    /* Befristet statt dauerhaft (P3, 11.09.2026): Der Hinweis erklaert denen
+       etwas, die den Vorlauf verpasst haben — bleibt er aber stehen, legt er
+       allen anderen nur den Finger auf etwas, woran sie nichts mehr aendern
+       koennen. Nach einem Tag verschwindet er von selbst. */
     var notice = state.delDismissed ? "" :
       '<div class="banner">'+
         '<span class="bi">'+I.clock+'</span>'+
-        '<span class="bt">'+txt+'</span>'+
+        '<span class="bt">'+txt+'<small>Dieser Hinweis verschwindet morgen von selbst.</small></span>'+
         '<button class="bn-x tap-target" data-act="dismiss-deleted" aria-label="Hinweis schließen">'+I.close+'</button>'+
       '</div>';
     return statusbar("9:41")+
@@ -1571,7 +1607,11 @@
       '<div class="banner">'+
         '<span class="bi">'+I.clock+'</span>'+
         '<span class="bt">„'+gname()+'“ endet morgen um '+state.endTime+' Uhr.'+
-          '<small>Sichert, was ihr behalten wollt.</small>'+
+          /* In allen drei Interviews waren Fotos die einzige verbleibende
+             Sorge, und 2 von 3 haben hier aktiv einen Hinweis vermisst.
+             Deshalb steht jetzt da, was konkret verschwindet. */
+          '<small><span class="loss">Fotos, Videos und der Verlauf sind danach weg.</span> '+
+          'Sichert jetzt, was ihr behalten wollt.</small>'+
           '<small>Nur Admins können verlängern.</small></span>'+
         '<button class="bb tap-target hint" data-act="open-extend">Verlängern</button>'+
         '<button class="bn-x tap-target" data-act="dismiss-chat-hint" aria-label="Hinweis schließen">'+I.close+'</button>'+
@@ -1642,6 +1682,25 @@
     '</div>';
   }
   /* label: "Endet:" im Erstellungsflow, "Neues Ende:" beim Verlaengern */
+  /* Drei gaengige Laufzeiten als Vorschlag. Doppelte Daten werden
+     uebersprungen (ist heute Sonntag, fallen "dieses Wochenende" und
+     "in einer Woche" sonst zusammen). */
+  function quickRow(){
+    var opts = [
+      ["Dieses Wochenende", comingSunday()],
+      ["In einer Woche",    plusDays(7)],
+      ["In zwei Wochen",    plusDays(14)]
+    ];
+    var seen = {}, html = "";
+    opts.forEach(function(o){
+      if(seen[o[1]]) return;
+      seen[o[1]] = true;
+      html += '<button class="qd tap-target'+(state.endDate===o[1]?" on":"")+'" '+
+        'data-act="pick-quick" data-date="'+o[1]+'">'+o[0]+'</button>';
+    });
+    return '<div class="qd-row">'+html+'</div>';
+  }
+
   function dateTimeField(label, hint, bare){
     return '<div class="'+(bare ? 'dtf-inner' : 'lzcard')+'">'+
       '<div class="dtf-row">'+
@@ -1649,9 +1708,11 @@
         '<button class="dtf-chip tap-target'+(state.picker==="date"?' on':'')+'" data-act="toggle-picker" data-mode="date">'+fmt(state.endDate)+'</button>'+
         '<button class="dtf-chip tap-target'+(state.picker==="time"?' on':'')+'" data-act="toggle-picker" data-mode="time">'+state.endTime+'</button>'+
       '</div>'+
-      /* Hinweis steht ueber dem Picker: aufgeklappt rutschte er sonst so weit
-         nach unten, dass er genau dann unsichtbar war, wenn die Entscheidung
-         faellt (P2, 09.09.2026 — erst ganz am Ende entdeckt). */
+      /* Erst die antippbaren Vorschlaege, dann der erklaerende Satz, dann der
+         Picker. P2 und P3 haben beide lange ueberlegt, wie lange nach dem
+         Anlass die Gruppe laufen soll — die Chips beantworten das, statt es
+         nur zu kommentieren. */
+      quickRow()+
       (hint ? '<p class="lz-hint">'+hint+'</p>' : '')+
       (state.picker==="date" ? calPanel() : state.picker==="time" ? timePanel() : "")+
     '</div>';
@@ -1696,16 +1757,20 @@
     return '<div class="ov'+c+'" data-act="close-sheet"><div class="ov-card'+c+'" data-stop>'+
       '<div class="grab"><i></i></div>'+
       '<h3>2 Gruppen enden morgen</h3>'+
-      '<p class="sub">Danach werden sie gelöscht. Sichert bis dahin, was ihr behalten wollt — Verlängern kann nur, wer Admin der jeweiligen Gruppe ist.</p>'+
+      '<p class="sub">Danach werden sie gelöscht — <span class="loss">Fotos, Videos und Verlauf inklusive</span>. '+
+      'Sichert bis dahin, was ihr behalten wollt. Verlängern kann nur, wer Admin der jeweiligen Gruppe ist.</p>'+
       '<div class="mg-row">'+
         '<span class="mg-ic">'+I.clock+'</span>'+
         '<span class="mg-t"><span class="mg-n">'+gname()+'</span><span class="mg-s">morgen, '+state.endTime+' Uhr · du bist Admin</span></span>'+
         '<button class="mg-b tap-target" data-act="open-extend">Verlängern</button>'+
       '</div>'+
+      /* Kein "Anfragen"-Knopf mehr (P3, 11.09.2026): Das vereinbarte Ende soll
+         die nachtraegliche Aushandlung ueberfluessig machen — ein Anfragen-Knopf
+         baut sie wieder ein, samt der sozialen Kosten des Neinsagens. Wer
+         verlaengern moechte, schreibt es in die Gruppe. */
       '<div class="mg-row">'+
         '<span class="mg-ic">'+I.clock+'</span>'+
         '<span class="mg-t"><span class="mg-n">'+MG2.name+'</span><span class="mg-s">morgen, 20:00 Uhr · du bist kein Admin</span></span>'+
-        '<button class="mg-b ghost tap-target" data-act="request-extend">Anfragen</button>'+
       '</div>'+
     '</div></div>';
   }
@@ -1874,6 +1939,13 @@
         }
         render();
         break;
+      /* Schnellauswahl: Datum setzen und den Kalender auf den passenden
+         Monat stellen, falls er gerade offen ist. */
+      case "pick-quick":
+        state.endDate = el.getAttribute("data-date");
+        state.calMonth = state.endDate.slice(0,7);
+        render();
+        break;
       case "cal-prev":
         if(state.calMonth > MONTH_MIN){ state.calMonth = shiftMonth(state.calMonth,-1); render(); }
         break;
@@ -1935,10 +2007,6 @@
         flash(state.multi ? "2 Gruppen wurden gelöscht" : "„"+gname()+"“ wurde gelöscht");
         break;
       case "open-multi": state.sheet = "multi"; render(); break;
-      case "request-extend":
-        state.sheet = null; render();
-        flash("Anfrage an die Admins gesendet");
-        break;
       case "toggle-multi":
         state.multi = !state.multi;
         state.remDismissed = false;

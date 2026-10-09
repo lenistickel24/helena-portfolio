@@ -42,8 +42,8 @@
           <p class="tag">Feature</p>
           <h1 class="page-heading">WhatsApp: Temporäre Gruppen</h1>
           <p class="case-lede">
-            Ein Feature-Konzept: Eine Gruppe kann bei der Erstellung ein Enddatum bekommen, und wenn
-            dieser Tag kommt, löscht sie sich von selbst, für alle.
+            Ein Feature-Konzept: Eine Gruppe bekommt beim Erstellen ein Enddatum. Wenn dieser Tag kommt,
+            löscht sie sich von selbst, für alle.
           </p>
         </div>
 
@@ -58,7 +58,7 @@
           </div>
           <div>
             <div class="case-meta-label">Zeitraum</div>
-            <div class="case-meta-value">August – September 2026</div>
+            <div class="case-meta-value">August – Oktober 2026</div>
           </div>
         </div>
       </div>
@@ -69,9 +69,564 @@
       <div class="wrap">
 
         <!-- 1.5 — Feature-Vorschau -->
-        <section class="case-section case-section--image reveal" aria-label="Vorschau des Features, Bild folgt"></section>
+        <section class="case-section case-section--image reveal" aria-label="Vorschau des Features">
+          <div class="phone-mock">
+            <div class="phone-screen">
+              <span class="ph-tag">Bild folgt</span>
+            </div>
+          </div>
+        </section>
 
-        <!-- 1.6 — Scope of Work -->
+        <!-- 2 — Das Problem -->
+        <section class="case-section reveal">
+          <h2 class="tag">Das Problem</h2>
+
+          <p>
+            WhatsApp-Gruppen für einmalige Anlässe bleiben für immer in der Chatliste: der Ausflug,
+            der Geburtstag, das Festival. Gebraucht werden sie nie wieder.
+          </p>
+          <p>
+            WhatsApp kennt kein sanftes Ende. Es gibt nur „Gruppe verlassen“, und das fühlt sich wie
+            ein Bruch an. Eine Gruppe heißt sogar <strong>„Oma Gruppe-ENDE“</strong>, weil jemand das
+            Ende von Hand in den Namen schreiben musste.
+          </p>
+        </section>
+
+        <!-- 2.6 — User Interviews / Insights -->
+        <section class="case-section reveal">
+          <h2 class="tag">User Interviews</h2>
+          <p>
+            Die Gespräche kamen nach dem ersten Konzept. Ich wollte meine Idee nicht bestätigt
+            bekommen. Ich wollte wissen, ob es das Problem auch außerhalb meiner eigenen Chatliste gibt.
+          </p>
+
+          <div class="insight-slider">
+            <div class="insight-track">
+              <div class="insight-card">
+                <span class="insight-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>
+                Bei allen ist der Anteil toter Gruppen gleich groß, egal wie nah man sich steht. Das Problem liegt am System, nicht an der Beziehung.
+              </div>
+              <div class="insight-card">
+                <span class="insight-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>
+                Verlassen fühlt sich wie ein Bruch an. Mehr kennt WhatsApp nicht, und das ist zu hart für eine Gruppe, die einfach nur fertig ist.
+              </div>
+              <div class="insight-card">
+                <span class="insight-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>
+                Niemand will riskieren, dass „doch noch was kommt“. Also bleibt die Gruppe liegen, statt verlassen zu werden.
+              </div>
+              <div class="insight-card">
+                <span class="insight-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>
+                Tote Gruppen gehen in der Masse unter. Erinnern hilft nicht: Man müsste sich an etwas erinnern, das man schon vergessen hat.
+              </div>
+              <div class="insight-card">
+                <span class="insight-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>
+                Eine Gruppe heißt „Oma Gruppe-ENDE“. Jemand hat das Ende von Hand in den Namen geschrieben, weil die App dafür keinen Platz hat.
+              </div>
+            </div>
+            <div class="insight-nav">
+              <button type="button" class="insight-nav-btn" data-dir="-1" aria-label="Vorheriger Insight">‹</button>
+              <button type="button" class="insight-nav-btn" data-dir="1" aria-label="Nächster Insight">›</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3 — Der Weg zur Lösung -->
+        <section class="case-section reveal">
+          <h2 class="tag">Vorgehen</h2>
+          <p>
+            Die Recherche hat die Richtung bestätigt: WhatsApp hat 2023 selbst „Expiring Groups“
+            getestet. Das Feature kam nie über den Test hinaus. Vermutlich, weil es nur für einen
+            selbst galt: Man konnte ein Ablaufdatum für sich setzen, nie für die ganze Gruppe. Für ein
+            Werkzeug, das mehrere Menschen betrifft, ist das zu wenig.
+          </p>
+          <p>
+            Meine erste Fassung ging von der Verlustangst aus. Wenn Leute Angst haben, etwas zu
+            verlieren, darf nichts verloren gehen. Also wandern abgelaufene Gruppen ins Archiv und
+            lassen sich jederzeit zurückholen. Dazu eine Einstellung, die den Altbestand automatisch
+            aufräumt, und eine persönliche Teilnahmedauer pro Person.
+          </p>
+          <p>
+            Das Konzept war sauber hergeleitet und trotzdem falsch. Bei der „Inline Skates“-Gruppe
+            fiel mir auf: Der Anlass hat ein <em>echtes, hartes</em> Ende. „Weg, aber kommt bei jeder
+            Nachricht zurück“ bildet das nicht ab. Das ist ein vager Zwischenzustand. Und aus einem
+            Feature waren längst drei geworden.
+          </p>
+
+          <div class="case-callout">
+            <p class="case-callout-line">
+              Die Verlustangst hängt nicht am <em>Ende</em> einer Gruppe. Sie hängt am nachträglichen,
+              einsamen Austritt aus einer Gruppe, deren Status unklar ist.
+            </p>
+            <p>
+              „Soll ich die jetzt verlassen? Was, wenn doch noch was kommt? Was denken die anderen?“
+              Diese Fragen gibt es nur, weil die Gruppe nie ein vereinbartes Ende hatte. Eine Gruppe,
+              die mit sichtbarem Enddatum <strong>geboren</strong> wird, kennt sie nicht.
+            </p>
+          </div>
+
+          <p>
+            Damit fiel das Archiv, und mit ihm zwei Drittel des Konzepts. Übrig blieb ein Feature:
+            <strong>Das Ende gehört an den Anfang.</strong>
+          </p>
+        </section>
+
+        <!-- 5 — Die Lösung -->
+        <section class="case-section reveal">
+          <h2 class="tag">Die Lösung</h2>
+
+          <div class="case-placeholder">
+            <span class="ph-tag">Bild folgt</span>
+            <p>Screenshot der Lösung.</p>
+          </div>
+
+          <ol>
+            <li>
+              <strong>Beim Erstellen wählt jede Gruppe bewusst: dauerhaft oder temporär.</strong>
+              Zwei gleichwertige Karten, keine vorausgewählt. Bei „temporär“ klappt in der Karte das
+              Enddatum auf: Kalender und Uhrzeit-Rad, voreingestellt auf das Ende des gewählten Tages.
+            </li>
+            <li>
+              <strong>Die Gruppe trägt ihr Ende die ganze Zeit sichtbar mit sich.</strong>
+              Derselbe Badge in der Chatliste wie im Gruppen-Header: „Endet 14. Okt“, ab einer Woche
+              vorher „Endet morgen“. Admins können das Datum jederzeit über die Gruppeninfo ändern,
+              nicht erst am Stichtag.
+            </li>
+            <li>
+              <strong>Der Stichtag wird früh und unübersehbar angekündigt.</strong> Einen Tag vorher
+              kommen eine Push, die die Stummschaltung ignoriert, eine Zeile in der Chatübersicht
+              und ein Hinweis im Chat. Alle sehen dasselbe: wann Schluss ist und dass jetzt der Moment
+              ist, zu sichern, was man behalten will.
+            </li>
+            <li>
+              <strong>Am Stichtag wird die Gruppe für alle gelöscht.</strong> Kein Archiv, keine
+              Nachfrist, keine Reaktivierung.
+            </li>
+          </ol>
+
+          <h3>Wo die Abwägungen lagen</h3>
+          <div class="decision-list">
+            <div class="decision">
+              <h3>Kein stiller Default beim Gruppentyp</h3>
+              <p class="why">Ein Default würde das Ausgangsproblem neu bauen: jede Gruppe dauerhaft, ohne dass es je jemand entschieden hat. Und aktivieren würde ihn ausgerechnet die Person, die viele Gruppen anlegt, also die, die die bewusste Wahl am nötigsten hat.</p>
+            </div>
+            <div class="decision">
+              <h3>Löschen statt Archivieren</h3>
+              <p class="why">Die erste Fassung ließ Gruppen ins Archiv wandern. Verworfen: „Weg, aber kommt bei jeder Nachricht zurück“ ist ein vager Zwischenzustand, der den klaren Anlass nicht abbildet. Und die Verlustangst rechtfertigt kein Archiv. Sie hängt am nachträglichen Austritt, nicht am vereinbarten Ende.</p>
+            </div>
+            <div class="decision">
+              <h3>Keine Nachfrist nach dem Stichtag</h3>
+              <p class="why">Eine 7-Tage-Frist zum „Behalten“ war eine Zwischenidee. Verworfen: Sie schiebt die Endgültigkeit nur um eine Woche und macht das Modell wieder komplizierter. Der Schutz gehört in den Vorlauf.</p>
+            </div>
+            <div class="decision">
+              <h3>Der ganze Aufwand steckt in der Ankündigung</h3>
+              <p class="why">Die Löschung ist endgültig. Deshalb ist der Weg dorthin bewusst redundant: Push, Übersichts-Zeile, Hinweis im Chat, und die Gruppe rückt nach oben. Den Stichtag zu übersehen soll praktisch unmöglich sein, außer man öffnet die App tagelang gar nicht.</p>
+            </div>
+            <div class="decision">
+              <h3>Keine automatische Medien-Sicherung</h3>
+              <p class="why">Naheliegend wäre, zum Stichtag alle Fotos in die Galerie zu speichern. Verworfen: WhatsApp hat dafür längst eine Einstellung. Wer sie an hat, hat die Fotos ohnehin. Wer sie aus hat, will das so. Eine Sonderregel würde diese Entscheidung übergehen und ungefragt Inhalte aus fremden Gruppen auf jedes Gerät schieben.</p>
+            </div>
+            <div class="decision">
+              <h3>Das Enddatum sitzt in der Auswahlkarte</h3>
+              <p class="why">Als eigener Kasten unter den Karten stand das Datum bezugslos da. In der Karte sieht man: Dieses Datum gehört zu dieser Wahl. Beim Verlängern ist der Aufbau derselbe. Wer einmal eine Gruppe angelegt hat, kennt den Schritt schon.</p>
+            </div>
+            <div class="decision">
+              <h3>Gebündelt, wenn mehrere Gruppen am selben Tag enden</h3>
+              <p class="why">Nach einem Festival-Wochenende laufen schnell drei Gruppen gleichzeitig aus. Drei Pushes und drei gestapelte Banner wären genau der Lärm, der so ein Feature unbeliebt macht. Stattdessen gibt es eine Push und eine Zeile, dahinter eine Liste mit „Verlängern“ pro Gruppe.</p>
+            </div>
+          </div>
+
+          <div class="case-callout">
+            <p class="case-callout-line">
+              „Eine Gruppe kann bei der Erstellung sagen: Ich habe ein Ende. Wenn dieser Tag
+              kommt, löscht sie sich von selbst, für alle.“
+            </p>
+            <p>
+              Wenn beim Erstellen alle gesehen haben, dass diese Gruppe im September endet, überrascht die
+              Löschung im September niemanden. Sie ist kein Bruch. Sie ist das, was vereinbart war.
+            
+            </p>
+          </div>
+        </section>
+
+        <!-- 4 — User Flow -->
+        <section class="case-section reveal">
+          <h2 class="tag">User Flow</h2>
+          <p>
+            Das Konzept braucht nur einen zusätzlichen Schritt beim Erstellen. Alles danach läuft von
+            selbst.
+          
+          </p>
+
+          <figure class="case-figure reveal">
+            <svg viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg" role="img"
+                 aria-label="Ein Flow in zwei Reihen. Erstellung im Bottom-Sheet: Chats, Neuer Chat, Kontakte, Name und Foto, Gruppentyp, der neue Schritt. Danach Laufzeit und Ende: Gruppe, In der Liste, Erinnerung einen Tag vorher, Gelöscht.">
+              <defs>
+                <linearGradient id="fl-acc" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#4a4a4a"/><stop offset="1" stop-color="#1c1a22"/>
+                </linearGradient>
+                <marker id="fl-ar" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+                  <path d="M0,1 L6,4 L0,7" fill="none" stroke="#b6b3ab" stroke-width="1.4"/>
+                </marker>
+              </defs>
+              <style>
+                .fb{ fill:#F4F2EC; stroke:rgba(28,26,34,.16); }
+                .ft{ fill:#3a3844; font-size:11.5px; text-anchor:middle; }
+                .fn .fb{ fill:url(#fl-acc); stroke:none; }
+                .fn .ft{ fill:#fff; font-weight:700; }
+                .fh{ fill:#9c99a6; font-size:11.5px; letter-spacing:.06em; }
+                .fc{ stroke:#b6b3ab; stroke-width:1.4; fill:none; }
+                .fsheet{ fill:none; stroke:rgba(28,26,34,.18); stroke-dasharray:4 4; }
+              
+  /* ---------- High-Fi-Screens (WhatsApp-Optik), gekapselt unter .wa-screens ---------- */
+  .wa-note{
+    font-size:.92rem;color:#6a6874;border:1px solid rgba(28,26,34,.14);
+    border-radius:12px;padding:.8rem 1rem;background:rgba(28,26,34,.025);
+  }
+  .wa-screens{
+    display:grid;gap:3rem 2rem;margin-top:2.2rem;
+    grid-template-columns:repeat(auto-fit, minmax(290px, 1fr));
+    align-items:start;
+  }
+  .wa-cell{margin:0;display:flex;flex-direction:column;gap:1rem;min-width:0}
+  .wa-cap{display:flex;flex-direction:column;gap:.3rem}
+  .wa-num{font-size:.72rem;letter-spacing:.12em;font-weight:700;color:#8a8794}
+  .wa-t{font-size:1.05rem;font-weight:650;line-height:1.3;color:#1c1a22}
+  .wa-d{font-size:.9rem;line-height:1.55;color:#6a6874}
+  .wa-d strong{color:#1c1a22;font-weight:600}
+.wa-screens{
+  --wa-ink:#0B0B0C;
+  --wa-sub:#717A7E;
+  --wa-line:#EDEEF0;
+  --wa-bg:#FFFFFF;
+  --wa-chat:#EFE7DE;
+  --wa-out:#D9FDD3;
+  --wa-in:#FFFFFF;
+  --wa-green:#21C063;          /* Plus-Button, Badges */
+  --wa-green-ink:#12805B;      /* gruene Schrift/Icons */
+  --wa-chip-on:#D7F7C8;        /* aktiver Filter-Tag */
+  --wa-chip-on-ink:#1A6B3C;
+  --wa-chip-line:#E2E5E7;
+  --wa-field:#F0F1F3;
+  --wa-circ:#F0F1F3;           /* runde Kopfzeilen-Buttons */
+  --wa-unread:#21C063;
+  --wa-sys:#FFF3C7;
+  --wa-sys-ink:#6B5B16;
+  --wa-amber-bg:#FFF0D9;
+  --wa-amber-ink:#9A6410;
+  --wa-amber-line:#F0D5A8;
+  --sf:-apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+}
+.wa-screens /* ---------- Board-Kopf ---------- */
+.eyebrow{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--board-accent);font-weight:600;margin:0 0 12px;}
+.wa-screens /* ---------- Raster ---------- */
+.grid{display:grid;gap:44px 36px;
+  grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));
+  align-items:start;}
+.wa-screens /* ---------- Telefonrahmen ---------- */
+.phone{width:100%;max-width:340px;aspect-ratio:375/812;
+  background:var(--wa-bg);border-radius:30px;overflow:hidden;
+  box-shadow:0 1px 0 rgba(255,255,255,.07) inset, 0 18px 44px rgba(0,0,0,.45);
+  display:flex;flex-direction:column;
+  font-family:var(--sf);color:var(--wa-ink);
+  font-size:13px;position:relative;}
+.wa-screens .sb{display:flex;justify-content:space-between;align-items:center;
+  padding:13px 22px 5px;font-size:12px;font-weight:600;flex:none;}
+.wa-screens .sb-r{display:flex;gap:4px;align-items:center}
+.wa-screens .sb-r i{display:block;width:3px;border-radius:1px;background:var(--wa-ink)}
+.wa-screens .sb-r i:nth-child(1){height:4px}
+.wa-screens .sb-r i:nth-child(2){height:6px}
+.wa-screens .sb-r i:nth-child(3){height:8px}
+.wa-screens .sb-r i:nth-child(4){height:10px}
+.wa-screens .batt{width:19px;height:10px;border:1px solid var(--wa-ink);border-radius:3px;position:relative;opacity:.9}
+.wa-screens .batt::after{content:"";position:absolute;inset:1.5px;background:var(--wa-ink);border-radius:1px;width:70%}
+.wa-screens /* Kopfzeile: erst die Buttonreihe, .wa-screens darunter der grosse Titel */
+.topbar{display:flex;align-items:center;padding:2px 15px 4px;flex:none;gap:9px}
+.wa-screens .circ{width:33px;height:33px;border-radius:50%;background:var(--wa-circ);
+  display:flex;align-items:center;justify-content:center;color:var(--wa-ink);flex:none;}
+.wa-screens .circ svg{width:17px;height:17px}
+.wa-screens .circ.plus{background:var(--wa-green);color:#fff}
+.wa-screens .circ.plus svg{width:19px;height:19px}
+.wa-screens .topbar .sp{margin-left:auto}
+.wa-screens .nav-title{font-size:29px;font-weight:700;letter-spacing:-.7px;padding:2px 16px 8px;flex:none}
+.wa-screens .search{margin:0 15px 9px;background:var(--wa-field);border-radius:20px;
+  padding:8px 13px;color:#8A9196;font-size:13.5px;
+  display:flex;gap:8px;align-items:center;flex:none;}
+.wa-screens .search svg{width:15px;height:15px;color:#8A9196;flex:none}
+.wa-screens /* Filter-Tags */
+.filters{display:flex;gap:7px;padding:0 15px 9px;flex:none;overflow:hidden}
+.wa-screens .f{border:1px solid var(--wa-chip-line);border-radius:18px;
+  padding:5px 10px;font-size:12.5px;font-weight:500;color:var(--wa-ink);
+  background:#fff;white-space:nowrap;flex:none;}
+.wa-screens .f.on{background:var(--wa-chip-on);border-color:var(--wa-chip-on);color:var(--wa-chip-on-ink);font-weight:600}
+.wa-screens /* Archiviert */
+.arch{display:flex;align-items:center;gap:13px;padding:9px 16px;flex:none;
+  font-size:15px;color:var(--wa-ink);}
+.wa-screens .arch svg{width:19px;height:19px;color:var(--wa-sub);margin-left:3px}
+.wa-screens /* Chatliste */
+.clist{flex:1;min-height:0;overflow:hidden}
+.wa-screens .row{display:flex;gap:12px;padding:8px 16px;align-items:flex-start}
+.wa-screens .av{width:49px;height:49px;border-radius:50%;background:#DDE3E5;flex:none;
+  display:flex;align-items:center;justify-content:center;color:#8A9196;
+  font-size:17px;font-weight:500;}
+.wa-screens .av svg{width:26px;height:26px}
+.wa-screens .av.t1{background:#D7E8DF}
+.wa-screens .av.t2{background:#E6DFD4}
+.wa-screens .av.t3{background:#DCE3EC}
+.wa-screens .rc{flex:1;min-width:0;border-bottom:1px solid var(--wa-line);padding-bottom:10px}
+.wa-screens .rt{display:flex;align-items:baseline;gap:8px}
+.wa-screens .rn{font-size:16px;font-weight:600;letter-spacing:-.25px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wa-screens .rd{margin-left:auto;font-size:12px;color:var(--wa-sub);flex:none}
+.wa-screens .rr{color:#53BDEB;font-size:12px;flex:none}
+.wa-screens .rd.gr{color:var(--wa-unread);font-weight:600}
+.wa-screens .rm{font-size:13.5px;color:var(--wa-sub);margin-top:1px;display:flex;align-items:center;gap:6px}
+.wa-screens .rm span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wa-screens .pill{margin-left:auto;background:var(--wa-unread);color:#fff;flex:none;
+  min-width:19px;height:19px;border-radius:10px;font-size:11.5px;font-weight:600;
+  display:flex;align-items:center;justify-content:center;padding:0 5px;}
+.wa-screens /* Der Badge — das Kernelement des Konzepts */
+.tag{display:inline-flex;align-items:center;gap:4px;flex:none;
+  background:var(--wa-chip-on);border:1px solid var(--wa-chip-on);color:var(--wa-chip-on-ink);
+  border-radius:18px;padding:3px 10px 3px 8px;
+  font-size:11.5px;font-weight:600;letter-spacing:-.1px;margin-top:5px;}
+.wa-screens .tag svg{width:11px;height:11px}
+.wa-screens .tag.soon{background:var(--wa-amber-bg);border-color:var(--wa-amber-line);color:var(--wa-amber-ink)}
+.wa-screens /* Chatbereich */
+.chat-head{display:flex;align-items:center;gap:7px;padding:2px 9px 9px;flex:none;}
+.wa-screens .back{display:flex;align-items:center;gap:1px;flex:none;
+  background:var(--wa-circ);border-radius:16px;padding:4px 8px 4px 5px;
+  font-size:12.5px;font-weight:500;color:var(--wa-ink);}
+.wa-screens .back svg{width:14px;height:14px}
+.wa-screens .ch-av{width:33px;height:33px;border-radius:50%;background:#DDE3E5;display:flex;align-items:center;justify-content:center;color:#8A9196;flex:none}
+.wa-screens .ch-av svg{width:18px;height:18px}
+.wa-screens .ch-meta{min-width:0;flex:1}
+.wa-screens .ch-t{font-size:15.5px;font-weight:600;letter-spacing:-.3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wa-screens .ch-s{font-size:11px;color:var(--wa-sub);display:flex;align-items:center;gap:4px;
+  margin-top:1px;white-space:nowrap;overflow:hidden;}
+.wa-screens .ch-s .tag{font-size:10.5px;padding:2px 7px 2px 6px}
+.wa-screens .ch-s .tag svg{width:10px;height:10px}
+.wa-screens .callbar{display:flex;align-items:center;gap:10px;flex:none;
+  background:var(--wa-circ);border-radius:17px;padding:6px 10px;}
+.wa-screens .callbar svg{width:17px;height:17px;color:var(--wa-ink)}
+.wa-screens /* Hintergrundmuster wie in der App — gezeichnete Umrisse auf Beige */
+.thread{flex:1;min-height:0;background-color:var(--wa-chat);padding:10px 11px;
+  display:flex;flex-direction:column;gap:5px;overflow:hidden;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='128' viewBox='0 0 150 150'%3E%3Cg fill='none' stroke='%23E2D9CC' stroke-width='1.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='22' cy='24' r='7'/%3E%3Cpath d='M64 14l2.6 5.4 5.9.8-4.3 4.2 1 5.9-5.2-2.8-5.2 2.8 1-5.9-4.3-4.2 5.9-.8z'/%3E%3Crect x='106' y='15' width='15' height='15' rx='3.5'/%3E%3Cpath d='M18 78c0-4.6 7-4.6 7 0 0 4.6-7 9-7 9s-7-4.4-7-9c0-4.6 7-4.6 7 0z'/%3E%3Cpath d='M58 68h18v13H58zM58 68l9 7 9-7'/%3E%3Ccircle cx='118' cy='76' r='7'/%3E%3Cpath d='M118 71v5l3 2'/%3E%3Cpath d='M20 122h14M27 115v14'/%3E%3Cpath d='M62 116l12 12M74 116l-12 12'/%3E%3Cpath d='M106 130c6-3 10-7 10-12a6 6 0 00-11-3 6 6 0 00-11 3c0 5 4 9 10 12z'/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat:repeat;}
+.wa-screens .sys{align-self:center;background:var(--wa-sys);color:var(--wa-sys-ink);
+  border-radius:8px;padding:7px 11px;font-size:11.5px;line-height:1.45;
+  text-align:center;max-width:94%;box-shadow:0 1px .5px rgba(11,20,26,.1);}
+.wa-screens .sys b{font-weight:600}
+.wa-screens .bub{max-width:82%;border-radius:12px;padding:7px 10px 8px;font-size:14.5px;
+  line-height:1.33;box-shadow:0 1px .6px rgba(11,20,26,.14);position:relative;}
+.wa-screens .bub.them{background:var(--wa-in);align-self:flex-start;border-top-left-radius:3px}
+.wa-screens .bub.me{background:var(--wa-out);align-self:flex-end;border-top-right-radius:3px}
+.wa-screens .bn{display:block;font-size:12.5px;font-weight:600;color:#C4695E;margin-bottom:1px}
+.wa-screens .bub.them:nth-of-type(odd) .bn{color:#4A8BB5}
+.wa-screens .tm{font-size:10.5px;color:#8A9196;float:right;margin:6px 0 -2px 8px}
+.wa-screens .bub.me .tm::after{content:" ✓✓";color:#53BDEB;letter-spacing:-1px}
+.wa-screens .composer{flex:none;background:var(--wa-bg);padding:8px 11px 13px;
+  display:flex;gap:9px;align-items:center;}
+.wa-screens .c-ic{flex:none;color:var(--wa-ink);display:flex}
+.wa-screens .c-ic svg{width:22px;height:22px}
+.wa-screens .inp{flex:1;background:#fff;border:1px solid var(--wa-line);border-radius:20px;
+  padding:8px 11px 8px 14px;color:#8A9196;font-size:14px;
+  display:flex;align-items:center;gap:8px;min-width:0;}
+.wa-screens .inp .st{margin-left:auto;flex:none;display:flex;color:#6E7679}
+.wa-screens .inp .st svg{width:18px;height:18px}
+.wa-screens .send{width:35px;height:35px;border-radius:50%;background:var(--wa-green);display:flex;align-items:center;justify-content:center;flex:none;color:#fff}
+.wa-screens .send svg{width:18px;height:18px}
+.wa-screens /* Banner im Chat */
+.banner{flex:none;background:var(--wa-amber-bg);border-bottom:1px solid var(--wa-amber-line);
+  padding:10px 14px;display:grid;gap:8px 9px;
+  grid-template-columns:auto 1fr auto;align-items:start;}
+.wa-screens .banner .bi{color:var(--wa-amber-ink);flex:none;margin-top:1px}
+.wa-screens .banner .bi svg{width:15px;height:15px}
+.wa-screens .bt{flex:1;font-size:12.5px;line-height:1.45;color:var(--wa-ink)}
+.wa-screens .bt .loss{font-weight:600}
+.wa-screens .bt small{display:block;color:var(--wa-sub);font-size:11.5px;margin-top:2px}
+.wa-screens .bbtn{grid-column:2 / 4;justify-self:start;
+  background:var(--wa-green);color:#fff;border-radius:16px;
+  padding:6px 15px;font-size:12.5px;font-weight:600;}
+.wa-screens .bx{grid-column:3;grid-row:1;color:#9BA5AA;font-size:15px;line-height:1}
+.wa-screens .rban .bx{grid-column:auto;grid-row:auto}
+.wa-screens /* Hinweisleiste in der Chatübersicht */
+.rban{flex:none;margin:0 0 4px;background:var(--wa-amber-bg);
+  border-top:1px solid var(--wa-amber-line);border-bottom:1px solid var(--wa-amber-line);
+  padding:9px 16px;display:flex;gap:9px;align-items:center;}
+.wa-screens .rban .bi{color:var(--wa-amber-ink);flex:none;display:flex}
+.wa-screens .rban .bi svg{width:15px;height:15px}
+.wa-screens .rb-t{flex:1;font-size:12.5px;line-height:1.35}
+.wa-screens .rb-t small{display:block;color:var(--wa-sub);font-size:11.5px}
+.wa-screens /* Sheet — grauer Grund, .wa-screens weisse Karten, .wa-screens gruener Pillen-Button (Referenz Okt 2026) */
+.sheet-wrap{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;background:rgba(11,20,26,.26)}
+.wa-screens .sheet{background:#F2F2F7;border-radius:17px 17px 0 0;padding:9px 0 16px;
+  max-height:90%;display:flex;flex-direction:column;}
+.wa-screens .grab{width:36px;height:4px;border-radius:2px;background:#D2D4D8;margin:1px auto 9px;flex:none}
+.wa-screens .sh-nav{display:flex;align-items:center;gap:10px;padding:0 13px 13px;flex:none}
+.wa-screens .sh-back{width:35px;height:35px;border-radius:50%;background:#fff;border:1px solid #E4E5E9;
+  display:flex;align-items:center;justify-content:center;flex:none;color:var(--wa-ink);}
+.wa-screens .sh-back svg{width:16px;height:16px}
+.wa-screens .sh-tt{flex:1;text-align:center;min-width:0}
+.wa-screens .sh-t{font-size:16px;font-weight:600;letter-spacing:-.25px}
+.wa-screens .sh-c{font-size:11.5px;color:var(--wa-sub);margin-top:-1px}
+.wa-screens .sh-go{flex:none;background:var(--wa-green);color:#fff;border-radius:21px;
+  padding:9px 19px;font-size:15px;font-weight:600;letter-spacing:-.2px;}
+.wa-screens .sh-go.dim{background:#CFD2D6}
+.wa-screens .sh-body{padding:0 13px;overflow:hidden}
+.wa-screens .sh-q{font-size:20px;font-weight:650;letter-spacing:-.45px;line-height:1.2;margin:3px 2px 4px}
+.wa-screens .sh-sub{font-size:13px;color:var(--wa-sub);margin:0 2px 14px}
+.wa-screens .card{background:#fff;border-radius:17px;padding:15px;margin-bottom:11px;}
+.wa-screens .card.sel{box-shadow:0 0 0 2px var(--wa-green)}
+.wa-screens .ch{display:flex;gap:12px;align-items:flex-start}
+.wa-screens .radio{width:21px;height:21px;border-radius:50%;border:1.5px solid #C3C6CB;flex:none;margin-top:1px}
+.wa-screens .radio.on{border-color:var(--wa-green);border-width:6.5px}
+.wa-screens .c-t{font-size:16px;font-weight:600;letter-spacing:-.25px;display:flex;align-items:center;gap:7px}
+.wa-screens .c-d{font-size:13px;color:var(--wa-sub);line-height:1.4;margin-top:4px}
+.wa-screens .neu{background:var(--wa-unread);color:#fff;border-radius:4px;
+  font-size:9.5px;font-weight:700;letter-spacing:.06em;padding:2px 5px;}
+.wa-screens .c-extra{border-top:1px solid #ECEDEF;margin-top:13px;padding-top:13px}
+.wa-screens .dt{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.wa-screens .dt-l{font-size:15px;margin-right:auto}
+.wa-screens .dt-c{background:#F0F1F3;border-radius:9px;padding:7px 11px;font-size:14px;font-weight:500}
+.wa-screens .dt-c.on{background:var(--wa-chip-on);color:var(--wa-chip-on-ink);font-weight:600}
+.wa-screens .qd{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.wa-screens .q{border:1px solid #E2E4E7;border-radius:19px;padding:6px 12px;
+  font-size:12.5px;font-weight:500;color:var(--wa-ink);background:#fff;}
+.wa-screens .q.on{background:var(--wa-chip-on);border-color:var(--wa-chip-on);color:var(--wa-chip-on-ink);font-weight:600}
+.wa-screens .hint{font-size:12.5px;color:var(--wa-sub);line-height:1.4;margin:0}
+.wa-screens /* Schwebende Navigationsleiste — Pille statt durchgehender Leiste */
+.tabs{flex:none;margin:6px 11px 11px;background:#F4F5F6;
+  border-radius:27px;display:flex;padding:7px 5px 6px;
+  box-shadow:0 2px 10px rgba(11,20,26,.09);}
+.wa-screens .tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;
+  color:#5E6669;font-size:9.5px;position:relative;padding:4px 0 2px;border-radius:19px;}
+.wa-screens .tab.on{background:#E3E5E7;color:var(--wa-ink);font-weight:600}
+.wa-screens .tab svg{width:22px;height:22px}
+.wa-screens .tab .pic{width:22px;height:22px;border-radius:50%;background:#C9D2D6;display:block}
+.wa-screens .tab .dot{position:absolute;top:1px;right:50%;margin-right:-21px;background:var(--wa-unread);
+  color:#fff;border-radius:9px;min-width:17px;height:17px;font-size:10.5px;font-weight:600;
+  display:flex;align-items:center;justify-content:center;padding:0 4px;
+  border:2px solid #F4F5F6;}
+.wa-screens .tab .live{position:absolute;top:3px;right:50%;margin-right:-12px;
+  width:7px;height:7px;border-radius:50%;background:var(--wa-unread);
+  border:1.5px solid #F4F5F6;}
+  @media (max-width:560px){
+    .wa-screens{gap:2.4rem 0}
+  }
+
+</style>
+
+              <text class="fh" x="4" y="14">ERSTELLUNG: ALLES IN EINEM BOTTOM-SHEET</text>
+              <rect class="fsheet" x="0" y="24" width="700" height="56" rx="10"/>
+              <g transform="translate(8,34)">
+                <g><rect class="fb" x="0" y="0" width="120" height="36" rx="8"/><text class="ft" x="60" y="22">Chats</text></g>
+                <line class="fc" x1="122" y1="18" x2="140" y2="18" marker-end="url(#fl-ar)"/>
+                <g><rect class="fb" x="142" y="0" width="120" height="36" rx="8"/><text class="ft" x="202" y="22">Neuer Chat</text></g>
+                <line class="fc" x1="264" y1="18" x2="282" y2="18" marker-end="url(#fl-ar)"/>
+                <g><rect class="fb" x="284" y="0" width="120" height="36" rx="8"/><text class="ft" x="344" y="22">Kontakte</text></g>
+                <line class="fc" x1="406" y1="18" x2="424" y2="18" marker-end="url(#fl-ar)"/>
+                <g><rect class="fb" x="426" y="0" width="120" height="36" rx="8"/><text class="ft" x="486" y="22">Name &amp; Foto</text></g>
+                <line class="fc" x1="548" y1="18" x2="566" y2="18" marker-end="url(#fl-ar)"/>
+                <g class="fn"><rect class="fb" x="568" y="0" width="126" height="36" rx="8"/><text class="ft" x="631" y="22">Gruppentyp</text></g>
+              </g>
+              <text class="fh" x="576" y="96" font-size="10.5">↑ der neue Schritt</text>
+
+              <text class="fh" x="4" y="140">LAUFZEIT &amp; ENDE: PASSIERT VON SELBST</text>
+              <g transform="translate(8,152)">
+                <g><rect class="fb" x="0" y="0" width="150" height="36" rx="8"/><text class="ft" x="75" y="22">Gruppe</text></g>
+                <line class="fc" x1="152" y1="18" x2="170" y2="18" marker-end="url(#fl-ar)"/>
+                <g><rect class="fb" x="172" y="0" width="150" height="36" rx="8"/><text class="ft" x="247" y="22">In der Liste</text></g>
+                <line class="fc" x1="324" y1="18" x2="342" y2="18" marker-end="url(#fl-ar)"/>
+                <g><rect class="fb" x="344" y="0" width="170" height="36" rx="8"/><text class="ft" x="429" y="22">Erinnerung, 1 Tag vorher</text></g>
+                <line class="fc" x1="516" y1="18" x2="534" y2="18" marker-end="url(#fl-ar)"/>
+                <g class="fn"><rect class="fb" x="536" y="0" width="158" height="36" rx="8"/><text class="ft" x="615" y="22">Gelöscht</text></g>
+              </g>
+              <text class="fh" x="8" y="216" font-size="10.5">Ein Admin kann bis zum Stichtag verlängern oder die Gruppe dauerhaft machen, sonst läuft es durch.</text>
+            </svg>
+            <figcaption>
+              Der neue Pflichtschritt „Gruppentyp“ sitzt bewusst am Ende der vertrauten
+              Erstellungs-Reihenfolge: „Eine Sache noch“, statt den Ablauf von vorn zu unterbrechen.
+              Und erst wenn die Gruppe einen Namen hat, wird die Frage nach der Laufzeit konkret
+              statt abstrakt.
+            
+            </figcaption>
+          </figure>
+        </section>
+
+        <!-- 6 — Prototyp -->
+        <section class="case-section case-section--plain reveal">
+          <div class="case-prototype">
+            <div class="case-prototype-text">
+              <h2 class="tag">Prototyp</h2>
+              <p>
+                Der Weg ist als Prototyp gebaut: vom Erstellen der Gruppe über die Kennzeichnung und die
+                Erinnerung bis zur Löschung. Bewusst ohne Farbe — und zwar <strong>für die Testphase</strong>:
+                Bei einer naturgetreuen Nachbildung hätte ich nie unterscheiden können, ob Zustimmung dem
+                Konzept gilt oder schlicht der Vertrautheit. Die visuelle Ebene kam erst danach.
+              
+              </p>
+
+              <div class="case-cta">
+                <p>Größer und in Ruhe: der Prototyp im eigenen Tab, mit Flow-Leiste und Designnotizen.</p>
+                <a href="prototypes/whatsapp-temporaere-gruppen.html" target="_blank" rel="noopener" class="btn btn-primary">Prototyp öffnen <span class="btn-arrow">↗</span></a>
+              </div>
+            </div>
+
+            <figure class="case-figure reveal">
+              <iframe src="prototypes/whatsapp-temporaere-gruppen.html?test"
+                      title="Klick-Prototyp: Temporäre Gruppen"
+                      loading="lazy"
+                      style="width:100%;max-width:380px;height:720px;border:1px solid rgba(28,26,34,.16);border-radius:28px;display:block;margin:0 auto;background:#fff"></iframe>
+            </figure>
+          </div>
+        </section>
+
+        <!-- 7 — Validierung -->
+        <section class="case-section reveal">
+          <h2 class="tag">Was die Tests ergeben haben</h2>
+          <p>
+            Das Konzept steht auf <strong>einer</strong> Annahme: In einer temporären Gruppe steht
+            nichts, was den Stichtag überdauern muss. Stimmt sie, ist die Löschung Hygiene. Stimmt sie
+            nicht, ist das Feature gefährlich. Drei moderierte Sessions, je rund 30 Minuten,
+            Discovery plus Prototyp-Test.
+          </p>
+          <ul>
+            <li><strong>Die Annahme hält — dreimal, im ungünstigen Fall.</strong> Alle öffneten eine seit über einem Jahr stille Anlass-Gruppe. Ob da etwas drin ist, das sie noch brauchen: „Absolut nicht.“ / „Nee, gar nicht.“ Das zählt besonders, weil bei <em>allen dreien</em> die Foto-Autospeicherung ausgeschaltet war — die Bilder wären tatsächlich verloren.</li>
+            <li><strong>Das Wording trägt.</strong> Auf die Frage, was „Endet 12. Okt“ bedeutet, kam zweimal unabhängig „gelöscht“. Niemand rechnete mit einem Archiv.</li>
+            <li><strong>Der Pflichtschritt erzeugt keine Reibung.</strong> Alle drei wählten „Temporär“ ohne Zögern und ohne Rückfrage.</li>
+            <li><strong>Und alle drei zogen die Zweiteilung selbst</strong> — bevor sie jemand erklärt hatte: „wie ein Organisator für einen Tag“, „Tagebuch gegen Event“, und einmal wörtlich der Begriff <em>temporäre Gruppen</em>, noch bevor der Prototyp überhaupt auf dem Tisch lag.</li>
+          </ul>
+
+          <h3>Vier Dinge habe ich danach geändert</h3>
+          <ul>
+            <li><strong>Die Erinnerung sagt jetzt, was verschwindet.</strong> Vorher: „Sichert, was ihr behalten wollt.“ Heute: „Fotos, Videos und der Verlauf sind danach weg.“ Alle drei nannten Fotos als ihre einzige Sorge, zwei vermissten an genau dieser Stelle einen Hinweis.</li>
+            <li><strong>Schnellauswahl statt Ratschlag.</strong> Zwei von drei lasen den Hinweis zum Enddatum erst, nachdem sie längst entschieden hatten. Es war kein Sichtbarkeits-, sondern ein Entscheidungsproblem: „Wie lange nach dem Event soll ich das machen? Das war mein Overthinking.“ Jetzt stehen dort drei antippbare Vorschläge.</li>
+            <li><strong>Ein Knopf ist verschwunden.</strong> „Verlängerung anfragen“ für Nicht-Admins — gestrichen, weil eine Testperson einen Widerspruch fand, den ich übersehen hatte: Das vereinbarte Ende soll die nachträgliche Aushandlung überflüssig machen, ein Anfragen-Knopf baut sie wieder ein. Samt der sozialen Kosten des Neinsagens — also genau dem Problem, mit dem dieses Projekt anfing.</li>
+            <li><strong>Eine Abschwächung statt einer Streichung.</strong> Dieselbe Person hielt auch den Hinweis nach der Löschung für überflüssig: „Sonst machst du noch 'n Finger drauf: Übrigens, du hast hier was verpasst.“ Dagegen steht die härteste Schwäche des Konzepts — wer im Vorlauf offline war, hat sonst gar keine Erklärung. Der Hinweis bleibt deshalb, verschwindet aber nach einem Tag von selbst.</li>
+          </ul>
+          <p>
+            <strong>Ehrlich dazu:</strong> Beim gestrichenen Knopf steht eine belastbare Stimme gegen
+            eine unbelastbare — eine andere Testperson hatte sich die Funktion gewünscht, allerdings
+            ohne sie je gesehen zu haben. Ich habe mich für das bessere Argument entschieden, nicht
+            für die Mehrheit. Drei Beobachtungen, die nur einmal vorkamen, habe ich bewusst
+            stehengelassen.
+          </p>
+        </section>
+
+        <!-- 8 — Scope -->
+        <section class="case-section reveal">
+          <h2 class="tag">Ehrlich benannt</h2>
+          <ul>
+            <li><strong>Was niemand sichert, geht verloren.</strong> Nach der Löschung sind Verlauf und Medien weg. Die Erinnerung stößt das Sichern an, nimmt es aber niemandem ab. Für diese Art von Gruppe ist das der bewusst gewählte Preis.</li>
+            <li><strong>Wer im Vorlauf offline ist, sieht die Erinnerung nie.</strong> Der ganze Schutz hängt an der Ankündigung. Zwei Wochen ohne Empfang, und die Gruppe ist bei der Rückkehr weg. Das ist die härteste offene Schwäche. Ich benenne sie lieber, als sie mit einer Halblösung zuzukleistern, die das Enddatum wieder unscharf machen würde.</li>
+            <li><strong>Der bestehende Rückstau</strong> bleibt außen vor. Das Feature greift bei neu erstellten Gruppen. Die alten muss man weiter von Hand aufräumen. Das ist Absicht, damit der Fokus bleibt.</li>
+            <li><strong>Wiederkehrende Anlässe</strong> unterstützt das Feature nicht aktiv: Für den nächsten Karneval entsteht eine neue Gruppe. Genau dieses Verhalten zeigen die Daten ohnehin.</li>
+            <li><strong>Kein Hi-Fi-Visual-Design.</strong> Das ist Absicht: Problem und Konzept stehen im Vordergrund.</li>
+          </ul>
+        </section>
+
+        <!-- 8.5 — Scope of Work -->
         <section class="case-section reveal">
           <h2>Scope of Work</h2>
 
@@ -113,310 +668,6 @@
           </div>
         </section>
 
-        <!-- 2 — Das Problem -->
-        <section class="case-section reveal">
-          <h2 class="tag">Das Problem</h2>
-
-          <p>
-            WhatsApp-Gruppen für einmalige Anlässe (Ausflug, Geburtstag, Festival) bleiben für
-            immer in der Chatliste, obwohl sie nie wieder gebraucht werden.
-          </p>
-          <p>
-            WhatsApp kennt kein sanftes Ende, nur „Gruppe verlassen", das fühlt sich wie ein
-            Bruch an. Eine Gruppe heißt sogar <strong>„Oma Gruppe-ENDE"</strong>, weil
-            jemand das Ende von Hand in den Namen schreiben musste.
-          </p>
-
-          <div class="stat-band stat-band--highlight">
-            <div>
-              <div class="stat-num">476</div>
-              <div class="stat-label">Gruppen in zwei vollständig ausgezählten Gruppenlisten</div>
-            </div>
-            <div>
-              <div class="stat-num">75 %</div>
-              <div class="stat-label">davon seit über einem Jahr ohne eine einzige Nachricht</div>
-            </div>
-            <div>
-              <div class="stat-num">0</div>
-              <div class="stat-label">Möglichkeiten, eine Gruppe von Anfang an als zeitlich begrenzt anzulegen</div>
-            </div>
-          </div>
-        </section>
-
-        <!-- 2.6 — User Interviews / Insights -->
-        <section class="case-section reveal">
-          <h2 class="tag">User Interviews</h2>
-          <p>Die wichtigsten Insights aus Recherche und Gesprächen, kurz zusammengefasst.</p>
-
-          <div class="insight-slider">
-            <div class="insight-track">
-              <div class="insight-card">
-                <span class="insight-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>
-                Verlassen fühlt sich wie ein Bruch an. Die einzige Handlung, die WhatsApp kennt, ist „Gruppe verlassen", das ist zu hart für eine Gruppe, die einfach nur fertig ist.
-              </div>
-              <div class="insight-card">
-                <span class="insight-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>
-                Niemand will riskieren, dass „doch noch was kommt". Also bleibt die Gruppe liegen, statt sie zu verlassen.
-              </div>
-              <div class="insight-card">
-                <span class="insight-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>
-                Tote Gruppen gehen in der Masse unter. Aktiv erinnern hilft nicht, man müsste sich an etwas erinnern, das man schon vergessen hat.
-              </div>
-              <div class="insight-card">
-                <span class="insight-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>
-                Der Anteil toter Gruppen ist bei allen gleich groß, egal wie nah man sich steht. Das Problem hängt am System, nicht an der Beziehung.
-              </div>
-              <div class="insight-card">
-                <span class="insight-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>
-                Eine Gruppe heißt „Oma Gruppe-ENDE". Jemand hat das Ende von Hand in den Namen geschrieben, weil die App dafür keinen Platz hat.
-              </div>
-            </div>
-            <div class="insight-nav">
-              <button type="button" class="insight-nav-btn" data-dir="-1" aria-label="Vorheriger Insight">‹</button>
-              <button type="button" class="insight-nav-btn" data-dir="1" aria-label="Nächster Insight">›</button>
-            </div>
-          </div>
-        </section>
-
-        <!-- 3 — Der Weg zur Lösung -->
-        <section class="case-section reveal">
-          <h2 class="tag">Vorgehen</h2>
-          <p>
-            Ein Fund aus der Recherche hat die Richtung bestätigt: WhatsApp hat 2023 selbst ein
-            Feature namens „Expiring Groups" getestet. Es kam nie über den Test hinaus. Vermutlich,
-            weil es nur individuell wirkte: Man konnte für sich selbst ein Ablaufdatum setzen, nie
-            für die ganze Gruppe. Für ein Werkzeug, das per Definition mehrere Leute betrifft, ist
-            das zu wenig.
-          </p>
-          <p>
-            Meine erste Fassung ging von der Verlustangst aus und zog daraus den naheliegenden
-            Schluss: Wenn Leute Angst haben, etwas zu verlieren, darf nichts verloren gehen. Abgelaufene
-            Gruppen sollten ins Archiv wandern, jederzeit zurückholbar. Dazu eine Einstellung, die den
-            Altbestand automatisch aufräumt, und eine persönliche Teilnahmedauer pro Person.
-          </p>
-          <p>
-            Das Konzept war korrekt hergeleitet und trotzdem falsch. Beim Blick auf die
-            „Inline Skates"-Gruppe fiel auf: Der Anlass hat ein <em>echtes, hartes</em> Ende. „Weg,
-            aber kommt bei jeder Nachricht zurück" bildet das nicht ab, das ist ein vager
-            Zwischenzustand. Und aus einem Feature waren längst drei geworden.
-          </p>
-
-          <div class="case-callout">
-            <p class="case-callout-line">
-              Die Verlustangst hängt nicht am <em>Ende</em> einer Gruppe, sondern am nachträglichen,
-              einsamen Austritt aus einer Gruppe, deren Status mehrdeutig ist.
-            </p>
-            <p>
-              „Soll ich die jetzt verlassen? Was, wenn doch noch was kommt? Was denken die anderen?"
-              Diese Fragen entstehen nur, weil die Gruppe nie ein vereinbartes Ende hatte. Eine Gruppe,
-              die mit einem sichtbaren Enddatum <strong>geboren</strong> wurde, hat davon nichts.
-            </p>
-          </div>
-
-          <p>
-            Damit fiel das Archiv, und mit ihm zwei Drittel des Konzepts. Übrig blieb ein einziges
-            Feature: <strong>Das Ende gehört an den Anfang.</strong>
-          </p>
-        </section>
-
-        <!-- 5 — Die Lösung -->
-        <section class="case-section reveal">
-          <h2 class="tag">Die Lösung</h2>
-
-          <div class="case-placeholder">
-            <span class="ph-tag">Bild folgt</span>
-            <p>Screenshot der Lösung.</p>
-          </div>
-
-          <ol>
-            <li>
-              <strong>Bei der Erstellung wählt jede Gruppe bewusst: dauerhaft oder temporär.</strong>
-              Zwei gleichwertige Karten, keine vorausgewählt. Bei „temporär" klappt direkt in der
-              Karte das Enddatum auf: Kalender und Uhrzeit-Rad, voreingestellt auf das Ende des
-              gewählten Tages.
-            </li>
-            <li>
-              <strong>Die ganze Laufzeit über trägt die Gruppe ihr Ende sichtbar mit sich.</strong>
-              Derselbe Badge in der Chatliste wie im Gruppen-Header: „Endet 14. Okt", ab einer Woche
-              vorher „Endet morgen". Admins können das Datum jederzeit über die Gruppeninfo ändern,
-              nicht erst am Stichtag.
-            </li>
-            <li>
-              <strong>Der Stichtag wird im Vorlauf unübersehbar angekündigt.</strong> Einen Tag
-              vorher: eine Push, die die Stummschaltung ignoriert, eine Zeile in der Chatübersicht,
-              ein Hinweis im Chat. Alle sehen dasselbe: wann Schluss ist und dass jetzt der Moment
-              ist, zu sichern, was man behalten will.
-            </li>
-            <li>
-              <strong>Am Stichtag wird die Gruppe für alle gelöscht.</strong> Kein Archiv, keine
-              Nachfrist, keine Reaktivierung.
-            </li>
-          </ol>
-
-          <h3>Wo die Abwägungen lagen</h3>
-          <div class="decision-list">
-            <div class="decision">
-              <h3>Kein stiller Default beim Gruppentyp</h3>
-              <p class="why">Ein Default würde exakt das Ausgangsproblem wieder aufbauen: jede Gruppe permanent, ohne dass es je jemand entschieden hat. Und aktivieren würde ihn ausgerechnet die Person, die viele Gruppen anlegt, also die, die die bewusste Wahl am nötigsten hat.</p>
-            </div>
-            <div class="decision">
-              <h3>Löschen statt Archivieren</h3>
-              <p class="why">Die erste Fassung ließ Gruppen ins Archiv wandern. Verworfen: „weg, aber kommt bei jeder Nachricht zurück" ist ein vager Zwischenzustand, der den klaren Anlass nicht abbildet. Und die Verlustangst rechtfertigt kein Archiv, weil sie am nachträglichen Austritt hängt, nicht am vereinbarten Ende.</p>
-            </div>
-            <div class="decision">
-              <h3>Keine Nachfrist nach dem Stichtag</h3>
-              <p class="why">Eine Zwischenüberlegung war eine 7-Tage-Frist zum „Behalten". Verworfen: Sie verschiebt die Endgültigkeit nur um eine Woche und macht das Modell wieder komplizierter. Der Schutz gehört komplett in den Vorlauf.</p>
-            </div>
-            <div class="decision">
-              <h3>Der ganze Aufwand steckt in der Ankündigung</h3>
-              <p class="why">Weil die Löschung endgültig ist, ist der Weg dahin bewusst redundant: Push, Übersichts-Zeile, Hinweis im Chat, und die Gruppe rückt nach oben. Es soll praktisch unmöglich sein, den Stichtag zu übersehen, ohne die App tagelang gar nicht zu öffnen.</p>
-            </div>
-            <div class="decision">
-              <h3>Keine automatische Medien-Sicherung</h3>
-              <p class="why">Naheliegend wäre, alle Fotos zum Stichtag in die Galerie zu speichern. Verworfen, denn WhatsApp hat dafür längst eine Einstellung. Wer sie an hat, hat die Fotos ohnehin; wer sie aus hat, will das so. Eine Sonderregel würde eine bestehende Nutzer-Entscheidung übergehen und ungefragt Inhalte aus fremden Gruppen auf jedes Gerät schieben.</p>
-            </div>
-            <div class="decision">
-              <h3>Das Enddatum sitzt in der Auswahlkarte</h3>
-              <p class="why">Als eigener Kasten unter den Karten stand es bezugslos da. In der Karte ist sichtbar, dass dieses Datum zu dieser Wahl gehört. Derselbe Aufbau auch beim Verlängern: wer einmal eine Gruppe angelegt hat, kennt den Schritt schon.</p>
-            </div>
-            <div class="decision">
-              <h3>Gebündelt, wenn mehrere Gruppen am selben Tag enden</h3>
-              <p class="why">Nach einem Festival-Wochenende laufen schnell drei Gruppen gleichzeitig aus. Drei Pushes und drei gestapelte Banner wären genau der Lärm, der so ein Feature unbeliebt macht. Stattdessen: eine Push, eine Zeile, dahinter eine Liste mit „Verlängern" je Gruppe.</p>
-            </div>
-          </div>
-
-          <div class="case-callout">
-            <p class="case-callout-line">
-              „Eine Gruppe kann bei der Erstellung sagen: ich habe ein Ende. Wenn dieser Tag
-              kommt, löscht sie sich von selbst, für alle."
-            </p>
-            <p>
-              Wenn beim Erstellen alle gesehen haben, dass diese Gruppe im September endet, ist die
-              Löschung im September keine Überraschung und kein Bruch. Sie ist das, was vereinbart war.
-            </p>
-          </div>
-        </section>
-
-        <!-- 4 — User Flow -->
-        <section class="case-section reveal">
-          <h2 class="tag">User Flow</h2>
-          <p>
-            Das Konzept braucht nur einen zusätzlichen Schritt beim Erstellen einer Gruppe. Alles
-            danach läuft von selbst.
-          </p>
-
-          <figure class="case-figure reveal">
-            <svg viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg" role="img"
-                 aria-label="Ein Flow in zwei Reihen. Erstellung im Bottom-Sheet: Chats, Neuer Chat, Kontakte, Name und Foto, Gruppentyp, der neue Schritt. Danach Laufzeit und Ende: Gruppe, In der Liste, Erinnerung einen Tag vorher, Gelöscht.">
-              <defs>
-                <linearGradient id="fl-acc" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0" stop-color="#4a4a4a"/><stop offset="1" stop-color="#1c1a22"/>
-                </linearGradient>
-                <marker id="fl-ar" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto">
-                  <path d="M0,1 L6,4 L0,7" fill="none" stroke="#b6b3ab" stroke-width="1.4"/>
-                </marker>
-              </defs>
-              <style>
-                .fb{ fill:#F4F2EC; stroke:rgba(28,26,34,.16); }
-                .ft{ fill:#3a3844; font-size:11.5px; text-anchor:middle; }
-                .fn .fb{ fill:url(#fl-acc); stroke:none; }
-                .fn .ft{ fill:#fff; font-weight:700; }
-                .fh{ fill:#9c99a6; font-size:11.5px; letter-spacing:.06em; }
-                .fc{ stroke:#b6b3ab; stroke-width:1.4; fill:none; }
-                .fsheet{ fill:none; stroke:rgba(28,26,34,.18); stroke-dasharray:4 4; }
-              </style>
-
-              <text class="fh" x="4" y="14">ERSTELLUNG: ALLES IN EINEM BOTTOM-SHEET</text>
-              <rect class="fsheet" x="0" y="24" width="700" height="56" rx="10"/>
-              <g transform="translate(8,34)">
-                <g><rect class="fb" x="0" y="0" width="120" height="36" rx="8"/><text class="ft" x="60" y="22">Chats</text></g>
-                <line class="fc" x1="122" y1="18" x2="140" y2="18" marker-end="url(#fl-ar)"/>
-                <g><rect class="fb" x="142" y="0" width="120" height="36" rx="8"/><text class="ft" x="202" y="22">Neuer Chat</text></g>
-                <line class="fc" x1="264" y1="18" x2="282" y2="18" marker-end="url(#fl-ar)"/>
-                <g><rect class="fb" x="284" y="0" width="120" height="36" rx="8"/><text class="ft" x="344" y="22">Kontakte</text></g>
-                <line class="fc" x1="406" y1="18" x2="424" y2="18" marker-end="url(#fl-ar)"/>
-                <g><rect class="fb" x="426" y="0" width="120" height="36" rx="8"/><text class="ft" x="486" y="22">Name &amp; Foto</text></g>
-                <line class="fc" x1="548" y1="18" x2="566" y2="18" marker-end="url(#fl-ar)"/>
-                <g class="fn"><rect class="fb" x="568" y="0" width="126" height="36" rx="8"/><text class="ft" x="631" y="22">Gruppentyp</text></g>
-              </g>
-              <text class="fh" x="576" y="96" font-size="10.5">↑ der neue Schritt</text>
-
-              <text class="fh" x="4" y="140">LAUFZEIT &amp; ENDE: PASSIERT VON SELBST</text>
-              <g transform="translate(8,152)">
-                <g><rect class="fb" x="0" y="0" width="150" height="36" rx="8"/><text class="ft" x="75" y="22">Gruppe</text></g>
-                <line class="fc" x1="152" y1="18" x2="170" y2="18" marker-end="url(#fl-ar)"/>
-                <g><rect class="fb" x="172" y="0" width="150" height="36" rx="8"/><text class="ft" x="247" y="22">In der Liste</text></g>
-                <line class="fc" x1="324" y1="18" x2="342" y2="18" marker-end="url(#fl-ar)"/>
-                <g><rect class="fb" x="344" y="0" width="170" height="36" rx="8"/><text class="ft" x="429" y="22">Erinnerung, 1 Tag vorher</text></g>
-                <line class="fc" x1="516" y1="18" x2="534" y2="18" marker-end="url(#fl-ar)"/>
-                <g class="fn"><rect class="fb" x="536" y="0" width="158" height="36" rx="8"/><text class="ft" x="615" y="22">Gelöscht</text></g>
-              </g>
-              <text class="fh" x="8" y="216" font-size="10.5">Ein Admin kann bis zum Stichtag verlängern oder die Gruppe dauerhaft machen, sonst läuft es durch.</text>
-            </svg>
-            <figcaption>
-              Der neue Pflichtschritt „Gruppentyp" sitzt bewusst am Ende der vertrauten
-              Erstellungs-Reihenfolge: „eine Sache noch", statt den Ablauf von vorn zu unterbrechen.
-              Und erst, wenn die Gruppe einen Namen hat, ist die Frage nach der Laufzeit konkret
-              statt abstrakt.
-            </figcaption>
-          </figure>
-        </section>
-
-        <!-- 6 — Prototyp -->
-        <section class="case-section reveal">
-          <div class="case-prototype">
-            <div class="case-prototype-text">
-              <h2 class="tag">Prototyp</h2>
-              <p>
-                Der Weg ist als Prototyp gebaut: vom Erstellen der Gruppe über die Kennzeichnung und die
-                Erinnerung bis zur Löschung. Bewusst ohne Farbe, es geht um die Interaktion, nicht ums
-                visuelle Design.
-              </p>
-
-              <div class="case-cta">
-                <p>Größer und in Ruhe: der Prototyp im eigenen Tab, mit Flow-Leiste und Designnotizen.</p>
-                <a href="prototypes/whatsapp-temporaere-gruppen.html" target="_blank" rel="noopener" class="btn btn-primary">Prototyp öffnen <span class="btn-arrow">↗</span></a>
-              </div>
-            </div>
-
-            <figure class="case-figure reveal">
-              <iframe src="prototypes/whatsapp-temporaere-gruppen.html?test"
-                      title="Klick-Prototyp: Temporäre Gruppen"
-                      loading="lazy"
-                      style="width:100%;max-width:380px;height:720px;border:1px solid rgba(28,26,34,.16);border-radius:28px;display:block;margin:0 auto;background:#fff"></iframe>
-            </figure>
-          </div>
-        </section>
-
-        <!-- 7 — Validierung -->
-        <section class="case-section reveal">
-          <h2 class="tag">Nächster Schritt</h2>
-          <p>
-            Das Konzept steht auf <strong>einer</strong> Annahme: In einer temporären Gruppe steht
-            nichts, was den Stichtag überdauern muss, und ein sichtbares Enddatum formt sogar mit,
-            was Leute hineinschreiben. Stimmt sie, ist die Löschung Hygiene. Stimmt sie nicht, ist
-            das Feature gefährlich. Deshalb steht sie an erster Stelle.
-          </p>
-          <ul>
-            <li><strong>Die tragende Annahme direkt:</strong> eine konkrete tote Gruppe aufmachen lassen und fragen: „Was steht hier drin, das du in einem Jahr noch brauchst?"</li>
-            <li><strong>Die Löschangst zweistufig:</strong> erst die Reaktion auf „die Gruppe wäre weg", dann dieselbe Frage noch einmal, aber mit dem Hinweis, dass das Enddatum von Anfang an sichtbar war. Der Abstand zwischen beiden Antworten ist der eigentliche Test dieser These.</li>
-            <li><strong>Das Wording:</strong> Verstehen Leute „Endet 14. Okt" als Löschung, oder rechnen sie mit einem Archiv? Das ist die Stelle, an der mein Text scheitern könnte.</li>
-            <li><strong>Der Pflichtschritt:</strong> wird er als Reibung empfunden oder einfach beantwortet?</li>
-          </ul>
-        </section>
-
-        <!-- 8 — Scope -->
-        <section class="case-section reveal">
-          <h2 class="tag">Ehrlich benannt</h2>
-          <ul>
-            <li><strong>Alles geht verloren, was niemand sichert.</strong> Nach der Löschung sind Verlauf und Medien weg. Die Erinnerung löst das Sichern aus, nimmt es aber niemandem ab. Für die adressierte Gruppenart ist das der bewusst gewählte Preis.</li>
-            <li><strong>Wer im Vorlauf offline ist, sieht die Erinnerung nie.</strong> Der ganze Schutz hängt daran, dass die Ankündigung ankommt. Zwei Wochen ohne Empfang, und die Gruppe ist bei der Rückkehr weg. Das ist die härteste offene Schwäche. Ich benenne sie lieber, als sie mit einer Halblösung zuzukleistern, die das Enddatum wieder unscharf machen würde.</li>
-            <li><strong>Der bestehende Rückstau</strong> bleibt außen vor. Das Feature setzt bei neu erstellten Gruppen an; die alten muss man weiter von Hand aufräumen. Bewusst so, um den Fokus zu halten.</li>
-            <li><strong>Wiederkehrende Anlässe</strong> werden nicht aktiv unterstützt: für den nächsten Karneval entsteht eine neue Gruppe. Das ist allerdings genau das Verhalten, das die Daten ohnehin zeigen.</li>
-            <li><strong>Kein Hi-Fi-Visual-Design</strong>, bewusste Entscheidung zugunsten von Problem und Konzept.</li>
-          </ul>
-        </section>
-
         <!-- 9 — Die fertigen Screens -->
         <section class="case-section reveal">
           <h2 class="tag">Ergebnis</h2>
@@ -434,6 +685,321 @@
               <p>Screen 3</p>
             </div>
           </div>
+        </section>
+
+        <!-- 10 — Learnings -->
+
+        <!-- 10 — Visuelles Design -->
+        <section class="case-section reveal">
+          <h2 class="tag">Visuelles Design</h2>
+          <p>
+            Während der Tests war der Prototyp bewusst grau. Erst als das Konzept stand, kam die
+            visuelle Ebene dazu — sechs Schlüsselmomente in WhatsApps eigener Sprache.
+            <strong>Alles hier Gezeigte ist Ergebnis der Interviews</strong>, besonders der
+            Foto-Hinweis und die Schnellauswahl beim Enddatum.
+          </p>
+          <p class="wa-note">
+            <strong>Unabhängiges Konzept.</strong> Nicht von WhatsApp, nicht beauftragt, nicht
+            veröffentlicht — eine Portfolio-Arbeit, die ein bestehendes Produkt als Bühne nutzt.
+          </p>
+
+          <div class="wa-screens">
+          <figure class="wa-cell">
+            <figcaption class="wa-cap">
+              <span class="wa-num">01</span>
+              <span class="wa-t">Gruppentyp wählen</span>
+              <span class="wa-d">Zwei gleichwertige Karten, <strong>keine vorausgewählt</strong>. Die Schnellauswahl nimmt die häufigste Entscheidung ab — zwei von drei Testpersonen hatten hier lange gegrübelt.</span>
+            </figcaption>
+      <div class="phone">
+        <div class="sb"><span>9:41</span><span class="sb-r"><i></i><i></i><i></i><i></i><span class="batt"></span></span></div>
+        <div class="topbar">
+          <span class="circ"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5.5" cy="12" r="1.9"/><circle cx="12" cy="12" r="1.9"/><circle cx="18.5" cy="12" r="1.9"/></svg></span>
+          <span class="sp"></span>
+          <span class="circ"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9.4 4h5.2l1.2 2H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h3.2l1.2-2Zm2.6 5.2a4.3 4.3 0 100 8.6 4.3 4.3 0 000-8.6Zm0 1.9a2.4 2.4 0 110 4.8 2.4 2.4 0 010-4.8Z"/></svg></span>
+          <span class="circ plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5.5v13M5.5 12h13"/></svg></span>
+        </div>
+        <div class="nav-title">Chats</div>
+        <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5" stroke-linecap="round"/></svg>Meta AI fragen oder suchen</div>
+        <div class="filters">
+          <span class="f on">Alle</span>
+          <span class="f">Ungelesen 9</span>
+          <span class="f">Favoriten 1</span>
+          <span class="f">Gruppen 1</span>
+          <span class="f">Communitys</span>
+        </div>
+        <div class="clist" style="opacity:.4">
+          <div class="row"><span class="av t1"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12a4 4 0 100-8 4 4 0 000 8Zm0 2c-4 0-8 2-8 4.5V21h16v-2.5c0-2.5-4-4.5-8-4.5Z"/></svg></span><div class="rc"><div class="rt"><span class="rn">Kochclub</span><span class="rd">08:12</span></div><div class="rm"><span>Tom: bringe den Nachtisch mit</span></div></div></div>
+        </div>
+        <div class="sheet-wrap">
+          <div class="sheet">
+            <div class="grab"></div>
+            <div class="sh-nav"><span class="sh-back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 5.5L8 12l6.5 6.5"/></svg></span><span class="sh-tt"><div class="sh-t">Gruppentyp</div></span><span class="sh-go">Erstellen</span></div>
+            <div class="sh-body">
+              <p class="sh-q">Wie lange soll die Gruppe „Ausflug“ bestehen bleiben?</p>
+              <p class="sh-sub">Keine Option ist vorausgewählt.</p>
+
+              <div class="card">
+                <div class="ch">
+                  <span class="radio"></span>
+                  <div><span class="c-t">∞ Dauerhaft</span>
+                  <div class="c-d">Bleibt bestehen, bis ihr sie selbst löscht. Kein Enddatum.</div></div>
+                </div>
+              </div>
+
+              <div class="card sel">
+                <div class="ch">
+                  <span class="radio on"></span>
+                  <div><span class="c-t">Temporär <span class="neu">NEU</span></span>
+                  <div class="c-d">Endet an einem festgelegten Datum — danach wird die Gruppe für alle gelöscht. Vorher werden alle erinnert.</div></div>
+                </div>
+                <div class="c-extra">
+                  <div class="dt"><span class="dt-l">Endet:</span><span class="dt-c on">So, 12. Okt</span><span class="dt-c">23:59</span></div>
+                  <div class="qd">
+                    <span class="q on">Dieses Wochenende</span>
+                    <span class="q">In einer Woche</span>
+                    <span class="q">In zwei Wochen</span>
+                  </div>
+                  <p class="hint">Ein Tag nach dem Anlass gibt allen Zeit, Fotos zu sichern.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+          </figure>
+          <figure class="wa-cell">
+            <figcaption class="wa-cap">
+              <span class="wa-num">02</span>
+              <span class="wa-t">Die Gruppe trägt ihr Enddatum</span>
+              <span class="wa-d">Derselbe Badge in der Liste wie im Gruppen-Header. Niemand muss sich das Datum merken — es steht da, wo man ohnehin hinschaut.</span>
+            </figcaption>
+      <div class="phone">
+        <div class="sb"><span>9:41</span><span class="sb-r"><i></i><i></i><i></i><i></i><span class="batt"></span></span></div>
+        <div class="topbar">
+          <span class="circ"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5.5" cy="12" r="1.9"/><circle cx="12" cy="12" r="1.9"/><circle cx="18.5" cy="12" r="1.9"/></svg></span>
+          <span class="sp"></span>
+          <span class="circ"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9.4 4h5.2l1.2 2H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h3.2l1.2-2Zm2.6 5.2a4.3 4.3 0 100 8.6 4.3 4.3 0 000-8.6Zm0 1.9a2.4 2.4 0 110 4.8 2.4 2.4 0 010-4.8Z"/></svg></span>
+          <span class="circ plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5.5v13M5.5 12h13"/></svg></span>
+        </div>
+        <div class="nav-title">Chats</div>
+        <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5" stroke-linecap="round"/></svg>Meta AI fragen oder suchen</div>
+        <div class="filters">
+          <span class="f on">Alle</span>
+          <span class="f">Ungelesen 9</span>
+          <span class="f">Favoriten 1</span>
+          <span class="f">Gruppen 1</span>
+          <span class="f">Communitys</span>
+        </div>
+        <div class="clist">
+        <div class="arch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="4" rx="1.2"/><path d="M5 8v11a1 1 0 001 1h12a1 1 0 001-1V8M10 12h4"/></svg>Archiviert</div>
+          <div class="row">
+            <span class="av t1"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 11a3 3 0 100-6 3 3 0 000 6Zm8 0a3 3 0 100-6 3 3 0 000 6ZM8 13c-2.7 0-6 1.3-6 3.5V19h12v-2.5C14 14.3 10.7 13 8 13Zm8 0c-.6 0-1.3.1-1.9.2 1.2.9 1.9 2 1.9 3.3V19h6v-2.5c0-2.2-3.3-3.5-6-3.5Z"/></svg></span>
+            <div class="rc">
+              <div class="rt"><span class="rn">Ausflug</span><span class="rd">10:32</span></div>
+              <div class="rm"><span>Sara: Ich hab die Flüge gebucht!</span></div>
+              <span class="tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2" stroke-linecap="round"/></svg>Endet 12. Okt</span>
+            </div>
+          </div>
+          <div class="row"><span class="av t2"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 11a3 3 0 100-6 3 3 0 000 6Zm8 0a3 3 0 100-6 3 3 0 000 6ZM8 13c-2.7 0-6 1.3-6 3.5V19h12v-2.5C14 14.3 10.7 13 8 13Zm8 0c-.6 0-1.3.1-1.9.2 1.2.9 1.9 2 1.9 3.3V19h6v-2.5c0-2.2-3.3-3.5-6-3.5Z"/></svg></span><div class="rc"><div class="rt"><span class="rn">Kochclub</span><span class="rd gr">08:12</span></div><div class="rm"><span>Tom: bringe den Nachtisch mit</span><span class="pill">3</span></div></div></div>
+          <div class="row"><span class="av">P</span><div class="rc"><div class="rt"><span class="rn">Papa</span><span class="rd">07:40</span></div><div class="rm"><span>Foto</span></div></div></div>
+          <div class="row"><span class="av t3"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 11a3 3 0 100-6 3 3 0 000 6Zm8 0a3 3 0 100-6 3 3 0 000 6ZM8 13c-2.7 0-6 1.3-6 3.5V19h12v-2.5C14 14.3 10.7 13 8 13Zm8 0c-.6 0-1.3.1-1.9.2 1.2.9 1.9 2 1.9 3.3V19h6v-2.5c0-2.2-3.3-3.5-6-3.5Z"/></svg></span><div class="rc"><div class="rt"><span class="rn">Team Projekt</span><span class="rd">Gestern</span></div><div class="rm"><span>Alex: klingt gut</span></div></div></div>
+          <div class="row"><span class="av t2"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 11a3 3 0 100-6 3 3 0 000 6Zm8 0a3 3 0 100-6 3 3 0 000 6ZM8 13c-2.7 0-6 1.3-6 3.5V19h12v-2.5C14 14.3 10.7 13 8 13Zm8 0c-.6 0-1.3.1-1.9.2 1.2.9 1.9 2 1.9 3.3V19h6v-2.5c0-2.2-3.3-3.5-6-3.5Z"/></svg></span><div class="rc"><div class="rt"><span class="rn">Grillfest 2025</span><span class="rd">12. Mai</span></div><div class="rm"><span>Sara: war ein schöner Abend!</span></div></div></div>
+          <div class="row"><span class="av">S</span><div class="rc" style="border:0"><div class="rt"><span class="rn">Sara</span><span class="rd">Gestern</span></div><div class="rm"><span>Wir sehen uns Samstag!</span></div></div></div>
+        </div>
+        <div class="tabs">
+          <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3.6"/><path d="M5.6 5.6a9 9 0 000 12.8M18.4 5.6a9 9 0 010 12.8"/></svg><span class="live"></span>Aktuelles</div>
+          <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6.5 3.5h2.8l1.9 4.6-2.3 1.4a11.5 11.5 0 005.6 5.6l1.4-2.3 4.6 1.9v2.8a2 2 0 01-2.2 2A16.4 16.4 0 014.5 5.7a2 2 0 012-2.2Z"/></svg>Anrufe</div>
+          <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3.5" y="5" width="17" height="14" rx="3.4"/><path d="M7.5 10h9M7.5 14h5.5" stroke-linecap="round"/></svg>Communitys</div>
+          <div class="tab on"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3.2c-5 0-9 3.5-9 7.9 0 2.3 1.1 4.3 2.9 5.7l-.9 4.1 4.5-1.9c.8.2 1.6.3 2.5.3 5 0 9-3.5 9-7.9S17 3.2 12 3.2Z"/></svg>Chats<span class="dot">9</span></div>
+          <div class="tab"><span class="pic"></span>Du</div>
+        </div>
+      </div>
+          </figure>
+          <figure class="wa-cell">
+            <figcaption class="wa-cap">
+              <span class="wa-num">03</span>
+              <span class="wa-t">Eine Systemnachricht, die alle sehen</span>
+              <span class="wa-d">Sie erklärt das Feature im Moment der Nutzung statt in einem Onboarding. Eine Testperson nannte ausgerechnet die Zusage <strong>„alle werden am Tag davor erinnert“</strong> als das, was ihr die Kontrollangst nimmt.</span>
+            </figcaption>
+      <div class="phone">
+        <div class="sb"><span>9:41</span><span class="sb-r"><i></i><i></i><i></i><i></i><span class="batt"></span></span></div>
+        <div class="chat-head">
+          <span class="back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 5.5L8 12l6.5 6.5"/></svg>9</span>
+          <span class="ch-av"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 11a3 3 0 100-6 3 3 0 000 6Zm8 0a3 3 0 100-6 3 3 0 000 6ZM8 13c-2.7 0-6 1.3-6 3.5V19h12v-2.5C14 14.3 10.7 13 8 13Zm8 0c-.6 0-1.3.1-1.9.2 1.2.9 1.9 2 1.9 3.3V19h6v-2.5c0-2.2-3.3-3.5-6-3.5Z"/></svg></span>
+          <div class="ch-meta"><div class="ch-t">Ausflug</div>
+          <div class="ch-s"><span class="tag" style="margin:0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2" stroke-linecap="round"/></svg>Endet 12. Okt</span> · 4 Mitglieder</div></div>
+          <span class="callbar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="2.5" y="6" width="13" height="12" rx="3"/><path d="M15.5 11l6-3.5v9l-6-3.5z"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M6.5 3.5h2.8l1.9 4.6-2.3 1.4a11.5 11.5 0 005.6 5.6l1.4-2.3 4.6 1.9v2.8a2 2 0 01-2.2 2A16.4 16.4 0 014.5 5.7a2 2 0 012-2.2Z"/></svg></span>
+        </div>
+        <div class="thread">
+          <div class="sys">Du hast die Gruppe „Ausflug“ erstellt</div>
+          <div class="sys"><b>Diese Gruppe endet am 12. Okt 2026, 23:59 Uhr.</b> Alle Mitglieder werden am Tag davor erinnert. Verlängert kein Admin, wird die Gruppe an diesem Tag für alle gelöscht.</div>
+          <div class="bub them"><span class="bn">Sara</span>Ich hab die Flüge gebucht!<span class="tm">10:32</span></div>
+          <div class="bub me">Perfekt, danke dir<span class="tm">10:34</span></div>
+          <div class="bub them"><span class="bn">Alex</span>Packliste kommt heute Abend<span class="tm">10:41</span></div>
+          <div class="bub me">Top. Wer nimmt den großen Koffer mit?<span class="tm">10:42</span></div>
+        </div>
+        <div class="composer">
+          <span class="c-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+          <span class="inp">Nachricht<span class="st"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.5 12a8.5 8.5 0 10-8.5 8.5c2 0 3-.5 4.5-2l4-4c1.5-1.5 0-2.5 0-2.5z"/><path d="M13.5 20.3c0-2.6 1.2-4.2 3.8-4.2"/></svg></span></span>
+          <span class="c-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M9.4 5h5.2l1.1 2H19a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V9a2 2 0 012-2h3.3l1.1-2Z"/><circle cx="12" cy="13" r="3.6"/></svg></span>
+          <span class="send"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 14.5a3.2 3.2 0 003.2-3.2V6.2a3.2 3.2 0 10-6.4 0v5.1A3.2 3.2 0 0012 14.5Z"/><path d="M18 11.3a6 6 0 01-12 0H4.4a7.6 7.6 0 006.8 7.5V22h1.6v-3.2a7.6 7.6 0 006.8-7.5H18Z"/></svg></span>
+        </div>
+      </div>
+          </figure>
+          <figure class="wa-cell">
+            <figcaption class="wa-cap">
+              <span class="wa-num">04</span>
+              <span class="wa-t">Die Erinnerung nennt, was verschwindet</span>
+              <span class="wa-d"><strong>Die wichtigste Änderung aus den Interviews.</strong> Alle drei nannten Fotos als ihre einzige Sorge, zwei vermissten hier aktiv einen Hinweis. Vorher stand hier nur „Sichert, was ihr behalten wollt.“</span>
+            </figcaption>
+      <div class="phone">
+        <div class="sb"><span>9:41</span><span class="sb-r"><i></i><i></i><i></i><i></i><span class="batt"></span></span></div>
+        <div class="chat-head">
+          <span class="back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 5.5L8 12l6.5 6.5"/></svg>9</span>
+          <span class="ch-av"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 11a3 3 0 100-6 3 3 0 000 6Zm8 0a3 3 0 100-6 3 3 0 000 6ZM8 13c-2.7 0-6 1.3-6 3.5V19h12v-2.5C14 14.3 10.7 13 8 13Zm8 0c-.6 0-1.3.1-1.9.2 1.2.9 1.9 2 1.9 3.3V19h6v-2.5c0-2.2-3.3-3.5-6-3.5Z"/></svg></span>
+          <div class="ch-meta"><div class="ch-t">Ausflug</div>
+          <div class="ch-s"><span class="tag soon" style="margin:0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2" stroke-linecap="round"/></svg>Endet morgen</span> · 4 Mitglieder</div></div>
+          <span class="callbar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="2.5" y="6" width="13" height="12" rx="3"/><path d="M15.5 11l6-3.5v9l-6-3.5z"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M6.5 3.5h2.8l1.9 4.6-2.3 1.4a11.5 11.5 0 005.6 5.6l1.4-2.3 4.6 1.9v2.8a2 2 0 01-2.2 2A16.4 16.4 0 014.5 5.7a2 2 0 012-2.2Z"/></svg></span>
+        </div>
+        <div class="banner">
+          <span class="bi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2" stroke-linecap="round"/></svg></span>
+          <span class="bt">„Ausflug“ endet morgen um 23:59 Uhr.
+            <small><span class="loss" style="color:var(--wa-ink)">Fotos, Videos und der Verlauf sind danach weg.</span> Sichert jetzt, was ihr behalten wollt.</small>
+            <small>Nur Admins können verlängern.</small>
+          </span>
+          <span class="bbtn">Verlängern</span>
+          <span class="bx">✕</span>
+        </div>
+        <div class="thread">
+          <div class="bub them"><span class="bn">Tom</span>Treffen wir uns direkt am Gate?<span class="tm">18:02</span></div>
+          <div class="bub me">Ja, 45 Minuten vorher<span class="tm">18:04</span></div>
+          <div class="bub them"><span class="bn">Mama</span>Schade, dass es schon vorbei ist! War schön mit euch<span class="tm">19:20</span></div>
+          <div class="bub them"><span class="bn">Tom</span>Ich hab die Fotos gerade in meine Galerie gespeichert<span class="tm">19:26</span></div>
+          <div class="bub me">Gute Idee, mach ich auch<span class="tm">19:31</span></div>
+        </div>
+        <div class="composer">
+          <span class="c-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+          <span class="inp">Nachricht<span class="st"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.5 12a8.5 8.5 0 10-8.5 8.5c2 0 3-.5 4.5-2l4-4c1.5-1.5 0-2.5 0-2.5z"/><path d="M13.5 20.3c0-2.6 1.2-4.2 3.8-4.2"/></svg></span></span>
+          <span class="c-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M9.4 5h5.2l1.1 2H19a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V9a2 2 0 012-2h3.3l1.1-2Z"/><circle cx="12" cy="13" r="3.6"/></svg></span>
+          <span class="send"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 14.5a3.2 3.2 0 003.2-3.2V6.2a3.2 3.2 0 10-6.4 0v5.1A3.2 3.2 0 0012 14.5Z"/><path d="M18 11.3a6 6 0 01-12 0H4.4a7.6 7.6 0 006.8 7.5V22h1.6v-3.2a7.6 7.6 0 006.8-7.5H18Z"/></svg></span>
+        </div>
+      </div>
+          </figure>
+          <figure class="wa-cell">
+            <figcaption class="wa-cap">
+              <span class="wa-num">05</span>
+              <span class="wa-t">Derselbe Schritt, noch einmal</span>
+              <span class="wa-d">Das Verlängern-Sheet spiegelt den Gruppentyp-Schritt — auch die Option <strong>„Dauerhaft behalten“</strong>. Alle drei fanden den Weg sofort; eine nannte ungefragt ihren eigenen Fall: eine Urlaubsgruppe, die bleiben durfte.</span>
+            </figcaption>
+      <div class="phone">
+        <div class="sb"><span>9:41</span><span class="sb-r"><i></i><i></i><i></i><i></i><span class="batt"></span></span></div>
+        <div class="chat-head">
+          <span class="back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 5.5L8 12l6.5 6.5"/></svg>9</span>
+          <span class="ch-av"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 11a3 3 0 100-6 3 3 0 000 6Zm8 0a3 3 0 100-6 3 3 0 000 6ZM8 13c-2.7 0-6 1.3-6 3.5V19h12v-2.5C14 14.3 10.7 13 8 13Zm8 0c-.6 0-1.3.1-1.9.2 1.2.9 1.9 2 1.9 3.3V19h6v-2.5c0-2.2-3.3-3.5-6-3.5Z"/></svg></span>
+          <div class="ch-meta"><div class="ch-t">Ausflug</div><div class="ch-s">Gruppeninfo</div></div>
+          <span class="callbar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="2.5" y="6" width="13" height="12" rx="3"/><path d="M15.5 11l6-3.5v9l-6-3.5z"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M6.5 3.5h2.8l1.9 4.6-2.3 1.4a11.5 11.5 0 005.6 5.6l1.4-2.3 4.6 1.9v2.8a2 2 0 01-2.2 2A16.4 16.4 0 014.5 5.7a2 2 0 012-2.2Z"/></svg></span>
+        </div>
+        <div class="thread" style="opacity:.45">
+          <div class="sys">Du hast die Gruppe „Ausflug“ erstellt</div>
+          <div class="bub them"><span class="bn">Sara</span>Ich hab die Flüge gebucht!<span class="tm">10:32</span></div>
+          <div class="bub me">Perfekt, danke dir<span class="tm">10:34</span></div>
+          <div class="bub them"><span class="bn">Alex</span>Packliste kommt heute Abend<span class="tm">10:41</span></div>
+        </div>
+        <div class="sheet-wrap">
+          <div class="sheet">
+            <div class="grab"></div>
+            <div class="sh-nav"><span class="sh-back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 5.5L8 12l6.5 6.5"/></svg></span><span class="sh-tt"><div class="sh-t">Laufzeit</div><div class="sh-c">Ausflug</div></span><span class="sh-go">Fertig</span></div>
+            <div class="sh-body">
+              <p class="sh-q">Wie lange soll „Ausflug“ noch bestehen?</p>
+              <p class="sh-sub">Ändern kann das nur, wer Admin ist.</p>
+
+              <div class="card sel">
+                <div class="ch">
+                  <span class="radio on"></span>
+                  <div><span class="c-t">Neues Enddatum</span>
+                  <div class="c-d">Die Gruppe läuft bis zum neuen Datum weiter. Alle sehen die Änderung.</div></div>
+                </div>
+                <div class="c-extra">
+                  <div class="dt"><span class="dt-l">Endet:</span><span class="dt-c on">So, 19. Okt</span><span class="dt-c">23:59</span></div>
+                  <div class="qd">
+                    <span class="q">Dieses Wochenende</span>
+                    <span class="q on">In einer Woche</span>
+                    <span class="q">In zwei Wochen</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="ch">
+                  <span class="radio"></span>
+                  <div><span class="c-t">∞ Dauerhaft behalten</span>
+                  <div class="c-d">Aus der temporären Gruppe wird eine normale. Kein Enddatum mehr.</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+          </figure>
+          <figure class="wa-cell">
+            <figcaption class="wa-cap">
+              <span class="wa-num">06</span>
+              <span class="wa-t">Eine Quittung auf Zeit</span>
+              <span class="wa-d">Die Gruppe ist weg. Es bleibt eine Zeile in Nutzersprache — vor allem für die, die den Vorlauf verpasst haben. <strong>Sie verschwindet nach einem Tag von selbst</strong>, damit sie niemandem dauerhaft den Finger auf etwas legt, woran nichts mehr zu ändern ist.</span>
+            </figcaption>
+      <div class="phone">
+        <div class="sb"><span>9:41</span><span class="sb-r"><i></i><i></i><i></i><i></i><span class="batt"></span></span></div>
+        <div class="topbar">
+          <span class="circ"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5.5" cy="12" r="1.9"/><circle cx="12" cy="12" r="1.9"/><circle cx="18.5" cy="12" r="1.9"/></svg></span>
+          <span class="sp"></span>
+          <span class="circ"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9.4 4h5.2l1.2 2H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h3.2l1.2-2Zm2.6 5.2a4.3 4.3 0 100 8.6 4.3 4.3 0 000-8.6Zm0 1.9a2.4 2.4 0 110 4.8 2.4 2.4 0 010-4.8Z"/></svg></span>
+          <span class="circ plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5.5v13M5.5 12h13"/></svg></span>
+        </div>
+        <div class="nav-title">Chats</div>
+        <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5" stroke-linecap="round"/></svg>Meta AI fragen oder suchen</div>
+        <div class="filters">
+          <span class="f on">Alle</span>
+          <span class="f">Ungelesen 9</span>
+          <span class="f">Favoriten 1</span>
+          <span class="f">Gruppen 1</span>
+          <span class="f">Communitys</span>
+        </div>
+        <div class="rban">
+          <span class="bi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2" stroke-linecap="round"/></svg></span>
+          <span class="rb-t">Die Gruppe „Ausflug“ war bis zum 12. Okt 2026 angelegt und wurde automatisch gelöscht.
+            <small>Dieser Hinweis verschwindet morgen von selbst.</small>
+          </span>
+          <span class="bx">✕</span>
+        </div>
+        <div class="clist">
+          <div class="row"><span class="av t2"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 11a3 3 0 100-6 3 3 0 000 6Zm8 0a3 3 0 100-6 3 3 0 000 6ZM8 13c-2.7 0-6 1.3-6 3.5V19h12v-2.5C14 14.3 10.7 13 8 13Zm8 0c-.6 0-1.3.1-1.9.2 1.2.9 1.9 2 1.9 3.3V19h6v-2.5c0-2.2-3.3-3.5-6-3.5Z"/></svg></span><div class="rc"><div class="rt"><span class="rn">Kochclub</span><span class="rd gr">08:12</span></div><div class="rm"><span>Tom: bringe den Nachtisch mit</span><span class="pill">3</span></div></div></div>
+          <div class="row"><span class="av">P</span><div class="rc"><div class="rt"><span class="rn">Papa</span><span class="rd">07:40</span></div><div class="rm"><span>Foto</span></div></div></div>
+          <div class="row"><span class="av t3"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 11a3 3 0 100-6 3 3 0 000 6Zm8 0a3 3 0 100-6 3 3 0 000 6ZM8 13c-2.7 0-6 1.3-6 3.5V19h12v-2.5C14 14.3 10.7 13 8 13Zm8 0c-.6 0-1.3.1-1.9.2 1.2.9 1.9 2 1.9 3.3V19h6v-2.5c0-2.2-3.3-3.5-6-3.5Z"/></svg></span><div class="rc"><div class="rt"><span class="rn">Team Projekt</span><span class="rd">Gestern</span></div><div class="rm"><span>Alex: klingt gut</span></div></div></div>
+          <div class="row"><span class="av t2"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 11a3 3 0 100-6 3 3 0 000 6Zm8 0a3 3 0 100-6 3 3 0 000 6ZM8 13c-2.7 0-6 1.3-6 3.5V19h12v-2.5C14 14.3 10.7 13 8 13Zm8 0c-.6 0-1.3.1-1.9.2 1.2.9 1.9 2 1.9 3.3V19h6v-2.5c0-2.2-3.3-3.5-6-3.5Z"/></svg></span><div class="rc"><div class="rt"><span class="rn">Grillfest 2025</span><span class="rd">12. Mai</span></div><div class="rm"><span>Sara: war ein schöner Abend!</span></div></div></div>
+          <div class="row"><span class="av">S</span><div class="rc" style="border:0"><div class="rt"><span class="rn">Sara</span><span class="rd">Gestern</span></div><div class="rm"><span>Wir sehen uns Samstag!</span></div></div></div>
+        </div>
+        <div class="tabs">
+          <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3.6"/><path d="M5.6 5.6a9 9 0 000 12.8M18.4 5.6a9 9 0 010 12.8"/></svg><span class="live"></span>Aktuelles</div>
+          <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6.5 3.5h2.8l1.9 4.6-2.3 1.4a11.5 11.5 0 005.6 5.6l1.4-2.3 4.6 1.9v2.8a2 2 0 01-2.2 2A16.4 16.4 0 014.5 5.7a2 2 0 012-2.2Z"/></svg>Anrufe</div>
+          <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3.5" y="5" width="17" height="14" rx="3.4"/><path d="M7.5 10h9M7.5 14h5.5" stroke-linecap="round"/></svg>Communitys</div>
+          <div class="tab on"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3.2c-5 0-9 3.5-9 7.9 0 2.3 1.1 4.3 2.9 5.7l-.9 4.1 4.5-1.9c.8.2 1.6.3 2.5.3 5 0 9-3.5 9-7.9S17 3.2 12 3.2Z"/></svg>Chats<span class="dot">9</span></div>
+          <div class="tab"><span class="pic"></span>Du</div>
+        </div>
+      </div>
+          </figure>
+          </div>
+        </section>
+
+        <section class="case-section reveal">
+          <h2 class="tag">Was ich mitnehme</h2>
+          <p>
+            Kleine Dinge können Großes bewirken. Ein Feature muss nicht riesig sein, um ein echtes
+            Problem zu lösen.
+          </p>
+          <p>
+            Und ein sauber hergeleitetes Konzept darf trotzdem fallen, wenn es dem Anlass nicht
+            gerecht wird.
+          </p>
         </section>
   </main>
 
