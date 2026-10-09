@@ -74,7 +74,10 @@
           }
         });
       },
-      { threshold: 0.15, rootMargin: "0px 0px -40px 0px" }
+      // Kein prozentualer Schwellwert: Bei sehr hohen Abschnitten (auf dem Handy über
+      // 7.000 px) passen 15 % nie in den Bildschirm, sie blieben dann unsichtbar.
+      // Stattdessen einblenden, sobald die Oberkante 12 % über dem unteren Rand ist.
+      { threshold: 0, rootMargin: "0px 0px -12% 0px" }
     );
 
     revealEls.forEach(function (el) {

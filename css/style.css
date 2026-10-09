@@ -963,7 +963,7 @@ body.case-overlay::before {
    Das breite Browser-Mockup bleibt bei 16:9. */
 .case-section--image:has(.phone-mock) {
   aspect-ratio: auto;
-  height: calc(1.836 * min(0.95 * (100vw - 66px), 340px));
+  height: calc(1.834 * min(0.95 * (100vw - 66px), 340px));
 }
 /* ohne graue Fläche — Inhalt sitzt direkt auf dem weißen Sheet, Padding bleibt,
    damit der Text weiter mit den grauen Blöcken fluchtet */
@@ -984,7 +984,7 @@ body.case-overlay::before {
   bottom: -22%;
   transform: translateX(-50%);
   height: 118%;
-  aspect-ratio: 9 / 19.5;
+  aspect-ratio: 390 / 844;
   min-width: 0;
   overflow: hidden; /* sonst erzwingt der Inhalt eine Mindestbreite und sprengt das Verhältnis */
   padding: clamp(5px, 0.8vw, 9px);
@@ -1247,6 +1247,210 @@ body.case-overlay::before {
   margin: 0 0 1rem;
 }
 .case-callout p { font-size: 0.98rem; margin: 0.6rem 0 0; }
+/* Schritte-Leiste: vier Momente nebeneinander (z. B. "Die Lösung") */
+.case-section > ol.step-row { grid-column: full-start / full-end; }
+.case-section ol.step-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin: 1.5rem 0 2.6rem;
+  padding: 0;
+  list-style: none;
+}
+@media (min-width: 1100px) { .case-section ol.step-row { grid-template-columns: repeat(4, 1fr); } }
+@media (max-width: 520px) { .case-section ol.step-row { grid-template-columns: 1fr; } }
+.case-section .step {
+  background: #ffffff;
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-lg);
+  padding: 1.3rem 1.3rem 1.5rem;
+  margin: 0;
+}
+.case-section .step-no {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.7rem;
+  height: 1.7rem;
+  margin-bottom: 0.8rem;
+  border-radius: 50%;
+  background: var(--ink);
+  color: #ffffff;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+.case-section .step h3 { margin: 0 0 0.45rem; font-size: 1.05rem; }
+.case-section .step p { margin: 0; font-size: 0.93rem; color: var(--ink-soft); }
+
+/* Ablaufdiagramme: auf schmalen Bildschirmen seitlich scrollbar, damit die Schrift lesbar bleibt */
+.flow-hint { display: none; }
+@media (max-width: 700px) {
+  .flow-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .flow-scroll svg { min-width: 640px; }
+  .case-section p.flow-hint { display: block; margin: 0.5rem 0 0; font-size: 0.78rem; color: var(--ink-faint); }
+}
+
+/* Testergebnisse: Zahlenband mit vier Karten, Zitate, Vorher-Nachher-Tabelle */
+.stat-band.stat-band--4 { grid-template-columns: repeat(2, 1fr); }
+@media (min-width: 1000px) { .stat-band.stat-band--4 { grid-template-columns: repeat(4, 1fr); } }
+@media (max-width: 520px) { .stat-band.stat-band--4 { grid-template-columns: 1fr; } }
+.stat-band--highlight .stat-label { margin-top: 0.7rem; }
+.case-section p.test-quotes {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 3.6vw, 2.1rem);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin: 2.2rem 0 0.5rem;
+}
+.case-section p.test-quotes span { color: var(--ink-faint); }
+.case-section p.test-quotes-cap { font-size: 0.92rem; color: var(--ink-soft); margin: 0 0 1rem; }
+.case-section p.test-note { font-size: 0.85rem; color: var(--ink-faint); margin: 0 0 2.4rem; }
+.case-section > .change-table-wrap { grid-column: full-start / full-end; overflow-x: auto; margin: 1rem 0 2rem; }
+.change-table { width: 100%; border-collapse: collapse; font-size: 0.93rem; line-height: 1.5; }
+.change-table thead th {
+  text-align: left;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  padding: 0 1rem 0.7rem 0;
+}
+.change-table tbody th, .change-table td { text-align: left; vertical-align: top; padding: 1rem 1rem 1rem 0; border-top: 1px solid var(--line); }
+.change-table tbody th { font-weight: 700; color: var(--ink); width: 17%; }
+.change-table td { color: var(--ink-soft); }
+.change-table td:nth-child(2) { width: 17%; }
+.change-table td:nth-child(3) { width: 19%; color: var(--ink); font-weight: 600; }
+@media (max-width: 760px) {
+  .change-table thead { display: none; }
+  .change-table, .change-table tbody, .change-table tr, .change-table tbody th, .change-table td { display: block; width: auto !important; }
+  .change-table tr { padding: 1rem 0; border-top: 1px solid var(--line); }
+  .change-table tbody th, .change-table td { border: 0; padding: 0.15rem 0; }
+  .change-table td::before { content: attr(data-label) ": "; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-faint); }
+}
+
+/* Kleines Großbuchstaben-Etikett über der Abschnitts-Überschrift (z. B. "DAS PROBLEM") */
+.case-section p.case-eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent, var(--ink-faint));
+  margin: 0 0 0.55rem;
+}
+
+/* Der eine große Moment einer Case Study: schwarze Fläche, ein Satz */
+.case-section.case-moment {
+  background: var(--ink);
+  text-align: center;
+  padding-top: clamp(3.5rem, 8vw, 6rem);
+  padding-bottom: clamp(3.5rem, 8vw, 6rem);
+}
+.case-section.case-moment p.case-moment-line {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.2rem, 6vw, 4rem);
+  line-height: 1.06;
+  letter-spacing: -0.025em;
+  color: #ffffff;
+  margin: 0 auto 1rem;
+  max-width: 14ch;
+}
+.case-section.case-moment p.case-moment-sub {
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0 auto;
+  max-width: 44ch;
+}
+
+/* Lösung: jeder Schritt mit seinem Screen daneben, im Wechsel links/rechts */
+.case-section > .feature-steps { grid-column: full-start / full-end; margin: 2rem 0 3rem; }
+.feature-step {
+  display: grid;
+  grid-template-columns: minmax(0, 380px) auto;
+  justify-content: start;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  align-items: center;
+  padding: clamp(2.5rem, 6vw, 4.5rem) 0;
+}
+.feature-step:nth-child(even) { grid-template-columns: auto minmax(0, 380px); }
+/* Schritt 1 (ein Handy) ein Stück eingerückt; die Schritte mit zwei Handys brauchen die volle Breite */
+@media (min-width: 1001px) { .feature-step:first-child { padding-left: clamp(1rem, 6vw, 5.5rem); } }
+.feature-step:nth-child(even) .feature-step-text { order: 2; }
+.case-section .feature-step h3 { margin: 0 0 0.6rem; font-size: 1.3rem; }
+.case-section .feature-step p { margin: 0; max-width: 46ch; }
+.wa-screens.wa-row { display: flex; gap: 1.2rem; margin: 0; justify-content: center; }
+.wa-screens.wa-row .phone { width: 280px; max-width: 280px; flex: none; }
+@media (max-width: 1000px) {
+  .feature-step, .feature-step:nth-child(even) { grid-template-columns: 1fr; }
+  .feature-step:nth-child(even) .feature-step-text { order: 0; }
+  .wa-screens.wa-row { flex-wrap: wrap; }
+  .wa-screens.wa-row .phone { width: min(280px, 100%); }
+}
+
+/* Zweispaltiger Einstieg: Text links, Bild rechts (ohne graue Fläche) */
+.case-section > .case-split {
+  grid-column: full-start / full-end;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 400px);
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: center;
+  margin-bottom: 3rem;
+}
+.case-split .wa-problem { margin: 0; }
+@media (max-width: 900px) { .case-section > .case-split { grid-template-columns: minmax(0, 1fr); } .case-split .wa-problem { max-width: 400px; } }
+
+/* Abwägungen nebeneinander, ohne "Warum"-Etikett */
+.case-section > .decision-list.decision-row {
+  grid-column: full-start / full-end;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.5rem, 4vw, 3rem);
+  border-top: 0;
+}
+.decision-row .decision { border: 0; padding: 0.6rem 0 0; }
+.decision-row .decision .why::before { content: none; }
+@media (max-width: 800px) { .case-section > .decision-list.decision-row { grid-template-columns: minmax(0, 1fr); gap: 0; } .decision-row .decision { padding: 1.2rem 0; } }
+
+/* Ablaufdiagramm ohne weiße Fläche */
+.case-figure .flow-scroll svg { background: none; border: 0; padding: 0; border-radius: 0; }
+
+/* Eine gemeinsame linke Kante: Auf Seiten mit body.case-aligned beginnt alles (Etikett, Überschrift,
+   Text, Karten, Screens, Tabellen) an derselben Kante. Fließtext bleibt auf lesbare Zeilenlänge
+   begrenzt, breite Elemente nutzen die volle Breite. */
+body.case-aligned .case-section > * { grid-column: full-start / full-end; }
+body.case-aligned .case-section > :is(p, h2, h3, ul, ol) { max-width: var(--measure); }
+
+/* Abschnitte mit eingerücktem Text: Etikett, Überschriften, Absätze und Listen in der mittigen Spalte,
+   breite Elemente (Karten, Zahlenband, Tabelle, Schritte, Prototyp, Diagramm) bleiben breit. */
+body.case-aligned .case-section.case-indent-text > :is(.case-eyebrow, h2, h3, p, ul, ol, .decision-row) { grid-column: content-start / content-end; }
+/* Mehr Freiraum vor Zwischenüberschriften */
+body.case-aligned .case-section.case-indent-text > h3:not(:first-child) { margin-top: clamp(3rem, 7vw, 5rem); }
+
+/* Einzelne Textblöcke in die mittige Spalte einrücken */
+body.case-aligned .case-section > .col-indent { grid-column: content-start / content-end; }
+
+/* Abschnitte ohne grauen Kasten: Text in der mittigen Spalte, damit er nicht an der Kante klebt */
+body.case-aligned .case-section.case-indent > * { grid-column: content-start / content-end; }
+
+/* Grauer Kasten, links und rechts eingerückt */
+.case-section.case-box-inset { margin-inline: clamp(1rem, 9vw, 8rem); }
+
+/* Die Wende einer Case Study als große Einzelzeile */
+.case-section p.case-statement {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.7rem, 4.2vw, 2.5rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin: 2.6rem 0 0.7rem;
+}
+.info-card ul.struck { padding-left: 1.1rem; }
+.info-card ul.struck s { color: var(--ink-faint); text-decoration-thickness: 1.5px; }
 
 /* number band */
 .stat-band {
@@ -1382,7 +1586,7 @@ body.case-overlay::before {
   gap: clamp(1.5rem, 4vw, 3rem);
 }
 .case-prototype-text { flex: 1 1 360px; max-width: var(--measure); }
-.case-prototype .case-figure { flex: 0 1 auto; margin: 0; }
+.case-prototype .case-figure { flex: 0 0 auto; max-width: 100%; margin: 0; }
 
 /* Scope-of-Work Gantt (Platzhalter — echte Daten kommen noch) */
 .gantt { grid-column: full-start / full-end; margin: 1.6rem 0; }
@@ -1477,6 +1681,7 @@ body.case-overlay::before {
   line-height: 1.45;
   color: var(--ink);
 }
+.insight-title { display: block; font-weight: 700; margin-bottom: 0.35rem; }
 .insight-nav { display: flex; gap: 0.6rem; margin-top: 0.8rem; padding-left: var(--case-pad-x); }
 .insight-nav-btn {
   width: 36px;
