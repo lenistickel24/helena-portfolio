@@ -1291,21 +1291,7 @@ body.case-overlay::before {
 }
 
 /* Testergebnisse: Zahlenband mit vier Karten, Zitate, Vorher-Nachher-Tabelle */
-.stat-band.stat-band--4 { grid-template-columns: repeat(2, 1fr); }
-@media (min-width: 1000px) { .stat-band.stat-band--4 { grid-template-columns: repeat(4, 1fr); } }
-@media (max-width: 520px) { .stat-band.stat-band--4 { grid-template-columns: 1fr; } }
 .stat-band--highlight .stat-label { margin-top: 0.7rem; }
-.case-section p.test-quotes {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: clamp(1.5rem, 3.6vw, 2.1rem);
-  line-height: 1.2;
-  letter-spacing: -0.015em;
-  color: var(--ink);
-  margin: 2.2rem 0 0.5rem;
-}
-.case-section p.test-quotes span { color: var(--ink-faint); }
-.case-section p.test-quotes-cap { font-size: 0.92rem; color: var(--ink-soft); margin: 0 0 1rem; }
 .case-section p.test-note { font-size: 0.85rem; color: var(--ink-faint); margin: 0 0 2.4rem; }
 .case-section > .change-table-wrap { grid-column: full-start / full-end; overflow-x: auto; margin: 1rem 0 2rem; }
 .change-table { width: 100%; border-collapse: collapse; font-size: 0.93rem; line-height: 1.5; }
@@ -1403,17 +1389,6 @@ body.case-overlay::before {
 .case-split .wa-problem { margin: 0; }
 @media (max-width: 900px) { .case-section > .case-split { grid-template-columns: minmax(0, 1fr); } .case-split .wa-problem { max-width: 400px; } }
 
-/* Abwägungen nebeneinander, ohne "Warum"-Etikett */
-.case-section > .decision-list.decision-row {
-  grid-column: full-start / full-end;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(1.5rem, 4vw, 3rem);
-  border-top: 0;
-}
-.decision-row .decision { border: 0; padding: 0.6rem 0 0; }
-.decision-row .decision .why::before { content: none; }
-@media (max-width: 800px) { .case-section > .decision-list.decision-row { grid-template-columns: minmax(0, 1fr); gap: 0; } .decision-row .decision { padding: 1.2rem 0; } }
 
 /* Ablaufdiagramm ohne weiße Fläche */
 .case-figure .flow-scroll svg { background: none; border: 0; padding: 0; border-radius: 0; }
@@ -1426,7 +1401,10 @@ body.case-aligned .case-section > :is(p, h2, h3, ul, ol) { max-width: var(--meas
 
 /* Abschnitte mit eingerücktem Text: Etikett, Überschriften, Absätze und Listen in der mittigen Spalte,
    breite Elemente (Karten, Zahlenband, Tabelle, Schritte, Prototyp, Diagramm) bleiben breit. */
-body.case-aligned .case-section.case-indent-text > :is(.case-eyebrow, h2, h3, p, ul, ol, .decision-row) { grid-column: content-start / content-end; }
+body.case-aligned .case-section.case-indent-text > :is(.case-eyebrow, h2, h3, p, ul, ol) { grid-column: content-start / content-end; }
+/* Das Ablaufdiagramm sitzt in derselben Spalte wie Überschrift und Erklärung */
+body.case-aligned .case-section.case-indent-text > .case-figure { grid-column: content-start / content-end; }
+
 /* Mehr Freiraum vor Zwischenüberschriften */
 body.case-aligned .case-section.case-indent-text > h3:not(:first-child) { margin-top: clamp(3rem, 7vw, 5rem); }
 
@@ -1436,8 +1414,44 @@ body.case-aligned .case-section > .col-indent { grid-column: content-start / con
 /* Abschnitte ohne grauen Kasten: Text in der mittigen Spalte, damit er nicht an der Kante klebt */
 body.case-aligned .case-section.case-indent > * { grid-column: content-start / content-end; }
 
-/* Grauer Kasten, links und rechts eingerückt */
-.case-section.case-box-inset { margin-inline: clamp(1rem, 9vw, 8rem); }
+
+.change-table .cell-note { display: block; margin-top: 0.7rem; padding-top: 0.7rem; border-top: 1px solid var(--line); color: var(--ink-soft); }
+.change-table .cell-note strong { color: var(--ink); }
+
+/* Fazit: Etikett und Überschrift zentriert */
+body.case-aligned .case-section.case-fazit.case-indent-text > :is(.case-eyebrow, h2) { grid-column: full-start / full-end; max-width: none; text-align: center; }
+
+/* Fazit: drei Erkenntnisse als Karten nebeneinander */
+.case-section > .takeaways {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1rem, 2.5vw, 1.5rem);
+  margin: 2rem 0 0.5rem;
+}
+.takeaway {
+  background: var(--paper-alt);
+  border-radius: var(--radius-lg);
+  padding: clamp(1.5rem, 3vw, 2.1rem);
+}
+.case-section .takeaway .step-no { margin-bottom: 1.1rem; }
+.case-section .takeaway h3 { margin: 0 0 0.7rem; font-size: 1.2rem; line-height: 1.25; letter-spacing: -0.01em; }
+.case-section .takeaway p { margin: 0; font-size: 0.97rem; color: var(--ink-soft); }
+@media (max-width: 800px) { .case-section > .takeaways { grid-template-columns: minmax(0, 1fr); } }
+
+/* Ergebnis-Tabelle der Tests: Frage, was passiert ist, Ergebnis */
+.result-table tbody th { width: 28%; }
+.result-table td:nth-child(2) { width: auto; color: var(--ink-soft); font-weight: 400; }
+.result-table td:nth-child(3) { width: 22%; color: var(--ink-soft); font-weight: 400; }
+.result-table .result-num {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.6rem;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--accent, var(--ink));
+  margin-bottom: 0.25rem;
+}
 
 /* Die Wende einer Case Study als große Einzelzeile */
 .case-section p.case-statement {
@@ -1587,6 +1601,8 @@ body.case-aligned .case-section.case-indent > * { grid-column: content-start / c
 }
 .case-prototype-text { flex: 1 1 360px; max-width: var(--measure); }
 .case-prototype .case-figure { flex: 0 0 auto; max-width: 100%; margin: 0; }
+/* nur Prototyp und Button, mittig untereinander */
+.case-prototype.case-prototype--solo { flex-direction: column; align-items: center; gap: 1.6rem; margin: 1rem 0 2rem; }
 
 /* Scope-of-Work Gantt (Platzhalter — echte Daten kommen noch) */
 .gantt { grid-column: full-start / full-end; margin: 1.6rem 0; }
